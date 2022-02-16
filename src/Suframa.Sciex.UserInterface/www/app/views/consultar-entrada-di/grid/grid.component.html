@@ -1,0 +1,148 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="Id" [sorted]="sorted" (onChangeSort)="changeSort($event)">Identificador</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="NomeArquivo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Arquivo</app-ordenacao>
+					</th>
+					<th class="unset-nowrap text-center">
+						QT DI
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="DataHoraRecepcao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Dt. Recebido</app-ordenacao>
+					</th>
+					<th class="unset-nowrap text-center">
+						Status da Validação do Arquivo
+					</th>
+
+				</tr>
+			</thead>
+
+			<tbody class="text-sm">
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="unset-nowrap text-center" style="vertical-align: middle;">{{item.id}}</td>
+					<td class="unset-nowrap text-center" style="vertical-align: middle;">
+						<button type="button" class="btn btn-link" style="color:blue"
+								(click)="downloadArquivo(item.diArquivo.arquivo)">{{item.nomeArquivo}}
+						</button>
+					</td>
+					<td class="unset-nowrap text-center" style="vertical-align: middle;">
+						<!-- QUANTIDADE DE DI ENCONTRADA NO ARQUIVO E SITUACAO ARQUIVO NÃO PROCESSADO -->
+						<span *ngIf="item.quantidadeDi == null"> - </span>
+						<span *ngIf="(item.quantidadeDi > 0 && item.situacaoLeitura != 2)">{{item.quantidadeDi}}</span>
+						<span *ngIf="item.quantidadeDi == 0">0</span>
+
+						<!-- QUANTIDADE DI NO ARQUIVO E SITUACAO ARQUIVO PROCESSADO-->
+						<span *ngIf="(item.quantidadeDi > 0 && item.situacaoLeitura == 2)">
+							<a routerLink="/consultar-entrada-di-processado/{{item.id}}/visualizar"
+								style="cursor: pointer;" class="font-bold">{{item.quantidadeDi}}</a>
+						</span>
+
+						<!-- QUANTIDADE DI PROCESSADA COM SUCESSO-->
+						<span *ngIf="item.quantidadeDiProcessada == null"> - </span>
+						<span *ngIf="(item.quantidadeDiProcessada > 0 && item.situacaoLeitura == 2)">
+							<a routerLink="/consultar-entrada-di-processado/{{item.id}}/{{2}}/visualizar"
+								style="cursor: pointer;" class="font-bold">{{item.quantidadeDiProcessada}}</a>
+						</span>
+						<span *ngIf="item.quantidadeDiProcessada == 0" class="text-sucess font-bold">0</span>
+
+						<!--QUANTIDADE DI COM FALHA -->
+						<span *ngIf="item.quantidadeDiErro == null"> - </span>
+						<span *ngIf="(item.quantidadeDiErro > 0 && item.situacaoLeitura == 2)">
+							<a routerLink="/consultar-entrada-di-processado/{{item.id}}/{{3}}/visualizar"
+								style="cursor: pointer;" class="text-danger font-bold">{{item.quantidadeDiErro}}</a>
+						</span>
+						<span *ngIf="item.quantidadeDiErro == 0" class="text-danger font-bold">0</span>
+
+					</td>
+					<!-- STATUS DE LEITURA - VALIDAÇÃO DE ARQUIVO SUFRAMA -->
+					<td class="unset-nowrap text-center" style="vertical-align: middle;">{{item.dataHoraRecepcao | date: 'dd/MM/yyyy'}}</td>
+					<td class="text-center" style="max-width: 270px;">
+
+						<div class="col-lg-2" style="margin-left: 70px;">
+
+							<svg style="" data-toggle="tooltip" title="Arquivo enviado à Suframa" class="circle" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1">
+								<g id="surface1">
+									<path style=" fill:#FFAAAA;" d="M 41 45 L 9 45 L 9 3 L 31 3 L 41 13 Z "></path>
+									<path style=" fill:#550000;" d="M 39.5 14 L 30 14 L 30 4.5 Z "></path>
+									<path style=" fill:#550000;" d="M 21.246094 24.722656 L 18.785156 24.722656 L 18.785156 33 L 16.769531 33 L 16.769531 24.722656 L 14.347656 24.722656 L 14.347656 23.046875 L 21.246094 23.046875 Z "></path>
+									<path style=" fill:#550000;" d="M 25.519531 26.464844 L 26.859375 23.046875 L 29.164063 23.046875 L 26.824219 27.984375 L 29.21875 33 L 26.886719 33 L 25.519531 29.519531 L 24.15625 33 L 21.828125 33 L 24.21875 27.980469 L 21.875 23.046875 L 24.179688 23.046875 Z "></path>
+									<path style=" fill:#550000;" d="M 36.683594 24.722656 L 34.222656 24.722656 L 34.222656 33 L 32.203125 33 L 32.203125 24.722656 L 29.785156 24.722656 L 29.785156 23.046875 L 36.679688 23.046875 L 36.679688 24.722656 Z "></path>
+								</g>
+							</svg>
+
+							<label style="display: block;">{{item.dataHoraRecepcao | slice:11:16}}</label>
+
+						</div>
+
+						<div class="col-lg-2">
+
+							<svg style="" data-toggle="tooltip" title="Arquivo em validação" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1" class="circle">
+								<g id="surface1" *ngIf="item.dataHoraInicioProcesso != '0001-01-01T00:00:00' ? false : true">
+									<path style=" fill:#5D6562;" d="M 41 45 L 9 45 L 9 3 L 31 3 L 41 13 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 39.5 14 L 30 14 L 30 4.5 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 21.246094 24.722656 L 18.785156 24.722656 L 18.785156 33 L 16.769531 33 L 16.769531 24.722656 L 14.347656 24.722656 L 14.347656 23.046875 L 21.246094 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 25.519531 26.464844 L 26.859375 23.046875 L 29.164063 23.046875 L 26.824219 27.984375 L 29.21875 33 L 26.886719 33 L 25.519531 29.519531 L 24.15625 33 L 21.828125 33 L 24.21875 27.980469 L 21.875 23.046875 L 24.179688 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 36.683594 24.722656 L 34.222656 24.722656 L 34.222656 33 L 32.203125 33 L 32.203125 24.722656 L 29.785156 24.722656 L 29.785156 23.046875 L 36.679688 23.046875 L 36.679688 24.722656 Z "></path>
+								</g>
+								<g id="surface1" *ngIf="item.dataHoraInicioProcesso != '0001-01-01T00:00:00' ? true : false">
+									<path style=" fill:#D4B16A;" d="M 41 45 L 9 45 L 9 3 L 31 3 L 41 13 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 39.5 14 L 30 14 L 30 4.5 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 21.246094 24.722656 L 18.785156 24.722656 L 18.785156 33 L 16.769531 33 L 16.769531 24.722656 L 14.347656 24.722656 L 14.347656 23.046875 L 21.246094 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 25.519531 26.464844 L 26.859375 23.046875 L 29.164063 23.046875 L 26.824219 27.984375 L 29.21875 33 L 26.886719 33 L 25.519531 29.519531 L 24.15625 33 L 21.828125 33 L 24.21875 27.980469 L 21.875 23.046875 L 24.179688 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 36.683594 24.722656 L 34.222656 24.722656 L 34.222656 33 L 32.203125 33 L 32.203125 24.722656 L 29.785156 24.722656 L 29.785156 23.046875 L 36.679688 23.046875 L 36.679688 24.722656 Z "></path>
+								</g>
+							</svg>
+
+							<label [ngClass]="(item.dataHoraInicioProcesso == null) ? 'ds-none':'ds-block'"
+										 *ngIf="item.dataHoraInicioProcesso == null ? false : true">{{item.dataHoraInicioProcesso | slice:11:16}}</label>
+
+							<label [ngClass]="(item.dataHoraInicioProcesso == null) ? 'ds-block':'ds-none'"
+										 *ngIf="item.dataHoraInicioProcesso == null ? true : false">00:00</label>
+
+						</div>
+
+						<div class="col-lg-2">
+
+							<svg style="" data-toggle="tooltip" title="Arquivo validado" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48" version="1.1" class="circle">
+								<g id="surface1" *ngIf="item.dataHoraFimProcesso != null ? false : true">
+									<path style=" fill:#5D6562;" d="M 41 45 L 9 45 L 9 3 L 31 3 L 41 13 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 39.5 14 L 30 14 L 30 4.5 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 21.246094 24.722656 L 18.785156 24.722656 L 18.785156 33 L 16.769531 33 L 16.769531 24.722656 L 14.347656 24.722656 L 14.347656 23.046875 L 21.246094 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 25.519531 26.464844 L 26.859375 23.046875 L 29.164063 23.046875 L 26.824219 27.984375 L 29.21875 33 L 26.886719 33 L 25.519531 29.519531 L 24.15625 33 L 21.828125 33 L 24.21875 27.980469 L 21.875 23.046875 L 24.179688 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 36.683594 24.722656 L 34.222656 24.722656 L 34.222656 33 L 32.203125 33 L 32.203125 24.722656 L 29.785156 24.722656 L 29.785156 23.046875 L 36.679688 23.046875 L 36.679688 24.722656 Z "></path>
+								</g>
+								<g id="surface1" *ngIf="item.dataHoraFimProcesso != null ? true : false">
+									<path style=" fill:#669999;" d="M 41 45 L 9 45 L 9 3 L 31 3 L 41 13 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 39.5 14 L 30 14 L 30 4.5 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 21.246094 24.722656 L 18.785156 24.722656 L 18.785156 33 L 16.769531 33 L 16.769531 24.722656 L 14.347656 24.722656 L 14.347656 23.046875 L 21.246094 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 25.519531 26.464844 L 26.859375 23.046875 L 29.164063 23.046875 L 26.824219 27.984375 L 29.21875 33 L 26.886719 33 L 25.519531 29.519531 L 24.15625 33 L 21.828125 33 L 24.21875 27.980469 L 21.875 23.046875 L 24.179688 23.046875 Z "></path>
+									<path style=" fill:#3B3F3D;" d="M 36.683594 24.722656 L 34.222656 24.722656 L 34.222656 33 L 32.203125 33 L 32.203125 24.722656 L 29.785156 24.722656 L 29.785156 23.046875 L 36.679688 23.046875 L 36.679688 24.722656 Z "></path>
+								</g>
+							</svg>
+
+							<label [ngClass]="(item.dataHoraFimProcesso == null) ? 'ds-none':'ds-block'"
+										 *ngIf="item.dataHoraFimProcesso == null ? false : true">{{item.dataHoraFimProcesso | slice:11:16}}</label>
+
+							<label [ngClass]="(item.dataHoraFimProcesso == null) ? 'ds-block':'ds-none'"
+										 *ngIf="item.dataHoraFimProcesso == null ? true : false">00:00</label>
+
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A0072EF6-B84A-4671-B692-D1BCB190145E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Suframa.Sciex.CrossCutting.Mapping</RootNamespace>
+    <AssemblyName>Suframa.Sciex.CrossCutting.Mapping</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseViewModelProfile.cs" />
+    <Compile Include="BaseDtoProfile.cs" />
+    <Compile Include="BaseEntityProfile.cs" />
+    <Compile Include="DataTransferObjects\ClasseAtividadeDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\DivisaoAtividadeDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\GrupoAtividadeDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\MunicipioDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\NaturezaGrupoDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\NaturezaJuridicaDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\NaturezaQualificacaoDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\QualificaçãoDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\SecaoAtividadeDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\SetorAtividadeDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\SetorDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\SubclasseAtividadeDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\UFDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\UnidadeCadastradoraDtoProfile.cs" />
+    <Compile Include="DataTransferObjects\UnidadeSecundariaDtoProfile.cs" />
+    <Compile Include="EntityToModel\AgendaAtendimentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\AliHistoricoEntityProfile.cs" />
+    <Compile Include="EntityToModel\AuditoriaAplicacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\AuditoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\DIArquivoEntradaEntityProfile.cs" />
+    <Compile Include="EntityToModel\DIEntradaEntityProfile.cs" />
+    <Compile Include="EntityToModel\PRCHistoricoDetalheInsumoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PRCHistoricoInsumoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PRCStatusEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParecerComplementarEntityProfile.cs" />
+    <Compile Include="EntityToModel\PRCStatusEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParecerTecnicoProdutoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParecerTecnicoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PEArquivoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PEProdutoPaisEntityProfile.cs" />
+    <Compile Include="EntityToModel\PEProdutoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PlanoExportacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\LEInsumoEntityProfile.cs" />
+    <Compile Include="EntityToModel\LEProdutoEntityProfile .cs" />
+    <Compile Include="EntityToModel\RecintoAlfandegaEntityProfile.cs" />
+    <Compile Include="EntityToModel\SetorArmazenamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPELoteEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPEProdutoEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoLEInsumoEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoDeclaracaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\DiLiEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliFornecedorFabricanteEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliMercadoriaComercializacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoFornecedorFabricanteEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPliDetalheMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPliEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPliMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPliProcessoAnuenteEntityProfile.cs" />
+    <Compile Include="EntityToModel\AliArquivoEntityProfile.cs" />
+    <Compile Include="EntityToModel\EstruturaPropriaPLIArquivoEntityProfile.cs" />
+    <Compile Include="EntityToModel\EstruturaPropriaPLIEntityProfile.cs" />
+    <Compile Include="EntityToModel\LiArquivoEntity.cs" />
+    <Compile Include="EntityToModel\LiHistoricoEntityProfie.cs" />
+    <Compile Include="EntityToModel\ErroProcessamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ErroMensagemEntityProfile.cs" />
+    <Compile Include="EntityToModel\LancamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\CodigoLancamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\RepresentacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\DiEntityProfile.cs" />
+    <Compile Include="EntityToModel\LiArquivoRetornoEntityProfile.cs" />
+    <Compile Include="EntityToModel\LiSubstituidaEntityProfile.cs" />
+    <Compile Include="EntityToModel\LiEntityProfile.cs" />
+    <Compile Include="EntityToModel\AliArquivoEnvioEntityProfile.cs" />
+    <Compile Include="EntityToModel\AliEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaPliDebitoEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaPliMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaPliHistoricoEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaPliDetalheMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaPliEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaNCMBeneficioEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaGrupoBeneficioEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaFatoGeradorEntityProfile.cs" />
+    <Compile Include="EntityToModel\TaxaEmpresaAtuacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\NcmExcecaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\NcmEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParidadeValorEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParidadeCambialEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliProdutoEntityProfile.cs" />
+    <Compile Include="EntityToModel\RegimeTributarioMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoEmbalagemEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoSolicAlteracaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViaTransporteEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewInsumoPadraoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewRelatorioAnaliseProcessamentoPliEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewOrgaoAnuenteEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewMunicipioEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewNcmEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewSetorEmpresaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewProdutoEmpresaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewDetalheMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewImportadorEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewUnidadeMedidaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ViewSetorEntityProfile.cs" />
+    <Compile Include="EntityToModel\ControleImportacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliDetalheMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliProcessoAnuenteEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliMercadoriaEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliHistoricoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliAplicacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PliEntityProfile.cs" />
+    <Compile Include="EntityToModel\CodigoUtilizacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\CodigoContaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ModalidadePagamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\MotivoEntityProfile.cs" />
+    <Compile Include="EntityToModel\InstituicaoFinanceiraEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParametrosEntityProfile.cs" />
+    <Compile Include="EntityToModel\ControleExecucaoServicoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ImportadorEntityProfile.cs" />
+    <Compile Include="EntityToModel\ListaServicoEntityProfile.cs" />
+    <Compile Include="EntityToModel\MoedaEntityProfile.cs" />
+    <Compile Include="EntityToModel\FornecedorEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParametroAnalista1EntityProfile.cs" />
+    <Compile Include="EntityToModel\AnalistaEntityProfile.cs" />
+    <Compile Include="EntityToModel\FundamentoLegalEntityProfile.cs" />
+    <Compile Include="EntityToModel\FabricanteEntityProfile.cs" />
+    <Compile Include="EntityToModel\RegimeTributarioTesteEntityProfile.cs" />
+    <Compile Include="EntityToModel\UnidadeReceitaFederalEntityProfile.cs" />
+    <Compile Include="EntityToModel\AladiEntityProfile.cs" />
+    <Compile Include="EntityToModel\ArquivoInformacaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ArquivoEntityProfile.cs" />
+    <Compile Include="EntityToModel\AtividadeEconomicaEntityProfile.cs" />
+    <Compile Include="EntityToModel\CalendarioAgendamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\CalendarioDiaEntityProfile.cs" />
+    <Compile Include="EntityToModel\CalendarioHoraEntityProfile.cs" />
+    <Compile Include="EntityToModel\CampoSistemaEntityProfile.cs" />
+    <Compile Include="EntityToModel\NaladiEntityProfile.cs" />
+    <Compile Include="EntityToModel\RegimeTributarioEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParametroAnalistaServicoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParametroAnalistaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ParametroDistribuicaoAutomaticaEntityProfile.cs" />
+    <Compile Include="EntityToModel\ConsultaPublicaEntityProfile.cs" />
+    <Compile Include="EntityToModel\DiligenciaAnexoEntityProfile.cs" />
+    <Compile Include="EntityToModel\DiligenciaAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\DiligenciaAtividadeSetorEntityProfile.cs" />
+    <Compile Include="EntityToModel\DiligenciaEntityProfile.cs" />
+    <Compile Include="EntityToModel\HistoricoSituacaoInscricaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\InscricaoCadastralCredenciamentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ListaDocumentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\MensagemPadraoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PedidoCorrecaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\VWDocumentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\VWQuadroPessoalAprovadoEntityProfile.cs" />
+    <Compile Include="EntityToModel\VWPessoaJuridicaSocioAprovadoEntityProfile.cs" />
+    <Compile Include="EntityToModel\VWPessoaJuridicaAtividadeAprovadoEntityProfile.cs" />
+    <Compile Include="EntityToModel\VWPessoaFisicaAprovadoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ProtocoloProcedureProfile.cs" />
+    <Compile Include="EntityToModel\VWPessoaJuridicaAprovadoEntityProfile.cs" />
+    <Compile Include="EntityToModel\VWPessoaJuridicaAdministradorAprovadoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PessoaJuridicaSocioEntityProfile.cs" />
+    <Compile Include="EntityToModel\InscricaoCadastralEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoConsultaPublicaEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoDocumentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\PapelEntityProfile.cs" />
+    <Compile Include="EntityToModel\UsuarioInternoEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoRequerimentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\StatusProtocoloEntityProfile.cs" />
+    <Compile Include="EntityToModel\SituacaoInscricaoEntityProfile.cs" />
+    <Compile Include="EntityToModel\ServicoEntityProfile.cs" />
+    <Compile Include="EntityToModel\TipoIncentivoEntityProfile.cs" />
+    <Compile Include="EntityToModel\RecursoEntityProfile.cs" />
+    <Compile Include="EntityToModel\UsuarioInternoPapelEntityProfile.cs" />
+    <Compile Include="EntityToModel\WorkflowProtocoloEntityProfile.cs" />
+    <Compile Include="EntityToModel\QuadroPessoalEntityProfile.cs" />
+    <Compile Include="EntityToModel\RequerimentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\SubclasseAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\UFEntityProfile.cs" />
+    <Compile Include="ModelToEntity\AgendaAtendimentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\AliHistoricoVMProfile.cs" />
+    <Compile Include="ModelToEntity\AuditoriaAplicacaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\AuditoriaVMProfile.cs" />
+    <Compile Include="ModelToEntity\DIEntradaVMProfile.cs" />
+    <Compile Include="ModelToEntity\PEProdutoPaisVMProfile.cs" />
+    <Compile Include="ModelToEntity\RecintoAlfandegaVMProfile.cs" />
+    <Compile Include="ModelToEntity\SetorArmazenamentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\TipoDeclaracaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\DiLiVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaPliDebitoVMProfile.cs" />
+    <Compile Include="ModelToEntity\SolicitacaoPliProcessoAnuenteEntityVMProfile.cs" />
+    <Compile Include="ModelToEntity\SolicitacaoFornecedorFabricanteVMProfile.cs" />
+    <Compile Include="ModelToEntity\ErroProcessamentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\LancamentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\DiVMProfile.cs" />
+    <Compile Include="ModelToEntity\LiArquivoRetornoVMProfile.cs" />
+    <Compile Include="ModelToEntity\LiSubstituidaVMProfile.cs" />
+    <Compile Include="ModelToEntity\LiVMProfile.cs" />
+    <Compile Include="ModelToEntity\AliArquivoEnvioVMProfile.cs" />
+    <Compile Include="ModelToEntity\AliVMProfile.cs" />
+    <Compile Include="ModelToEntity\ControleImportacaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\NcmExcecaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\NcmVMProfile.cs" />
+    <Compile Include="ModelToEntity\ParidadeValorVMProfile.cs" />
+    <Compile Include="ModelToEntity\ParidadeCambialVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliAplicacaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliDetalheMercadoriaVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliHistoricoVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliMercadoriaVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliProcessoAnuenteVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliProdutoVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaPliDetalheMercadoriaVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaPliHistoricoVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaPliMercadoriaVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaPliVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaNCMBeneficioVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaGrupoBeneficioVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaFatoGeradorVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaEmpresaAtuacaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\PliVMProfile.cs" />
+    <Compile Include="ModelToEntity\CodigoUtilizacaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\CodigoContaVMProfile.cs" />
+    <Compile Include="ModelToEntity\ModalidadePagamentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\InstituicaoFinanceiraVMProfile.cs" />
+    <Compile Include="ModelToEntity\MotivoVMProfile.cs" />
+    <Compile Include="ModelToEntity\ParametrosVMProfile.cs" />
+    <Compile Include="ModelToEntity\ControleExecucaoServicoVMProfile.cs" />
+    <Compile Include="ModelToEntity\ImportadorVMProfile.cs" />
+    <Compile Include="ModelToEntity\ListaServicoVMProfile.cs" />
+    <Compile Include="ModelToEntity\MoedaVMProfile.cs" />
+    <Compile Include="ModelToEntity\FornecedorVMProfile.cs" />
+    <Compile Include="ModelToEntity\ParametroAnalista1VMProfile.cs" />
+    <Compile Include="ModelToEntity\AnalistaVMProfile.cs" />
+    <Compile Include="ModelToEntity\FundamentoLegalVMProfile.cs" />
+    <Compile Include="ModelToEntity\FabricanteVMProfile.cs" />
+    <Compile Include="ModelToEntity\RegimeTributarioMercadoriaVMProfile.cs" />
+    <Compile Include="ModelToEntity\TipoEmbalagemVMProfile.cs" />
+    <Compile Include="ModelToEntity\UnidadeReceitaFederalVMProfile.cs" />
+    <Compile Include="ModelToEntity\NaladiVMProfile.cs" />
+    <Compile Include="ModelToEntity\RegimeTributarioVMProfile.cs" />
+    <Compile Include="ModelToEntity\AladiVMProfile.cs" />
+    <Compile Include="ModelToEntity\ArquivoVMProfile.cs" />
+    <Compile Include="ModelToEntity\CalendarioAgendamentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\CalendarioDiaVMProfile.cs" />
+    <Compile Include="ModelToEntity\CalendarioHoraVMProfile.cs" />
+    <Compile Include="ModelToEntity\CepVMProfile.cs" />
+    <Compile Include="ModelToEntity\ConsultaPublicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\DadosCadastroVMProfile.cs" />
+    <Compile Include="ModelToEntity\DadosSolicitanteVMProfile.cs" />
+    <Compile Include="DataTransferObjects\CepDtoProfile.cs" />
+    <Compile Include="EntityToModel\DadosSolicitanteEntityProfile.cs" />
+    <Compile Include="EntityToModel\PessoaFisicaEntityProfile.cs" />
+    <Compile Include="EntityToModel\PaisEntityProfile.cs" />
+    <Compile Include="EntityToModel\PessoaJuridicaAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\PessoaJuridicaEntityProfile.cs" />
+    <Compile Include="EntityToModel\PorteEmpresaEntityProfile.cs" />
+    <Compile Include="EntityToModel\PessoaJuridicaAdministradorEntityProfile.cs" />
+    <Compile Include="EntityToModel\CepEntityProfile.cs" />
+    <Compile Include="EntityToModel\ProtocoloEntityProfile.cs" />
+    <Compile Include="ModelToEntity\DiligenciaAnexosVMProfile.cs" />
+    <Compile Include="ModelToEntity\DiligenciaAtividadeSetorVMProfile.cs" />
+    <Compile Include="ModelToEntity\DiligenciaAtividadeVMProfile.cs" />
+    <Compile Include="ModelToEntity\DiligenciaVMProfile.cs" />
+    <Compile Include="ModelToEntity\DocumentoComprobatorioVMProfile.cs" />
+    <Compile Include="ModelToEntity\EnderecoPessoaJuridicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\CancelamentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\IdentificacaoPessoaFisicaVMProfile.cs" />
+    <Compile Include="EntityToModel\PessoaJuridicaInscricaoEstadualEntityProfile.cs" />
+    <Compile Include="EntityToModel\ClasseAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\DivisaoAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\GrupoAtividadeEntityProfile.cs" />
+    <Compile Include="Initialize.cs" />
+    <Compile Include="EntityToModel\MunicipioEntityProfile.cs" />
+    <Compile Include="EntityToModel\NaturezaGrupoEntityProfile.cs" />
+    <Compile Include="EntityToModel\NaturezaJuridicaEntityProfile.cs" />
+    <Compile Include="EntityToModel\NaturezaQualificacaoEntityProfile.cs" />
+    <Compile Include="ModelToEntity\ViaTransporteVMProfile.cs" />
+    <Compile Include="ModelToEntity\ViewNcmVMProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ModelToEntity\IdentificacaoPessoaJuridicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\JulgamentoRecursoVMProfile.cs" />
+    <Compile Include="ModelToEntity\ManterAtividadeEconomicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\ManterNaturezaJuridicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\ManterSetorEmpresarialVMProfile.cs" />
+    <Compile Include="ModelToEntity\ManterUnidadeCadastradoraVMProfile.cs" />
+    <Compile Include="ModelToEntity\MunicipioVMProfile.cs" />
+    <Compile Include="EntityToModel\MotivoSituacaoInscricaoEntityProfile.cs" />
+    <Compile Include="ModelToEntity\ParametroAnalistaServicoVMProfile.cs" />
+    <Compile Include="ModelToEntity\ParametroAnalistaVMProfile.cs" />
+    <Compile Include="ModelToEntity\SetorVMProfile.cs" />
+    <Compile Include="ModelToEntity\UnidadeCadastradoraVMProfile.cs" />
+    <Compile Include="ModelToEntity\TipoRequerimentoVMProfile.cs" />
+    <Compile Include="ModelToEntity\ServicoVMProfile.cs" />
+    <Compile Include="ModelToEntity\PedidoCorrecaoProfile.cs" />
+    <Compile Include="ModelToEntity\PessoaJuridicaInscricaoEstadualVMProfile.cs" />
+    <Compile Include="ModelToEntity\InscricaoCadastralVMProfile.cs" />
+    <Compile Include="ModelToEntity\SituacaoInscricaoVMProfile.cs" />
+    <Compile Include="ModelToEntity\TipoIncentivoVMProfile.cs" />
+    <Compile Include="ModelToEntity\RecursoVMProfile.cs" />
+    <Compile Include="ModelToEntity\UsuarioInternoPapelVMProfile.cs" />
+    <Compile Include="ModelToEntity\UsuarioInternoVMProfile.cs" />
+    <Compile Include="ModelToEntity\WorkflowProtocoloVMProfile.cs" />
+    <Compile Include="ModelToEntity\ProtocoloVMProfile.cs" />
+    <Compile Include="ModelToEntity\QuadroPessoalVMProfile.cs" />
+    <Compile Include="EntityToModel\QualificacaoEntityProfile.cs" />
+    <Compile Include="ModelToEntity\QualificacaoVMProfile.cs" />
+    <Compile Include="EntityToModel\RequerimentoDocumentoEntityProfile.cs" />
+    <Compile Include="EntityToModel\SetorEntityProfile.cs" />
+    <Compile Include="EntityToModel\SecaoAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\UnidadeCadastradoraEntityProfile.cs" />
+    <Compile Include="EntityToModel\SetorAtividadeEntityProfile.cs" />
+    <Compile Include="EntityToModel\UnidadeSecundariaEntityProfile.cs" />
+    <Compile Include="ModelToEntity\FiltroCadastroPessoaJuridicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\AtividadePessoaJuridicaVMProfile.cs" />
+    <Compile Include="ModelToEntity\PaisVMProfile.cs" />
+    <Compile Include="ModelToEntity\ManterEnderecoVMProfile.cs" />
+    <Compile Include="ModelToEntity\QuadroSocietarioVMProfile.cs" />
+    <Compile Include="ModelToEntity\QuadroAdministradoresVMProfile.cs" />
+    <Compile Include="ModelToEntity\TaxaServicoVMProfile.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Suframa.Sciex.CrossCutting.Mapping.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.DataTransferObject\Suframa.Sciex.CrossCutting.DataTransferObject.csproj">
+      <Project>{afb3d36d-7929-41ac-a3dd-71dbddeb3dae}</Project>
+      <Name>Suframa.Sciex.CrossCutting.DataTransferObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting\Suframa.Sciex.CrossCutting.csproj">
+      <Project>{bc105e8e-3b81-494a-a61f-9b2ee18a77a5}</Project>
+      <Name>Suframa.Sciex.CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.DataAccess\Suframa.Sciex.DataAccess.csproj">
+      <Project>{75e29a91-1d70-4c43-ba0c-4cab420c658d}</Project>
+      <Name>Suframa.Sciex.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,174 @@
+<div #appModalMoeda
+    id="1" 
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none;overflow-y: auto;">
+
+    <div 
+        class="modal-dialog" 
+        style="width:1500px;margin-top: 10px;" 
+        style=" max-width: 60%; width: auto !important; margin-top: 10px; ">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                <h4 class="modal-title" style="color: White;" id="modalParecer">Alteração do Insumo</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row col-lg-12">
+                    <div class="col-lg-12" >
+                        <label class="m-r-xs">Insumo:</label>
+                        <span>{{codigoInsumo}} | {{descricaoInsumo}}</span>
+                    </div>
+                    <div class="col-lg-12" >
+                        <label class="m-r-xs">Detalhe:</label>
+                        <span> {{numeroSequencial}} </span>
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-lg-8">
+                        <label class="m-r-xs"></label>  
+                        <span class="pull-right"></span>
+                    </div>								   
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">Moeda</h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row form-group">
+                            <div class="row col-lg-12">
+
+                                <div class="col-lg-3">
+                                    <label>DE:</label>
+                                    <div class="ds-flex">
+                                        <input type="text" class="form-control" value="{{descricaoMoeda}}" disabled />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <label for="descricao" class="">PARA:</label>
+                                    <app-drop-list-select 
+                                        #moeda 
+                                        id="moeda"
+                                        (valorModificado)="parametros.idMoeda = $event" 
+                                        name="idMoeda" 
+                                        servico="Moeda"
+                                        [selMinimumInputLength]="3" 
+                                        [placeholder]="somenteLeitura ? '' : 'Selecione uma opção'"
+                                        [(ngModel)]="parametros.idMoeda"
+                                    >
+                                    </app-drop-list-select>
+                                </div>
+
+                                <div class="col-lg-2" style="margin-top: 6px;">
+                                    <label></label>
+                                    <div class="ds-flex">
+                                        <a (click)="calcularMoeda()" class="btn btn-sm btn-primary m-l">                                             
+                                            <span class="fa fa-money"></span> Calcular 
+                                        </a>
+                                    </div>                                       
+                                </div>                                  
+
+                            </div>
+                        </div>
+                    </div>  
+
+                    <div class="row col-lg-12">
+                    </div>
+            
+                    <div class=panel-body>
+
+                        <div class="row col-lg-8">
+
+                            <fieldset class="row form-group ml-mr-none h160" style="border: 1px solid #000; padding: 10px;margin-left: 05px;">
+                                <legend style="width: auto;border: 0;margin-bottom: 0px;"> Valores Previstos</legend>
+
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Paridade(US$):</label>
+                                        <span class="pull-right">{{parametros.calcularMoedaPara.paridade ?
+                                                                   (parametros.calcularMoedaPara.paridade | number : '1.7-7') :
+                                                                   '0,0000000'}}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Qtde:</label>
+                                        <span class="pull-right">{{parametros.calcularMoedaPara.saldoQuantidade ?  
+                                                                   (parametros.calcularMoedaPara.saldoQuantidade | number : '1.7-7') :
+                                                                    '0,0000000'}}</span>
+
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Valor(US$):</label>
+                                        <span class="pull-right">
+                                            {{parametros.calcularMoedaPara.saldoValorUS ?
+                                              (parametros.calcularMoedaPara.saldoValorUS  | number : '1.7-7') :
+                                               '0,0000000'}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Acréscimo(US$):</label>
+                                        <span class="pull-right">{{parametros.calcularMoedaPara.acrescimoUS ? 
+                                                                   (parametros.calcularMoedaPara.acrescimoUS| number : '1.7-7') :
+                                                                   '0,0000000'}}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Final(US$):</label>
+                                        <span class="pull-right">{{parametros.calcularMoedaPara.saldoFinalUS ?
+                                                                   (parametros.calcularMoedaPara.saldoFinalUS | number : '1.7-7') :
+                                                                   '0,0000000'}}</span>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-left: 30px;">
+                        <small >
+                            <b style="color: #FF0000">As informações apresentadas no quadro "Valores Previstos" são específicas da solicitação de alteração selecionada.</b>
+                        </small> 					
+
+                        <br>
+                        <small>
+                            <b style="color: #FF0000">Para visualizar os "Valores Previstos" do insumo, de forma ampla, favor consultar o cálculo no Quadro III.</b>
+                        </small>
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-default" 
+                        (click)="confirmarCancelamento()">
+                            <span class="fa fa-times"></span> Cancelar 
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-primary" 
+                        (click)="confirmarSalvar()">
+                            <span class="fa fa-save"></span> Salvar 
+                    </button>
+                </div>
+            </div>
+        </div>
+                
+    </div>
+
+</div>    
+
+<div #appModalMoedaBackground class="modal-backdrop fade in" style="display: none;"></div>

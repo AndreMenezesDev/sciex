@@ -1,0 +1,118 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód.</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoProdutoSuframa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Prod. Suf.</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoTipoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo do Produto</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DataCadastro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data do Cadastro</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="StatusLE" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="StatusLEAlteracao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Alteração</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-center">{{item.codigoProduto}}</td>
+					<td class="unset-nowrap">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap">{{item.descCodigoProdutoSuframa}}</td>
+					<td class="unset-nowrap">{{item.descCodigoTipoProduto}}</td>
+					<td class="unset-nowrap">{{item.dataCadastroFormatada}}</td>
+					<td class="unset-nowrap">{{item.descStatusLE}}</td>
+					<td class="unset-nowrap">{{item.descStatusLEAlteracao}}</td>
+					<td class="text-center">
+						<!---->
+						<a 
+							routerLink="/manter-listagem-exportacao/{{item.idLe}}/visualizar" 
+							class="btn btn-default btn-sm" 
+							data-toggle="tooltip" 
+							title="" 
+							data-original-title="Visualizar">
+								<i class="fa fa-file-text-o"></i>
+						</a>
+						<!---->
+						<a 
+							routerLink="/manter-listagem-exportacao/{{item.idLe}}/editar" 
+							class="btn btn-default btn-sm" 
+							*ngIf="item.statusLE == 1" 
+							data-toggle="tooltip" 
+							title="" 
+							data-original-title="Incluir Insumos">
+								<i class="i i-add-to-list"></i>
+						</a>
+						<!---->
+						<!-- *ngIf="item.statusLE == 5 || item.statusLEAlteracao == 1"  -->
+						<a 
+							routerLink="/manter-listagem-exportacao/{{item.idLe}}/corrigir" 
+							*ngIf="(item.statusLE == 4 && item.statusLEAlteracao == 1) || (item.statusLE == 5 && item.statusLEAlteracao == 0)
+							|| (item.statusLE == 5 && item.statusLEAlteracao == 1) || (item.statusLE == 5 && item.statusLEAlteracao == 5)  " 
+							class="btn btn-default btn-sm" 
+							data-toggle="tooltip" 
+							title="" 
+							data-original-title="Alterar Insumos">
+								<i class="fa fa-edit"></i>
+						</a>
+						<!---->
+						<a 
+							style="cursor:pointer" 
+							*ngIf="item.statusLE == 4 && item.statusLEAlteracao == 0 || item.statusLE == 4 && item.statusLEAlteracao == 4" 
+							data-toggle="tooltip" 
+							class="btn btn-default btn-sm" 
+							(click)="solicitarAlteracao(item)" 
+							title="" 
+							data-original-title="Solicitar Alteração">
+								<i class="fa fa-pencil"></i>
+						</a>
+						<!---->
+						<a 
+							style="cursor:pointer" 
+							class="btn btn-danger btn-sm" 
+							data-toggle="tooltip" 
+							*ngIf="item.statusLE == 1" 
+							title="" 
+							data-original-title="Excluir" 
+							(click)="confirmarExclusao(item.idLe)">
+								<i class="fa fa-trash-o"></i>
+						</a>
+						<!---->
+						<a 
+							*ngIf="(item.statusLE == 1 && item.statusLEAlteracao == 0) || (item.statusLE == 1 && item.statusLEAlteracao == 1)
+							|| (item.statusLE == 5 && item.statusLEAlteracao == 0) || (item.statusLE == 5 && item.statusLEAlteracao == 1)
+							|| (item.statusLE == 4 && item.statusLEAlteracao == 1) || (item.statusLE == 5 && item.statusLEAlteracao == 5)"
+							style="cursor:pointer" 
+							data-toggle="tooltip" 
+							class="btn btn-default btn-sm" 
+							(click)="confirmarEntrega(item)" 
+							title="" 
+							data-original-title="Entregar LE">
+								<i class="i i-paperplane"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

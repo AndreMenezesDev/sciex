@@ -1,0 +1,16 @@
+﻿namespace Suframa.Sciex.CrossCutting.DataTransferObject.Enum
+{
+    public enum EnumAliStatus
+	{
+        ALI_GERADA = 1,
+        ALI_ENVIADA_AO_SISCOMEX = 2,
+        ALI_DEFERIDA = 3,
+		ALI_INDEFERIDA_PELA_SUFRAMA = 4,
+		ALI_INDEFERIDA_PELO_SISCOMEX = 5,
+		ALI_SOLICITADA_PARA_CANCELAMENTO = 6,
+		LI_CANCELADA_PELO_IMPORTADOR = 7,
+		ALI_CANCELADA_PELO_SISCOMEX = 8,
+		ALI_SUBSTITUÍDA = 9,
+		ALI_RETIFICADA = 10,
+	}
+}

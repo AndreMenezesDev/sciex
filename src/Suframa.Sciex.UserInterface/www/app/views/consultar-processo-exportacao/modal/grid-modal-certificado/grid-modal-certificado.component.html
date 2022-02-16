@@ -1,0 +1,34 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)"
+					[(isShowPanel)]="exibirCabecalhoGrid"
+					>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="Tipo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ação</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+				<tr *ngFor="let item of lista; let ind = index">
+					<td class="text-left">{{item.descricaoTipo}}</td>
+					<td class="text-center">
+						<a (click)="emitirCertificado(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title=""
+							data-original-title="Emitir Certificado"><i class="i  i-stack2"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-relatorio-certificado-registro #relatorio ></app-relatorio-certificado-registro>

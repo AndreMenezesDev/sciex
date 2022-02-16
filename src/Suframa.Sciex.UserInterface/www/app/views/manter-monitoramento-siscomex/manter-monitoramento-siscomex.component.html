@@ -1,0 +1,166 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Monitoramento do Processamento SISCOMEX</app-titulo>
+			<app-sub-titulo>Envio de Arquivo</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+
+				<header class="panel-heading">
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+						<div class="row form-group">
+							<div class="col-lg-6 b-b b-r">
+								<label>
+									<div class="radio i-checks">
+										<label>
+											<input type="radio" #envioArquivo (change)="getSelectedOption()" name="radio[custom]" value="1" checked="checked"><i></i> <span class="font-bold">Envio de Arquivo</span>
+										</label>
+									</div>
+								</label>
+							</div>
+							<div class="col-lg-6 b-b">
+								<label>
+									<div class="radio i-checks">
+										<label>
+											<input type="radio" #aliEspecifica  (change)="getSelectedOption()" name="radio[custom]" value="2"><i></i> <span class="font-bold">ALI Específica</span>
+										</label>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="col-lg-10">
+									<label for="dataorigem">Período do Envio:</label>
+									<div class="input-group" style="display: flex;">
+										<input #dataEnvioInicial
+											   type="date"
+											   id="dataInicial"
+											   min="0001-01-01" max="9999-12-31"
+											   name="dataInicio"
+											   [(ngModel)]="parametros.dataInicio"
+											   class="form-control date"
+											   style="width: 50%;"
+											   maxlength="10"
+											   autocomplete="off"
+											   (keyup.enter)="buscar(true)"
+											   required>
+
+										<span class="text-center" style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+										<input #dataEnvioFinal
+											   type="date"
+											   id="dataFim"
+											   name="dataFim"
+											   min="0001-01-01" max="9999-12-31"
+											   [(ngModel)]="parametros.dataFim"
+											   class="form-control date"
+											   style="width: 50%;"
+											   maxlength="10"
+											   autocomplete="off"
+											   (keyup.enter)="buscar(true)"
+											   required>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-lg-6">
+								<div class="col-lg-9">
+									<label for="txtCodigo" class="control-label">Nº ALI:</label>
+									<input #nAli
+										   type="text"
+										   id="nAli"
+										   class="form-control"
+										   name="nAli"
+										   maxlength="10"
+										   autocomplete="off"
+										   [(ngModel)]="model.numeroAli"
+										   (keyup.enter)="buscar(true)"
+										   onlyNumber="true"
+										   required/>
+								</div>
+							</div>
+						</div>
+
+						<div class="line"></div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="col-lg-11">
+									<div class="form-group m-n">
+										<label for="coberturaCambial" class="control-label">Tipo de Consulta:</label>
+										<!--<select #tipoConsulta
+												name="tipoDeConsulta"
+												id="tipoDeConsulta"
+												[(ngModel)]="model.tipoDeConsulta"
+												[disabled]="desabilitado"
+												class="form-control"
+												required>
+											<option [ngValue]="undefined" selected>ANALÍTICO</option>
+											<option value="1">SINTÉTICO</option>
+										</select>-->
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="line"></div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="col-lg-11">
+									<div class="form-group m-n">
+										<label for="coberturaCambial" class="control-label">Status de Envio:</label>
+										<!--<select #statusEnvio
+												name="statusDeEnvio"
+												id="statusDeEnvio"
+												[(ngModel)]="model.codigoStatusEnvioSiscomex"
+												[disabled]="desabilitado"
+												class="form-control">
+											<option [ngValue]="undefined" selected>TODOS</option>
+											<option value="1">NÃO ENVIADO AO SISCOMEX</option>
+											<option value="2">ENVIADO AO SISCOMEX</option>
+											<option value="3">NÃO ENVIADO AO SISCOMEX - TENTATIVA DE ENVIO EXCEDEU O LIMITE </option>
+										</select>-->
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</article>
+
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="$event.preventDefault(); buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button class="btn btn-sm btn-default" type="reset" (click)=" limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section [hidden]="ocultarGrid" class="panel panel-default">
+				<app-monitoramento-siscomex-grid [(lista)]="grid.lista"
+						   [(total)]="grid.total"
+						   [(size)]="grid.size"
+						   [(page)]="grid.page"
+						   [(parametros)]="parametros"
+						   (onChangeSort)="onChangeSort($event)"
+						   (onChangeSize)="onChangeSize($event)"
+						   (onChangePage)="onChangePage($event)">
+				</app-monitoramento-siscomex-grid>
+			</section>
+		</div>
+	</div>
+</div>

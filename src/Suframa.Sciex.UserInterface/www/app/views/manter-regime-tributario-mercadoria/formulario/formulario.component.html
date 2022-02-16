@@ -1,0 +1,124 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Regime Tributário da Mercadoria</app-titulo>
+			<app-sub-titulo>Cadastrar Regime Tributário da Mercadoria</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<button type="button" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-save"></i> Salvar</button>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+						<fieldset [disabled]="desabilitado">
+
+							<div class="row form-group">
+								<div class="col-lg-9">
+									<div class="form-group">
+										<label for="municipio" class="control-label required">Município:</label>
+										<app-drop-list-select		
+												(valorModificado)="capturarUF(codigoMunicipio.model.uf); model.codigoMunicipio = codigoMunicipio.model.codigoMunicipio ; parametros.codigoMunicipio = $event"
+												(limparObjetosAuxiliares)="parametros.UF = $event"
+												name="codigoMunicipio"
+												[isDisabled]="desabilitado"
+												[isRequired]="true"
+												servico="Municipio"
+												[(ngModel)]="model.codigoMunicipio"
+												[selMinimumInputLength]="3"
+												[placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+												#codigoMunicipio>
+										</app-drop-list-select>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<div class="form-group">
+										<label for="txtCodigo" class="control-label">UF:</label>
+										<input type="text"
+											   id="txuf"
+											   class="form-control"
+											   name="uf"
+											   maxlength="2"
+											   [(ngModel)]="Uf"
+											   disabled="disabled"/>
+									</div>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label for="regimeTributario" class="control-label required">Regime Tributário:</label>
+										<app-drop-list name="parametros.idRegimeTributario"
+													   servico="RegimeTributarioList"
+													   [(ngModel)]="model.idRegimeTributario"
+													   placeholder="Selecione uma opção"
+													   [isRequired]="true"
+													   #idregimetributario>
+										</app-drop-list>
+									</div>
+								</div>
+								<div class="col-lg-8">
+									<label for="fundamentoLegal" class="control-label required">Fundamento Legal:</label>
+									<app-drop-list-select (valorModificado)="model.idFundamentoLegal = $event"
+														  [(ngModel)]="model.idFundamentoLegal"
+														  name="idFundamentoLegal"
+														  [isDisabled]="desabilitado"
+														  [isRequired]="true"
+														  servico="FundamentoLegal"
+														  [selMinimumInputLength]="2"
+														  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+														  #fundamentoLegal>
+									</app-drop-list-select>
+								</div>
+							</div>
+
+							<div class="row form-group">
+								<div class="col-lg-2">
+									<label for="dataorigem" class="required">Início da Vigência:</label>
+									<input #dataInicioVigencia
+										   type="date"
+										   min="0001-01-01" max="9999-12-31"
+										   id="dataInicioVigencia"
+										   name="dataInicioVigencia"
+										   [(ngModel)]="model.dataInicioVigencia"
+										   class="form-control date"
+										   maxlength="10"
+										   autocomplete="off"
+										   required />
+								</div>
+
+							</div>
+
+						</fieldset>
+					</form>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<button type="button" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-save"></i> Salvar</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

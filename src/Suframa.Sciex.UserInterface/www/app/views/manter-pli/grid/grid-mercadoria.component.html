@@ -1,0 +1,52 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)"
+		  >
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="CodigoNCMMercadoria" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoNCMMercadoria" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-center">{{item.codigoNCMMercadoria}}</td>
+					<td class="unset-nowrap">{{item.descricaoNCMMercadoria | uppercase}}</td>
+
+					<td class="text-center">
+						<a style="cursor:pointer"
+						   class="btn btn-default btn-sm"
+						   [ngClass]="{'display-none': !mostrarBotao}"
+						   data-toggle="tooltip"
+						   data-original-title="Visualizar"
+						   (click)="abrirModalMercadoria(item)">
+						   <i class="fa fa-file-text-o"></i>
+						</a>
+
+						<a *ngIf="isRetificador" style="cursor:pointer" class="btn btn-default btn-sm" [ngClass]=" {'display-none': mostrarBotao}"data-toggle="tooltip" data-original-title="Alterar NCM" (click)="alterarNCM(item)"><i class="fa fa-edit"></i></a>
+
+						<a style="cursor:pointer" class="btn btn-default btn-sm" [ngClass]=" {'display-none': mostrarBotao}"data-toggle="tooltip" data-original-title="Alterar Mercadoria" (click)="abrirModalMercadoria(item)"><i class="fa fa-pencil"></i></a>
+						<a style="cursor:pointer" class="btn btn-default btn-sm" [ngClass]=" {'display-none': mostrarBotao}" data-toggle="tooltip" title="" data-original-title="Aplicar Parâmetros" (click)="abrirModalAplicarParametro(item)"><i class="fa fa-clipboard"></i></a>
+						<a style="cursor:pointer" class="btn btn-danger btn-sm" [ngClass]=" {'display-none': mostrarBotao}" data-toggle="tooltip" title="" data-original-title="Excluir" (click)="confirmarExclusao(item) "><i class="fa fa-trash-o"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-modal-mercadoria-pli-comercializacao #appModalMercadoriaPliComercializacao></app-modal-mercadoria-pli-comercializacao>
+<app-modal-mercadoria-pli #appModalMercadoriaPli></app-modal-mercadoria-pli>
+<app-modal-aplicar-parametros #appModalAplicarParametros></app-modal-aplicar-parametros>

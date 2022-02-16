@@ -1,0 +1,51 @@
+<div class="tab-pane">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-lg-12">
+				<label>Unidade Cadastradora:</label><br>
+				<label class="radio-inline i-checks">
+					<input type="radio" name="radioUnidadeCadastradora" [disabled]="!isUnidadeCadastradoraManaus" (change)="changeRadioUnidadeCadastradora(1)"><i></i> Todas
+				</label>
+				<label class="radio-inline i-checks">
+					<input type="radio" name="radioUnidadeCadastradora" [disabled]="!isUnidadeCadastradoraManaus" (change)="changeRadioUnidadeCadastradora(2)" [checked]="!isUnidadeCadastradoraManaus"><i></i> Específicas
+				</label>
+				<label class="radio-inline i-checks">
+					<app-drop-list name="unidadeCadastradora"
+								   servico="UnidadeCadastradora"
+								   parametroChave="idUnidadeCadastradora"
+								   [(parametro)]="idUnidadeCadastradoraParametro"
+								   [(ngModel)]="idUnidadeCadastradora"
+								   (change)="selecionarUnidadeCadastradora()"
+								   [isDisabled]="radioUnidadeCadastradora == 1"
+								   #unidadeCadastradoraDropList>
+					</app-drop-list>
+				</label>
+				<ul id="parsley-checkboxline2" class="parsley-error-list" style="display: block;"></ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead class="thead-cadsuf">
+				<tr>
+					<th>Unidade Cadastradora</th>
+					<th>Protocolo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index;">
+					<td>{{item.descricaoUnidadeCadastradora}}</td>
+					<td>
+						<label class="radio-inline i-checks m-r">
+							<input type="radio" name="radioUnidadeCadastradora{{i}}" [value]="true" [(ngModel)]="item.isAtivo" (change)="atualizarStatus(item, true)"><i></i> Ativo
+						</label>
+						<label class="radio-inline i-checks">
+							<input type="radio" name="radioUnidadeCadastradora{{i}}" [value]="false" [(ngModel)]="item.isAtivo" (change)="atualizarStatus(item, false)"><i></i> Inativo
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

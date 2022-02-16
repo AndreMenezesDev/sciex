@@ -1,0 +1,14 @@
+<div (click)="changeSort(field)">
+	<span *ngIf="field == sorted">
+		<span class="" [ngSwitch]="reverse">
+			<i *ngSwitchCase="1" class="fa fa-sort-asc" style="padding-right: 5px;"></i>
+			<i *ngSwitchCase="0" class="fa fa-sort-desc" style="padding-right: 5px;"></i>
+		</span>
+	</span>
+	<span *ngIf="field != sorted">
+		<span class="">
+			<i class="fa fa-sort" style="padding-right: 5px;"></i>
+		</span>
+	</span>
+	<ng-content></ng-content>
+</div>

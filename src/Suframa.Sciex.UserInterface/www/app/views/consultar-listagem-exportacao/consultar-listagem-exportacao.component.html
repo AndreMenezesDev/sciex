@@ -1,0 +1,143 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Consultar Listagem de Exportação</app-titulo>
+			<app-sub-titulo>Consulta de LEs</app-sub-titulo>
+		</div>
+	</div> 
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+
+						<div class="row" *ngIf="isUsuarioInterno">
+							<div class="col-lg-2" >
+								<div class="form-group">
+									<label for="txInscricaoCadastral" class="control-label">Inscrição Cadastral:</label>
+									<input #inscricaoCadastral
+										   type="text"
+										   id="txtInscricaoCadastral"
+										   class="form-control"
+										   name="inscricaoCadastral"
+										   maxlength="9"
+										    [(ngModel)]="parametros.inscricaoCadastral"
+										   onlyNumber="true"
+										   (keyup.enter)="buscar(true)"/>
+								</div>
+							</div>
+							<div class="col-lg-10">
+								<label for="txtEmpresa" class="control-label">Empresa:</label>
+								<input #empresa
+									   type="text"
+									   id="txtEmpresa"
+									   class="form-control"
+									   maxlength="60"
+									   name="empresa"
+									    [(ngModel)]="parametros.razaoSocial"
+									   (keyup.enter)="buscar(true)"
+									   inputTextFilter="true"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-2 form-group">
+								<label for="txInscricaoCadastral" class="control-label">Código do Produto:</label>
+								<input #inscricaoCadastral
+										type="text"
+										id="txtCodigoProduto"
+										class="form-control"
+										name="codigoProduto"
+										maxlength="9"
+										[(ngModel)]="parametros.codigoProduto"
+										onlyNumber="true"
+										(keyup.enter)="buscar(true)"/>
+							</div>
+							
+							<div class="col-lg-3">
+								<label for="dataorigem" class="">Período do Envio:</label>
+								<div class="input-group" style="display: flex;">
+									<input #dataInicio
+										   type="date"
+										   id="dataInicio"
+										   name="dataInicio"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataInicio"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   (keyup.enter)="buscar(true)">
+									<span class="text-center" style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+									<input #dataFim
+										   type="date"
+										   id="dataFim"
+										   name="dataFim"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataFim"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   (keyup.enter)="buscar(true)">
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<label for="tipoStatus" class="">Status:</label>
+								<select name="tipoStatus"
+										id="tipoStatus"
+										class="form-control"
+										[(ngModel)]="parametros.statusLE">
+									<option [ngValue]="undefined">Todos</option>
+									<option value="2">Entregue</option>
+									<option value="3">Aguardando Aprovação</option>
+									<option value="4">Aprovada</option>
+									<option value="5">Bloqueada</option>
+								</select>
+							</div>
+
+							<div class="col-lg-4 form-group" *ngIf="isUsuarioInterno">
+								<label for="analista" class="">Analista:</label>
+								<app-drop-list id="analista"
+												name="analista"
+												placeholder="Todos"
+												servico="AnalistaAtivoLe"
+												[(ngModel)]="parametros.idAnalistaDesignado">
+								</app-drop-list>
+							</div>
+						</div>
+					</form>
+				</article>
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button #btnlimpar class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+
+			<app-consultar-listagem-exportacao-grid [(lista)]="grid.lista"
+								 [(total)]="grid.total"
+								 [(size)]="grid.size"
+								 [(page)]="grid.page"
+								 [(isUsuarioInterno)]="isUsuarioInterno"
+								 [(parametros)]="parametros"
+								 (onChangeSort)="onChangeSort($event)"
+								 (onChangeSize)="onChangeSize($event)"
+								 (onChangePage)="onChangePage($event)">
+			</app-consultar-listagem-exportacao-grid>
+		</div>
+	</div>
+</div>

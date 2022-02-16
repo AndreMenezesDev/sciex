@@ -1,0 +1,107 @@
+<app-grid [(page)]="page" [(size)]="size" [(total)]="total" [(parametros)]="parametros"
+	(onChangeSize)="changeSize($event)" (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="text-center th-100">Ações</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="SituacaoAnalise" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód.
+							Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNcm" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted"
+							(onChangeSort)="changeSort($event)">Coef. Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoUnidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							Unidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoEspecificacaoTecnica" [sorted]="sorted"
+							(onChangeSort)="changeSort($event)">Especificação Técnica</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoPartNumber" [sorted]="sorted"
+							(onChangeSort)="changeSort($event)">Part Number</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Perc
+							Perda(%)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor do
+							Insumo<br>(R$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody *ngIf="total > 0">
+
+				<tr *ngFor="let item of lista">
+					<td class="text-center">
+						<a (click)="abrirModalDetalheInsumo(item)" class="btn btn-default btn-sm" data-toggle="tooltip"
+							title="" data-original-title="Detalhe do Insumo"><i class="fa fa-list"></i>
+						</a>
+						<a *ngIf="!visualizar" (click)="aprovarItem(item)" data-toggle="tooltip" title="Aprovar"
+							data-original-title="Aprovar" class="btn btn-primary btn-sm">
+							<i class="fa fa-check"></i>
+						</a>
+						<a *ngIf="!visualizar" (click)="abrirGlosa(item)" class="btn btn-danger btn-sm"
+							data-toggle="tooltip" title="Reprovar" data-original-title="Reprovar">
+							<i class="fa fa-times"></i>
+						</a>
+						<a *ngIf="visualizar && item.situacaoAnalise == 2" (click)="abrirVisualizarGlosa(item)"
+							class="btn btn-danger btn-sm" data-toggle="tooltip" title="Reprovado"
+							data-original-title="Reprovar">
+							<i class="fa fa-times"></i>
+						</a>
+					</td>
+					<td class="text-left" [ngClass]="{'textGreen':item.situacaoAnalise == 1, 
+												'textRed':item.situacaoAnalise == 2,
+												'textYellow':item.situacaoAnalise == 4 }">
+
+												{{item.situacaoAnalise == 1 ? 'APROVADO' 
+														: item.situacaoAnalise == 2 ? 'REPROVADO'
+														: item.situacaoAnalise == 4 ? 'CORRIGIDO'
+														: '-'}}
+					</td>
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.tipoInsumo}}</td>
+					<td class="text-left">{{item.codigoNcm}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+					<td class="text-left">{{item.valorCoeficienteTecnico}}</td>
+					<td class="text-left">{{item.codigoUnidade}}</td>
+					<td class="text-left">{{item.descricaoEspecificacaoTecnica}}</td>
+					<td class="text-left">{{item.descricaoPartNumber}}</td>
+					<td class="text-left">{{item.valorPercentualPerda}}</td>
+					<td class="text-left">{{item.qtdSomatorioDetalheInsumoFormatada}}</td>
+					<td class="text-left">{{item.valorInsumoFormatada}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-justicar-glosa #appModalJustificativaGlosa ></app-modal-justicar-glosa>
+<app-modal-analise-detalhes-insumo #appModalDetalheInsumo></app-modal-analise-detalhes-insumo>
+<app-modal-justicar-indeferir #modalJustificativaIndeferir></app-modal-justicar-indeferir>

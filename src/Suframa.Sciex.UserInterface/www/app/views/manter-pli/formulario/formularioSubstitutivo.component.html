@@ -1,0 +1,270 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Cadastrar PLI</app-titulo>
+			<app-sub-titulo>{{titulo}} PLI </app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+
+						<a routerLink="/manter-pli" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+						<a routerLink="/manter-pli/{{modelPli.idPLI}}/editarsubstitutivo"  class="btn btn-primary btn-sm" *ngIf="somenteLeitura  && modelPli.codigoPLIStatus < 21"><i class="fa fa-pencil"></i> Editar</a>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="lblTipoPli" class="control-label text-nowrap" [class.required]="!desabilitado">Tipo de PLI:</label>
+								<input id="txtTipoPli"
+									   type="text"
+									   name="descricaoTipoPli"
+									   autocomplete="off"
+									   class="form-control"
+									   disabled="disabled"
+									   [(ngModel)]="descricaoTipoPli" />
+										<!--[readonly]="habilitarCampoCodigo"-->
+							</div>
+							<div class="col-lg-4">
+								<label for="lblNumeroPLI" class="control-label text-nowrap" [class.required]="!desabilitado">Nº PLI:</label>
+								<input type="text"
+									   id="txtNumeroPLI"
+									   name="modelPli.numeroPLIConcatenado"
+									   autocomplete="off"
+									   class="form-control"
+									   disabled="disabled"
+									   [(ngModel)]="modelPli.numeroPLI" />
+
+										<!--[readonly]="habilitarCampoCodigo"-->
+							</div>
+							<div class="col-lg-4">
+								<label for="lblAplicacaoPli" class="control-label text-nowrap" [class.required]="!desabilitado">Aplicação do PLI:</label>
+								<input id="txtAplicacaoPli"
+									   type="text"
+									   name="txtAplicacaoPli"
+									   autocomplete="off"
+									   class="form-control"
+									   disabled="disabled"
+									   [(ngModel)]="modelPli.descricaoAplicacao" />
+
+										<!--[readonly]="habilitarCampoCodigo"-->
+							</div>
+						</div>
+						<div class="line"></div>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="lblSetor" class="control-label text-nowrap" [class.required]="!desabilitado">Setor:</label>
+								<input id="txtSetor"
+									   type="text"
+									   name="txtSetor"
+									   autocomplete="off"
+									   class="form-control"
+									   style="text-transform:uppercase"
+									   disabled="disabled"
+									   [(ngModel)]="modelPli.descricaoSetor" />
+										<!--[readonly]="habilitarCampoCodigo"-->
+							</div>
+							<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="atualizarCPFTecnologia()">
+								<div class="col-lg-4">
+									<label for="lblCPF" class="control-label text-nowrap" [class.required]="!desabilitado">CPF Representante SISCOMEX:</label>
+									<input type="text" [attr.disabled]="somenteLeitura ? '' : null"
+										   id="txtCPF"
+										   name="cpf"
+										   autocomplete="off"
+										   class="form-control"
+										   [(ngModel)]="modelPli.numCPFRepLegalSISCO"
+										   (keyup)="removerHint()"
+										   cpfCnpj="true"
+										   maxlength="14"
+										   #cpf />
+								</div>
+							</form>
+
+							<div class="col-lg-4">
+								<label class="required">LI Referência:</label>
+								<input type="text"
+									   id="txtLiReferencia"
+									   class="form-control"
+									   name="referenciaLI"
+									   autocomplete="off"
+									   [(ngModel)]="modelPli.numeroLIReferencia"
+									   required
+									   [attr.disabled]="true"
+									   #referenciaLI />
+							</div>
+
+						</div>
+					</fieldset>
+					<div class="row m-t-sm form-group">
+						<div class="col-lg-12">
+							<div class="checkbox i-checks">
+								<label>
+									<input id="check" #optioncheckedTA type="checkbox" [attr.disabled]="somenteLeitura ? '' : null"
+										   name="options" /><i></i>	 Dispositivos de tecnologia assistiva
+								</label>
+							</div>
+						</div>
+					</div>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+
+						<a routerLink="/manter-pli" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+						<button class="btn btn-primary btn-sm" (click)="formularioB.onSubmit();" *ngIf="mostrarBotao && modelPli.codigoPLIStatus < 21">Salvar</button>
+						<a routerLink="/manter-pli/{{modelPli.idPLI}}/editarsubstitutivo" class="btn btn-primary btn-sm" *ngIf="somenteLeitura  && modelPli.codigoPLIStatus < 21"><i class="fa fa-pencil"></i> Editar</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>
+							Cancelar
+						</button>
+						<button type="button"
+								disableOnClick
+								class="btn btn-primary btn-sm"
+								(click)="formulario.onSubmit()"
+								*ngIf="!desabilitado">
+							<i class="fa fa-save"></i>
+							Salvar
+						</button>
+					</div>
+					<h2 class="panel-title h5">{{subtituloPainel}}</h2>
+				</header>
+				<article class="panel-body">
+
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="adicionarProduto()">
+
+						<div class="row form-group">
+							<div class="col-lg-12 display-flex">
+
+								<app-drop-list-select2 (valorModificado)="parametros.idProdutoEmpresa = $event"
+													  name="idProduto"
+													   id="idProduto"
+													  servico="ViewProdutoEmpresa"
+													  [isDisabled]="somenteLeitura"
+													  parametro="{{CNPJ}}"
+													  parametroChave="Cnpj"
+													  [placeholder]="somenteLeitura ? '' : 'Informe o código ou a descrição do Produto'"
+													  isCloseNormal="true"
+													  #produto>
+								</app-drop-list-select2>
+
+								<div class="display-flex">
+									<span class="input-group-btn">
+										<button type="button"
+												class="btn btn-primary"
+												data-toggle="tooltip"
+												(click)="adicionarProduto()"
+												title="Incluir Produto" [disabled]="somenteLeitura">
+											<span class="fa fa-check"></span>
+										</button>
+									</span>
+								</div>
+
+							</div>
+						</div>
+
+						<div *ngFor="let item of listaProdutos">
+							<div class="panel-group m-b" id="accordion">
+								<section class="panel panel-default">
+									<header class="panel-heading pos-rlt">
+
+										<a class="accordion-toggle font-bold"
+										   data-toggle="collapse"
+										   data-parent="#accordion"
+										   [href]="'#pli'+item.idPliProduto"
+										   (click)="abrirListaMercadorias(item.idPliProduto)">
+											<i class="fa fa-plus-square-o a" id="{{item.idPliProduto}}"></i>
+											{{item.descricao | uppercase}}
+										</a>
+
+										<div class="collapse-btn-excluir">
+											<div class="pull-right">
+												<span data-toggle="modal" data-target="#ajudaModal" data-backdrop="static" data-keyborad="false">
+													<button [disabled]="somenteLeitura" type="button" (click)="confirmarExclusaoProduto(item)" class="btn btn-sm btn-danger" data-toggle="tooltip" title="" style="margin-top: -4px;" data-original-title="Excluir Produto"><span class="fa fa-trash"></span></button>
+												</span>
+											</div>
+										</div>
+
+									</header>
+
+									<div id="pli{{item.idPliProduto}}" class="panel-collapse collapse">
+										<article class="panel-body">
+											<div class="row form-group">
+												<div class="col-lg-12 display-flex">
+
+													<app-drop-list-select2 (valorModificado)="parametros.idMercadoria = $event"
+																		  name="idMercadoria"
+																		   id="idMercadoria"
+																		  servico="ViewMercadoria"
+																		  [isDisabled]="somenteLeitura"
+																		  [placeholder]="somenteLeitura ? '' : 'Informe o código ou a descrição da Mercadoria'"
+																		  parametro="{{item.codigoProduto}}"
+																		  parametroChave="CodigoProdutoMercadoria"
+																		  parametro1="1"
+																		  parametroChave1="StatusMercadoria"
+																		  isCloseNormal="true"
+																		  #mercadoria>
+													</app-drop-list-select2>
+
+													<div class="display-flex">
+														<span class="input-group-btn">
+															<button type="button"
+																	class="btn btn-primary"
+																	data-toggle="tooltip"
+																	(click)="adicionarMercadoria(item)"
+																	title="Incluir Mercadoria" [disabled]="somenteLeitura">
+																<span class="fa fa-check"></span>
+															</button>
+														</span>
+													</div>
+
+												</div>
+											</div>
+
+											<app-manter-pli-mercadoria-grid [(lista)]="grid.lista"
+																			[(total)]="grid.total"
+																			[(size)]="grid.size"
+																			[(page)]="grid.page"
+																			[(parametros)]="parametros"
+																			(onChangeSize)="onChangeSize($event)"
+																			(onChangePage)="onChangePage($event)"
+																			[(mostrarBotao)]="somenteLeitura">
+											</app-manter-pli-mercadoria-grid>
+
+										</article>
+									</div>
+
+								</section>
+
+							</div>
+						</div>
+
+					</form>
+
+				</article>
+			</section>
+		</div>
+	</div>
+</div>
+
+
+

@@ -1,0 +1,179 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Designar Análises</app-titulo>
+			<app-sub-titulo>Consultar PLI, LE, Plano de Exportação e Solicitações de Alteração no Processo a serem
+				Designados</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+
+				<header class="panel-heading">
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;"
+							(click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+						<div class="row form-group">
+
+							<div class="col-lg-5">
+								<label for="tpPesquisa" class="control-label">Tipo de Pesquisa:</label>
+								<div class="radio i-checks divRadioPliNormal">
+									<label>
+										<input #pli (change)="getSelectedOption()" type="radio" name="radio[custom]"
+											value="1" checked="checked"><i></i> PLI
+									</label>
+								</div>
+								<div class="radio i-checks divRadioPliNormal">
+									<label>
+										<input #le (change)="getSelectedOption()" type="radio" name="radio[custom]"
+											value="2"><i></i> LE
+									</label>
+								</div>
+								<div class="radio i-checks divRadioPliNormal">
+									<label>
+										<input #pe (change)="getSelectedOption()" type="radio" name="radio[custom]"
+											value="3"><i></i> Plano
+									</label>
+								</div>
+								<div class="radio i-checks divRadioPliNormal">
+									<label>
+										<input #solic (change)="getSelectedOption()" type="radio" name="radio[custom]"
+											value="4"><i></i> Solicitação de Alteração no Processo
+									</label>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-2">
+								<div class="form-group">
+									<label for="txInscricaoCadastral" class="control-label">Inscrição Cadastral:</label>
+									<input #inscricaoCadastral type="text" id="txtInscricaoCadastral"
+										class="form-control" name="inscricaoCadastral" maxlength="9"
+										[(ngModel)]="parametros.inscricaoCadastral" onlyNumber="true"
+										(keyup.enter)="buscar(true)" />
+								</div>
+							</div>
+							<div class="col-lg-10">
+								<label for="txtEmpresa" class="control-label">Empresa:</label>
+								<input #empresa type="text" id="txtEmpresa" class="form-control" maxlength="60"
+									name="empresa" [(ngModel)]="parametros.razaoSocial" (keyup.enter)="buscar(true)"
+									inputTextFilter="true" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="form-group" *ngIf="isPli">
+									<label for="npli" class="control-label">Nº PLI:</label>
+									<input #npli type="text" id="npli" class="form-control" name="npli" maxlength="11"
+										autocomplete="off" placeholder="aaaa/nnnnnn" formatarNumeroPli="true"
+										[(ngModel)]="parametros.numero" (keyup.enter)="buscar(true)" />
+								</div>
+								<div class="form-group" *ngIf="isLe">
+									<label for="codigoProduto" class="control-label">Código Produto:</label>
+									<input #codigoProduto type="text" id="codigoProduto" class="form-control"
+										name="codigoProduto" autocomplete="off" [(ngModel)]="parametros.codigoProduto"
+										(keyup.enter)="buscar(true)" />
+								</div>
+								<div class="form-group" *ngIf="isPlano">
+									<label for="numeroPlano" class="control-label">Nº Plano:</label>
+									<input #plano type="text" name="numeroPlano" id="numeroPlano" class="form-control"
+										placeholder="_____/aaaa" maxlength="11" mask-number [mask]="'99999/9999'"
+										[(ngModel)]="parametros.numeroAnoPlanoFormatado" />
+								</div>
+								<div class="col-lg-6 form-group" *ngIf="isSolic">
+									<label for="" class="control-label">Nº da Solicitação:</label>
+										<input name="numSolic" type="text" class="form-control" placeholder="nnnnn/aaaa"
+											maxlength="11" mask-number [mask]="'99999/9999'"
+											[(ngModel)]="parametros.numeroAnoSolicitacao">
+								</div>
+								<div class="col-lg-6 form-group" *ngIf="isSolic">
+									<label for="" class="control-label">Nº do Processo:</label>
+										<input name="numProc" type="text" class="form-control" placeholder="nnnn/aaaa"
+											maxlength="10" mask-number [mask]="'9999/9999'"
+											[(ngModel)]="parametros.numeroAnoProcesso">
+								</div>
+
+							</div>
+
+							<div class="col-lg-6">
+								<div class="col-lg-6">
+									<label for="dataorigem">Período de Entrega:</label>
+									<div class="input-group" style="display: flex;">
+										<input #dataEnvioInicial type="date" id="dataInicial" min="0001-01-01"
+											max="9999-12-31" name="dataInicio" [(ngModel)]="parametros.dataInicio"
+											class="form-control date" style="width: 50%;" maxlength="10"
+											autocomplete="off" (keyup.enter)="buscar(true)">
+
+										<span class="text-center"
+											style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+										<input #dataEnvioFinal type="date" id="dataFim" name="dataFim" min="0001-01-01"
+											max="9999-12-31" [(ngModel)]="parametros.dataFim" class="form-control date"
+											style="width: 50%;" maxlength="10" autocomplete="off"
+											(keyup.enter)="buscar(true)">
+									</div>
+								</div>
+								<div class="col-lg-6 form-group" *ngIf="isPli">
+									<label for="analista" class="">Analista:</label>
+										<app-drop-list id="analista" name="analista" placeholder="Todos"
+											servico="AnalistaAtivo" [(ngModel)]="parametros.idAnalistaDesignado">
+										</app-drop-list>
+								</div>
+								<div class="col-lg-6 form-group" *ngIf="isLe">
+									<label for="analista" class="">Analista:</label>
+									<app-drop-list id="analista" name="analista" placeholder="Todos"
+										servico="AnalistaAtivoLe" [(ngModel)]="parametros.idAnalistaDesignado">
+									</app-drop-list>
+								</div>
+								<div class="col-lg-6 form-group" *ngIf="isPlano || isSolic">
+									<label for="analista" class="">Analista:</label>
+									<app-drop-list id="analista" name="analista" placeholder="Todos"
+										servico="AnalistaAtivoPlano" [(ngModel)]="parametros.idAnalistaDesignado">
+									</app-drop-list>
+								</div>
+							</div>
+
+						</div>
+					</form>
+
+				</article>
+
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix"
+					style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick
+							(click)="$event.preventDefault(); buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button class="btn btn-sm btn-default" type="reset" (click)=" limpar()"><i
+								class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()"
+							style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section [hidden]="ocultarGrid" class="panel panel-default">
+
+				<app-designar-pli-grid [(lista)]="grid.lista" [(total)]="grid.total" [(size)]="grid.size"
+					[(page)]="grid.page" [(isPli)]="isPli" [(isLe)]="isLe" [(isPlano)]="isPlano" [(isSolic)]="isSolic"
+					[(parametros)]="parametros" (retornoDesignar)="designar()" (onChangeSort)="onChangeSort($event)"
+					(onChangeSize)="onChangeSize($event)" (onChangePage)="onChangePage($event)">
+				</app-designar-pli-grid>
+
+			</section>
+		</div>
+	</div>
+</div>
+
+<app-modal-designar-analista #appModalDesignarAnalista></app-modal-designar-analista>

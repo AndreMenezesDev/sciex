@@ -1,0 +1,176 @@
+<app-grid
+	[(page)]="page"
+	[(size)]="size"
+	[(total)]="total"
+	[(parametros)]="parametros"
+	(onChangeSize)="changeSize($event)"
+	(onChangePage)="changePage($event)"
+>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="text-center th-100">Ações</th>
+					<th class="th-sortable">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="CodigoNcm" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted" (onChangeSort)="changeSort($event)">Coef. Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="CodigoUnidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Unidade</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="DescricaoEspecificacaoTecnica" [sorted]="sorted" (onChangeSort)="changeSort($event)">Especificação Técnica</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="DescricaoPartNumber" [sorted]="sorted" (onChangeSort)="changeSort($event)">Part Number</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorPercentualPerda" [sorted]="sorted" (onChangeSort)="changeSort($event)">Perc Perda(%)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="QuantidadeAprovado" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Aprovada</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="QuantidadeComp" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Comprovada</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarAprovado" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Aprovado (US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarComp" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Comprovado (US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="QuantidadeSaldo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Saldo</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarSaldo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Saldo (US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarFOBAprovado" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Aprovado FOB(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarCFRAprovado" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Aprovado CFR(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="QuantidadeAdicional" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Adicional</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorAdicional" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Adicional(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorAdicionalFrete" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Frete(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="StatusInsumoNovo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Insumo Novo</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr *ngFor="let item of lista">
+
+					<td class="text-center">
+
+						<a
+							*ngIf="item.statusInsumo != emAlteracao"
+							routerLink="/manter-plano-exportacao-detalhes-insumos-acompanhar/{{item.idInsumo}}/detalhe-importado-visualizar"
+						 	class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							title=""
+							data-original-title="Detalhe do Insumo">
+								<i class="fa fa-list"></i>
+						</a>
+
+						<a
+							*ngIf="item.statusInsumo != emAlteracao && dadosSolicitacao != null"
+							(click)="abrirModalTransferenciaInsumo(item)"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							title=""
+							data-original-title="Transferência de Insumo">
+								<i class="i i-shuffle"></i>
+						</a>
+
+						<a  *ngIf="!(item.statusInsumoNovo === 1)"
+							(click)="abrirModalVisualizarSolicitacaoDetalhada(item)"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							title=""
+							data-original-title="Cálculo">
+								<i class="fa fa-money"></i>
+						</a>
+
+						<a
+							*ngIf="(item.statusInsumoNovo === 1)"
+							routerLink="/manter-plano-exportacao-detalhes/{{item.idInsumo}}/editar-detalhe-insumos-novo"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							title=""
+							data-original-title="Editar Insumo">
+								<i class="fa fa-edit"></i>
+						</a>
+
+						<a
+							*ngIf="(item.statusInsumo == emAlteracao && (item.statusInsumoNovo !== 1))"
+							routerLink="/manter-plano-exportacao-detalhes/{{item.idInsumo}}/analisar-detalhe-insumos"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							title=""
+							data-original-title="Editar Insumo">
+								<i class="fa fa-edit"></i>
+						</a>
+
+						<a
+							*ngIf="item.statusInsumo == emAlteracao"
+							(click)="deletarInsumo(item)"
+							class="btn btn-danger btn-sm"
+							data-toggle="tooltip"
+							title="Deletar Insumo"
+							data-original-title="Excluir insumo novo em alteração">
+								<i class="fa fa-trash"></i>
+						</a>
+
+					</td>
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.tipoInsumo}}</td>
+					<td class="text-left">{{item.codigoNCM}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+					<td class="text-left">{{item.valorCoeficienteTecnico}}</td>
+					<td class="text-left">{{item.descCodigoUnidade}}</td>
+					<td class="text-left">{{item.descricaoEspecificacaoTecnica}}</td>
+					<td class="text-left">{{item.descricaoPartNumber}}</td>
+					<td class="text-left">{{(item.valorPercentualPerda == null || item.valorPercentualPerda == 0) ? 0 : item.valorPercentualPerda | number : '1.1-1'}}</td>
+					<td class="text-left">{{(item.quantidadeAprovado == null || item.quantidadeAprovado == 0) ? '0,0000000' : item.quantidadeAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.quantidadeComp == null || item.quantidadeComp == 0) ? '0,0000000' : item.quantidadeComp | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorDolarAprovado == null || item.valorDolarAprovado == 0) ? '0,0000000' : item.valorDolarAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorDolarComp == null || item.valorDolarComp == 0) ? '0,0000000' : item.valorDolarComp | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.quantidadeSaldo == null || item.quantidadeSaldo == 0) ? '0,0000000' : item.quantidadeSaldo | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorDolarSaldo == null || item.valorDolarSaldo == 0) ? '0,0000000' : item.valorDolarSaldo | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorDolarFOBAprovado == null || item.valorDolarFOBAprovado == 0) ? '0,0000000' : item.valorDolarFOBAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorDolarCFRAprovado == null || item.valorDolarCFRAprovado == 0) ? '0,0000000' : item.valorDolarCFRAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.quantidadeAdicional == null || item.quantidadeAdicional == 0) ? '0,0000000' : item.quantidadeAdicional | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorAdicional == null || item.valorAdicional == 0) ? '0,0000000' : item.valorAdicional | number : '1.7-7'}}</td>
+					<td class="text-left">{{(item.valorAdicionalFrete == null || item.valorAdicionalFrete == 0) ? '0,0000000' : item.valorAdicionalFrete | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.isNovoRegistro}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-modal-detalhes-insumo #appModalDetalheInsumo></app-modal-detalhes-insumo>
+<app-modal-transferencia-insumo #appModalTransferenciaInsumo></app-modal-transferencia-insumo>
+<app-modal-solicitacao-detalhada #ModalSolicitacaoDetalhada></app-modal-solicitacao-detalhada>

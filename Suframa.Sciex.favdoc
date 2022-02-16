@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Favorites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <folders>
+    <Folder>
+      <name>SCIEX</name>
+      <folders />
+      <favorites>
+        <Favorite>
+          <name>AssemblyInfo.cs</name>
+          <path>src\Suframa.Sciex.ApplicationService\Properties\AssemblyInfo.cs</path>
+          <absolutePath>D:\LamppIT\Git\projetos\sciex\sciex\src\Suframa.Sciex.ApplicationService\Properties\AssemblyInfo.cs</absolutePath>
+        </Favorite>
+        <Favorite>
+          <name>connectionStrings.config</name>
+          <path>connectionStrings.config</path>
+          <absolutePath>D:\LamppIT\Git\projetos\sciex\sciex\connectionStrings.config</absolutePath>
+          <position>
+            <line>15</line>
+            <column>21</column>
+            <lineHash>1yDhqe/LVfUwlRWRkaXl4tDu4XXBDbwMQXfsk6MDqtw=</lineHash>
+          </position>
+        </Favorite>
+      </favorites>
+    </Folder>
+  </folders>
+  <favorites />
+</Favorites>

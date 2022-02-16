@@ -1,0 +1,50 @@
+<app-grid 
+		  [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<!-- <th class="th-100 text-left">Ações</th> -->
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="DescricaoPlanoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Ações</app-ordenacao>
+					</th>	
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="DescricaoStatus" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status da Análise</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="Data" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo de Alteração</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="DataValidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">De</app-ordenacao>
+					</th>						
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="DescricaoPlanoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">PARA</app-ordenacao>
+					</th>				
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="DescricaoPlanoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista</app-ordenacao>
+					</th>				
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="DescricaoPlanoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Justificativa</app-ordenacao>
+					</th>	
+				</tr>
+			</thead>
+			<tbody>				
+				<tr *ngFor="let item of lista">
+					<td class="text-left">    </td>
+					<td class="text-left">    </td>
+					<td class="text-left">    </td>
+					<td class="text-left">    </td>
+					<td class="text-left">    </td>
+					<td class="text-left">    </td>
+					<td class="text-left">    </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

@@ -1,0 +1,100 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+
+	<div class="e row">
+		<div class="col-lg-12">
+			<section class="panel panel-default m-t">
+				<header class="panel-heading FixPanelHeading">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+					<h2 class="panel-title h5">Mercadorias do PLI</h2>
+				</header>
+				<form class="form" role="form">
+					<article class="panel-body text-sm">
+
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="alert alert-success" style="background-color: #e2f7ff; border-color: #196684; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+									Dados do PLI <span class="fa fa-long-arrow-right"></span> Lista de Mercadorias
+								</div>
+							</div>
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4" style="color: #234884;">
+								<label class="m-r-xs">Nº PLI:</label><span>{{model.numeroPliConcatenado}}</span>
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">QTD de Mercadorias:</label><span>{{model.quantidadeMercadorias}}</span>
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Valor Total em Dólar:</label><span class="pull-right">{{model.valorTotalDolarMercadorias}}</span>
+							</div>
+
+						</div>
+
+						<div class="row form-group col-lg-12">
+
+							<div class="col-lg-7">
+								<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{model.cnpj}} | {{model.razaoSocial}}</span>
+							</div>
+
+							<div class="col-lg-1">
+
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Valor Total em Real:</label><span class="pull-right">{{model.valorTotalRealMercadorias}}</span>
+							</div>
+
+						</div>
+
+						<div class="row form-group col-lg-12">
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Débito:</label><span>{{model.descricaoDebito}}</span>
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Situação:</label><span>{{model.situacao}}</span>
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Valor TCIF:</label><span class="pull-right">{{model.descricaoValorGeralTcif}}</span>
+							</div>
+
+						</div>
+
+						<div class="row"></div>
+
+						<div class="row">
+							<div class="col-lg-12">
+
+								<app-manter-pli-consultar-mercadoria-grid [(lista)]="grid.lista"
+																		  [(total)]="grid.total"
+																		  [(size)]="grid.size"
+																		  [(page)]="grid.page"
+																		  [(parametros)]="parametros"
+																		  #gridMercadoriaPli>
+								</app-manter-pli-consultar-mercadoria-grid>
+							</div>
+						</div>
+					</article>
+					<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+						<div class="pull-right">
+							<a (click)="voltar()" class="btn btn-default btn-sm">
+								<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+							</a>
+						</div>
+					</footer>
+				</form>
+			</section>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,51 @@
+<app-grid [isHideCabecalho]="true"
+		  [isHidePaginacao]="true"
+		  [(page)]="page"
+		  [(total)]="total"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive text-sm">
+		<table class="table text-nowrap m-n b-t b-light">
+			<thead style="background-color: #00552b; color: white;">
+				<tr>
+					<th class="th-sortable">
+						<app-ordenacao field="Papel.Descricao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Papel</app-ordenacao>
+					</th>
+
+					<th class="th-sortable">
+						<app-ordenacao field="UsuarioInterno.Nome" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nome Usuário</app-ordenacao>
+					</th>
+
+					<th class="th-sortable text-center">
+						<app-ordenacao field="UsuarioInterno.Cpf" [sorted]="sorted" (onChangeSort)="changeSort($event)">CPF</app-ordenacao>
+					</th>
+
+					<th class="text-center">Qtd. Protocolos</th>
+
+					<th class="th-sortable text-center">
+						<app-ordenacao field="IsAtivo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+
+					<th class="text-center">Excluir</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of lista; let index = index;"
+					[ngClass]="getColorClass(index)">
+					<td>{{item.papel}}</td>
+					<td>{{item.nome}}</td>
+					<td class="text-center">{{item.cpf}}</td>
+					<td class="text-center">{{item.quantidadeProtocolos}}</td>
+					<td class="text-center">
+						<a *ngIf="item.isAtivo" class="btn btn-sm btn-success" disableOnClick (click)="ativarInativar(item)"><span class="fa fa-check"></span> Ativo</a>
+						<a *ngIf="!item.isAtivo" class="btn btn-sm btn-danger" disableOnClick (click)="ativarInativar(item)"><span class="fa fa-times"></span> Inativo</a>
+					</td>
+					<td class="text-center">
+						<a class="btn btn-sm btn-danger" data-toggle="tooltip" title="" data-original-title="Excluir" disableOnClick (click)="excluir(item)"><span class="fa fa-trash"></span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

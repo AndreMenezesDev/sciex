@@ -1,0 +1,163 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Manter NCM de Exceção</app-titulo>
+			<app-sub-titulo>Consultar NCM de Exceção</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+
+				<header class="panel-heading">
+					<div [hidden]="ocultarFiltro" class="pull-right">
+						<a routerLink="/manter-ncm-excecao/cadastrar" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Novo</a>
+					</div>
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+
+						<div class="row">
+							<div class="col-lg-2">
+								<div class="form-group">
+									<label for="txtCodigo" class="control-label">Código:</label>
+									<input #codigo
+												 type="text"
+												 id="txtCodigo"
+												 class="form-control"
+												 name="codigo"
+												 maxlength="10"
+												 mascararNCM="true"
+												 (keyup.enter)="buscar(true, false)" />
+								</div>
+							</div>
+							<div class="col-lg-10">
+								<label for="txtDescricao" class="control-label">Descrição:</label>
+								<input #descricao
+									type="text"
+									id="txtDescricao"
+									class="form-control"
+									maxlength="120"
+									name="descricao"
+									(keyup.enter)="buscar(true, false)"
+									inputTextFilter="true" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="municipio" class="">Municipio:</label>
+								<!-- <app-drop-list-select (valorModificado)="parametros.Descricao = $event"
+																			name="parametros.descricaoMunicipio"
+																			servico="Municipio"
+																			[selMinimumInputLength]="3"
+																			placeholder="Selecione uma opção"
+																			[(ngModel)]="parametros.Descricao"
+																			#municipio>
+								</app-drop-list-select> -->
+								    <app-drop-list-select (valorModificado)="parametros.Descricao = $event"
+														  (limparObjetosAuxiliares)="parametros.CodigoNCM = $event"
+														  name="codigoMunicipio"
+														  [isRequired]="false"
+														  servico="Municipio"
+														  [selMinimumInputLength]="3"
+														  placeholder="Informe o Municipio"
+														  #municipio>
+									</app-drop-list-select>
+							</div>
+							<div class="col-lg-4">
+								<label for="txtSetor">Setor:</label>
+								<app-drop-list name="setor"
+															 placeholder="Selecione uma opção"
+															 [(ngModel)]="parametros.codigoSetor"
+															 servico="ViewSetor"
+															 #setor>
+								</app-drop-list>
+							</div>
+						</div>
+						<div class="line"></div>
+						<div class="row form-group">
+							<div class="col-lg-4">
+								<label for="dataorigem">Início da vigência:</label>
+								<div class="input-group" style="display: flex;">
+									<input #dataInicio
+												 type="date"
+												 id="dataInicial"
+												 min="0001-01-01" max="9999-12-31"
+												 name="dataInicio" [(ngModel)]="parametros.dataInicio"
+												 class="form-control date"
+												 style="width: 50%;"
+												 maxlength="10"
+												 autocomplete="off"
+												(keyup.enter)="buscar(true, false)">
+
+									<span class="text-center" style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+									<input #dataFim
+												 type="date"
+												 id="dataFim"
+												 name="dataFim"
+												 min="0001-01-01" max="9999-12-31"
+												 [(ngModel)]="parametros.dataFim"
+												 class="form-control date"
+												 style="width: 50%;"
+												 maxlength="10"
+												 autocomplete="off"
+												(keyup.enter)="buscar(true, false)">
+								</div>
+							</div>
+
+							<div class="col-lg-5">
+								<div class="form-group">
+									<label for="status" class="control-label">Status:</label>
+									<div class="radio i-checks" style="margin-right: 1px;">
+										<label>
+											<input #todos type="radio" name="radio[custom]" value="1" checked="checked"><i></i> Todos
+										</label>
+										<label>
+											<input #ativo type="radio" name="radio[custom]" value="1"><i></i> Ativo
+										</label>
+										<label>
+											<input #inativo type="radio" name="radio[custom]" value="1"><i></i> Inativo
+										</label>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</form>
+
+				</article>
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar(true, false)"><i class="fa fa-search"></i> Buscar</button>
+						<button class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section [hidden]="ocultarGrid" class="panel panel-default">
+
+				<app-manter-ncm-excecao-grid [(lista)]="grid.lista"
+						   [(total)]="grid.total"
+						   [(size)]="grid.size"
+						   [(page)]="grid.page"
+						   [(parametros)]="parametros"
+						   (onChangeSort)="onChangeSort($event)"
+						   (onChangeSize)="onChangeSize($event)"
+						   (onChangePage)="onChangePage($event)">
+				</app-manter-ncm-excecao-grid>
+
+			</section>
+		</div>
+
+	</div>
+</div>

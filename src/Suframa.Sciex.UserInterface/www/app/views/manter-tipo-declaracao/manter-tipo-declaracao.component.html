@@ -1,0 +1,95 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Manter Tipo de Declaração</app-titulo>
+			<app-sub-titulo>Consultar Tipo de Declaração</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div [hidden]="ocultarFiltro" class="pull-right">
+						<a routerLink="/manter-tipo-declaracao/cadastrar" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Novo</a>
+					</div>
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+
+						<div class="row form-group">
+							<div class="col-lg-1">
+								<div class="form-group">
+									<label for="txtCodigo" class="control-label">Código:</label>
+									<input #codigo
+										   type="text"
+										   id="txtCodigo"
+										   class="form-control"
+										   name="codigo"
+										   maxlength="2"
+										   onlyNumber="true"
+										   (keyup.enter)="buscar(true)" />
+								</div>
+							</div>
+							<div class="col-lg-11">
+								<label for="txtDescricao" class="control-label">Descrição:</label>
+								<input #descricao
+									   type="text"
+									   id="txtDescricao"
+									   class="form-control"
+									   maxlength="200"
+									   name="descricao"
+									   (keyup.enter)="buscar(true)"
+									   inputTextFilter="true" />
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="col-lg-7">
+								<div class="form-group">
+									<label for="status" class="control-label">Status:</label>
+									<div class="radio i-checks" style="margin-right: 0px;">
+										<label>
+											<input #todos type="radio" name="radio[custom]" value="1" checked="checked"><i></i> Todos
+										</label>
+										<label>
+											<input #ativo type="radio" name="radio[custom]" value="1"><i></i> Ativo
+										</label>
+										<label>
+											<input #inativo type="radio" name="radio[custom]" value="1"><i></i> Inativo
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</article>
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12" [hidden]="ocultarGrid">
+
+			<app-manter-tipo-declaracao-grid [(lista)]="grid.lista"
+										  [(total)]="grid.total"
+										  [(size)]="grid.size"
+										  [(page)]="grid.page"
+										  [(parametros)]="parametros"
+										  (onChangeSort)="onChangeSort($event)"
+										  (onChangeSize)="onChangeSize($event)"
+										  (onChangePage)="onChangePage($event)">
+			</app-manter-tipo-declaracao-grid>
+
+		</div>
+	</div>
+</div>

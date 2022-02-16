@@ -1,0 +1,231 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Propriedade do Produto</app-titulo>
+			<app-sub-titulo>Informações do Produto do Plano </app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i>
+							Voltar</a>
+					</div>
+					<h2 class="panel-title h5">Dados do Produto</h2>
+				</header>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-2">
+								<label for="codigoProdutoExportacao" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Prod. Exportação:</label>
+								<input id="codigoProdutoExportacao" type="text" name="codigoProdutoExportacao" autocomplete="off"
+									class="form-control" disabled="disabled"
+									[(ngModel)]="modelProduto.codigoProdutoExportacao" />
+							</div>
+							<div class="col-lg-10">
+								<label for="codigoProdutoSuframa" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Descrição:</label>
+								<input type="text" id="codigoProdutoSuframa" name="codigoProdutoSuframa"
+									autocomplete="off" class="form-control" disabled="disabled"
+									[(ngModel)]="modelProduto.descCodigoProdutoSuframa" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="codigoTipoProduto" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Tipo:</label>
+								<input id="codigoTipoProduto" type="text" name="codigoTipoProduto" autocomplete="off"
+									class="form-control" disabled="disabled"
+									[(ngModel)]="modelProduto.descCodigoTipoProduto" />
+							</div>
+							<div class="col-lg-4">
+								<label for="codigoNCM" class="control-label text-nowrap"
+									[class.required]="!desabilitado">NCM:</label>
+								<input type="text" id="codigoNCM" name="codigoNCM"
+									autocomplete="off" class="form-control" disabled="disabled"
+									[(ngModel)]="modelProduto.codigoNCM" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="descricaoModelo" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Modelo:</label>
+								<input id="descricaoModelo" type="text" name="descricaoModelo" autocomplete="off"
+									class="form-control" disabled="disabled"
+									[(ngModel)]="modelProduto.descricaoModelo" />
+							</div>
+							<div class="col-lg-4">
+								<label for="codigoUnidade" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Unidade:</label>
+								<input type="text" id="codigoUnidade" name="codigoUnidade"
+									autocomplete="off" class="form-control" disabled="disabled"
+									[(ngModel)]="modelProduto.descCodigoUnidade" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3">
+								<label for="numeroPlano" class="control-label text-nowrap"
+									[class.required]="!desabilitado">N° Plano:</label>
+								<input id="numeroPlano" type="text" name="numeroPlano" autocomplete="off"
+									class="form-control" disabled="disabled"
+									[(ngModel)]="modelPE.numeroAnoPlanoFormatado" />
+							</div>
+							<div class="col-lg-3">
+								<label for="descricaoModalidade" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Modalidade:</label>
+								<input type="text" id="descricaoModalidade" name="descricaoModalidade"
+									autocomplete="off" class="form-control" disabled="disabled"
+									[(ngModel)]="modelPE.tipoModalidadeString" />
+							</div>
+							<div class="col-lg-3">
+								<label for="descricaoTipo" class="control-label text-nowrap"
+									[class.required]="!desabilitado">Tipo:</label>
+								<input id="descricaoTipo" type="text" name="descricaoTipo" autocomplete="off"
+									class="form-control" disabled="disabled" [(ngModel)]="modelPE.tipoExportacaoString" />
+							</div>
+						</div>
+					</fieldset>
+				</article>
+			</section>
+		</div>
+
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<h2 class="panel-title h5">Dados da Exportação</h2>
+				</header>
+				<div class="row form-group">
+					<div class="col-lg-12" style="width: 97%;">
+						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
+							<legend style="width: auto; border: 0;">Valores de Exportação</legend>
+							<div class="row form-group">
+								<div class="col-lg-4">
+									<label>Quantidade Total:</label>
+									<div class="ds-flex">
+										<input type="text" class="form-control" [(ngModel)]="modelProduto.qtdFormatado" disabled />
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<label>Valor Total(US$):</label>
+									<div class="ds-flex">
+										<input type="text" class="form-control" [(ngModel)]="modelProduto.valorDolarFormatado" disabled />
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+
+				
+				<div class="row form-group" >
+					
+					<div class="col-lg-12" style="width: 97%;">
+						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
+							<legend style="width: auto; border: 0;">País de Destino</legend>
+							<div class="row has-error" *ngIf="validar">
+								<label for="status" class="control-label" style="display: flex; justify-content: center;">Necessário cadastro de no mínimo 1 registro</label>
+							</div>
+							<div class="row form-group" [ngClass]="{'has-error': validar }">
+								<div class="col-lg-4">
+									<label>País:</label>
+									<app-drop-list-select2 (valorModificado)="parametros.codigoPais = $event"
+															name="pais"
+															servico="Pais"
+															[(ngModel)]="parametros.codigoPais"
+															[isDisabled]="somenteLeitura"
+															[placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+															#pais>
+									</app-drop-list-select2>
+								</div>
+								<div class="col-lg-3">
+									<label>Quantidade Total:</label>
+									<div class="ds-flex">
+										<input id="quantidade" name="quantidade"
+										type="text" class="form-control" 
+										maxlength="14"
+										formatar-numero-decimal5 [prefix]="' '"
+										placeholder="0.00000"
+										[readonly]="somenteLeitura" [(ngModel)]="parametros.quantidade"/>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<label>Valor Total(US$):</label>
+									<div class="ds-flex">
+										<input id="valorTotal" name="valorTotal"
+										 type="text" class="form-control" 
+										[readonly]="somenteLeitura" [(ngModel)]="parametros.valorDolar"
+										maxlength="15"
+										formatar-numero [prefix]="' '"
+										placeholder="0.00"
+										/>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="pull-right m-b">
+								<button (click)="incluirPais()" *ngIf="!somenteLeitura" type="button" class="btn btn-sm btn-primary"><span class="fa fa-plus m-r-xs"></span>Incluir Item na Lista</button>
+							</div>
+							<form>
+								<article class="panel-body">
+									<div class="row">
+										<table class="table table-striped">
+											<thead class="table-header-color">
+												<tr>
+													<th class="th-sortable unset-nowrap">
+														<app-ordenacao field="NumeroPlano" [sorted]="sorted" (onChangeSort)="changeSort($event)">País Destino</app-ordenacao>
+													</th>					
+													<th class="th-sortable unset-nowrap">
+														<app-ordenacao field="TipoModalidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+													</th>
+													<th class="th-sortable unset-nowrap">
+														<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor (US$)</app-ordenacao>
+													</th>
+													<th class="text-center th-100" *ngIf="!somenteLeitura">Ações</th>
+												</tr>
+											</thead>
+								
+											<tbody *ngIf="totalpais != 0">
+												<tr *ngFor="let item of listaPais">
+													<td class="text-left">{{item.descricaoPais}}</td>
+													<td class="text-left" formatar-numero="true">{{item.quantidadeFormatado}}</td>
+													<td class="text-left" formatar-numero="true">{{item.valorDolarFormatado}}</td>
+													<td class="text-center" *ngIf="!somenteLeitura">
+														<a (click)="abrirModalAlterar(item)"   class="btn btn-default btn-sm" 
+														data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i>
+														</a>
+														<a  (click)="confirmarExclusaoPais(item)"  
+														class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir"><i class="fa fa-trash-o"></i>
+														</a>
+													</td>
+												</tr>
+											</tbody>
+											<tbody *ngIf="totalpais == 0">
+												<td colspan="4" class="text-center" style="font-weight: bold;">Nenhum registro encontrado.</td>
+											</tbody>
+
+										</table>
+									</div>
+								</article>
+							</form>
+						</fieldset>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+			<div class="pull-right">
+				<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i>
+					Voltar</a>
+			</div>
+		</footer>
+	</div>
+</div>
+
+<app-modal-alterar-pais #appModalAlterarPais></app-modal-alterar-pais>

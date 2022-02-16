@@ -1,0 +1,39 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="localErro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Local do Erro</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="mensagemErro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Mensagem de Erro</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="origemErro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Origem do Erro</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody class="text-sm">
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="unset-nowrap text-center">
+						<span *ngIf="item.codigoNivelErro == 1 ">DI</span>
+						<span *ngIf="item.codigoNivelErro == 2 ">ADIÇÃO</span>
+					</td>
+					<td class="unset-nowrap text-left">{{item.descricao}}</td>
+					<td class="unset-nowrap text-left">{{item.origemErro}}</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+</app-grid>

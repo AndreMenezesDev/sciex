@@ -1,0 +1,77 @@
+<div #appModalParecer class="modal fade in" tabindex="-1" role="dialog" aria-hidden="true"
+	style=" display: none; overflow: auto">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white">
+				<h4 class="modal-title" id="modalParecer">Parecer Técnico do Plano</h4>
+			</div>
+			<div class="modal-body">
+				<section class="panel panel-default">
+					<header class="panel-heading">
+						<div [hidden]="!ocultarFiltro" class="pull-right">
+							<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;"
+								(click)="ocultar()">
+								<span class="fa fa-magic m-r-xs"></span>Exibir Filtros
+							</button>
+						</div>
+						<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+					</header>
+					<article [hidden]="ocultarFiltro" class="panel-body">
+						<form>
+							<article class="panel-body">
+								<div class="row form-group">
+									<div class="row">
+										<div class="col-lg-8" style="margin-left: 15px;">
+											<label>Escolha o tipo de Parecer Técnico a se visualizado:</label>
+											<select name="tipoStatus" id="tipoStatus" class="form-control"
+												[(ngModel)]="parametros.tipoStatus">
+												<option [ngValue]="undefined">TODOS</option>
+												<option value="AP">Aprovação</option>
+												<option value="AL">Alteração</option>
+												<option value="CA">Cancelamento</option>
+											</select>
+										</div>
+										<div class="col-lg-5" style="margin-left: 15px;">
+											<label for="numeroControle" class="">Nº de Controle:</label>
+											<input type="text" name="numeroControle" id="numeroControle"
+												class="form-control" placeholder="____/AAAA" maxlength="9" mask-number
+												[mask]="'9999/9999'" [(ngModel)]="parametros.numeroControleString" />
+										</div>
+									</div>
+								</div>
+							</article>
+						</form>
+					</article>
+					<footer [hidden]="ocultarFiltro" class="panel-footer clearfix"
+						style="padding-top: 5px; padding-bottom: 5px;">
+						<div class="pull-right">
+							<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar()"><i
+									class="fa fa-search"></i> Buscar</button>
+							<button #btnlimpar class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i
+									class="fa fa-eraser"></i> Limpar</button>
+							<button type="button" class="btn btn-sm btn-default" (click)="ocultar()"
+								style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar
+								Filtros</button>
+						</div>
+					</footer>
+				</section>
+				<div class="row">
+					<div class="col-lg-12">
+						<app-grid-modal-parecer-tec [(lista)]="grid.lista" [(total)]="grid.total" [(size)]="grid.size"
+							[(page)]="grid.page" [(parametros)]="parametros" [(formPai)]="formPai"
+							(onChangeSort)="onChangeSort($event)" (onChangeSize)="onChangeSize($event)"
+							(onChangePage)="onChangePage($event)">
+						</app-grid-modal-parecer-tec>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span
+						class="fa fa-long-arrow-left"></span> Voltar</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalParecerBackground class="modal-backdrop fade in" style="display: none;"></div>

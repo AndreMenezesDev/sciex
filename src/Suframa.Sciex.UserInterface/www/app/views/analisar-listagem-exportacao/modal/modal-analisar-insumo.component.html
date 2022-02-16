@@ -1,0 +1,644 @@
+<div #appModalNovoInsumo id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog" style="
+    max-width: 65%;
+    width: auto !important;
+    margin-top: 10px;
+">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="title">{{path}} Insumo</h4>
+			</div>
+			<div class="modal-body" style="max-height: calc(100vh - 210px);  overflow-y: auto;" *ngIf="!exibirOriginalEAlterado">
+
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+
+					<div class="form-group row">
+						<div class="col-lg-2">
+							<label for="codigoProduto" class="control-label">Código do Insumo:</label>
+						</div>
+						<div class="col-lg-4">
+							<input type="text" id="codigoInsumo" [readonly]="somenteLeitura" class="form-control"
+								name="insumoDesc" [(ngModel)]="parametros.codigoInsumo" />
+
+						</div>
+
+						<div class="col-lg-2" style="text-align: right;">
+							<label for="tipoInsumo" class="">Tipo Insumo:</label>
+						</div>
+						<div class="col-lg-4">
+							<select name="tipoInsumo" id="tipoInsumo" [disabled]="somenteLeitura" class="form-control"
+								[(ngModel)]="parametros.tipoInsumo">
+								<option [ngValue]="undefined">Selecione</option>
+								<option value="P">P - Insumo Padrão</option>
+								<option value="E">E - Insumo Estrangeiro Extra Listagem Padrão</option>
+								<option value="N">N - Nacional</option>
+								<option value="R">R - Regional</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo == null || parametros.tipoInsumo == 1">
+						<div class="col-lg-2">
+							<label for="codigoNcm" class="control-label">NCM do Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<app-drop-list-select2 
+								(valorModificado)="parametros.codigoNCM1 = $event"
+								(onSelected)="selecionaNCM($event)" 
+								name="codigoNcm" 
+								required
+								[isDisabled]="somenteLeitura || parametros.tipoInsumo == null" 
+								servico="ViewMercadoria"
+								[(ngModel)]="parametros.codigoNCM1" 
+								[parametro]="codigoProduto"
+								parametroChave="codigoProdutoMercadoria"
+								[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM1>
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo > 1">
+						<div class="col-lg-2">
+							<label for="codigoNcm" class="control-label">NCM do Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<app-drop-list-select2 (valorModificado)="parametros.codigoNCM2 = $event"
+								(onSelected)="selecionaNCM($event)" name="codigoNcm" required
+								[isDisabled]="somenteLeitura" servico="ViewNcm" [(ngModel)]="parametros.codigoNCM2"
+								[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM2>
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo == null || parametros.tipoInsumo == 1">
+						<div class="col-lg-2">
+							<label for="codigoInsumo" class="control-label">Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<app-drop-list-select2 (valorModificado)="parametros.idInsumo = $event"
+								(onSelected)="selecionaInsumo($event)" name="codigoInsumo" required
+								[isDisabled]="somenteLeitura || parametros.tipoInsumo == null || parametros.codigoNCM1 == null"
+								servico="ViewDetalheMercadoria" [(ngModel)]="parametros.idInsumo"
+								[parametro]="codigoProduto" parametroChave="codigoProduto"
+								[parametro1]="parametros.codigoNCM" parametroChave1="codigoNCMMercadoria"
+								[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoInsumo1>
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo > 1">
+						<div class="col-lg-2">
+							<label for="insumoDesc" class="control-label required">Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="insumoDesc" required
+								[readonly]="somenteLeitura || parametros.codigoNCM2 == null" class="form-control"
+								name="insumoDesc" [(ngModel)]="parametros.descricaoInsumo" maxlength="259"
+								#insumoDesc />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-2">
+							<label for="unidade">Unidade:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" [readonly]="true" id="unidade" class="form-control" name="unidade"
+								[(ngModel)]="parametros.descricaoUnidadeMedida" #unidade />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-2">
+							<label for="coefTec">Coeficiente Técnico:</label>
+						</div>
+						<div class="col-lg-4">
+							<input type="text" required [readonly]="somenteLeitura" id="coefTec" class="form-control"
+								name="coefTec" [(ngModel)]="parametros.valorCoeficienteTecnico" maxlength="255"
+								(blur)="onBlurValidar()" step=".001" #coefTec />
+						</div>
+						<div class="col-lg-2" style="text-align: right;">
+							<label for="partNumber">Part Number:</label>
+						</div>
+						<div class="col-lg-4">
+							<input type="text" required [readonly]="somenteLeitura" id="partNumber" class="form-control"
+								name="partNumber" [(ngModel)]="parametros.codigoPartNumber" maxlength="30"
+								#partNumber />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-3">
+							<label for="especificacaoTecnica">Especificação Técnica:</label>
+						</div>
+						<div class="col-lg-12">
+							<textarea class="form-control ng-pristine ng-valid ng-touched" id="especificacaoTecnica"
+								[readonly]="somenteLeitura" required maxlength="3723"
+								[(ngModel)]="parametros.descricaoEspecTecnica" name="especificacaoTecnica" rows="3">
+							</textarea>
+						</div>
+					</div>
+
+					<div class="form-group row" *ngIf="tipoInsumoAlteracao != 3">
+						<div class="col-lg-4">
+							<div class="radio i-checks" style="margin-right: 0px;">
+								<label class="m-r-md">
+									<input type="radio" name="radio[custom]" value="1"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> Ativo
+								</label>
+								<label>
+									<input type="radio" name="radio[custom]" value="2"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> Inativo
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row" *ngIf="tipoInsumoAlteracao == 3">
+						<div class="col-lg-4">
+							<div class="col-lg-12">
+								<label for="especificacaoTecnica">Aceitar Cancelamento?</label>
+							</div>
+							<div class="col-lg-12 radio i-checks" style="margin-right: 0px;">
+								<label class="m-r-md">
+									<input type="radio" name="radio[custom]" value="1"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> SIM
+								</label>
+								<label>
+									<input type="radio" name="radio[custom]" value="2"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> NÃO
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row" *ngIf="parametros.situacaoInsumo == '2'">
+						<div class="col-lg-3">
+							<label for="especificacaoTecnica">Mensagem de Erro:</label>
+						</div>
+						<div class="col-lg-12">
+							<textarea class="form-control ng-pristine ng-valid ng-touched" id="mensagemErro"
+								maxlength="500" [(ngModel)]="parametros.descricaoErro" name="mensagemErro" rows="3">
+							</textarea>
+						</div>
+					</div>					
+
+				</form>
+			</div>
+
+			<!-- INSUMO DE ALTERACAO -->
+			<div class="modal-body" *ngIf="exibirOriginalEAlterado">
+				<form id="formularioB" 
+				#formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()" 
+				*ngIf="tipoInsumoAlteracao == 1 || (tipoInsumoAlteracao == 3 && !exibirOriginalEAlterado)">
+
+					<div class="form-group row">
+						<div class="col-lg-2">
+							<label for="codigoProduto" class="control-label">Código do Insumo:</label>
+						</div>
+						<div class="col-lg-4">
+							<input type="text" id="codigoInsumo" [readonly]="somenteLeitura" class="form-control"
+								name="insumoDesc" [(ngModel)]="parametros.codigoInsumo" />
+
+						</div>
+
+						<div class="col-lg-2" style="text-align: right;">
+							<label for="tipoInsumo" class="">Tipo Insumo:</label>
+						</div>
+						<div class="col-lg-4">
+							<select name="tipoInsumo" id="tipoInsumo" [disabled]="somenteLeitura" class="form-control"
+								[(ngModel)]="parametros.tipoInsumo">
+								<option [ngValue]="undefined">Selecione</option>
+								<option value="P">P - Insumo Padrão</option>
+								<option value="E">E - Insumo Estrangeiro Extra Listagem Padrão</option>
+								<option value="N">N - Nacional</option>
+								<option value="R">R - Regional</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo == null || parametros.tipoInsumo == 1">
+						<div class="col-lg-2">
+							<label for="codigoNcm" class="control-label">NCM do Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<app-drop-list-select2 (valorModificado)="parametros.codigoNCM1 = $event"
+								(onSelected)="selecionaNCM($event)" name="codigoNcm" required
+								[isDisabled]="somenteLeitura || parametros.tipoInsumo == null" servico="ViewMercadoria"
+								[(ngModel)]="parametros.codigoNCM1" [parametro]="codigoProduto"
+								parametroChave="codigoProdutoMercadoria"
+								[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM1>
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo > 1">
+						<div class="col-lg-2">
+							<label for="codigoNcm" class="control-label">NCM do Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<app-drop-list-select2 (valorModificado)="parametros.codigoNCM2 = $event"
+								(onSelected)="selecionaNCM($event)" name="codigoNcm" required
+								[isDisabled]="somenteLeitura" servico="ViewNcm" [(ngModel)]="parametros.codigoNCM2"
+								[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM2>
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo == null || parametros.tipoInsumo == 1">
+						<div class="col-lg-2">
+							<label for="codigoInsumo" class="control-label">Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<app-drop-list-select2 (valorModificado)="parametros.idInsumo = $event"
+								(onSelected)="selecionaInsumo($event)" name="codigoInsumo" required
+								[isDisabled]="somenteLeitura || parametros.tipoInsumo == null || parametros.codigoNCM1 == null"
+								servico="ViewDetalheMercadoria" [(ngModel)]="parametros.idInsumo"
+								[parametro]="codigoProduto" parametroChave="codigoProduto"
+								[parametro1]="parametros.codigoNCM" parametroChave1="codigoNCMMercadoria"
+								[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoInsumo1>
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="form-group row" *ngIf="parametros.tipoInsumo > 1">
+						<div class="col-lg-2">
+							<label for="insumoDesc" class="control-label required">Insumo:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" id="insumoDesc" required
+								[readonly]="somenteLeitura || parametros.codigoNCM2 == null" class="form-control"
+								name="insumoDesc" [(ngModel)]="parametros.descricaoInsumo" maxlength="259"
+								#insumoDesc />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-2">
+							<label for="unidade">Unidade:</label>
+						</div>
+						<div class="col-lg-10">
+							<input type="text" [readonly]="true" id="unidade" class="form-control" name="unidade"
+								[(ngModel)]="parametros.descricaoUnidadeMedida" #unidade />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-2">
+							<label for="coefTec">Coeficiente Técnico:</label>
+						</div>
+						<div class="col-lg-4">
+							<input type="text" required [readonly]="somenteLeitura" id="coefTec" class="form-control"
+								name="coefTec" [(ngModel)]="parametros.valorCoeficienteTecnico" maxlength="255"
+								(blur)="onBlurValidar()" step=".001" #coefTec />
+						</div>
+						<div class="col-lg-2" style="text-align: right;">
+							<label for="partNumber">Part Number:</label>
+						</div>
+						<div class="col-lg-4">
+							<input type="text" required [readonly]="somenteLeitura" id="partNumber" class="form-control"
+								name="partNumber" [(ngModel)]="parametros.codigoPartNumber" maxlength="30"
+								#partNumber />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-3">
+							<label for="especificacaoTecnica">Especificação Técnica:</label>
+						</div>
+						<div class="col-lg-12">
+							<textarea class="form-control ng-pristine ng-valid ng-touched" id="especificacaoTecnica"
+								[readonly]="somenteLeitura" required maxlength="3723"
+								[(ngModel)]="parametros.descricaoEspecTecnica" name="especificacaoTecnica" rows="3">
+							</textarea>
+						</div>
+					</div>
+
+					<div class="form-group row" *ngIf="tipoInsumoAlteracao == 1">
+						<div class="col-lg-4">
+							<div class="radio i-checks" style="margin-right: 0px;">
+								<label class="m-r-md">
+									<input type="radio" name="radio[custom]" value="1"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> Ativo
+								</label>
+								<label>
+									<input type="radio" name="radio[custom]" value="2"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> Inativo
+								</label>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="form-group row" *ngIf="tipoInsumoAlteracao == 3">
+						<div class="col-lg-4">
+							<div class="col-lg-12">
+								<label for="especificacaoTecnica">Aceitar Cancelamento?</label>
+							</div>
+							<div class="col-lg-12 radio i-checks" style="margin-right: 0px;">
+								<label class="m-r-md">
+									<input type="radio" name="radio[custom]" value="1"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> SIM
+								</label>
+								<label>
+									<input type="radio" name="radio[custom]" value="2"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> NÃO
+								</label>
+							</div>
+						</div>
+					</div> -->
+
+					<div class="form-group row" *ngIf="parametros.situacaoInsumo == '2'">
+						<div class="col-lg-3">
+							<label for="especificacaoTecnica">Mensagem de Erro:</label>
+						</div>
+						<div class="col-lg-12">
+							<textarea class="form-control ng-pristine ng-valid ng-touched" id="mensagemErro"
+								maxlength="500" [(ngModel)]="parametros.descricaoErro" name="mensagemErro" rows="3">
+							</textarea>
+						</div>
+					</div>
+
+				</form>
+
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()" 
+					*ngIf="tipoInsumoAlteracao == 2 || (tipoInsumoAlteracao == 3 && exibirOriginalEAlterado)">
+					<div class="alert alert-success"
+						style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+						Dados Originais
+					</div>
+					<div>
+						<div class="form-group row">
+							<div class="col-lg-2">
+								<label for="codigoProduto1" class="control-label">Código do Insumo:</label>
+							</div>
+							<div class="col-lg-4">
+								<input type="text" id="codigoInsumo1" [readonly]="somenteLeitura" class="form-control"
+									name="insumoDesc" [(ngModel)]="model1.codigoInsumo" />
+
+							</div>
+
+							<div class="col-lg-2" style="text-align: right;">
+								<label for="tipoInsumo1" class="">Tipo Insumo:</label>
+							</div>
+							<div class="col-lg-4">
+								<select name="tipoInsumo1" id="tipoInsumo1" [disabled]="somenteLeitura"
+									class="form-control" [(ngModel)]="model1.tipoInsumo">
+									<option [ngValue]="undefined">Selecione</option>
+									<option value="P">P - Insumo Padrão</option>
+									<option value="E">E - Insumo Estrangeiro Extra Listagem Padrão</option>
+									<option value="N">N - Nacional</option>
+									<option value="R">R - Regional</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model1.tipoInsumo == null || model1.tipoInsumo == 1">
+							<div class="col-lg-2">
+								<label for="codigoNcm1" class="control-label">NCM do Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<app-drop-list-select2 (valorModificado)="model1.codigoNCM1 = $event"
+									(onSelected)="selecionaNCM($event)" name="codigoNcm1" id="codigoNcm1" required
+									[isDisabled]="somenteLeitura || model1.tipoInsumo == null" servico="ViewMercadoria"
+									[(ngModel)]="model1.codigoNCM1" [parametro]="codigoProduto"
+									parametroChave="codigoProdutoMercadoria"
+									[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM1>
+								</app-drop-list-select2>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model1.tipoInsumo > 1">
+							<div class="col-lg-2">
+								<label for="codigoNcm1" class="control-label">NCM do Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<app-drop-list-select2 (valorModificado)="model1.codigoNCM2 = $event"
+									(onSelected)="selecionaNCM($event)" name="codigoNcm1" id="codigoNcm1" required
+									[isDisabled]="somenteLeitura" servico="ViewNcm" [(ngModel)]="model1.codigoNCM2"
+									[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM2>
+								</app-drop-list-select2>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model1.tipoInsumo == null || model1.tipoInsumo == 1">
+							<div class="col-lg-2">
+								<label for="codigoInsumo1" class="control-label">Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<app-drop-list-select2 (valorModificado)="model1.idInsumo = $event"
+									(onSelected)="selecionaInsumo($event)" name="codigoInsumo1" id="codigoInsumo1"
+									required
+									[isDisabled]="somenteLeitura || model1.tipoInsumo == null || model1.codigoNCM1 == null"
+									servico="ViewDetalheMercadoria" [(ngModel)]="model1.idInsumo"
+									[parametro]="codigoProduto" parametroChave="codigoProduto"
+									[parametro1]="model1.codigoNCM" parametroChave1="codigoNCMMercadoria"
+									[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+									#codigoInsumo1>
+								</app-drop-list-select2>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model1.tipoInsumo > 1">
+							<div class="col-lg-2">
+								<label for="insumoDesc1" class="control-label required">Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<input type="text" id="insumoDesc1" required
+									[readonly]="somenteLeitura || model1.codigoNCM2 == null" class="form-control"
+									name="insumoDesc1" [(ngModel)]="model1.descricaoInsumo" maxlength="259"
+									#insumoDesc />
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-2">
+								<label for="unidade1">Unidade:</label>
+							</div>
+							<div class="col-lg-10">
+								<input type="text" [readonly]="true" id="unidade1" class="form-control" name="unidade1"
+									[(ngModel)]="model1.descricaoUnidadeMedida" #unidade />
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-2">
+								<label for="coefTec">Coeficiente Técnico:</label>
+							</div>
+							<div class="col-lg-4">
+								<input type="text" required [readonly]="somenteLeitura" id="coefTec1"
+									class="form-control" name="coefTec1" [(ngModel)]="model1.valorCoeficienteTecnico"
+									maxlength="255" (blur)="onBlurValidar()" step=".001" #coefTec />
+							</div>
+							<div class="col-lg-2" style="text-align: right;">
+								<label for="partNumber1">Part Number:</label>
+							</div>
+							<div class="col-lg-4">
+								<input type="text" required [readonly]="somenteLeitura" id="partNumber1"
+									class="form-control" name="partNumber1" [(ngModel)]="model1.codigoPartNumber"
+									maxlength="30" #partNumber />
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-3">
+								<label for="especificacaoTecnica1">Especificação Técnica:</label>
+							</div>
+							<div class="col-lg-12">
+								<textarea class="form-control ng-pristine ng-valid ng-touched"
+									id="especificacaoTecnica1" [readonly]="somenteLeitura" required maxlength="3723"
+									[(ngModel)]="model1.descricaoEspecTecnica" name="especificacaoTecnica1" rows="3">
+								</textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="alert alert-success"
+						style="background-color: #deffe1;border-color: #f0f0f0;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+						Dados Alterados
+					</div>
+					<div>
+						<div class="form-group row">
+							<div class="col-lg-2">
+								<label for="codigoProduto2" class="control-label">Código do Insumo:</label>
+							</div>
+							<div class="col-lg-4">
+								<input type="text" id="codigoInsumo2" [readonly]="somenteLeitura" class="form-control"
+									name="insumoDesc2" [(ngModel)]="model2.codigoInsumo" />
+
+							</div>
+
+							<div class="col-lg-2" style="text-align: right;">
+								<label for="tipoInsumo2" class="">Tipo Insumo:</label>
+							</div>
+							<div class="col-lg-4">
+								<select name="tipoInsumo2" id="tipoInsumo2" [disabled]="somenteLeitura"
+									class="form-control" [(ngModel)]="model2.tipoInsumo">
+									<option [ngValue]="undefined">Selecione</option>
+									<option value="P">P - Insumo Padrão</option>
+									<option value="E">E - Insumo Estrangeiro Extra Listagem Padrão</option>
+									<option value="N">N - Nacional</option>
+									<option value="R">R - Regional</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model2.tipoInsumo == null || model2.tipoInsumo == 1">
+							<div class="col-lg-2">
+								<label for="codigoNcm2" class="control-label">NCM do Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<app-drop-list-select2 (valorModificado)="model2.codigoNCM1 = $event"
+									(onSelected)="selecionaNCM($event)" name="codigoNcm2" id="codigoNcm2" required
+									[isDisabled]="somenteLeitura || model2.tipoInsumo == null" servico="ViewMercadoria"
+									[(ngModel)]="model2.codigoNCM1" [parametro]="codigoProduto"
+									parametroChave="codigoProdutoMercadoria"
+									[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM1>
+								</app-drop-list-select2>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model2.tipoInsumo > 1">
+							<div class="col-lg-2">
+								<label for="codigoNcm2" class="control-label">NCM do Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<app-drop-list-select2 (valorModificado)="model2.codigoNCM2 = $event"
+									(onSelected)="selecionaNCM($event)" name="codigoNcm2" id="codigoNcm2" required
+									[isDisabled]="somenteLeitura" servico="ViewNcm" [(ngModel)]="model2.codigoNCM2"
+									[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'" #codigoNCM2>
+								</app-drop-list-select2>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model2.tipoInsumo == null || model2.tipoInsumo == 1">
+							<div class="col-lg-2">
+								<label for="codigoInsumo2" class="control-label">Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<app-drop-list-select2 (valorModificado)="model2.idInsumo = $event"
+									(onSelected)="selecionaInsumo($event)" name="codigoInsumo2" id="codigoInsumo2"
+									required
+									[isDisabled]="somenteLeitura || model2.tipoInsumo == null || model2.codigoNCM1 == null"
+									servico="ViewDetalheMercadoria" [(ngModel)]="model2.idInsumo"
+									[parametro]="codigoProduto" parametroChave="codigoProduto"
+									[parametro1]="model2.codigoNCM" parametroChave1="codigoNCMMercadoria"
+									[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+									#codigoInsumo1>
+								</app-drop-list-select2>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="model2.tipoInsumo > 1">
+							<div class="col-lg-2">
+								<label for="insumoDesc2" class="control-label required">Insumo:</label>
+							</div>
+							<div class="col-lg-10">
+								<input type="text" id="insumoDesc2" required
+									[readonly]="somenteLeitura || model2.codigoNCM2 == null" class="form-control"
+									name="insumoDesc2" [(ngModel)]="model2.descricaoInsumo" maxlength="259"
+									#insumoDesc />
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-2">
+								<label for="unidade2">Unidade:</label>
+							</div>
+							<div class="col-lg-10">
+								<input type="text" [readonly]="true" id="unidade2" class="form-control" name="unidade2"
+									[(ngModel)]="model2.descricaoUnidadeMedida" #unidade />
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-lg-2">
+								<label for="coefTec2">Coeficiente Técnico:</label>
+							</div>
+							<div class="col-lg-4">
+								<input type="text" required [readonly]="somenteLeitura" id="coefTec2"
+									class="form-control" name="coefTec2" [(ngModel)]="model2.valorCoeficienteTecnico"
+									maxlength="255" (blur)="onBlurValidar()" step=".001" #coefTec />
+							</div>
+							<div class="col-lg-2" style="text-align: right;">
+								<label for="partNumber2">Part Number:</label>
+							</div>
+							<div class="col-lg-4">
+								<input type="text" required [readonly]="somenteLeitura" id="partNumber2"
+									class="form-control" name="partNumber2" [(ngModel)]="model2.codigoPartNumber"
+									maxlength="30" #partNumber />
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<div class="col-lg-3">
+								<label for="especificacaoTecnica">Especificação Técnica:</label>
+							</div>
+							<div class="col-lg-12">
+								<textarea class="form-control ng-pristine ng-valid ng-touched"
+									id="especificacaoTecnica2" [readonly]="somenteLeitura" required maxlength="3723"
+									[(ngModel)]="model2.descricaoEspecTecnica" name="especificacaoTecnica2" rows="3">
+								</textarea>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-4">
+							<div class="radio i-checks" style="margin-right: 0px;">
+								<label class="m-r-md">
+									<input type="radio" name="radio[custom]" value="1"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> Ativo
+								</label>
+								<label>
+									<input type="radio" name="radio[custom]" value="2"
+										[(ngModel)]="parametros.situacaoInsumo"><i></i> Inativo
+								</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row" *ngIf="parametros.situacaoInsumo == '2'">
+						<div class="col-lg-3">
+							<label for="especificacaoTecnica">Mensagem de Erro:</label>
+						</div>
+						<div class="col-lg-12">
+							<textarea class="form-control ng-pristine ng-valid ng-touched" id="mensagemErro"
+								maxlength="500" [(ngModel)]="parametros.descricaoErro" name="mensagemErro" rows="3">
+							</textarea>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<!-- INSUMO DE ALTERACAO -->
+			<div class="modal-footer" style="padding: 10px 15px;" *ngIf="path == 'Analisar'">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span
+						class="fa fa-times"></span> Cancelar</button>
+				<button type="button" id="Cadastrar" class="btn btn-primary btn-sm" (click)="salvarAnalise()"><span
+						class="fa fa-check"></span>Salvar</button>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;" *ngIf="path == 'Visualizar'">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span
+						class="fa fa-long-arrow-left m-r-xs"></span> Voltar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalNovoInsumoBackground class="modal-backdrop fade in" style="display: none;"></div>

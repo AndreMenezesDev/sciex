@@ -1,0 +1,58 @@
+.menu-opcao-button {
+	width: 525px !important;
+	font-size: 12pt !important;
+	height: 52px !important;
+	padding-top: 12px !important;
+	background-color: #f2f4f8 !important;
+}
+
+	.menu-opcao-button:hover {
+		width: 525px !important;
+		font-size: 12pt !important;
+		color: #FFF !important;
+		height: 52px !important;
+		padding-top: 12px !important;
+		background-color: #00552b !important;
+	}
+
+.panel-margin {
+	margin-top: 50px;
+}
+
+.panel-color {
+	background-color: #ccc !important;
+}
+
+.titulo-required {
+	color: #c33b3b
+}
+
+.no-padding {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.no-padding-any {
+	padding: 0 !important;
+}
+
+.no-margin {
+	margin-right: 0px !important;
+	margin-left: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.char-textarea {
+	resize: none;
+}
+
+.char-count {
+	font-weight: lighter;
+}
+
+.pre-customizado {
+	background-color: transparent;
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+}

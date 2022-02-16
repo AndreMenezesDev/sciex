@@ -1,0 +1,111 @@
+<div #appModalSolicitacao
+    id="1" 
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none; overflow-y: auto;">
+
+        <div 
+            class="modal-dialog" 
+            style="width:1500px;margin-top: 10px;" 
+            style=" max-width: 60%; width: auto !important; margin-top: 10px; overflow-y: auto;">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                    <h4 class="modal-title" style="color: White;" id="modalParecer">Solicitações do Detalhe</h4>
+                </div>
+
+                <div class="modal-body" style="overflow-y: auto;">
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Insumo:</label>
+                            <span>{{descInsumo}}</span>
+                        </div>
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Detalhe:</label>
+                            <span>{{numeroSequencial}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-8">
+                            <label class="m-r-xs"></label>  
+                            <span class="pull-right"></span>
+                        </div>								   
+                    </div>
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Alterações Solicitadas para o Detalhe</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group" >
+                                <div class="row col-lg-12" style="margin-left: 15px;">
+                                    <div *ngIf="listaDetalhesSolicAlteracao == null">
+                                        <span class="fa fa-exclamation-triangle fa-1x text-danger" data-toggle="tooltip" title="Atenção"></span>
+                                            <b style="color: red;">Nenhuma Alteração Solicitada.</b>
+                                        <span class="fa fa-exclamation-triangle fa-1x text-danger" data-toggle="tooltip" title="Atenção"></span>    
+                                    </div>
+
+                                    <div>
+                                        <div *ngIf="listaDetalhesSolicAlteracao" class="row col-lg-12">
+                                            <div *ngFor="let item of listaDetalhesSolicAlteracao">
+                                                <div class="row form-group">
+                                                        <div class="col-lg-4">
+                                                            <label class="m-r-xs">Tipo de Alteração:</label><span>{{ item.descricaoTipoAlteracao ? item.descricaoTipoAlteracao : '--' }}</span>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="m-r-xs">De:</label><span>{{ item.descricaoDe ? item.descricaoDe : '--' }}</span>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="m-r-xs">Para:</label><span>{{ item.descricaoPara ? item.descricaoPara : '--'}}</span>
+                                                        </div>
+                                                                                                   
+                                                </div>
+                                            </div>
+                                            <!-- 
+                                            <tr *ngFor="let item of listaDetalhesSolicAlteracao">
+                                                <td><b>Tipo de Alteração:</b> {{ item.descricaoTipoAlteracao ? item.descricaoTipoAlteracao : '--' }}</td>
+                                                <td style="margin-left: 20px;"><b>De:</b> {{ item.descricaoDe ? item.descricaoDe : '--' }}</td> 
+                                                <td style="margin-left: 20px;"><b>Para:</b> {{ item.descricaoPara ? item.descricaoPara : '--'}}</td>
+                                            </tr> 
+                                            -->
+                                        </div>
+                                    </div>    
+
+                                </div>
+                                   
+
+                                  
+                            </div>
+                        </div>  
+                    </div>
+
+
+                    <div class="row col-lg-12">
+                    </div>         
+            
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-default" 
+                        (click)="fechar()">
+                            <span class="fa fa-long-arrow-left m-r-xs"></span> Voltar
+                    </button>
+                </div>
+
+		    </div>
+
+     
+
+        
+        
+            </div>
+        
+        </div>
+
+</div>
+
+<div #appModalSolicitacaoBackground class="modal-backdrop fade in" style="display: none;"></div> 

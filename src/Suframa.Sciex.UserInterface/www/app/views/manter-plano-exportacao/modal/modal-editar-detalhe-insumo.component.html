@@ -1,0 +1,93 @@
+<div #appModalEditarDetalhe id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="title">{{titulo}} Dados do Detalhamento do Insumo</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="confirmaSalvar()">
+
+					<div class="col-lg-12">
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="codigoInsumo" class="control-label text-nowrap"
+									>Código Insumo:</label>
+								<input id="codigoInsumo" type="text" name="codigoInsumo" autocomplete="off"
+									class="form-control" disabled="disabled"
+									[(ngModel)]="parametros.codigoInsumo" />
+							</div>
+						</div>
+						<div class="row" *ngIf="isQuadroNacional">
+							<!-- <div class="row"> -->
+							<div class="col-lg-4">
+								<label for="quantidade" class="control-label text-nowrap"
+									>Quantidade:</label>
+								<input id="quantidade" type="text" name="quantidade"
+									 autocomplete="off" maxlength="16"
+									 formatar-numero-decimal5 [prefix]="' '"
+									placeholder="0.00000"
+									class="form-control" 
+									[(ngModel)]="parametros.quantidade" />
+							</div>
+							<div class="col-lg-4">
+								<label for="valorUnitario" class="control-label text-nowrap"
+									>Valor Unitário (R$):</label>
+								<input id="valorUnitario" type="text" id="valorUnitario" name="valorUnitario"
+									maxlength="18"
+									formatar-numero-decimal7 [prefix]="' '"
+									placeholder="0.0000000"
+									autocomplete="off" class="form-control" 
+									[(ngModel)]="parametros.valorUnitario" />
+							</div>
+						</div>
+
+						<div class="row" *ngIf="!isQuadroNacional">
+							<div class="col-lg-4">
+								<label>Quantidade:</label>
+								<div class="ds-flex">
+									<input id="quantidade" name="quantidade" 
+									type="text" class="form-control" [readonly]="somenteLeitura"
+									maxlength="16"
+									formatar-numero-decimal5 [prefix]="' '"
+									placeholder="0.00000"
+									[(ngModel)]="parametros.quantidade"/>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<label>Valor Unitário FOB:</label>
+								<div class="ds-flex">
+									<input id="valorUnitarioFOB" name="valorUnitarioFOB" type="text" class="form-control" [readonly]="somenteLeitura"
+									maxlength="18"
+									formatar-numero-decimal7 [prefix]="' '"
+									placeholder="0.0000000"
+									[(ngModel)]="parametros.valorUnitario"/>
+								</div>
+							</div>
+
+							<div class="col-lg-4">
+								<label>Valor Frete(US$):</label>
+								<div class="ds-flex">
+									<input id="valorFrete" name="valorFrete" type="text" class="form-control" [readonly]="somenteLeitura" 
+									maxlength="18"
+									formatar-numero-decimal7 [prefix]="' '"
+									placeholder="0.0000000"
+									[(ngModel)]="parametros.valorFrete"/>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;" >
+				<button type="button" class="btn btn-sm btn-default" (click)="confirmaFechar()"><span
+						class="fa fa-times"></span> Cancelar</button>
+				<button type="button" id="Cadastrar" class="btn btn-primary btn-sm" (click)="confirmaSalvar()"><span
+						class="fa fa-save"></span>Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalEditarDetalheBackground class="modal-backdrop fade in" style="display: none;"></div>

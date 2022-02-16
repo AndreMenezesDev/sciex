@@ -1,0 +1,314 @@
+<div #appModalQuantidadeCoeficienteTecnico
+    id="1" 
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none; overflow-y: auto;"
+    >
+
+        <div 
+            class="modal-dialog" 
+            style="width:1500px;margin-top: 10px;" 
+            style=" max-width: 60%; width: auto !important; margin-top: 10px; ">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                    <h4 class="modal-title" style="color: White;" id="modalParecer">Alteração do Insumo</h4>
+                </div>
+
+                <div class="modal-body" *ngIf="exibirModal" style="overflow-y: auto;">
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Insumo:</label>
+                            <span> {{codigoInsumo}} | {{descricaoInsumo}} </span>
+                        </div>
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs"> Detalhe: </label>
+                            <span> {{ numeroSequencial}} </span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-8">
+                            <label class="m-r-xs"></label>  
+                            <span class="pull-right"></span>
+                        </div>								   
+                    </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Coeficiente Técnico</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-3">
+                                        <label>DE:</label>
+                                        <div class="ds-flex">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                disabled 
+                                                formatar-numero-decimal7 [prefix]="' '"
+                                                value="{{ parametros.prcInsumoDE.valorCoeficienteTecnico ? 
+                                                            (parametros.prcInsumoDE.valorCoeficienteTecnico | number : '1.7-7')
+                                                                : '0,0000000'  }}"
+                                            /> 
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label>PARA:</label>
+                                        <div class="ds-flex">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                [(ngModel)]="parametros.quantidadeCoefTecnicoPara.valorParaCoeficienteTecnico" 
+                                                formatar-numero-decimal5 
+                                                [prefix]="' '"
+                                                (blur)="calculaCoeficienteTecnico()"
+                                            />                                          
+                                        </div>
+                                    </div>     
+                                    
+                                    <div class="col-lg-4" style="margin-top: 25px;" *ngIf="quantidadeMaxima != null">
+                                       <b>Quantidade Máxima: </b> <b style="color: blue;">{{quantidadeMaxima | number : '1.7-7'}}</b>
+                                    </div>   
+
+                                </div>
+                            </div>                         
+                        </div>  
+                    </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Quantidade</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group">
+                                <div class="row col-lg-12">
+
+                                    <div class="col-lg-3">
+                                        <label>DE:</label>
+                                        <div class="ds-flex">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                disabled 
+                                                formatar-numero-decimal7 [prefix]="' '"
+                                                value="{{ parametros.prcDetalheInsumoDE.quantidade ? 
+                                                            (parametros.prcDetalheInsumoDE.quantidade | number : '1.7-7')
+                                                                : '0,0000000'  }}"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label>PARA:</label>
+                                        <div class="ds-flex">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                [(ngModel)]="parametros.quantidadeCoefTecnicoPara.valorPara" 
+                                                formatar-numero-decimal5 
+                                                [prefix]="' '"
+                                            />                                          
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2" style="margin-top: 6px;">
+                                        <label></label>
+                                        <div class="ds-flex">
+                                            <a (click)="calcular()" class="btn btn-sm btn-primary m-l">                                             
+                                                <span class="fa fa-money"></span> Calcular 
+                                            </a>
+                                        </div>                                       
+                                    </div>                                  
+
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="row col-lg-12">
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="row col-lg-6">
+                            <fieldset class="row form-group ml-mr-none h160">
+                                <legend>Valores Atuais</legend>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Qtde Comprovada: </label>
+                                        <span class="pull-right">
+                                            {{ (parametros.prcInsumoDE.quantidadeComp) ? 
+                                                 (parametros.prcInsumoDE.quantidadeComp | number : '1.7-7')
+                                                         : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Qtde: </label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.quantidadeSaldo  ? 
+                                                 (parametros.prcInsumoDE.quantidadeSaldo | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Unitário (US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcDetalheInsumoDE.valorUnitario ? 
+                                                 (parametros.prcDetalheInsumoDE.valorUnitario | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Aprovado (US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.valorDolarAprovado ? 
+                                                 (parametros.prcInsumoDE.valorDolarAprovado | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">                                        
+                                        <label class="m-r-xs">Valor Comprovado (US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.valorDolarComp ? 
+                                                 (parametros.prcInsumoDE.valorDolarComp | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Valor (US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.valorDolarSaldo ? 
+                                                (parametros.prcInsumoDE.valorDolarSaldo | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs"></label>
+                                        <span class="pull-right"></span>
+                                    </div>								   
+                                </div>
+                               
+                            </fieldset>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <fieldset class="row form-group ml-mr-none h160">
+                                <legend>Valores Previstos</legend>
+                                    <div class="row form-group">
+                                        <div class="col-lg-8">
+                                            <label class="m-r-xs">Saldo Quantidade:</label>
+                                            <span class="pull-right">
+                                                {{
+                                                    parametros.quantidadeCoefTecnicoPara.saldoQuantidade ? 
+                                                        (parametros.quantidadeCoefTecnicoPara.saldoQuantidade | number : '1.7-7')
+                                                            : '0,0000000' 
+                                                }}
+                                            </span>
+                                        </div>								   
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-8">
+                                            <label class="m-r-xs">Quantidade Adicional:</label>
+                                            <span class="pull-right">
+                                                {{
+                                                    parametros.quantidadeCoefTecnicoPara.quantidadeAdic ? 
+                                                        (parametros.quantidadeCoefTecnicoPara.quantidadeAdic | number : '1.7-7')
+                                                            : '0,0000000' 
+                                                }}
+                                            </span>
+                                        </div>								   
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-8">
+                                            <label class="m-r-xs">Saldo Final (US$):</label>
+                                            <span class="pull-right">
+                                                {{
+                                                    parametros.quantidadeCoefTecnicoPara.saldoFinalUS ? 
+                                                        (parametros.quantidadeCoefTecnicoPara.saldoFinalUS | number : '1.7-7')
+                                                            : '0,0000000' 
+                                                }}
+                                            </span>
+                                        </div>								   
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-lg-8">
+                                            <label class="m-r-xs">Acréscimo(US$):</label>
+                                            <span class="pull-right">
+                                                {{
+                                                    parametros.quantidadeCoefTecnicoPara.acrescimo ? 
+                                                        (parametros.quantidadeCoefTecnicoPara.acrescimo | number : '1.7-7')
+                                                            : '0,0000000' 
+                                                }}
+                                            </span>
+                                        </div>								   
+                                    </div>
+
+                                     <div class="row form-group">
+                                        <div class="col-lg-8">
+                                            <label class="m-r-xs"></label>
+                                            <span class="pull-right"></span>
+                                        </div>								   
+                                    </div>
+                                    
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row wrapper">
+                        <div class="col-lg-12"> -->
+                            <small>
+                                <b style="color: #FF0000">As informações apresentadas no quadro "Valores Previstos" são específicas da solicitação de alteração selecionada.</b>
+                            </small> 					
+                        <!-- </div>
+                        <div class="col-lg-12"> -->
+                            <br>
+                            <small>
+                                <b style="color: #FF0000">Para visualizar os "Valores Previstos" do insumo, de forma ampla, favor consultar o cálculo no Quadro III.</b>
+                            </small>						
+                        <!-- </div>
+                    </div> -->
+
+                </div>
+            
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-default" 
+                        (click)="confirmarCancelamento()">
+                            <span class="fa fa-times"></span> Cancelar 
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-primary" 
+                        (click)="confirmarSalvar()">
+                            <span class="fa fa-save"></span> Salvar 
+                    </button>
+                </div>
+
+		    </div>
+
+        </div>
+
+</div>
+
+<div #appModalQuantidadeCoeficienteTecnicoBackground class="modal-backdrop fade in" style="display: none;"></div>

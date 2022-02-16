@@ -1,0 +1,48 @@
+<div #appModalHistoricoInsumos class="modal fade in" tabindex="-1" role="dialog" aria-hidden="true"
+	style=" display: none; overflow: auto">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="modalHistoricoInsumos">Visualizar Histórico de Alteração de Insumos</h4>
+			</div>
+			<div class="modal-body">
+				<section class="panel panel-default">
+					<header class="panel-heading">
+						<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+					</header>
+					<article  class="panel-body">
+						<form>
+							<article class="panel-body">
+								<div class="row form-group">
+									<div class="row">
+										<div class="col-lg-8" style="margin-left: 15px;">
+											<label>Deseja visualizar o histórico SOMENTE do insumo selecionado ou de TODOS os insumos?</label>
+										</div>
+									</div>
+								</div>
+							</article>
+						</form>
+					</article>
+					<footer class="panel-footer clearfix"
+						style="padding-top: 5px; padding-bottom: 5px;">
+						<div>
+							<button class="btn btn-sm btn-primary" type="submit" (click) = "emitirHistoricoInsumo(true)"><i
+									></i> Somente do Insumo</button>
+							<button class="btn btn-sm btn-primary" type="submit" (click) = "emitirHistoricoInsumo(false)"><i
+									class = "pull-right"></i> Todos</button>
+						</div>
+					</footer>
+				</section>
+			</div>
+
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span
+						class="fa fa-long-arrow-left"></span> Voltar</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalHistoricoInsumosBackground class="modal-backdrop fade in" style="display: none;"></div>
+<app-relatorio-historico-insumos-importados-suframa #relatorio ></app-relatorio-historico-insumos-importados-suframa>
+

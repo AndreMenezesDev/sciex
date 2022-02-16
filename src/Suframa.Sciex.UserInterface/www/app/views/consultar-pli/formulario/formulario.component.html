@@ -1,0 +1,200 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+
+	<div class="row">
+
+		<div class="col-lg-12">
+
+			<section class="panel panel-default m-t">
+
+				<header class="panel-heading">
+
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+
+				</header>
+
+				<article class="panel-body text-sm">
+
+					<div class="row">
+
+						<div class="col-lg-12">
+
+							<div class="alert dados-pli-style">
+								Dados do PLI
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4 label-npli-color">
+							<label class="m-r-xs">Nº PLI:</label><span>{{ model.numeroPliConcatenado }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Data:</label><span>{{ model.dataEnvioPliFormatada }}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-4 text-nowrap">
+							<label class="m-r-xs">Tipo de PLI:</label><span>{{ model.descricaoTipoDocumento }}</span>
+						</div>
+
+						<div class="col-lg-4 text-nowrap">
+						
+							<a  
+							 *ngIf="model.numeroLIReferencia"
+							 routerLink="/consultar-pli/{{model.idLiReferencia}}/visualizar-detalhamento-li" data-toggle="tooltip" title="" data-original-title="Mostrar LI Referência">	
+							<label class="m-r-xs">Nro. LI. Referência:</label><span>{{ model.numeroLIReferencia}}</span>
+							</a>
+						
+							<a
+						    *ngIf="!model.numeroLIReferencia">
+						    <label class="m-r-xs">Nro. LI. Referência:</label><span>--</span>
+							</a>				
+					</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Empresa:</label><span>{{ model.inscricaoCadastral}} | {{ model.cnpj }} | {{ model.razaoSocial }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-6">
+							<label class="m-r-xs">Endereço:</label><span>{{ model.endereco }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Número:</label><span>{{ model.numero }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-6">
+							<label class="m-r-xs">Complemento:</label><span>{{ model.complemento }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Bairro:</label><span>{{ model.bairro }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-6">
+							<label class="m-r-xs">Município:</label><span class="">{{ model.codigoMunicipio }} | {{ model.municipio }}</span>
+						</div>
+
+						<div class="col-lg-2">
+							<label class="m-r-xs">UF:</label><span>{{ model.uf }}</span>
+						</div>
+
+						<div class="col-lg-2">
+							<label class="m-r-xs">CEP:</label><span>{{ model.cep }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Atividade Econômica:</label><span class="">{{ model.codigoCNAE }} | {{ model.descricaoCNAE }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">País do Importador:</label><span class="">{{ model.paisCodigo }} | {{model.paisDescricao }}</span>
+						</div>
+
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Telefone:</label><span>{{ model.telefone }}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">CPF Representante Legal:</label><span class="">{{ model.numCPFRepLegalSISCO }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Código Aplicação:</label><span class="pull-right">{{ model.codigoPliAplicao }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<span>{{ model.descricaoAplicacao }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4" style="color: #234884">
+							<label class="m-r-xs">Status do PLI:</label><span class="">{{ model.statusPli }} | {{ model.descricaoStatus }}</span>
+						</div>
+
+						<div class="col-lg-4" style="color: #234884">
+							<label class="m-r-xs"><a routerLink="/consultar-pli/{{model.idPLI}}/visualizar-mercadoria-pli">Visualizar Mercadorias do PLI</a></label>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12" *ngIf="model.statusAnaliseVisual == 1">
+
+						<div class="col-lg-4" style="color: orange">
+							<label class="m-r-xs">Status da Análise Visual:</label><span class="">{{ model.statusPliAnalise }} | {{ model.statusPliAnaliseFormatado }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12" *ngIf="model.statusPliTecnologiaAssistiva == 1">
+
+						<div class="col-lg-4" style="background-color: #e2f7ff; text-align: center; border-color: #196684">
+							<label class="m-r-xs" style="font-weight: bold;">PLI de Tecnologia assistiva</label>
+						</div>
+					</div>
+
+
+				</article>
+				<footer class="panel-footer clearfix panel-footer-sciex">
+
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

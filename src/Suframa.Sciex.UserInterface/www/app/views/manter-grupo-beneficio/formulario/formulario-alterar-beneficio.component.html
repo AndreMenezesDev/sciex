@@ -1,0 +1,169 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Alterar Benefício</app-titulo>
+			<app-sub-titulo>Alterar Benefício</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<div class="pull-right">
+
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-default btn-sm"
+                                    (click)="cancelarOperacao()">
+                                <i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+                            </button>
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-primary btn-sm"
+                                    (click)="formulario.onSubmit()">
+                                <i class="fa fa-save"></i> Salvar
+                            </button>
+
+                        </div>
+						<!--<a routerLink="/aladi/pesquisar" class="btn btn-default btn-sm"><i class="fa fa-long-arrow-left"></i> Cancelar</a>-->
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="validar()">
+						<fieldset>
+							<div class="row form-group">
+
+                                <div class="col-lg-2">
+                                    <label for="txtEmpresa" class="control-label">Código:</label>
+                                    <input #codigo
+                                           type="text"
+                                           id="txt-descricao"
+                                           class="form-control"
+                                           name="empresa"
+                                           inputTextFilter="true"
+                                           value = "{{model.codigo}}"
+                                           readonly
+                                    />
+                                </div>
+                                <!-- [(ngModel)]="model.codigo" -->
+
+								<div class="col-lg-8">
+                                    <label for="txtEmpresa" class="control-label required">Descrição:</label>
+                                    <input #descricao
+                                           type="text"
+                                           id="txt-descricao"
+                                           class="form-control"
+                                           name="empresa"
+                                           inputTextFilter="true"
+                                           value = "{{model.descricao}}"
+                                           required
+                                    />
+                                </div>
+                                <!-- [(ngModel)]="model.descricao "		 -->
+                            </div>
+
+                            <div class="row form-group">
+
+                                <div class="col-lg-3">
+									<div class="form-group">
+										<label for="status" class="control-label required">Tipo Benefício:</label>
+										<div class="radio i-checks" style="margin-right: 1px;">
+											<label>
+												<input #isencao type="radio" name="radio[custom]" value="1" checked="checked"><i></i> Isenção
+											</label>
+											<label>
+												<input #reducao type="radio" name="radio[custom]" value="2"><i></i> Redução
+                                            </label>
+                                            <label>
+                                                <input #suspensao type="radio" name="radio[custom]" value="3"><i></i> Suspensão
+											</label>
+										</div>
+									</div>
+								</div>
+
+                                <div class="col-lg-2" style="margin-right: 50px;">
+                                    <label for="percentualBeneficio" class="control-label">Percentual Beneficio:</label>
+                                    <div class="form-group">
+                                        <input #percentualBeneficio
+                                               type="text"
+                                               id="txt-descricao"
+                                               value = "{{model.valorPercentualReducao}}"
+                                               class="form-control"
+                                               name="empresa"
+                                               (blur)="onBlurValidarPercentual()"
+                                               inputTextFilter="true"
+                                               style="width: 90%;display: -webkit-inline-box;"
+                                               required/>
+                                        <label style="float: right; margin-top: 10px;">%</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-2 required" style="margin-right: 3px;">
+                                    <label for="status" class="control-label required">Status:</label>
+                                    <div>
+                                        <label class="switch m-n">
+                                            <input #statustf type="checkbox" name="status">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-10">
+                                <div class="row form-group">
+
+                                    <label for="justificativa" class="control-label">Amparo Legal:</label>
+                                    <textarea   class="form-control"
+                                                name="text-amparo-legal"
+                                                #textAmparoLegal
+                                                rows="4"
+                                                style="resize: none;"
+                                                value = "{{model.descricaoAmparoLegal}}">
+                                     </textarea>
+                                     <!-- [(ngModel)]="parametros.amparoLegal">           -->
+                                </div>
+                            </div>
+
+                            <div class="col-sm-10">
+                                <div class="row form-group">
+
+                                        <label for="txtEmpresa" class="control-label required">Justificativa:</label>
+                                        <input #justificativa
+                                               type="text"
+                                               id="justificativa"
+                                               class="form-control"
+                                               name="justificativa"
+                                               inputTextFilter="true"
+                                               required
+                                        />
+                                </div>
+                            </div>
+
+						</fieldset>
+					</form>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<button type="button"
+								disableOnClick
+								class="btn btn-primary btn-sm"
+								(click)="formulario.onSubmit()">
+							<i class="fa fa-save"></i> Salvar
+						</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

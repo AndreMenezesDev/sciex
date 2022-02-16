@@ -1,0 +1,209 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+
+	<div class="row">
+
+		<div class="col-lg-12">
+
+			<section class="panel panel-default m-t">
+
+				<header class="panel-heading">
+
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+
+				</header>
+
+				<article class="panel-body text-sm">
+
+					<div class="row">
+
+						<div class="col-lg-12">
+
+							<div *ngIf="model != null && model.idPLIAplicacao != undefined && model.idPLIAplicacao != 1" class="alert alert-success" style="background-color: #e2f7ff; border-color: #196684; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+								Dados do PLI <span class="fa fa-long-arrow-right"></span> Lista de Mercadorias <span class="fa fa-long-arrow-right"></span> Descrição do Produto/Mercadoria
+							</div>
+							<div *ngIf="model != null && model.idPLIAplicacao != undefined && model.idPLIAplicacao == 1" class="alert alert-success" style="background-color: #e2f7ff; border-color: #196684; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+								Dados do PLI <span class="fa fa-long-arrow-right"></span> Lista de Mercadorias <span class="fa fa-long-arrow-right"></span> Descrição da Mercadoria
+							</div>
+
+							
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4 label-npli-color">
+							<label class="m-r-xs">Nº PLI:</label><span>{{ model.numeroPliConcatenado }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Data:</label><span>{{ model.dataEnvioPliFormatada }}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{ model.cnpj }} | {{ model.razaoSocial }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12" *ngIf="notComercializacao">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Produto Padrão:</label><span class="">{{ modelMercadoria.codigoProdutoConcatenado }}</span>
+						</div>
+
+					</div>
+
+					<div class="col-lg-12 form-group" *ngIf="notComercializacao">
+
+						<div style="border-bottom: 1px solid #000"></div>
+
+					</div>
+
+					<div class="row col-lg-12" *ngIf="notComercializacao">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Produto:</label><span class="pull-right">{{ modelMercadoria.codigoProdutoFormatado }}</span>
+						</div>
+
+						<div class="col-lg-9">
+							<span>{{ modelMercadoria.descricaoProduto }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12" *ngIf="notComercializacao">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Tipo:</label><span class="pull-right">{{ modelMercadoria.tipoProdutoFormatado}}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12" *ngIf="notComercializacao">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Modelo:</label><span class="pull-right">{{ modelMercadoria.modeloProdutoFormatado }}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+							<div class="col-lg-3">
+								<label class="m-r-xs">Código Mercadoria:</label><span class="pull-right"><a routerLink="/consultar-pli/{{modelMercadoria.idPLI}}/{{modelMercadoria.idPliMercadoria}}/visualizar-mercadoria-detalhe" class="font-bold" data-toggle="tooltip" title="" data-original-title="Visualizar Detalhes da Mercadoria">{{ modelMercadoria.codigoNCMMercadoria }}</a></span>
+							</div>
+
+							<div class="col-lg-9">
+								<span>{{ modelMercadoria.descricaoNCMMercadoria }}</span>
+							</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Material Usado:</label><span class="pull-right">{{ modelMercadoria.tipoMaterialUsado }}</span>
+						</div>
+
+						<div class="col-lg-5">
+							<label class="m-r-xs">Quantidade Estatística:</label><span class="pull-right">{{ modelMercadoria.quantidadeUnidadeMedidaEstatistica }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Peso Líquido:</label><span class="pull-right">{{ modelMercadoria.pesoLiquido }}</span>
+						</div>
+
+						<div class="col-lg-5">
+							<label class="m-r-xs">Incoterm:</label><span class="pull-right">{{ modelMercadoria.codigoIncoterms }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Naladi:</label><span class="pull-right">{{  modelMercadoria.urfNaladi }}</span>
+						</div>
+
+						<div class="col-lg-5">
+							<label class="m-r-xs">País Procedência:</label><span class="pull-right">{{ modelMercadoria.codigoPais }} | {{ modelMercadoria.descricaoPais }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">RFB Entrada:</label><span class="pull-right">{{  modelMercadoria.urfDespacho }}</span>
+						</div>
+
+						<div class="col-lg-5">
+							<label class="m-r-xs">RFB Despacho:</label><span class="pull-right">{{ modelMercadoria.entradaMercadoria }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-3">
+							<label class="m-r-xs">Nº Comun. Compra:</label><span class="pull-right">{{ modelMercadoria.numeroComunicadoCompra }}</span>
+						</div>
+
+						<div class="col-lg-3">
+							<label class="m-r-xs"><a routerLink="/consultar-pli/{{model.idPLI}}/{{modelMercadoria.idPliMercadoria}}/visualizar-mercadoria-negociacao" class="font-bold" style="text-decoration: underline;">Visualizar Dados da Negociação</a></label><span class="pull-right"></span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs"><a routerLink="/consultar-pli/{{model.idPLI}}/{{modelMercadoria.idPliMercadoria}}/visualizar-mercadoria-fornecedor" class="font-bold" style="text-decoration: underline;">Visualizar Fornecedor/Anuente/Destaque</a></label><span class="pull-right"></span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+						<p></p>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Informações Complementares:</label>
+						</div>
+					</div>
+
+					<!-- BORDER BGN -->
+					<div class="col-lg-12">
+						<div class="b-b" style="border-color: #000;"></div>
+					</div>
+					<!-- BORDER END -->
+
+					<div class="row col-lg-12 form-group">
+						<div class="col-lg-12">
+							<span class="m-r-xs">{{ modelMercadoria.descricaoInformacaoComplementar }}</span>
+						</div>
+					</div>
+
+				</article>
+				<footer class="panel-footer clearfix panel-footer-sciex">
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

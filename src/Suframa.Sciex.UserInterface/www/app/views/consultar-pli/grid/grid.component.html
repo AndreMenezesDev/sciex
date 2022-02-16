@@ -1,0 +1,139 @@
+<app-grid-reprocessar-pli [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)"
+		  [(ocultarBotaoReprocessar)]="ocultarBotaoReprocessar">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<!--<th class="th-10">
+						<input #checkedpli *ngIf="!ocultarbotaocheck"
+							   type="checkbox"
+							   name="optionsConsultarPLI"
+							   (click)="onChangeCheckAllGridPLI()" />
+					</th>-->
+
+					<th class="th-sortable th-150 unset-nowrap">
+						<app-ordenacao field="numeroPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 text-center">
+						<app-ordenacao field="DataEnvioPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center">
+						<app-ordenacao field="InscricaoCadastral" [sorted]="sorted" (onChangeSort)="changeSort($event)">Inscrição Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable th-250 unset-nowrap">
+						<app-ordenacao field="RazaoSocial" [sorted]="sorted" (onChangeSort)="changeSort($event)">Empresa</app-ordenacao>
+					</th>
+						<th class="text-left th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index">
+					<!--<td >
+						<div *ngIf="!ocultarbotaocheck">
+						<input  id="check" #optionchecked type="checkbox" *ngIf="item.statusPliProcessamento == 3"
+							   name="options"
+							   (change)="item.checkbox = !item.checkbox; removeCheckAll()"
+							   [checked]="item.checkbox"
+							   [(ngModel)]="check[i]"
+							   style="-webkit-transform: scale(1.5);" />
+						</div>
+					</td>-->
+
+					<td class="">
+						{{item.ano}}/{{item.numeroPli | formatCode:6}}
+
+						<!--Regra 01 Entregue à Suframa-->
+						<a *ngIf="item.statusPli >= 21" title="" data-toggle="tooltip" data-original-title="Entregue à Suframa"><i class="fa fa-star" style="color: rgb(107, 69, 156); font-size: 1.3em;"></i></a>
+						<!--Desativada-->
+						<a *ngIf="item.statusPli < 21" title="" data-toggle="tooltip" data-original-title="Entregue à Suframa"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+
+
+						<!--Regra 02 Débito Gerado-->
+						<a *ngIf="item.statusTaxa == 3" title="" data-toggle="tooltip" data-original-title="Débito Gerado"><i class="fa fa-star" style="color: rgb(0, 86, 163); font-size: 1.3em;"></i></a>
+						<!--Regra 02 Debito com erro-->
+						<a *ngIf="item.statusTaxa == 4" title="" data-toggle="tooltip" data-original-title="Débito com Erro"> <i class="fa fa-star" style="color: #e80b0b; font-size: 1.3em;"></i></a>
+
+						<!--Regra 03 Débito Gerado e Tecnologia Assistiva-->
+						<a *ngIf="item.statusPli == 23 && item.statusAnaliseVisual == 1" title="" data-toggle="tooltip" data-original-title="Encaminhado para análise visual"><i class="fa fa-star" style="color: orange; font-size: 1.3em;"></i></a>
+						<!--Desativada-->
+						<a *ngIf="item.statusTaxa != 3 && item.statusTaxa != 4" title="" data-toggle="tooltip" data-original-title="Aguardando geração de débito"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+
+
+						<!--Regra 03 Processado pela Suframa-->
+						<!--Desativado-->
+						<a *ngIf="(item.statusPli == 21 || item.statusPli == 22 || (item.statusPli == 23 && item.statusAnaliseVisual != 1) || item.statusPli == 24)" title="" data-toggle="tooltip" data-original-title="Aguardando processamento da SUFRAMA"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+
+						<a *ngIf="item.statusPli == 25 && item.statusPliProcessamento == 1" title="" data-toggle="tooltip" data-original-title="Processado pela SUFRAMA"><i class="fa fa-star" style="color: rgb(1, 147, 206); font-size: 1.3em;"></i></a>
+						<!--Reprovado-->
+						<a *ngIf="item.statusPli == 25 && item.statusPliProcessamento == 2 || item.statusPliProcessamento == 3" title="" data-toggle="tooltip" data-original-title="Uma ou mais mercadorias não foram aprovadas pela SUFRAMA"> <i class="fa fa-star" style="color: #e80b0b; font-size: 1.3em;"></i></a>
+
+
+						<!--Regra 04 Enviado ao SISCOMEX-->
+						<a *ngIf="item.statusPli == 25 && item.enviadoAoSiscomex == 2" title="" data-toggle="tooltip" data-original-title="Enviado ao SISCOMEX"><i class="fa fa-star" style="color: rgb(0,168,143); font-size: 1.3em; opacity: 1.3"></i></a>
+						<!--Desativado-->
+						<a *ngIf="item.enviadoAoSiscomex == null || item.enviadoAoSiscomex == 0 || item.enviadoAoSiscomex == 1" title="" data-toggle="tooltip" data-original-title="Aguardando envio ao SISCOMEX"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+
+
+						<!--Desativado-->
+						<a *ngIf=" item.statusPli != 25" title="" data-toggle="tooltip" data-original-title="Aguardando resposta do SISCOMEX"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+						<a *ngIf=" item.statusPli == 25 && (item.respondidoPeloSiscomex != 2)" title="" data-toggle="tooltip" data-original-title="Aguardando resposta do Siscomex"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+						<!--<a *ngIf=" item.statusPli == 25 && item.statusALI == 2" title="" data-toggle="tooltip" data-original-title="Aguardando resposta do Siscomex"> <i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+						<a *ngIf=" item.statusPli == 25 && item.statusALI == 4" title="" data-toggle="tooltip" data-original-title="Aguardando resposta do Siscomex"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>-->
+						<!--<a *ngIf=" item.statusPli == 25 && item.statusALI == 8" title="" data-toggle="tooltip" data-original-title="Aguardando resposta do Siscomex"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>-->
+						<!--Regra 05 Respondido Pelo SISCOMEX-->
+						<a *ngIf="item.statusPli == 25  && (item.respondidoPeloSiscomex == 2) && item.temALIIndeferida == false" title="" data-toggle="tooltip" data-original-title="Respondido pelo SISCOMEX"> <i class="fa fa-star" style="color: rgb(109, 220,7); font-size: 1.3em"></i></a>
+						<!--<a *ngIf="item.statusPli == 25 && item.statusALI == 6" title="" data-toggle="tooltip" data-original-title="Respondido pelo SISCOMEX"><i class="fa fa-star" style="color: rgb(109, 220,7); font-size: 1.3em"></i></a>
+						<a *ngIf="item.statusPli == 25 && item.statusALI == 7" title="" data-toggle="tooltip" data-original-title="Respondido pelo SISCOMEX"><i class="fa fa-star" style="color: rgb(109, 220,7); font-size: 1.3em"></i></a>-->
+						<!--Reprovado-->
+						<a *ngIf="item.statusPli == 25 && (item.respondidoPeloSiscomex == 2) && item.temALIIndeferida" title="" data-toggle="tooltip" data-original-title="Uma ou mais mercadorias não foram aprovadas pelo Siscomex"><i class="fa fa-star" style="color: #e80b0b; font-size: 1.3em;"></i></a>
+
+						<a *ngIf="item.statusPli == 25 && item.temDiDesembaracada == 1" title="" data-toggle="tooltip" data-original-title="DI Desembaraçada pelo SISCOMEX"><i class="fa fa-star" style="color: #28683f; font-size: 1.3em; opacity: 1.3;"></i></a>
+						<!--Desativado-->
+						<a *ngIf="item.temDiDesembaracada == 0" title="" data-toggle="tooltip" data-original-title="Aguardando DI Desembaraçada"><i class="fa fa-star" style="color: rgb(51,51,51); font-size: 1.3em; opacity: 0.3"></i></a>
+
+
+					</td>
+					<td class="text-center">{{item.dataEnvioPliFormatada}}</td>
+					<td class="text-center">{{item.inscricaoCadastral}}</td>
+					<td class="unset-nowrap">{{item.razaoSocial}}</td>
+					<td class="text-left">
+
+						<span>
+							<!-- <a routerLink="/consultar-pli/{{item.idPLI}}/visualizar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a> -->
+							<a (click)="enviarRota(item.idPLI)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+							<a *ngIf="item.statusPliProcessamento == 1"
+							   style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon btn-primary"
+							   routerLink="/consultar-pli/{{item.idPLI}}/relatorio-status"
+							   data-toggle="tooltip" title="" data-original-title="Aprovado">
+								<i class="fa fa-check"></i>
+							</a>
+							<a *ngIf="item.statusPliProcessamento == 2"
+							   style="cursor:pointer"
+							   class="btn btn-rounded btn-sm btn-icon btn-warning"
+							   routerLink="/consultar-pli/{{item.idPLI}}/relatorio-status"
+							   data-toggle="tooltip" title="" data-original-title="Parcialmente aprovado">
+								<i class="fa fa-exclamation"></i>
+							</a>
+							<a *ngIf="item.statusPliProcessamento == 3"
+							   style="cursor:pointer"
+							   class="btn btn-rounded btn-sm btn-icon btn-danger"
+							   routerLink="/consultar-pli/{{item.idPLI}}/relatorio-status"
+							   data-toggle="tooltip" title="" data-original-title="Reprovado">
+							   <i class="fa fa-times"></i>
+							</a>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid-reprocessar-pli>
+<app-consultar-pli-formulario [(rota)]="rotaParametro" #consultarPli hidden="true" ></app-consultar-pli-formulario>

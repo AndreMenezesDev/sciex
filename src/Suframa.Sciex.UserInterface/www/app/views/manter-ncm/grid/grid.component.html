@@ -1,0 +1,74 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="codigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código</app-ordenacao>
+					</th>
+					<th class="th-sortable th-500 unset-nowrap">
+						<app-ordenacao field="Descricao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 text-center unset-nowrap">
+						Amazônia Ocidental
+					</th>
+					<th class="th-sortable th-100 text-center unset-nowrap">
+						Status
+					</th>
+					<th class="th-sortable th-150 text-center unset-nowrap">
+						Ação
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="unset-nowrap">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap">{{item.descricao}}</td>
+					<td class="unset-nowrap">{{item.isAmazoniaOcidentalString}}</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.status == 0 ? 'btn-danger' : 'btn-primary'"
+							   (click)="abrirJustificativa(item)">
+							   <!-- (click)="item.status == 0 ? confirmarAtivarStatus(item) : confirmarInativarStatus(item)"> -->
+								<i class="fa"
+								   [ngClass]="item.status === 0 ? 'fa-times' : 'fa-check'">
+								</i>
+							</a>
+						</span>
+					</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor: pointer;"
+								routerLink="/manter-ncm/{{item.idNcm}}/editar"
+								class="btn btn-default btn-sm"
+								data-toogle="tooltip"
+								data-original-title="Editar">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</span>
+						<span>
+							<a style="cursor: pointer;"
+								class="btn btn-default btn-sm"
+								data-toogle="tooltip"
+								data-original-title="Histórico"
+								(click)="abrirHistorico(item)">
+								<i class="i i-history"></i>
+							</a>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-justificativa-status #appModalJustificativaStatus></app-modal-justificativa-status>
+<app-modal-historico-ncm #appModalHistoricoNcm></app-modal-historico-ncm>

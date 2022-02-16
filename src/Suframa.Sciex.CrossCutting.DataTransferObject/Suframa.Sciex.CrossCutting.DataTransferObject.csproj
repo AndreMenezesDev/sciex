@@ -1,0 +1,548 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Suframa.Sciex.CrossCutting.DataTransferObject</RootNamespace>
+    <AssemblyName>Suframa.Sciex.CrossCutting.DataTransferObject</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\System.ComponentModel.DataAnnotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseDto.cs">
+      <LastGenOutput>BaseDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Dto\ImportadorDto.cs" />
+    <Compile Include="Dto\LiDtop.cs" />
+    <Compile Include="Dto\HistoricoNcmDto.cs" />
+    <Compile Include="Dto\PliAplicacaoDto.cs" />
+    <Compile Include="Dto\PliDetalheMercadoriaDto.cs" />
+    <Compile Include="Dto\NcmDto.cs" />
+    <Compile Include="Dto\PliProdutoDto.cs" />
+    <Compile Include="Dto\PliHistoricoDto.cs" />
+    <Compile Include="Dto\PliMercadoriaDto.cs" />
+    <Compile Include="Dto\PliProcessoAnuenteDto.cs" />
+    <Compile Include="Dto\PliStatusDto.cs" />
+    <Compile Include="Dto\PliTipoDto.cs" />
+    <Compile Include="Dto\PliDto.cs" />
+    <Compile Include="Dto\Parametros.cs" />
+    <Compile Include="Dto\RespostaHttpDto.cs" />
+    <Compile Include="Dto\FundamentoLegalDto.cs" />
+    <Compile Include="Dto\FabricanteDto.cs" />
+    <Compile Include="Dto\RegimeTributarioDto.cs" />
+    <Compile Include="Dto\FornecedorDto.cs" />
+    <Compile Include="Dto\ParidadeCambialGenerator.cs" />
+    <Compile Include="Dto\ParidadeCambialDto.cs" />
+    <Compile Include="Dto\ParidadeCambialSingle.cs" />
+    <Compile Include="Dto\UnidadeReceitaFederalDto.cs" />
+    <Compile Include="Dto\AladiDto.cs" />
+    <Compile Include="Dto\ArquivoDto.cs" />
+    <Compile Include="Dto\ListaDto.cs" />
+    <Compile Include="Dto\NaladiDto.cs" />
+    <Compile Include="Dto\RequerimentoDto.cs" />
+    <Compile Include="Dto\RepresentanteLegalDto.cs" />
+    <Compile Include="Dto\InscricaoDto.cs" />
+    <Compile Include="Dto\CredenciadoConsultorDto.cs" />
+    <Compile Include="Dto\CredenciadoConsultorWrapper.cs" />
+    <Compile Include="Dto\CredenciadoRemTranspDto.cs" />
+    <Compile Include="Dto\AuditorDto.cs" />
+    <Compile Include="Dto\AuditorDtoWrapper.cs" />
+    <Compile Include="Dto\CampoSistemaDto.cs" />
+    <Compile Include="Dto\DiligenciaDto.cs" />
+    <Compile Include="Dto\CancelamentoDto.cs" />
+    <Compile Include="Dto\InscricaoCadastralDto.cs" />
+    <Compile Include="Dto\MenuDto.cs" />
+    <Compile Include="Dto\PapelDto.cs" />
+    <Compile Include="Dto\PerfilDto.cs" />
+    <Compile Include="Dto\StatusProtocoloGrupoDto.cs" />
+    <Compile Include="Dto\StautsProtocoloParametrosDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>StautsProtocoloParametrosDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Dto\CepDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>CepDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Dto\ClasseAtividadeDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>ClasseAtividadeDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Dto\DivisaoAtividadeDto.cs" />
+    <Compile Include="Dto\ProtocoloDto.cs" />
+    <Compile Include="Dto\CaptchaDto.cs" />
+    <Compile Include="Dto\SacDto.cs" />
+    <Compile Include="Dto\TipoRequerimentoGrupoDto.cs" />
+    <Compile Include="Dto\UsuarioSaaDto.cs" />
+    <Compile Include="Enum\EnumSituacaoAnalisePEDue.cs" />
+    <Compile Include="Enum\EnumSolicitacaoProrrogacao.cs" />
+    <Compile Include="Enum\EnumErroProcessamentoLENivelErro.cs" />
+    <Compile Include="Enum\EnumMensagemErro.cs" />
+    <Compile Include="Enum\EnumStatusRespostaRequisicao.cs" />
+    <Compile Include="Enum\EnumStatusSolicitacaoAlteracao.cs" />
+    <Compile Include="Enum\EnumStatusSolicitacaoDetalheAlteracao.cs" />
+    <Compile Include="Enum\EnumTipoAlteracaoInsumo.cs" />
+    <Compile Include="Enum\EnumTipoInsumoAlteracao.cs" />
+    <Compile Include="Enum\EnumSituacaoListagemExportacao.cs" />
+    <Compile Include="Enum\EnumSituacaoPlanoExportacao.cs" />
+    <Compile Include="Enum\EnumSituacaoLeitura.cs" />
+    <Compile Include="Enum\EnumStatusDebito.cs" />
+    <Compile Include="Enum\EnumLancamento.cs" />
+    <Compile Include="Enum\EnumSituacaoAnalisePlanoExportacao.cs" />
+    <Compile Include="Enum\EnumSituacaoInsumo.cs" />
+    <Compile Include="Enum\EnumStatusProcessamentoDi.cs" />
+    <Compile Include="Enum\EnumTipoPli.cs" />
+    <Compile Include="Enum\EnumStatusProcessamentoPli.cs" />
+    <Compile Include="Enum\EnumAliArquivoStatus.cs" />
+    <Compile Include="Enum\EnumAliTipoArquivo.cs" />
+    <Compile Include="Enum\EnumControleServico.cs" />
+    <Compile Include="Enum\EnumExtensions.cs" />
+    <Compile Include="Enum\EnumEstruturaPropriaArquivoProcessamento.cs" />
+    <Compile Include="Enum\EnumEstruturaPropriaArquivoStatus.cs" />
+    <Compile Include="Enum\EnumLiTipoArquivo.cs" />
+    <Compile Include="Enum\EnumPliTipoDocumento.cs" />
+    <Compile Include="Enum\EnumSistemaOrigem.cs" />
+    <Compile Include="Enum\EnumErroProcessamentoNivelErro.cs" />
+    <Compile Include="Enum\EnumLiStatus.cs" />
+    <Compile Include="Enum\EnumAliStatus.cs" />
+    <Compile Include="Enum\EnumPliStatus.cs" />
+    <Compile Include="Enum\EnumPliStatusProcessamento.cs" />
+    <Compile Include="Enum\EnumPliTipoOrigem.cs" />
+    <Compile Include="Enum\EnumServico.cs" />
+    <Compile Include="Enum\EnumIntegracaoEmpresaInscricaoDtVal.cs" />
+    <Compile Include="Enum\EnumIntegracaoSetCd.cs" />
+    <Compile Include="Enum\EnumIntegracaoTipoImportador.cs" />
+    <Compile Include="Enum\EnumSituacaoSincronismoBloqueio.cs" />
+    <Compile Include="Enum\EnumStatusCalendario.cs" />
+    <Compile Include="Enum\EnumStatusCalendarioHora.cs" />
+    <Compile Include="Enum\EnumStatusComunicacao.cs" />
+    <Compile Include="Enum\EnumStatusControleExecucaoJob.cs" />
+    <Compile Include="Enum\EnumTipoCoberturaCambial.cs" />
+    <Compile Include="Enum\EnumTipoAli.cs" />
+    <Compile Include="Enum\EnumTipoOperacao.cs" />
+    <Compile Include="Enum\EnumTipoAcordoTarifario.cs" />
+    <Compile Include="Enum\EnumTipoRequisicao.cs" />
+    <Compile Include="Enum\EnumAcao.cs" />
+    <Compile Include="Enum\EnumAcaoCampoSistema.cs" />
+    <Compile Include="Enum\EnumListaServico.cs" />
+    <Compile Include="Enum\EnumMotivoSituacaoInscricao.cs" />
+    <Compile Include="Enum\EnumOrigemConsultaPublica.cs" />
+    <Compile Include="Enum\EnumPapel.cs" />
+    <Compile Include="Enum\EnumPerfil.cs" />
+    <Compile Include="Enum\EnumSituacaoInscricao.cs" />
+    <Compile Include="Enum\EnumStatusControleExecucaoServico.cs" />
+    <Compile Include="Enum\EnumStatusDiligencia.cs" />
+    <Compile Include="Enum\EnumStatusPedidoCorrecao.cs" />
+    <Compile Include="Enum\EnumStatusProtocolo.cs" />
+    <Compile Include="Enum\EnumStatusProtocoloGrupo.cs" />
+    <Compile Include="Enum\EnumStatusRestricao.cs" />
+    <Compile Include="Enum\EnumStatusTaxaServico.cs" />
+    <Compile Include="Enum\EnumTipoAgendaAtendimento.cs" />
+    <Compile Include="Enum\EnumTipoAssociacao.cs" />
+    <Compile Include="Enum\EnumTipoCobrancaRequerimento.cs" />
+    <Compile Include="Enum\EnumTipoDadoCadastro.cs" />
+    <Compile Include="Enum\EnumTipoGrupoMensagemPadrao.cs" />
+    <Compile Include="Enum\EnumTipoNotificacao.cs" />
+    <Compile Include="Enum\EnumTipoOrigemDocumento.cs" />
+    <Compile Include="Enum\EnumSituacaoInformacaoComplementar.cs" />
+    <Compile Include="Enum\EnumTipoAtividade.cs" />
+    <Compile Include="Enum\EnumTipoOrigemRequisicao.cs" />
+    <Compile Include="Enum\EnumTipoPessoaDropList.cs" />
+    <Compile Include="Enum\EnumTipoRequerimentoGrupo.cs" />
+    <Compile Include="Enum\EnumTipoSocio.cs" />
+    <Compile Include="Enum\EnumTipoEstabelecimento.cs" />
+    <Compile Include="Enum\EnumTipoSetorEmpresarial.cs" />
+    <Compile Include="Enum\EnumStatus.cs" />
+    <Compile Include="Enum\EnumTipoEntidadeRegistro.cs" />
+    <Compile Include="Enum\EnumTipoPessoa.cs" />
+    <Compile Include="Enum\EnumTipoRequerimento.cs" />
+    <Compile Include="Dto\GrupoAtividadeDto.cs" />
+    <Compile Include="Dto\IBaseDto.cs" />
+    <Compile Include="Dto\ManterSetorEmpresarialDto.cs" />
+    <Compile Include="Dto\ManterAtividadeEconomicaDto.cs" />
+    <Compile Include="Dto\ManterUnidadeCadastradoraDto.cs" />
+    <Compile Include="Dto\ManterNaturezaJuridicaDto.cs" />
+    <Compile Include="Dto\MunicipioDto.cs" />
+    <Compile Include="Dto\NaturezaGrupoDto.cs" />
+    <Compile Include="Dto\PessoaFisicaDto.cs" />
+    <Compile Include="Enum\EnumTipoSolicitacaoDetalhe.cs" />
+    <Compile Include="Enum\EnumTipoTransportador.cs" />
+    <Compile Include="Enum\EnumTipoUsuario.cs" />
+    <Compile Include="SortOptions.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>SortOptions.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="TokenDto.cs" />
+    <Compile Include="ViewModel\DuePorProdutoVM.cs" />
+    <Compile Include="ViewModel\ListaSolicitacaoVM.cs" />
+    <Compile Include="ViewModel\PlanoExportacaoDUEVM.cs" />
+    <Compile Include="ViewModel\PRCHistoricoDetalheInsumoVM.cs" />
+    <Compile Include="ViewModel\PRCHistoricoInsumoVM.cs" />
+    <Compile Include="ViewModel\ProcessoDetalheInsumoVM.cs" />
+    <Compile Include="ViewModel\DesignarSolicitacaoVM.cs" />
+    <Compile Include="ViewModel\VM.cs" />
+    <Compile Include="ViewModel\AliHistoricoVM.cs" />
+    <Compile Include="ViewModel\GerarParecerSuspensaoVM.cs" />
+    <Compile Include="ViewModel\ProrrogarSolicitacaoVM.cs" />
+    <Compile Include="ViewModel\PRCSolicProrrogacaoVM .cs" />
+    <Compile Include="ViewModel\AprovarTodosInsumosEDetalhesVM.cs" />
+    <Compile Include="ViewModel\AuditoriaAplicacaoVM.cs" />
+    <Compile Include="ViewModel\AuditoriaVM.cs" />
+    <Compile Include="ViewModel\BuscarValoresInsumoVM.cs" />
+    <Compile Include="ViewModel\CalcularMoedaVM.cs" />
+    <Compile Include="ViewModel\CertificadoRegistroVM.cs" />
+    <Compile Include="ViewModel\CodigoDescricaoAlfandegaSetorArmazenamentoVM.cs" />
+    <Compile Include="ViewModel\DadosErroProcessamentoPEVM.cs" />
+    <Compile Include="ViewModel\DetalhesMinhaSolicitacaoAlteracaoVM.cs" />
+    <Compile Include="ViewModel\DIArquivoEntradaVM.cs" />
+    <Compile Include="ViewModel\DIArquivoVM.cs" />
+    <Compile Include="ViewModel\DIEntradaVM.cs" />
+    <Compile Include="ViewModel\DadosErroProcessamentoVM.cs" />
+    <Compile Include="ViewModel\EstruturaPropriaLEEntityVM.cs" />
+    <Compile Include="ViewModel\EstruturaPropriaLEVM.cs" />
+    <Compile Include="ViewModel\EstruturaPropriaPLIGrafoVM.cs" />
+    <Compile Include="ViewModel\EstruturaPropriaPEVM.cs" />
+    <Compile Include="ViewModel\InsumoVM.cs" />
+    <Compile Include="ViewModel\LEInsumoErroVM.cs" />
+    <Compile Include="ViewModel\LEAnaliseInsumoVM.cs" />
+    <Compile Include="ViewModel\ListaPlanoVM.cs" />
+    <Compile Include="ViewModel\ParecerTecnicoProdutoVM.cs" />
+    <Compile Include="ViewModel\ParecerComplementarVM.cs" />
+    <Compile Include="ViewModel\PRCDetalheInsumoTableColunsVM.cs" />
+    <Compile Include="ViewModel\PRCInsumoTableColunsVM.cs" />
+    <Compile Include="ViewModel\PRCSolicDetalheVM.cs" />
+    <Compile Include="ViewModel\PRCSolicitacaoAlteracaoVM.cs" />
+    <Compile Include="ViewModel\PRCSolicHistoricoVM.cs" />
+    <Compile Include="ViewModel\TipoSolicAlteracaoVM.cs" />
+    <Compile Include="ViewModel\ValorFreteVM.cs" />
+    <Compile Include="ViewModel\ValorUnitarioVM.cs" />
+    <Compile Include="ViewModel\QuantidadeCoefTecnicoVM.cs" />
+    <Compile Include="ViewModel\RelatorioParecerTecnicoVM.cs" />
+    <Compile Include="ViewModel\PEArquivoVM.cs" />
+    <Compile Include="ViewModel\PEDetalheInsumosVM.cs" />
+    <Compile Include="ViewModel\PEProdutoPaisVM.cs" />
+    <Compile Include="ViewModel\PEInsumosVM.cs" />
+    <Compile Include="ViewModel\AnalisarPlanoExportacaoVM.cs" />
+    <Compile Include="ViewModel\PRCDetalheInsumoVM.cs" />
+    <Compile Include="ViewModel\PRCInsumoVM.cs" />
+    <Compile Include="ViewModel\PRCProdutoPaisVM.cs" />
+    <Compile Include="ViewModel\PRCProdutoVM.cs" />
+    <Compile Include="ViewModel\PRCStatusVM.cs" />
+    <Compile Include="ViewModel\ParecerTecnicoVM.cs" />
+    <Compile Include="ViewModel\ProcessoExportacaoVM.cs" />
+    <Compile Include="ViewModel\PlanoExportacaoVM.cs" />
+    <Compile Include="ViewModel\LEInsumoVM.cs" />
+    <Compile Include="ViewModel\ListaLeVM.cs" />
+    <Compile Include="ViewModel\ParametrosDIEntradaVM.cs" />
+    <Compile Include="ViewModel\LEProdutoVM.cs" />
+    <Compile Include="ViewModel\PEProdutoVM.cs" />
+    <Compile Include="ViewModel\RelatorioRetificacoesVM.cs" />
+    <Compile Include="ViewModel\RecintoAlfandegaVM.cs" />
+    <Compile Include="ViewModel\ResultadoProcessamentoVM.cs" />
+    <Compile Include="ViewModel\SetorArmazenamentoVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoPELoteVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoPEProdutoVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoLeInsumoVM.cs" />
+    <Compile Include="ViewModel\SolicitacoesAlteracaoVM.cs" />
+    <Compile Include="ViewModel\TipoAlteracaoVM.cs" />
+    <Compile Include="ViewModel\TipoDeclaracaoVM.cs" />
+    <Compile Include="ViewModel\DiArmazemVM.cs" />
+    <Compile Include="ViewModel\DiEmbalagemVM.cs" />
+    <Compile Include="ViewModel\DiLiVM.cs" />
+    <Compile Include="ViewModel\PliFornecedorFabricanteVM.cs" />
+    <Compile Include="ViewModel\LiStatusVM.cs" />
+    <Compile Include="ViewModel\PliMercadoriaComercializacaoVM.cs" />
+    <Compile Include="ViewModel\PliTipoVM.cs" />
+    <Compile Include="ViewModel\ParametrizarAnalistaVM.cs" />
+    <Compile Include="ViewModel\ListaPliVM .cs" />
+    <Compile Include="ViewModel\SolicitacaoPliDetalheMercadoriaVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoPliMercadoriaVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoPliProcessoAnuenteVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoFornecedorFabricanteVM.cs" />
+    <Compile Include="ViewModel\AliArquivoVM.cs" />
+    <Compile Include="ViewModel\AliEntradaArquivoVM.cs" />
+    <Compile Include="ViewModel\EstruturaPropriaPLIArquivoVM.cs" />
+    <Compile Include="ViewModel\EstruturaPropriaPLIVM.cs" />
+    <Compile Include="ViewModel\LiArquivoVM.cs" />
+    <Compile Include="ViewModel\LiHistoricoErroVM.cs" />
+    <Compile Include="ViewModel\SAAUsuarioVM.cs" />
+    <Compile Include="ViewModel\ErroProcessamentoVM.cs" />
+    <Compile Include="ViewModel\ErroMensagemVM.cs" />
+    <Compile Include="ViewModel\LancamentoVM.cs" />
+    <Compile Include="ViewModel\CodigoLancamentoVM.cs" />
+    <Compile Include="ViewModel\RepresentacaoVM.cs" />
+    <Compile Include="ViewModel\AliArquivoEnvioVM.cs" />
+    <Compile Include="ViewModel\AliVM.cs" />
+    <Compile Include="ViewModel\DiVM.cs" />
+    <Compile Include="ViewModel\LiVM.cs" />
+    <Compile Include="ViewModel\LiArquivoRetornoVM.cs" />
+    <Compile Include="ViewModel\LiSubstituidaVM.cs" />
+    <Compile Include="ViewModel\AliSubstituidaVM.cs" />
+    <Compile Include="ViewModel\SolicitacaoPliVM.cs" />
+    <Compile Include="ViewModel\TaxaPliDebitoVM.cs" />
+    <Compile Include="ViewModel\TipoCoberturaCambialVM.cs" />
+    <Compile Include="ViewModel\TipoAcordoTarifarioVM.cs" />
+    <Compile Include="ViewModel\PliStatusVM.cs" />
+    <Compile Include="ViewModel\TaxaServicoSacVM.cs" />
+    <Compile Include="ViewModel\TaxaPliMercadoriaVM.cs" />
+    <Compile Include="ViewModel\TaxaPliHistoricoVM.cs" />
+    <Compile Include="ViewModel\TaxaPliDetalheMercadoriaVM.cs" />
+    <Compile Include="ViewModel\TaxaPliVM.cs" />
+    <Compile Include="ViewModel\TaxaNCMBeneficioVM.cs" />
+    <Compile Include="ViewModel\TaxaGrupoBeneficioVM.cs" />
+    <Compile Include="ViewModel\TaxaFatoGeradorVM.cs" />
+    <Compile Include="ViewModel\TaxaEmpresaAtuacaoVM.cs" />
+    <Compile Include="ViewModel\OrgaoAnuenteVM.cs" />
+    <Compile Include="ViewModel\AgendaAtendimentoVM.cs" />
+    <Compile Include="ViewModel\NcmExcecaoVM.cs" />
+    <Compile Include="ViewModel\NcmVM.cs" />
+    <Compile Include="ViewModel\PliProdutoVM.cs" />
+    <Compile Include="ViewModel\SolicitarGeracaoDebitoVM.cs" />
+    <Compile Include="ViewModel\TipoEmbalagemVM.cs" />
+    <Compile Include="ViewModel\UsuarioPSSVM.cs" />
+    <Compile Include="ViewModel\ValoresVM.cs" />
+    <Compile Include="ViewModel\ViaTransporteVM.cs" />
+    <Compile Include="ViewModel\ViewInsumoPadraoVM.cs" />
+    <Compile Include="ViewModel\CodigoDescricaoInsumoDropDownVM.cs" />
+    <Compile Include="ViewModel\ViewProdEmpSufVM.cs" />
+    <Compile Include="ViewModel\ViewRelatorioAnaliseProcessamentoPliVM.cs" />
+    <Compile Include="ViewModel\ViewMercadoriaVM.cs" />
+    <Compile Include="ViewModel\ViewImportadorVM.cs" />
+    <Compile Include="ViewModel\ViewMunicipioVM.cs" />
+    <Compile Include="ViewModel\ViewNcmVM.cs" />
+    <Compile Include="ViewModel\ViewAtividadeEconomicaPrincipalVM.cs" />
+    <Compile Include="ViewModel\ViewDetalheMercadoriaVM.cs" />
+    <Compile Include="ViewModel\ViewUnidadeMedidaVM.cs" />
+    <Compile Include="ViewModel\ViewProdutoEmpresaVM.cs" />
+    <Compile Include="ViewModel\ViewSetorEmpresaVM.cs" />
+    <Compile Include="ViewModel\ViewSetorVM.cs" />
+    <Compile Include="ViewModel\ControleImportacaoVM.cs" />
+    <Compile Include="ViewModel\RegimeTributarioMercadoriaVM.cs" />
+    <Compile Include="ViewModel\PliAplicacaoVM.cs" />
+    <Compile Include="ViewModel\PliDetalheMercadoriaVM.cs" />
+    <Compile Include="ViewModel\PliHistoricoVM.cs" />
+    <Compile Include="ViewModel\PliMercadoriaVM.cs" />
+    <Compile Include="ViewModel\PliProcessoAnuenteVM.cs" />
+    <Compile Include="ViewModel\PliVM.cs" />
+    <Compile Include="ViewModel\CodigoUtilizacaoVM.cs" />
+    <Compile Include="ViewModel\CodigoContaVM.cs" />
+    <Compile Include="ViewModel\CounterVM.cs" />
+    <Compile Include="ViewModel\IncotermsVM.cs" />
+    <Compile Include="ViewModel\ModalidadePagamentoVM.cs" />
+    <Compile Include="ViewModel\MotivoVM.cs" />
+    <Compile Include="ViewModel\InstituicaoFinanceiraVM.cs" />
+    <Compile Include="ViewModel\ParametrosVM.cs" />
+    <Compile Include="ViewModel\ParametroConfiguracaoVM.cs" />
+    <Compile Include="ViewModel\ImportadorVM.cs" />
+    <Compile Include="ViewModel\ControleExecucaoServicoVM.cs" />
+    <Compile Include="ViewModel\ListaServicoVM.cs" />
+    <Compile Include="ViewModel\MoedaVM.cs" />
+    <Compile Include="ViewModel\StatusPLIVM.cs" />
+    <Compile Include="ViewModel\FornecedorVM.cs" />
+    <Compile Include="ViewModel\ParametroAnalista1VM.cs" />
+    <Compile Include="ViewModel\AnalistaVM.cs" />
+    <Compile Include="ViewModel\FundamentoLegalVM.cs" />
+    <Compile Include="ViewModel\FabricantePagedFilterVM.cs" />
+    <Compile Include="ViewModel\ParidadeCambialPagedFilterVM.cs" />
+    <Compile Include="ViewModel\ParidadeValorVM.cs" />
+    <Compile Include="ViewModel\RegimeTributarioPagedFilterVM.cs" />
+    <Compile Include="ViewModel\FabricanteVM.cs" />
+    <Compile Include="ViewModel\RegimeTributarioTestePagedFilterVM.cs" />
+    <Compile Include="ViewModel\RegimeTributarioTesteVM.cs" />
+    <Compile Include="ViewModel\ParidadeCambialVM.cs" />
+    <Compile Include="ViewModel\UnidadeReceitaFederalVM.cs" />
+    <Compile Include="ViewModel\AladiVM.cs" />
+    <Compile Include="ViewModel\AtividadeEconomicaVM.cs" />
+    <Compile Include="ViewModel\BloqueioDesbloqueioRetornoVM.cs" />
+    <Compile Include="ViewModel\BloqueioDesbloqueioVM.cs" />
+    <Compile Include="ViewModel\CalendarioAgendamentoVM.cs" />
+    <Compile Include="ViewModel\CalendarioDiaVM.cs" />
+    <Compile Include="ViewModel\CalendarioHoraVM.cs" />
+    <Compile Include="ViewModel\CalendarioVM.cs" />
+    <Compile Include="ViewModel\CampoSistemaVM.cs" />
+    <Compile Include="ViewModel\CancelamentoVM.cs">
+      <LastGenOutput>CancelamentoVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\CepVM.cs" />
+    <Compile Include="ViewModel\ConsultaPublicaVM.cs" />
+    <Compile Include="ViewModel\ConsultaPublicaResponsaveisVM.cs" />
+    <Compile Include="ViewModel\CredenciamentoVM.cs" />
+    <Compile Include="ViewModel\DiligenciaAnexoVM.cs" />
+    <Compile Include="ViewModel\DiligenciaAtividadeSetorVM.cs" />
+    <Compile Include="ViewModel\DiligenciaAtividadeVM.cs" />
+    <Compile Include="ViewModel\DiligenciaVM.cs" />
+    <Compile Include="ViewModel\HistoricoSituacaoInscricaoVM.cs" />
+    <Compile Include="ViewModel\InformacoesCadastroVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralConsultaVM.cs" />
+    <Compile Include="ViewModel\ConsultaProtocoloResultadoVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralAtividadeVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralEnderecoVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralHistoricoSituacaoInscricaoVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralTipoIncentivoVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralCredenciamentoVM.cs" />
+    <Compile Include="ViewModel\InscricaoCadastralVM.cs" />
+    <Compile Include="ViewModel\JulgamentoRecursoVM.cs" />
+    <Compile Include="ViewModel\MensagemPadraoVM.cs" />
+    <Compile Include="ViewModel\NaladiVM.cs" />
+    <Compile Include="ViewModel\FundamentoLegalPagedFilterVM.cs" />
+    <Compile Include="ViewModel\RegimeTributarioVM.cs" />
+    <Compile Include="ViewModel\NaturezaQualificacaoVM.cs" />
+    <Compile Include="ViewModel\NaturezaJuridicaVM.cs" />
+    <Compile Include="ViewModel\NotificacaoVM.cs" />
+    <Compile Include="ViewModel\MotivoSituacaoInscricaoVM.cs" />
+    <Compile Include="ViewModel\ParametroAnalistaServicoVM.cs" />
+    <Compile Include="ViewModel\ParametroAnalistaVM.cs" />
+    <Compile Include="ViewModel\ParametroDistribuicaoAutomaticaVM.cs" />
+    <Compile Include="ViewModel\PedidoCorrecaoVM.cs" />
+    <Compile Include="ViewModel\PendenciaCadastralVM.cs" />
+    <Compile Include="Dto\WorkflowProtocoloDto.cs" />
+    <Compile Include="ViewModel\PessoaVM.cs" />
+    <Compile Include="ViewModel\RequerimentoVM.cs" />
+    <Compile Include="ViewModel\ResultadoAnaliseVM.cs" />
+    <Compile Include="ViewModel\ResumoVM.cs" />
+    <Compile Include="ViewModel\StatusProtocoloVM.cs" />
+    <Compile Include="ViewModel\SituacaoInscricaoVM.cs" />
+    <Compile Include="ViewModel\ServicoVM.cs" />
+    <Compile Include="ViewModel\TipoRequerimentoVM.cs" />
+    <Compile Include="ViewModel\TipoIncentivoVM.cs" />
+    <Compile Include="ViewModel\RecursoVM.cs" />
+    <Compile Include="ViewModel\EnviaRecursoVM.cs" />
+    <Compile Include="ViewModel\DadosCadastroVM.cs" />
+    <Compile Include="ViewModel\PaisVM.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>PaisVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\ManterAtividadeEconomicaPagedFilterVM.cs" />
+    <Compile Include="ViewModel\ManterUnidadeCadastradoraPagedItemsVM.cs" />
+    <Compile Include="ViewModel\CepPagedFilterVM.cs" />
+    <Compile Include="ViewModel\NaturezaJuridicaPagedFilterVM.cs" />
+    <Compile Include="Dto\NaturezaJuridicaDto.cs" />
+    <Compile Include="Dto\NaturezaQualificacaoDto.cs" />
+    <Compile Include="Dto\ObjetivoSocialDto.cs" />
+    <Compile Include="PagedOptions.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>PagedOptions.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="PagedItems.cs">
+      <LastGenOutput>PagedItems.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="Dto\PessoaJuridicaDto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dto\QualificacaoDto.cs" />
+    <Compile Include="Dto\SecaoAtividadeDto.cs" />
+    <Compile Include="Dto\SetorAtividadeDto.cs" />
+    <Compile Include="Dto\SetorDto.cs" />
+    <Compile Include="Dto\SubClasseAtividadeDto.cs" />
+    <Compile Include="Dto\UFDto.cs" />
+    <Compile Include="Dto\UnidadeCadastradoraDto.cs" />
+    <Compile Include="Dto\UnidadeSecundariaDto.cs" />
+    <Compile Include="ViewModel\ArquivoVM.cs" />
+    <Compile Include="ViewModel\AtividadesPessoaJuridicaVM.cs" />
+    <Compile Include="ViewModel\DadosSolicitanteVM.cs">
+      <LastGenOutput>DadosSolicitanteVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\DocumentoComprobatorioVM.cs" />
+    <Compile Include="ViewModel\DocumentosComprobatoriosVM.cs" />
+    <Compile Include="ViewModel\EnderecoPessoaJuridicaVM.cs">
+      <LastGenOutput>EnderecoPessoaJuridicaVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\AtividadePessoaJuridicaVM.cs">
+      <LastGenOutput>AtividadePessoaJuridicaVM.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\IdentificacaoPessoaFisicaVM.cs" />
+    <Compile Include="ViewModel\PessoaJuridicaInscricaoVM.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>PessoaJuridicaInscricaoVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\IdentificacaoPessoaJuridicaVM.cs">
+      <LastGenOutput>IdentificacaoPessoaJuridicaVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\ManterAtividadeEconomicaVM.cs" />
+    <Compile Include="ViewModel\ManterEnderecoVM.cs" />
+    <Compile Include="ViewModel\ManterNaturezaJuridicaVM.cs" />
+    <Compile Include="ViewModel\ManterSetorEmpresarialVM.cs" />
+    <Compile Include="ViewModel\ManterUnidadeCadastradoraGridVM.cs" />
+    <Compile Include="ViewModel\ManterUnidadeCadastradoraVM.cs" />
+    <Compile Include="ViewModel\FiltroCadastroPessoaJuridicaVM.cs">
+      <LastGenOutput>FiltroCadastroPessoaJuridicaVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\PorteEmpresaVM.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>PorteEmpresaVM.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\ProtocoloHtmlVM.cs" />
+    <Compile Include="ViewModel\ConsultaProtocoloVM.cs" />
+    <Compile Include="ViewModel\TipoUsuarioVM.cs" />
+    <Compile Include="ViewModel\UnidadeCadastradoraVM.cs" />
+    <Compile Include="ViewModel\UsuarioInternoAssociacaoProtocoloVM.cs" />
+    <Compile Include="ViewModel\PapelVM.cs" />
+    <Compile Include="ViewModel\UsuarioInternoPapelVM.cs" />
+    <Compile Include="ViewModel\UsuarioInternoVM.cs" />
+    <Compile Include="ViewModel\UsuarioVM.cs" />
+    <Compile Include="ViewModel\VisualizarCadastroVM.cs" />
+    <Compile Include="ViewModel\WorkflowMensagemPadraoVM.cs" />
+    <Compile Include="ViewModel\WorkflowProtocoloVM.cs" />
+    <Compile Include="ViewModel\ProtocoloVM.cs" />
+    <Compile Include="ViewModel\MunicipioVM.cs" />
+    <Compile Include="ViewModel\QuadroAdministradoresVM.cs" />
+    <Compile Include="ViewModel\QuadroPessoalVM.cs" />
+    <Compile Include="ViewModel\QuadroSocietarioVM.cs" />
+    <Compile Include="ViewModel\QuadrosAdministradoresVM.cs" />
+    <Compile Include="ViewModel\QuadrosSocietariosVM.cs" />
+    <Compile Include="ViewModel\QualificacaoVM.cs">
+      <LastGenOutput>QualificacaoVM.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Include="ViewModel\SetorAtividadeVM.cs" />
+    <Compile Include="ViewModel\TaxaServicoVM.cs" />
+    <Compile Include="ViewModel\TipoDocumentoVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="ViewModel\PaisVM.cs.d.ts">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PaisVM.cs</DependentUpon>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Suframa.Sciex.CrossCutting.DataTransferObject.ruleset" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

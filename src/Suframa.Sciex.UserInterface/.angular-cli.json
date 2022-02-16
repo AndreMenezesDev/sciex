@@ -1,0 +1,75 @@
+{
+	"$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+	"project": {
+		"name": "sciex"
+	},
+	"apps": [
+		{
+			"root": "www",
+			"outDir": "dist",
+			"assets": [
+				"assets",
+				"favicon.ico"
+			],
+			"index": "index.html",
+			"main": "main.ts",
+			"polyfills": "polyfills.ts",
+			"test": "test.ts",
+			"tsconfig": "tsconfig.app.json",
+			"testTsconfig": "tsconfig.spec.json",
+			"prefix": "app",
+			"styles": [
+				"assets/styles/styles.css",
+				"assets/styles/normalize.css",
+				"assets/styles/animate.css",
+				"assets/styles/font-awesome.css",
+				"assets/styles/bootstrap-datetimepicker.css",
+				"assets/styles/main.css",
+				"assets/styles/styles-externo.css",
+				"assets/styles/cadsuf.css",
+				"assets/styles/angular-calendar.css"
+			],
+					"scripts": [
+						"../node_modules/jspdf/dist/jspdf.min.js",
+						"../node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+					],
+			"environmentSource": "environments/environment.ts",
+			"environments": {
+				"loc": "environments/environment.ts",
+				"dev": "environments/environment.dev.ts",
+				"prod": "environments/environment.prod.ts",
+				"local": "environments/environment.local.ts",
+				"hom": "environments/environment.hom.ts"
+
+			}
+		}
+	],
+	"e2e": {
+		"protractor": {
+			"config": "./protractor.conf.js"
+		}
+	},
+	"lint": [
+		{
+			"project": "src/tsconfig.app.json",
+			"exclude": "**/node_modules/**"
+		},
+		{
+			"project": "src/tsconfig.spec.json",
+			"exclude": "**/node_modules/**"
+		},
+		{
+			"project": "e2e/tsconfig.e2e.json",
+			"exclude": "**/node_modules/**"
+		}
+	],
+	"test": {
+		"karma": {
+			"config": "./karma.conf.js"
+		}
+	},
+	"defaults": {
+		"styleExt": "css",
+		"component": {}
+	}
+}

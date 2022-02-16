@@ -1,0 +1,1 @@
+﻿Esta pasta contém logs da aplicação

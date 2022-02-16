@@ -1,0 +1,93 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Manter ALADI</app-titulo>
+			<app-sub-titulo>Consultar ALADI</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div [hidden]="ocultarFiltro" class="pull-right">
+						<a routerLink="/aladi/cadastrar" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Novo</a>
+					</div>
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+
+						<div class="row">
+							<div class="col-lg-1">
+								<div class="form-group">
+									<label for="txtCodigo" class="control-label">Código:</label>
+									<input #codigo
+										   type="text"
+										   id="txtCodigo"
+										   class="form-control"
+										   name="codigo"
+										   maxlength="3"
+										   onlyNumber="true"
+										   (keyup.enter)="buscar(true)" />
+								</div>
+							</div>
+							<div class="col-lg-11">
+								<label for="txtDescricao" class="control-label">Descrição:</label>
+								<input #descricao
+									   type="text"
+									   id="txtDescricao"
+									   class="form-control"
+									   maxlength="120"
+									   name="descricao"
+									   (keyup.enter)="buscar(true)"
+									   inputTextFilter="true" />
+							</div>
+						</div>
+						<div class="row">
+						</div>
+
+						<div *ngIf="false" style="display: block">
+
+							<canvas id="print" baseChart
+									[datasets]="barChartData"
+									[labels]="barChartLabels"
+									[options]="barChartOptions"
+									[legend]="barChartLegend"
+									[chartType]="barChartType"
+									(chartHover)="chartHovered($event)"
+									(chartClick)="chartClicked($event)"></canvas>
+						</div>
+					</form>
+
+				</article>
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div [hidden]="ocultarGrid" class="col-lg-12">
+
+			<app-manter-aladi-grid [(lista)]="grid.lista"
+								   [(total)]="grid.total"
+								   [(size)]="grid.size"
+								   [(page)]="grid.page"
+								   [(parametros)]="parametros"
+								   (onChangeSort)="onChangeSort($event)"
+								   (onChangeSize)="onChangeSize($event)"
+								   (onChangePage)="onChangePage($event)">
+			</app-manter-aladi-grid>
+		</div>
+	</div>
+	
+
+</div>

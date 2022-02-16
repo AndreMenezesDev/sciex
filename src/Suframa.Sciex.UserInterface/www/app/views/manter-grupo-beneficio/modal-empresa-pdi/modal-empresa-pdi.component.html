@@ -1,0 +1,33 @@
+<div #appModalEmpresaPDI class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog" style="width: 95%; margin-top: 20px;">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Empresa de PD&#38;I</h4>
+			</div>
+			<div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 210px);">
+				<div class="col-lg-12">
+					<label class="m-r-xs"><b>Grupo Benefício: 7 - BENS DE INFORMÁTICA, SEUS INSUMOS E COMPONENTES</b></label>
+				</div>
+				<div class="row" *ngIf="trouxedados">
+					<div class="col-lg-12">		
+						<app-empresa-pdi-grid
+							[(lista)]="grid.lista"
+						    [(total)]="grid.total"
+							[(size)]="grid.size"
+							[(page)]="grid.page"
+							[(parametros)]="parametros"
+							(onChangeSize)="onChangeSize($event)"
+							(onChangePage)="onChangePage($event)"
+							(onChangeSort)="onChangeSort($event)">
+						</app-empresa-pdi-grid>							
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a (click)="fechar()" class="btn btn-sm btn-default btn-sm" data-dismiss="modal"><i class="fa fa-long-arrow-left m-r-xs"></i>Voltar</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalEmpresaPDIBackground class="modal-backdrop fade in" style="display: none;"></div>

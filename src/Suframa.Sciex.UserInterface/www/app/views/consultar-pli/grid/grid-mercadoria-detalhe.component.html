@@ -1,0 +1,45 @@
+<app-grid
+		  [(lista)]="lista"
+		  [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-80 unset-nowrap text-left">
+						<app-ordenacao field="idPliDetalheMercadoria" [sorted]="sorted" (onChangeSort)="changeSort($event)">ITEM</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap text-right">
+						<app-ordenacao field="quantidadeComercializada" [sorted]="sorted" (onChangeSort)="changeSort($event)">QUANTIDADE</app-ordenacao>
+					</th>
+					<th class="th-sortable th-130 unset-nowrap text-right">
+						<app-ordenacao field="valorUnitarioCondicaoVenda" [sorted]="sorted" (onChangeSort)="changeSort($event)">VALOR UNIT. ORIG.</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-right">
+						<app-ordenacao field="valorUnitarioCondicaoVendaDolar" [sorted]="sorted" (onChangeSort)="changeSort($event)">VALOR UNIT. US$</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-right">
+						<app-ordenacao field="valorTotalCondicaoVendaDolar" [sorted]="sorted" (onChangeSort)="changeSort($event)">VALOR DO ITEM US$</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-left font-bold"><a routerLink="/consultar-pli/{{item.idPli}}/{{item.idPliMercadoria}}/{{item.idPliDetalheMercadoria}}/visualizar-detalhe-item-mercadoria">{{item.codigoDetalheMercadoriaFormatado}}</a></td>
+					<td class="unset-nowrap text-right">{{item.quantidadeComercializadaFormatada}}</td>
+					<td class="unset-nowrap text-right">{{item.valorUnitarioCondicaoVendaFormatada}}</td>
+					<td class="unset-nowrap text-right">{{item.valorUnitarioCondicaoVendaDolarFormatada}}</td>
+					<td class="unset-nowrap text-right">{{item.valorTotalCondicaoVendaDolarFormatada}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

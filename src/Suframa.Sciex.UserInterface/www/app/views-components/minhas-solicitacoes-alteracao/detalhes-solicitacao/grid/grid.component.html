@@ -1,0 +1,70 @@
+<app-grid 
+    [(page)]="page"
+    [(size)]="size"
+    [(total)]="total"
+    [(parametros)]="parametros"
+    (onChangeSize)="changeSize($event)"
+    (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+                    <th class="th-sortable unset-nowrap text-center">
+						Ações
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Insumo</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoDetalheInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Detalhe</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoStatus" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição Insumo</app-ordenacao>
+					</th>		
+                    <th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoTipoAlteracao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo Alteração</app-ordenacao>
+					</th>	
+                    <th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoDe" [sorted]="sorted" (onChangeSort)="changeSort($event)">De</app-ordenacao>
+					</th>		
+                    <th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoPara" [sorted]="sorted" (onChangeSort)="changeSort($event)">Para</app-ordenacao>
+					</th>		
+				</tr>
+			</thead>
+			<tbody>	
+				
+                <tr *ngFor="let item of lista">		
+                    <td class="text-center">
+						<a	
+						*ngIf="item.solicitacaoAlteracao.id!=0"
+                            (click)="excluir(item)"
+							class="btn btn-danger btn-sm" 
+                            data-toggle="tooltip" 
+                            title="" 
+                            data-original-title="Excluir">
+                                <i class="fa fa-trash"></i>
+						</a>
+					</td>			
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.codigoDetalheInsumo}}</td>
+					<td class="text-left">{{item.descricaoStatus}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+                    <td class="text-left">{{item.descricaoTipoAlteracao}}</td>
+                    <td class="text-left">{{item.descricaoDe}}</td>
+                    <td class="text-left">{{item.descricaoPara}}</td>
+				</tr> 
+                         
+                
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<!-- detalhe-minhas-solicitacoes/idSolicitacao
+    <app-modal-detalhes-insumo #appModalDetalheInsumo></app-modal-detalhes-insumo> 
+-->

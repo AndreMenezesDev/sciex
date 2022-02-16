@@ -1,0 +1,1033 @@
+<div #appModalPliMercadoria id="{{idPliMercadoria}}" 
+	class="modal fade in" 
+	tabindex="-1" 
+	role="dialog" 
+	aria-hidden="true" 
+	style=" display: none; overflow: auto">
+	<div class="modal-dialog modal-lg-2">
+		<div class="modal-content">
+
+			<div class="modal-header bg-primary" style="padding: 10px 25px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">{{titulo}}</h4>
+			</div>
+			<div id="scroll" class="modal-body" style="overflow-y:auto;max-height:calc(100vh - 210px);">
+
+				<form id="formulario{{idPliMercadoria}}" name="formulario{{idPliMercadoria}}" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar(true)">
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<label>Produto:</label>
+							<input #pliProduto type="text" id="txtProdutoPli" class="form-control" name="descricaoProduto" [(ngModel)]="produto" readonly />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-8">
+							<label>Mercadoria:</label>
+							<input type="text" id="txtMercadoriaPli" class="form-control" name="descricaoMercadoria" [(ngModel)]="mercadoria" readonly />
+						</div>
+
+						<div class="col-lg-4" *ngIf="model.tipoALI == 'Substitutiva'">
+							<label>LI Referência:</label>
+							<input type="text"
+								   id="txtLiReferencia"
+								   class="form-control"
+								   name="referenciaLI"
+								   autocomplete="off"
+								   [(ngModel)]="model.numeroLIReferencia"
+								   required
+								   [attr.disabled]="true"
+								   #referenciaLI />
+						</div>
+
+						<div class="col-lg-4" *ngIf="model.tipoALI == 'Retificadora'">
+							<label>DI Referência:</label>
+							<input type="text"
+								   id="txtDiReferencia"
+								   class="form-control"
+								   name="referenciaDI"
+								   autocomplete="off"
+								   [(ngModel)]="model.numeroLIRetificador"
+								   required
+								   [attr.disabled]="true"
+								   #referenciaDI />
+						</div>
+
+					</div>
+					<section class="panel panel-default">
+						<header class="panel-heading">
+							<ul class="nav nav-tabs nav-justified">
+								<li class="active"><a #abaDados href="#dados{{idPliMercadoria}}" data-toggle="tab">Dados <b *ngIf="model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.totalItens > 0" class="badge bg-danger pull-right" style="background-color: red;">{{model.validarDadosMercadoria.totalItens}}</b></a></li>
+								<li><a href="#detalhe{{idPliMercadoria}}" data-toggle="tab">Detalhes <b *ngIf="model.validarDetalhesMercadoria != undefined && model.validarDetalhesMercadoria.totalItens > 0" class="badge bg-danger pull-right" style="background-color: red;">{{model.validarDetalhesMercadoria.totalItens}}</b></a></li>
+								<li><a href="#fornecedor{{idPliMercadoria}}" data-toggle="tab">Fornecedor/Fabricante <b *ngIf="model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.totalItens > 0" class="badge bg-danger pull-right" style="background-color: red;">{{model.validarFornecedorFabricanteMercadoria.totalItens}}</b></a></li>
+								<!--<li><a href="#fabricante" data-toggle="tab">Fabricante</a></li>-->
+								<li><a href="#negociacao{{idPliMercadoria}}" data-toggle="tab">Negociação <b *ngIf="model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.totalItens > 0" class="badge bg-danger pull-right" style="background-color: red;">{{model.validarNegociacaoMercadoria.totalItens}}</b></a></li>
+								<li><a href="#complemento{{idPliMercadoria}}" data-toggle="tab">Complemento</a></li>
+							</ul>
+						</header>
+						<div class="panel-body">
+							<div class="tab-content m-t-none">
+
+								<!--dados-->
+								<div class="tab-pane active" id="dados{{idPliMercadoria}}">
+									<div class="row form-group">
+										<div class="col-lg-6" [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.pesoLiquido && (model.pesoLiquido == undefined || model.pesoLiquido == 0) }">
+											<label for="txtDados" class="control-label text-nowrap">Peso Líquido em KG:</label>
+											<input #pesoLiquido
+												   type="text"
+												   id="txtPesoLiquido"
+												   name="pesoLiquido"
+												   autocomplete="off"
+												   class="form-control"
+												   [readonly]="somenteLeitura"
+												   maxlength="18"
+												   (blur)="formatarMascaraSair(5, 1, 10)"/>
+										</div>
+										<div class="col-lg-6">
+											<label for="txtDados" class="control-label text-nowrap">Agência Secex:</label>
+											<input type="text"
+												   id="txtAgencia"
+												   name="agenciaSecex"
+												   autocomplete="off"
+												   class="form-control"
+												   [readonly]="isRetificador || somenteLeitura"
+												   [(ngModel)]="model.numeroAgenciaSecex"
+												   maxlength="5" />
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-lg-6" [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.quantidadeMedidaEstatistica && (model.quantidadeUnidadeMedidaEstatistica == undefined || model.quantidadeUnidadeMedidaEstatistica == 0) }">
+											<label for="txtDados" class="control-label text-nowrap">Quantidade na Medida Estatística:</label>
+											<input #quantidadeEstatistica
+												   type="text"
+												   id="txtQuantidadeEstatistica"
+												   name="txtQuantidadeEstatistica"
+												   autocomplete="off"
+												   class="form-control"
+												   [readonly]="somenteLeitura"												   
+												   maxlength="17"
+												   (blur)="formatarMascaraSair(5, 2, 9)"												   
+												    />
+										</div>
+										<div class="col-lg-6">
+											<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.moeda && model.idMoeda == undefined}">Moeda:</label>
+											<app-drop-list-select2 (valorModificado)="model.idMoeda = $event"
+																   name="idMoeda"
+																   servico="Moeda"
+																   [(ngModel)]="model.idMoeda"
+																   [isDisabled]="somenteLeitura"
+																   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																   [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.moeda && model.idMoeda == undefined}"
+																   #moeda>
+											</app-drop-list-select2>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-lg-6">
+											<label for="txtDados" class="control-label text-nowrap">Número do Comunicado de Compra:</label>
+											<input type="text"
+												   id="txtNumeroComunicadoCompra"
+												   name="txtNumeroComunicadoCompra"
+												   autocomplete="off"
+												   class="form-control"
+												   [readonly]="isRetificador || somenteLeitura"
+												   [(ngModel)]="model.numeroComunicadoCompra"
+												   maxlength="13" />
+										</div>
+										<div class="col-lg-6">
+											<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.incorterms && model.idIncoterms == undefined}">INCOTERMS:</label>
+											<app-drop-list-select2 (valorModificado)="model.idIncoterms = $event"
+																   name="idIncoterms"
+																   servico="Incoterms"
+																   [(ngModel)]="model.idIncoterms"
+																   [isDisabled]="somenteLeitura"
+																   [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.incorterms && model.idIncoterms == undefined}"
+																   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																   #incoterms>
+											</app-drop-list-select2>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-lg-6">
+											<label for="txtDados" class="control-label text-nowrap">Número do Ato Drawback:</label>
+											<input type="text"
+												   id="txtNumeroAtoDrawback"
+												   name="txtNumeroAtoDrawback"
+												   autocomplete="off"
+												   class="form-control"
+												   [readonly]="isRetificador || somenteLeitura"
+												   [(ngModel)]="model.numeroAtoDrawback"
+												   maxlength="13" />
+										</div>
+										<div class="col-lg-6">
+											<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.pais && model.codigoPais == undefined}">País:</label>
+											<app-drop-list-select2 (valorModificado)="model.codigoPais = $event"
+																   name="pais"
+																   servico="Pais"
+																   [(ngModel)]="model.codigoPais"
+																   [isDisabled]="somenteLeitura"
+																   [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.pais && model.codigoPais == undefined}"
+																   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																   #pais>
+											</app-drop-list-select2>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-lg-6">
+											<fieldset>
+												<legend>RFB</legend>
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.urfEntrada && model.idURFEntrada == undefined}">Entrada:</label>
+														<app-drop-list-select2 (valorModificado)="model.idURFEntrada = $event"
+																			   name="idEntrada"
+																			   servico="UnidadeReceitaFederal"
+																			   [(ngModel)]="model.idURFEntrada"
+																			   [isDisabled]="isRetificador || somenteLeitura"
+																			   [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.urfEntrada && model.idURFEntrada == undefined}"
+																			   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																			   #entrada>
+														</app-drop-list-select2>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-12">
+														<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.urfDespacho && model.idURFDespacho == undefined}">Despacho:</label>
+														<app-drop-list-select2 (valorModificado)="model.idURFDespacho = $event"
+																			   name="idDespacho"
+																			   servico="UnidadeReceitaFederal"
+																			   [(ngModel)]="model.idURFDespacho"
+																			   [isDisabled]="isRetificador || somenteLeitura"
+																			   [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.urfDespacho && model.idURFDespacho == undefined}"
+																			   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																			   #despacho>
+														</app-drop-list-select2>
+													</div>
+												</div>
+											</fieldset>
+										</div>
+										<div class="col-lg-6">
+											<fieldset>
+												<legend>REGIME DE TRIBUTAÇÃO</legend>
+												<div class="row form-group">
+													<div class="col-lg-12" [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.regimeTributario && (model.idRegimeTributario == undefined || model.idRegimeTributario == 0)}">
+														<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.regimeTributario && (model.idRegimeTributario == undefined || model.idRegimeTributario == 0)}">Regime Tributário:</label>
+														<app-drop-list name="model.idRegimeTributario"
+																	   servico="RegimeTributarioOpcoesFixas"
+																	   [isDisabled]="isRetificador || somenteLeitura"
+																	   [placeholder]="somenteLeitura ? '' : 'Selecione uma opção'"
+																	   [(ngModel)]="model.idRegimeTributario"
+																	   #regimeTributario>
+														</app-drop-list>
+
+													</div>
+												</div>
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<label [ngClass]="{'errorColor': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.fundamentoLegal && model.idFundamentoLegal == undefined}">Fundamento Legal:</label>
+														<app-drop-list-select2 (valorModificado)="model.idFundamentoLegal = $event"
+																			   name="idFundamento"
+																			   servico="FundamentoLegal"
+																			   [(ngModel)]="model.idFundamentoLegal"
+																			   [isDisabled]="isRetificador || somenteLeitura"
+																			   [ngClass]="{'has-error': model.validarDadosMercadoria != undefined && model.validarDadosMercadoria.fundamentoLegal && model.idFundamentoLegal == undefined}"
+																			   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																			   selMinimumInputLength="2"
+																			   #fundamentolegal>
+														</app-drop-list-select2>
+													</div>
+												</div>
+												<div class="row form-group">
+													<div class="col-lg-6">
+														<label for="txtDados" class="control-label text-nowrap">CRA (%):</label>
+														<input type="text"
+															   id="txtCRA"
+															   name="txtCRA"
+															   autocomplete="off"
+															   class="form-control"
+															   [readonly]="isRetificador || somenteLeitura"
+															   [value]="mascara()"
+															   [(ngModel)]="model.valorCRA"
+															   disabled
+															   #txtCRA />
+													</div>
+												</div>
+											</fieldset>
+										</div>
+									</div>
+									<div class="row form-group">
+									</div>
+								</div>
+
+								<!--detalhe-->
+								<div class="tab-pane" id="detalhe{{idPliMercadoria}}">
+									<form id="formularioDetalhe{{idPliMercadoria}}" name="formularioDetalhe{{idPliMercadoria}}" #formularioDetalhe="ngForm" ngNativeValidate (ngSubmit)="incluirItemMercadoria()">
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label [ngClass]="{'errorColor': model.validarDetalhesMercadoria != undefined && model.validarDetalhesMercadoria.itemMercadoria && idDetalheMercadoria == undefined && listaItemMercadoria.length == 0}">Item da Mercadoria:</label>
+												<app-drop-list-select2 (valorModificado)="idDetalheMercadoria = $event"
+																	   name="idDetalheMercadoria"
+																	   [isDisabled]="somenteLeitura"
+																	   required
+																	   servico="ViewDetalheMercadoria"
+																	   [(ngModel)]="modelDetalheMercadoria.idDetalheMercadoria"
+																	   [parametro]="model.codigoNCMMercadoria"
+																	   parametroChave="codigoNCMMercadoria"
+																	   [parametro1]="model.codigoProduto"
+																	   parametroChave1="codigoProduto"
+																	   [parametro2]="1"
+																	   parametroChave2="StatusDetalheMercadoria"
+																	   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																	   #itemMercadoria>
+												</app-drop-list-select2>
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label class="control-label text-nowrap">Complemento da Descrição:</label>
+												<textarea #complemento
+														  class="form-control"
+														  rows="5"
+														  maxlength="3723"
+														  name="txtComplementoDescricao"
+														  [readonly]="somenteLeitura"
+														  id="txtComplementoDescricao"
+														  [(ngModel)]="modelDetalheMercadoria.descricaoComplemento"
+														  (keydown)="onKeyDown($event)"></textarea>
+												<span class="help-block m-b-none">Quantidade de Caracteres: {{ 3723 - complemento.value.length }}</span>
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-4">
+												<label for="txtDados" class="control-label text-nowrap">Matéria Prima Básica:</label>
+												<input type="text"
+													   id="txtMateriaPrimaBasica"
+													   name="txtMateriaPrimaBasica"
+													   autocomplete="off"
+													   class="form-control"
+													   [(ngModel)]="modelDetalheMercadoria.descricaoMateriaPrimaBasica"
+													   [readonly]="somenteLeitura"
+													   maxlength="20" />
+											</div>
+											<div class="col-lg-4">
+												<label for="txtDados" class="control-label text-nowrap">Part Number:</label>
+												<input type="text"
+													   id="txtPartNumber"
+													   name="txtDados"
+													   autocomplete="off"
+													   class="form-control"
+													   [(ngModel)]="modelDetalheMercadoria.descricaoPartNumber"
+													   [readonly]="somenteLeitura"
+													   maxlength="20" />
+											</div>
+											<div class="col-lg-4">
+												<label for="txtDados" class="control-label text-nowrap">Ref. Fabricante:</label>
+												<input type="text"
+													   id="txtFabricante"
+													   name="txtFabricante"
+													   autocomplete="off"
+													   class="form-control"
+													   [(ngModel)]="modelDetalheMercadoria.descricaoREFFabricante"
+													   [readonly]="somenteLeitura"
+													   maxlength="20" />
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-6">
+												<label [ngClass]="{'errorColor': model.validarDetalhesMercadoria != undefined && model.validarDetalhesMercadoria.unidadeComercializada && idUnidadeMedida == undefined && listaItemMercadoria.length == 0}">Unidade Comercializada:</label>
+												<app-drop-list-select2 (valorModificado)="idUnidadeMedida = $event"
+																	   name="idUnidadeComercializada"
+																	   [isDisabled]="somenteLeitura"
+																	   servico="ViewUnidadeMedida"
+																	   [(ngModel)]="modelDetalheMercadoria.idUnidadeMedida"
+																	   [placeholder]="somenteLeitura ? '' : 'Informe a sigla ou a descrição'"
+																	   selMinimumInputLength="1"
+																	   [ngClass]="{'has-error': model.validarDetalhesMercadoria != undefined && model.validarDetalhesMercadoria.unidadeComercializada && idUnidadeMedida == undefined && listaItemMercadoria.length == 0}"
+																	   #unidadeComercializada>
+												</app-drop-list-select2>
+											</div>
+											<div class="col-lg-6" [ngClass]="{'has-error': model.validarDetalhesMercadoria != undefined && model.validarDetalhesMercadoria.quantidadeUnidadeComercializada && (modelDetalheMercadoria.quantidadeComercializada == undefined || modelDetalheMercadoria.quantidadeComercializada == 0) && listaItemMercadoria.length == 0}">
+												<label for="txtQuantidadeUnidadeComercializada" class="control-label text-nowrap">Quantidade Unidade Comercializada:</label>
+												<input type="text"
+													   id="txtQuantidadeUnidadeComercializada"
+													   name="txtQuantidadeUnidadeComercializada"
+													   autocomplete="off"
+													   class="form-control"
+													   (blur)="formatarMascaraSair(5, 3, 9)"
+													   [readonly]="somenteLeitura"
+													   maxlength="17"
+													   #quantidadeUnidadeComercializada />
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-4" [ngClass]="{'has-error': model.validarDetalhesMercadoria != undefined && model.validarDetalhesMercadoria.valorUnitarioCondicaoVenda && (modelDetalheMercadoria.valorUnitarioCondicaoVenda == undefined || modelDetalheMercadoria.valorUnitarioCondicaoVenda == 0) && listaItemMercadoria.length == 0}">
+												<label for="txtValorUnCondVenda" class="control-label text-nowrap">Valor Unitário Condição Venda:</label>
+												<input type="text"
+													   id="txtValorUnCondVenda"
+													   name="txtValorUnCondVenda"
+													   autocomplete="off"
+													   class="form-control"
+													   [readonly]="somenteLeitura"
+													   (blur)="formatarMascaraSair(7, 4, 11)"
+													   maxlength="22"
+													   placeholder="Informe o valor"
+													   #valorUnitarioCondicaoVenda />
+											</div>
+											<div class="col-lg-4">
+												<label for="txtValorCondVenda" class="control-label text-nowrap">Valor na Condição Venda:</label>
+												<input #valorCondicaoVendaInput
+													   type="text"
+													   id="txtValorCondVenda"
+													   name="txtValorCondVenda"
+													   autocomplete="off"
+													   class="form-control"
+													   [readonly]="somenteLeitura"
+													   maxlength="22"
+													   disabled />
+											</div>
+											<div class="col-lg-4">
+												<label for="txtValorCondVenda" class="control-label text-nowrap">Valor Total na Condição Venda:</label>
+												<input type="text"
+													   id="txtValorToCondVenda"
+													   name="txtValorToCondVenda"
+													   autocomplete="off"
+													   class="form-control"
+													   [(ngModel)]="valorDecimalTotal"
+													   [readonly]="somenteLeitura"
+													   formatar-numero="true"
+													   maxlength="24"
+													   disabled />
+											</div>
+										</div>
+
+										<!--botão incluir na lista-->
+										<div class="pull-right m-b">
+											<button [disabled]="somenteLeitura" type="button" class="btn btn-sm btn-primary" (click)="incluirItemMercadoria()"><span class="fa fa-plus m-r-xs"></span>Incluir Item na Lista</button>
+										</div>
+
+										<!--grid-->
+										<div class="row">
+											<!--[hidden]="ocultarGrid" -->
+											<div class="col-lg-12">
+
+												<app-manter-pli-detalhe-mercadoria-grid [(lista)]="gridDetalheMercadoria.lista"
+																						[(total)]="gridDetalheMercadoria.total"
+																						[(size)]="gridDetalheMercadoria.size"
+																						[(page)]="gridDetalheMercadoria.page"
+																						[(parametros)]="parametros"
+																						[(isShowPanel)]="isShowPanel"
+																						[(somenteLeitura)]="somenteLeitura">
+												</app-manter-pli-detalhe-mercadoria-grid>
+											</div>
+										</div>
+
+										<!--fim da grid-->
+									</form>
+								</div>
+
+								<!--fornecedor-->
+								<div class="tab-pane" id="fornecedor{{idPliMercadoria}}">
+
+									<div class="row form-group">
+										<div class="col-lg-6" [ngClass]="{'has-error': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.tipoFornecedor && (model.tipoFornecedor == undefined || model.tipoFornecedor == 0)}">
+											<label [ngClass]="{'errorColor': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.tipoFornecedor && (model.tipoFornecedor == undefined || model.tipoFornecedor == 0)}">Tipo do Fornecedor:</label>
+											<select id="TipoFornecedor"
+													name="TipoFornecedor"
+													[(ngModel)]="model.tipoFornecedor"
+													class="form-control"
+													[disabled]="somenteLeitura">
+												<option *ngFor="let op of tipoFornecedor"
+														[ngValue]="op.idTipoFornecedor"
+														[selected]="op.idTipoFornecedor === model.tipoFornecedor">
+													{{op.descricao}}
+												</option>
+											</select>
+										</div>
+
+
+										<div *ngIf="model.tipoFornecedor == 3" class="col-lg-6">
+											<label [ngClass]="{'errorColor': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.paisOrigem && model.codigoPaisOrigemFabricante == undefined}">País Origem:</label>
+											<app-drop-list-select2 (valorModificado)="model.codigoPaisOrigemFabricante = $event"
+																   name="codigoPais"
+																   servico="Pais"
+																   [(ngModel)]="model.codigoPaisOrigemFabricante"
+																   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																   [ngClass]="{'has-error': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.paisOrigem && model.codigoPaisOrigemFabricante == undefined}"
+																   [isDisabled]="somenteLeitura"
+																   #idPaisOrigem>
+											</app-drop-list-select2>
+										</div>
+
+									</div>
+
+									<div *ngIf="model.tipoFornecedor == 1 || model.tipoFornecedor == 2" class="row">
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+
+												<header class="panel-heading">
+													<a class="accordion-toggle font-bold cursor-pointer"
+													   data-toggle="collapse"
+													   [attr.data-target]="'#fornecedor2'"
+													   (click)="changeIconColFor()">
+														<i class="fa fa-plus-square-o a" id="abaFornecedor"></i>
+														Fornecedor
+													</a>
+												</header>
+
+												<div id="fornecedor2" class="panel-collapse collapse">
+													<article class="panel-body">
+														<div class="tab-pane" id="fornecedorPane">
+
+															<div class="row form-group">
+																<div class="col-lg-10" *ngIf="!somenteLeituraFor">
+																	<label [ngClass]="{'errorClass': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fornecedor}">Fornecedor:</label>
+
+																	<app-drop-list-select2 (valorModificado)="
+																												parametros.codigoPaisFornecedor == undefined ? parametros.codigoPaisFornecedor = fornecedorEmpresa.model.pais : fornecedorEmpresa.model.pais = parametros.codigoPaisFornecedor;
+																												parametros.logradouroFornecedor == undefined ? parametros.logradouroFornecedor = fornecedorEmpresa.model.logradouro : fornecedorEmpresa.model.logradouro = parametros.logradouroFornecedor;
+																												parametros.complementoFornecedor == undefined ? parametros.complementoFornecedor = fornecedorEmpresa.model.complemento : fornecedorEmpresa.model.complemento = parametros.complementoFornecedor;
+																												parametros.numeroFornecedor == undefined ? parametros.numeroFornecedor = fornecedorEmpresa.model.numero : fornecedorEmpresa.model.numero = parametros.numeroFornecedor;
+																												parametros.cidadeFornecedor == undefined ? parametros.cidadeFornecedor = fornecedorEmpresa.model.cidade : fornecedorEmpresa.model.cidade = parametros.cidadeFornecedor;
+																						  						parametros.estadoFornecedor == undefined ? parametros.estadoFornecedor = fornecedorEmpresa.model.estado : fornecedorEmpresa.model.estado = parametros.estadoFornecedor;
+																												model.idFornecedor = $event
+																											"
+																						   (limparObjetosAuxiliares)="
+																							 parametros.estadoFornecedor = parametros.cidadeFornecedor = parametros.numeroFornecedor = parametros.complementoFornecedor = parametros.logradouroFornecedor = parametros.codigoPaisFornecedor = $event
+																							"
+																						   name="idFornecedor"
+																						   servico="Fornecedor"
+																						   parametro="{{CNPJ}}"
+																						   parametroChave="CNPJImportador"
+																						   [(ngModel)]="model.idFornecedor"
+																						   [isDisabled]="somenteLeitura"
+																						   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																						   [ngClass]="{'errorClass': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fornecedor}"
+																						   #fornecedorEmpresa>
+																	</app-drop-list-select2>
+																</div>
+
+																<div class="col-lg-10" *ngIf="somenteLeituraFor">
+																	<label for="txtNomeForn" class="control-label text-nowrap" [ngClass]="{'errorClass': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fornecedor}">Fornecedor:</label>
+																	<input type="text"
+																		   id="txtNomeFornecedor"
+																		   name="txtNomeFornecedor"
+																		   autocomplete="off"
+																		   [(ngModel)]="parametros.nomeFornecedor"
+																		   [ngClass]="{'errorClass': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fornecedor}"
+																		   class="form-control"
+																		   [readonly]="true" />
+																</div>
+
+																<div class="col-lg-2" style="margin-top: 25px;" *ngIf="somenteLeituraFor">
+																	<button *ngIf="!somenteLeitura" #btnAlterarForFab type="button" class="btn btn-primary btn-sm" (click)="habilitarFor()"><span class="fa fa-times"></span> Alterar</button>
+																</div>
+															</div>
+
+															<fieldset>
+																<legend>Endereço do Fornecedor</legend>
+																<div class="row form-group">
+
+																	<div class="col-lg-4">
+																		<label for="txtPaisAquisicao" class="control-label text-nowrap">País de Aquisição:</label>
+																		<input type="text"
+																			   id="txtPaisDeAquisicao"
+																			   name="txtPaisDeAquisicao"
+																			   autocomplete="off"
+																			   [(ngModel)]="parametros.codigoPaisFornecedor"
+																			   class="form-control"
+																			   [readonly]="true" />
+																	</div>
+															
+																	<div class="col-lg-4">
+																		<label for="lblLogradouroFornecedor" class="control-label text-nowrap">Logradouro:</label>
+																		<input type="text"
+																			   id="txtLogradouroFornecedor"
+																			   name="txtLogradouroFornecedor"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="40"
+																			   [(ngModel)]="parametros.logradouroFornecedor"
+																			   [readonly]="true" />
+																	</div>
+
+																	<div class="col-lg-4">
+																		<label for="lblComplementoFornecedor" class="control-label text-nowrap">Complemento:</label>
+																		<input type="text"
+																			   id="txtComplementoFornecedor"
+																			   name="txtComplementoFornecedor"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="21"
+																			   [(ngModel)]="parametros.complementoFornecedor"
+																			   [readonly]="true" />
+																	</div>
+																</div>
+
+																<div class="row form-group">
+																	<div class="col-lg-4">
+																		<label for="lblNumeroFornecedor" class="control-label text-nowrap">Número:</label>
+																		<input type="text"
+																			   id="txtNumeroFornecedor"
+																			   name="txtNumeroFornecedor"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   [(ngModel)]="parametros.numeroFornecedor"
+																			   [readonly]="true"
+																			   maxlength="6" />
+																	</div>
+																	<div class="col-lg-4">
+																		<label for="lblCidadeFornecedor" class="control-label text-nowrap">Cidade:</label>
+																		<input type="text"
+																			   id="txtCidadeFornecedor"
+																			   name="txtCidadeFornecedor"
+																			   class="form-control"
+																			   maxlength="25"
+																			   [(ngModel)]="parametros.cidadeFornecedor"
+																			   [readonly]="true" />
+																	</div>
+																	<div class="col-lg-4">
+																		<label for="lblEstadoFornecedor" class="control-label text-nowrap">Estado:</label>
+																		<input type="text"
+																			   id="txtEstadoFornecedor"
+																			   name="txtEstadoFornecedor"
+																			   class="form-control"
+																			   maxlength="25"
+																			   [(ngModel)]="parametros.estadoFornecedor"
+																			   [readonly]="true" />
+																	</div>
+																</div>
+															</fieldset>
+														</div>
+
+													</article>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="line"></div>
+									<div *ngIf="model.tipoFornecedor == 2" class="row">
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+												<header class="panel-heading clearfix">
+													<a class="accordion-toggle font-bold cursor-pointer"
+													   data-toggle="collapse"
+													   [attr.data-target]="'#fabricante1'"
+													   (click)="changeIconColFab()">
+														<i class="fa fa-plus-square-o b" id="abaFabricante"></i>
+														Fabricante
+													</a>
+												</header>
+
+												<div id="fabricante1" class="panel-collapse collapse">
+													<article class="panel-body">
+														<div class="tab-pane" id="fabricantePane">
+															<div class="row form-group">
+																<div class="col-lg-10" *ngIf="!somenteLeituraFab">
+																	<label [ngClass]="{'errorClass': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fabricante && model.idFabricante == undefined}">Fabricante:</label>
+																	<app-drop-list-select2 (valorModificado)="
+																												parametros.codigoPaisFabricante == undefined ? parametros.codigoPaisFabricante = fabricanteEmpresa.model.pais : fabricanteEmpresa.model.pais = parametros.codigoPaisFabricante;
+																												parametros.logradouroFabricante == undefined ? parametros.logradouroFabricante = fabricanteEmpresa.model.logradouro : fabricanteEmpresa.model.logradouro = parametros.logradouroFabricante;
+																												parametros.complementoFabricante == undefined ? parametros.complementoFabricante = fabricanteEmpresa.model.complemento : fabricanteEmpresa.model.complemento = parametros.complementoFabricante;
+																												parametros.numeroFabricante == undefined ? parametros.numeroFabricante = fabricanteEmpresa.model.numero : fabricanteEmpresa.model.numero = parametros.numeroFabricante;
+																												parametros.cidadeFabricante == undefined ? parametros.cidadeFabricante = fabricanteEmpresa.model.cidade : fabricanteEmpresa.model.cidade = parametros.cidadeFabricante;
+																						  						parametros.estadoFabricante == undefined ? parametros.estadoFabricante = fabricanteEmpresa.model.estado : fabricanteEmpresa.model.estado = parametros.estadoFabricante;
+																												model.idFabricante = $event
+																											"
+																						   (limparObjetosAuxiliares)="
+																													parametros.cidadeFabricante = parametros.estadoFabricante = parametros.complementoFabricante = parametros.numeroFabricante = parametros.logradouroFabricante =	parametros.codigoPaisFabricante = $event
+																													"
+																						   name="idFabricante"
+																						   servico="Fabricante"
+																						   parametro="{{CNPJ}}"
+																						   parametroChave="CNPJImportador"
+																						   [(ngModel)]="model.idFabricante"
+																						   [isDisabled]="somenteLeitura"
+																						   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																						   [ngClass]="{'has-error': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fabricante && model.idFabricante == undefined}"
+																						   #fabricanteEmpresa>
+																	</app-drop-list-select2>
+																</div>
+
+																<div class="col-lg-10" *ngIf="somenteLeituraFab">
+																	<label for="txtNomeFab" [ngClass]="{'has-error': parametros.nomeFabricante == undefined}" class="control-label text-nowrap">Fabricante:</label>
+																	<input type="text"
+																		   id="txtNomeFabricante"
+																		   name="txtNomeFabricante"
+																		   autocomplete="off"
+																		   [(ngModel)]="parametros.nomeFabricante"
+																		   [ngClass]="{'has-error': model.validarFornecedorFabricanteMercadoria != undefined && model.validarFornecedorFabricanteMercadoria.fabricante && model.idFabricante == undefined}"
+																		   class="form-control"
+																		   [readonly]="true" />
+																</div>
+
+																<div class="col-lg-2" style="margin-top: 25px;" *ngIf="somenteLeituraFab">
+																	<button *ngIf="!somenteLeitura" #btnAlterarForFabr type="button" class="btn btn-primary btn-sm" (click)="habilitarFab()"><span class="fa fa-times"></span> Alterar</button>
+																</div>
+															</div>
+
+															<fieldset>
+																<legend>Endereço do Fabricante</legend>
+																<div class="row form-group">
+
+																	<div class="col-lg-4">
+																		<label for="txtPais" class="control-label text-nowrap">País:</label>
+																		<input type="text"
+																			   id="txtPais"
+																			   name="txtPais"
+																			   autocomplete="off"
+																			   [(ngModel)]="parametros.codigoPaisFabricante"
+																			   class="form-control"
+																			   [readonly]="true" />
+																	</div>
+																	
+																	<div class="col-lg-4">
+																		<label for="lblLogradouroFabricante" class="control-label text-nowrap">Logradouro:</label>
+																		<input type="text"
+																			   id="txtLogradouroFabricante"
+																			   name="txtLogradouroFabricante"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="40"
+																			   [(ngModel)]="parametros.logradouroFabricante"
+																			   [readonly]="true" />
+																	</div>
+
+																	<div class="col-lg-4">
+																		<label for="lblComplementoFabricante" class="control-label text-nowrap">Complemento:</label>
+																		<input type="text"
+																			   id="txtComplementoFabricante"
+																			   name="txtComplementoFabricante"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="21"
+																			   [(ngModel)]="parametros.complementoFabricante"
+																			   [readonly]="true" />
+																	</div>
+																</div>
+
+
+																<div class="row form-group">
+																	<div class="col-lg-4">
+																		<label for="txtNumeroFabricante" class="control-label text-nowrap">Número:</label>
+																		<input type="text"
+																			   id="txtNumeroFabricante"
+																			   name="txtNumeroFabricante"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="6"
+																			   [(ngModel)]="parametros.numeroFabricante"
+																			   [readonly]="true" />
+																	</div>
+																	<div class="col-lg-4">
+																		<label for="lblCidade" class="control-label text-nowrap">Cidade:</label>
+																		<input type="text"
+																			   id="txtCidadeFabricante"
+																			   name="txtCidadeFabricante"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="25"
+																			   [(ngModel)]="parametros.cidadeFabricante"
+																			   [readonly]="true" />
+																	</div>
+																	<div class="col-lg-4">
+																		<label for="lblEstadoFabricante" class="control-label text-nowrap">Estado:</label>
+																		<input type="text"
+																			   id="txtEstadoFabricante"
+																			   name="txtEstadoFabricante"
+																			   autocomplete="off"
+																			   class="form-control"
+																			   maxlength="25"
+																			   [(ngModel)]="parametros.estadoFabricante"
+																			   [readonly]="true" />
+																	</div>
+																</div>
+															</fieldset>
+														</div>
+
+
+													</article>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+
+								<!--negociacao-->
+								<div class="tab-pane" id="negociacao{{idPliMercadoria}}">
+									<fieldset>
+										<legend>Cobertura Cambial</legend>
+										<div class="row form-group">
+
+											<div class="col-lg-12" [ngClass]="{'has-error': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.tipoCobertura && (model.tipoCOBCambial == undefined || model.tipoCOBCambial == 0)}">
+												<label [ngClass]="{'errorColor': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.tipoCobertura && (model.tipoCOBCambial == undefined || model.tipoCOBCambial == 0)}">Tipo de Cobertura:</label>
+												<select id="TipoCobertura"
+														name="TipoCobertura"
+														(change)="onChangeOpcaoTipoCobertura()"
+														[(ngModel)]="model.tipoCOBCambial"
+														class="form-control"
+														[disabled]="somenteLeitura">
+													<option *ngFor="let op of tipoCobertura"
+															[ngValue]="op.idTipoCobertura"
+															[selected]="op.idTipoCobertura === 0">
+														{{op.descricao}}
+													</option>
+												</select>
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-6">
+												<label [ngClass]="{'errorColor': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.modalidadePagamento && model.idModalidadePagamento == undefined}">Modalidade Pagamento:</label>
+												<app-drop-list-select2 (valorModificado)="model.idModalidadePagamento = $event"
+																	   name="idModalidadePagamento"
+																	   servico="ModalidadePagamento"
+																	   [placeholder]="somenteLeitura || model.tipoCOBCambial == 0 || model.tipoCOBCambial == 3 || model.tipoCOBCambial == 4 ? '' : 'Infome o código ou a descrição'"
+																	   [(ngModel)]="model.idModalidadePagamento"
+																	   [ngClass]="{'has-error': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.modalidadePagamento && model.idModalidadePagamento == undefined}"
+																	   [isDisabled]="somenteLeitura || (model.tipoCOBCambial == 0 || model.tipoCOBCambial == 3 || model.tipoCOBCambial == 4)"
+																	   selMinimumInputLength="2"
+																	   #idModalidadePagamento>
+												</app-drop-list-select2>
+											</div>
+											<div class="col-lg-6">
+												<label [ngClass]="{'errorColor': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.motivo && model.idMotivo == undefined}">Motivo:</label>
+												<app-drop-list-select2 (valorModificado)="model.idMotivo = $event"
+																	   name="idMotivo"
+																	   servico="Motivo"
+																	   [(ngModel)]="model.idMotivo"
+																	   [isDisabled]="somenteLeitura || (model.tipoCOBCambial == 0 || model.tipoCOBCambial == 1 || model.tipoCOBCambial == 2 || model.tipoCOBCambial == 3) "
+																	   [ngClass]="{'has-error': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.motivo && model.idMotivo == undefined}"
+																	   [placeholder]="somenteLeitura || model.tipoCOBCambial == 0 || model.tipoCOBCambial == 1 || model.tipoCOBCambial == 2 || model.tipoCOBCambial == 3 ? '' : 'Infome o código ou a descrição'"
+																	   selMinimumInputLength="2"
+																	   #idMotivo>
+												</app-drop-list-select2>
+											</div>
+										</div>
+										<div class="row form-group">
+											<div class="col-lg-6">
+												<label [ngClass]="{'errorColor': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.instituicaoFinanceira && model.idInstituicaoFinanceira == undefined}">Instituição Financeira:</label>
+												<app-drop-list-select2 (valorModificado)="model.idInstituicaoFinanceira = $event"
+																	   name="idInstituicaoFinanceira"
+																	   servico="InstituicaoFinanceira"
+																	   [(ngModel)]="model.idInstituicaoFinanceira"
+																	   [ngClass]="{'has-error': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.instituicaoFinanceira && model.idInstituicaoFinanceira == undefined}"
+																	   [isDisabled]="somenteLeitura || (model.tipoCOBCambial == 0 || model.tipoCOBCambial == 1 || model.tipoCOBCambial == 2 || model.tipoCOBCambial == 4)"
+																	   [placeholder]="somenteLeitura || model.tipoCOBCambial == 0 || model.tipoCOBCambial == 1 || model.tipoCOBCambial == 2 || model.tipoCOBCambial == 4? '' : 'Infome o código ou a descrição'"
+																	   selMinimumInputLength="2"
+																	   #instituicaoFinanceira>
+												</app-drop-list-select2>
+											</div>
+											<div class="col-lg-6" [ngClass]="{'has-error': model.validarNegociacaoMercadoria != undefined && model.validarNegociacaoMercadoria.limitePagamentoDias && model.numeroCOBCambialLimiteDiasPagamento == undefined}">
+												<label for="txtLimitePgtoDias" class="control-label text-nowrap">Limite de Pagamento Dias:</label>
+												<input type="text"
+													   id="txtLimitePgtoDias"
+													   name="txtLimitePgtoDias"
+													   autocomplete="off"
+													   class="form-control"
+													   maxlength="3"
+													   onlyNumber="true"
+													   [(ngModel)]="model.numeroCOBCambialLimiteDiasPagamento"
+													   [readonly]="somenteLeitura || (model.tipoCOBCambial == 0 || model.tipoCOBCambial == 2 || model.tipoCOBCambial == 3 || model.tipoCOBCambial == 4)" />
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset>
+										<legend>Acordos Tarifários</legend>
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label>Acordo ALADI:</label>
+												<app-drop-list-select2 (valorModificado)="model.idAladi = $event"
+																	   name="idAcordoAladi"
+																	   servico="Aladi"
+																	   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																	   [isDisabled]="somenteLeitura"
+																	   [(ngModel)]="model.idAladi"
+																	   #acordoAladi>
+												</app-drop-list-select2>
+											</div>
+										</div>
+
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label>NALADI/SH:</label>
+												<app-drop-list-select2 (valorModificado)="model.idNaladi = $event"
+																	   name="idNaladi"
+																	   servico="Naladi"
+																	   [(ngModel)]="model.idNaladi"
+																	   [isDisabled]="somenteLeitura"
+																	   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																	   #naladi>
+												</app-drop-list-select2>
+											</div>
+										</div>
+
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label>Tipo:</label>
+												<select id="TipoAcordoTarifario"
+														name="TipoAcordoTarifario"
+														[(ngModel)]="model.tipoAcordoTarifario"
+														class="form-control"
+														[disabled]="somenteLeitura">
+
+													<option *ngFor="let op of tipoAcordoTarifario"
+															[ngValue]="op.idTipoAcordoTarifario"
+															[selected]="op.idTipoAcordoTarifario === 0">
+														{{op.descricao}}
+													</option>
+
+												</select>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset>
+										<legend>Destaque NCM</legend>
+										<div class="row form-group">
+											<div class="col-lg-2">
+												<label for="txtDestaque" class="control-label text-nowrap">Destaque NCM:</label>
+												<input type="text"
+													   id="txtDestaqueNCM"
+													   name="txtDestaqueNCM"
+													   autocomplete="off"
+													   class="form-control"
+													   [(ngModel)]="model.numeroNCMDestaque"
+													   maxlength="3"
+													   [readonly]="somenteLeitura"
+													   onlyNumber="true" />
+											</div>
+										</div>
+									</fieldset>
+								</div>
+
+								<!--complemento-->
+								<div class="tab-pane" id="complemento{{idPliMercadoria}}">
+									<form id="formularioComplemento{{idPliMercadoria}}" name="formularioComplemento{{idPliMercadoria}}" #formularioComplemento="ngForm" ngNativeValidate (ngSubmit)="incluirComplemento()">
+										<div class="row form-group">
+											<div class="col-lg-12">
+												<label class="control-label text-nowrap">Informações Complementares:</label>
+												<textarea #informacoesComplementares
+														  class="form-control"
+														  name="txtInformacoesComplementares"
+														  rows="5"
+														  [(ngModel)]="model.descricaoInformacaoComplementar"
+														  maxlength="4048"
+														  id="txtInformacoesComplementares"
+														  [readonly]="somenteLeitura"
+														  (keydown)="onKeyDown($event)">
+												</textarea>
+												<span class="help-block m-b-none">Quantidade de Caracteres: {{ 4048 - informacoesComplementares.value.length }}</span>
+											</div>
+										</div>
+
+										<div class="row form-group">
+											<div class="col-lg-12">
+
+												<legend>Condição</legend>
+
+												<div class="row form-group">
+													<div class="col-lg-12">
+														<div class="checkbox i-checks">
+															<label>
+																<input [disabled]="isRetificador || somenteLeitura" #bemFabricado type="checkbox" name="radio[custom]" value="1"><i></i> Bem fabricado sob encomenda
+															</label>
+														</div>
+														<div class="checkbox i-checks">
+															<label>
+																<input [disabled]="isRetificador || somenteLeitura" #materialUsado type="checkbox" name="radio[custom]" value="1"><i></i> Material usado
+															</label>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<fieldset>
+											<legend>Processo Anuente</legend>
+											<div class="row form-group">
+												<div class="col-lg-12">
+													<label for="txtNumero" class="control-label text-nowrap">Número Processo:</label>
+													<input type="text"
+														   id="txtNumeroProcesso"
+														   name="txtNumeroProcesso"
+														   autocomplete="off"
+														   class="form-control"
+														   [readonly]="somenteLeitura"
+														   maxlength="20"
+														   [(ngModel)]="modelProcessoAnuente.numeroProcesso"
+														   #numeroProcesso />
+												</div>
+											</div>
+											<div class="row form-group">
+												<div class="col-lg-12">
+													<label>Órgão Anuente:</label>
+													<app-drop-list-select2 (valorModificado)="modelProcessoAnuente.idOrgaoAnuente = $event"
+																		   name="idOrgaoAnuente"
+																		   servico="OrgaoAnuente"
+																		   [isDisabled]="somenteLeitura"
+																		   [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'"
+																		   [(ngModel)]="modelProcessoAnuente.idOrgaoAnuente"
+																		   selMinimumInputLength="2"
+																		   #orgaoAnuente>
+													</app-drop-list-select2>
+												</div>
+											</div>
+
+											<!--incluir lista-->
+
+											<div class="row form-group">
+												<div class="col-lg-12">
+													<div class="text-right">
+														<button [disabled]="somenteLeitura" type="button" class="btn btn-sm btn-primary" (click)="incluirComplemento()"><span class="fa fa-plus m-r-xs"></span>Incluir na Lista</button>
+													</div>
+												</div>
+											</div>
+
+											<!--grid-->
+											<!--[hidden]="ocultarGrid" -->
+											<div class="row">
+												<div class="col-lg-12">
+
+													<app-manter-pli-processo-anuente-grid [(lista)]="gridProcessoAnuente.lista"
+																						  [(total)]="gridProcessoAnuente.total"
+																						  [(size)]="gridProcessoAnuente.size"
+																						  [(page)]="gridProcessoAnuente.page"
+																						  [(parametros)]="parametros"
+																						  [(isShowPanel)]="isShowPanel"
+																						  [(somenteLeitura)]="somenteLeitura">
+													</app-manter-pli-processo-anuente-grid>
+												</div>
+											</div>
+										</fieldset>
+									</form>
+								</div>
+							</div>
+						</div>
+					</section>
+				</form>
+			</div>
+			<div *ngIf="total == 0" class="modal-footer" style="padding: 10px 15px;">
+				<button [ngClass]=" {'display-none': !somenteLeitura}" type="button" class="btn btn-sm btn-default" (click)="fechar('salvo')"><span class="fa fa-long-arrow-left m-r-xs"></span> Voltar</button>
+				<button [ngClass]=" {'display-none': somenteLeitura}" type="button" class="btn btn-sm btn-default" (click)="fechar('')"><span class="fa fa-times"></span> Cancelar</button>
+				<button [ngClass]=" {'display-none': somenteLeitura}" id="Cadastrar" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()"><span class="fa fa-save"></span> Salvar</button>
+			</div>
+			<div *ngIf="total > 0" class="modal-footer" style="padding: 10px 15px;">
+				<div class="col-sm-4 text-left m1">
+					<span class="text-muted inline m-t-sm m-b-sm">Mostrando {{indexAtual+1}} de {{total}} mercadorias</span>
+				</div>
+
+				<div class="col-sm-8 text-right">
+					<button type="button" class="btn btn-sm btn-default" (click)="fechar('')"><span class="fa fa-times"></span> Cancelar</button>
+					<a *ngIf="(indexAtual+1) > 1 && (indexAtual+1) <= total" style="cursor:pointer" class="btn btn-sm btn-default btnPrevious" (click)="Anterior()"><i class="fa fa-arrow-left m-r-xs"></i>Anterior</a>
+					<a *ngIf="(indexAtual+1) > 0 && (indexAtual+1) < total" style="cursor:pointer" class="btn btn-sm btn-default btnNext" (click)="Proximo()"><i class="fa fa-arrow-right m-r-xs"></i>Próximo</a>
+					<button type="button" *ngIf="!((indexAtual+1) > 0 && (indexAtual+1) < total) || (indexAtual+1) == total" id="Cadastrar" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()"><span class="fa fa-save"></span> Salvar</button>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<div #appModalPliMercadoriaBackground class="modal-backdrop fade in" style="display: none;"></div>
+

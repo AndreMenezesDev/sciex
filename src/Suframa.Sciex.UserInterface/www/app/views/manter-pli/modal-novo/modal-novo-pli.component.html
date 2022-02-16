@@ -1,0 +1,87 @@
+<div #appModalNovoPli id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Novo PLI</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<label for="txtDescricao" class="required" >Tipo de PLI:</label>
+							<app-drop-list id="idTipoPLI"
+										   name="idTipoPLI"
+										   placeholder="Selecione uma opção"
+										   servico="PliTipoFixo"
+										   [(ngModel)]="model.tipoDocumento"
+										   required
+										   #tipoPLI>
+							</app-drop-list>
+						</div>						
+						<div class="col-lg-4" *ngIf="model.tipoDocumento == 2">
+							<label class="required">LI Referência:</label>
+							<input type="number"
+								   id="txtLiReferencia"
+								   class="form-control"
+								   name="referenciaLI"
+								   [(ngModel)]="model.numeroLIReferencia"
+								   required
+								   (keypress)="numericOnly($event)"
+								   min="1"
+								   max="1000000000"
+								   #referenciaLI />
+						</div>
+						<div class="col-lg-4" *ngIf="model.tipoDocumento == 3">
+							<label class="required">DI Referência:</label>
+							<input type="number"
+								   id="txtDiReferencia"
+								   class="form-control"
+								   name="txtDiReferencia"
+								   [(ngModel)]="model.numeroDIReferencia"
+								   required
+								   (keypress)="numericOnly($event)"
+								   min="1"
+								   max="10000000000"
+								   #referenciaDI />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<label class="required">Aplicação do PLI:</label>
+							<app-drop-list name="aplicacaoPLI"
+														 placeholder="Selecione uma opção"
+														 servico="PliAplicacaoFixo"
+														 isVisibleFieldCod="true"
+														 required
+														 [(ngModel)]="model.codigoPliAplicao">
+							</app-drop-list>				
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<label class="required">CPF Representante Legal SISCOMEX:</label>
+							<input 
+										 type="text"
+										 id="txtCPF"
+										 class="form-control"
+										 name="cpf"
+										 autocomplete="off"
+										 [(ngModel)]="cpfDigitado"
+										 cpf="true"
+										 (keyup)="removerHint()"
+										 cpfCnpj="true"
+										 maxlength="14"
+										 #cpf/>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-times"></span> Cancelar</button>
+				<button type="button" id="Cadastrar" class="btn btn-primary btn-sm" (click)="formulario.onSubmit()"><span class="fa fa-check"></span>Cadastrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalNovoPliBackground class="modal-backdrop fade in" style="display: none;"></div>

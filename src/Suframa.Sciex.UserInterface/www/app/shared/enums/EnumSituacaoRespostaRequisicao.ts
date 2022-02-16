@@ -1,0 +1,6 @@
+export enum EnumStatusRetornoRequisicao {	
+	ERRO = 0,
+	SUCESSO = 1,
+	PARIDADE_CAMBIAL_NAO_CADASTRADA = 2,
+	NAO_EXISTE_SOLCITACAO_ALTERACAO_CADASTRADA = 3
+}

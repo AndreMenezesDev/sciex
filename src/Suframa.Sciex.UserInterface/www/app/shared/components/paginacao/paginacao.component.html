@@ -1,0 +1,40 @@
+<div class="col-sm-8 text-right" style="background-color: white!important; font-size: 12px;">
+    <ul class="pagination pagination-sm m-t-xs m-b-none">
+        <li [class.disabled]="!canPrevious()">
+            <a href="javascript:void(0)"
+                (click)="selectPage(1)">
+                <i class="fa fa-angle-double-left"></i>
+                Primeira
+            </a>
+        </li>
+        <li [class.disabled]="!canPrevious()">
+            <a href="javascript:void(0)"
+                (click)="prevPage()">
+                <i class="fa fa-angle-left"></i>
+                Anterior
+            </a>
+        </li>
+        <li class="pages"
+            *ngFor="let pg of pages"
+            [class.active]="pg.number === page">
+            <a href="javascript:void(0)"
+                (click)="selectPage(pg.number)">
+                {{pg.text}}
+            </a>
+        </li>
+        <li [class.disabled]="!canNext()">
+            <a href="javascript:void(0)"
+                (click)="nextPage()">
+                Próxima
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </li>
+        <li [class.disabled]="!canNext()">
+            <a href="javascript:void(0)"
+                (click)="selectPage(totalPages)">
+                Última
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>

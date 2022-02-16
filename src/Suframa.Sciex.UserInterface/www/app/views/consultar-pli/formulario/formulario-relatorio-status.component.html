@@ -1,0 +1,64 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+	<div class="e row">
+		<div class="col-lg-12">
+			<section class="panel panel-default m-t">
+				<header class="panel-heading FixPanelHeading">
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+					<h2 class="panel-title h5">Relatório de Análise do PLI</h2>
+				</header>
+				<form class="form" role="form">
+					<article class="panel-body text-sm">
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-8">
+								<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{model.cnpj}} | {{model.razaoSocial}}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12 m-b">
+								<div class="col-lg-3">
+									<a routerLink="/consultar-pli/{{model.idPLI}}/visualizar-detalhamento-pli" style="color: #234884;">
+										<label class="m-r-xs">Nº PLI:</label><span>{{model.numeroPliConcatenado}}</span>
+									</a>
+								</div>
+								<div class="col-lg-5">
+									<label class="m-r-xs">Data do Processamento:</label><span>{{model.dataProcessamento}}</span>
+								</div>
+								<div class="col-lg-3" *ngIf="model.quantidadeErroProcessamento > 0 && model.statusPliProcessamento != 1">
+									<a routerLink="/consultar-pli/{{model.idPLI}}/visualizar-relatorio-listagem-erro-pli" style="background-color: #ebccd1; color: #820e0e; border-color: #ffa0a0;" class="btn btn-danger btn-sm"><i class="fa fa-times m-r-xs"></i> Relatório de Erros</a>
+								</div>
+						</div>
+					
+						<div class="row">
+							<div class="col-lg-12">
+								<app-manter-status-pli-grid [(lista)]="grid.lista"
+															[(total)]="grid.total"
+															[(size)]="grid.size"
+															[(page)]="grid.page"
+															[(parametros)]="parametros"
+															[(quantidadeErroAli)]="quantidadeErroAli"
+															#gridStatusPli>
+								</app-manter-status-pli-grid>
+							</div>
+						</div>
+					</article>
+					<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+						<div class="pull-right">
+							<a (click)="voltar()"
+							   class="btn btn-default btn-sm">
+								<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+							</a>
+						</div>
+					</footer>
+				</form>
+			</section>
+		</div>
+	</div>
+
+</div>

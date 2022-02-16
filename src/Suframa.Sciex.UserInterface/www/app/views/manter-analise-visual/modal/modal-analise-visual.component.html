@@ -1,0 +1,155 @@
+<div #appModalAnaliseVisual class="modal fade in" id="1" tabindex="-1" role="dialog" aria-hidden="true"
+	style=" display: none; overflow: auto">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Visualizar Análise Visual</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<label for="descricao" class="">{{item.inscricaoCadastral}} | {{item.razaoSocial}}</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<label for="descricao" class="">PLI: {{item.ano}}/{{item.numeroPli | formatCode:6}}</label>
+						</div>
+					</div>
+
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h5 class="panel-title">Análise Visual</h5>
+						</div>
+						<div class="panel-body">
+
+							<div class="form-group row">
+								<div class="col-lg-4">
+									<label for="cnpj" class="">Analista:</label>
+									<input type="text" name="analista" id="analista" class="form-control"
+										[(ngModel)]="item.nomeResponsavelRegistro" readonly />
+								</div>
+								<div class="col-lg-4">
+									<label for="cnpj" class="">Situação:</label>
+									<input type="text" name="situacao" id="situacao" class="form-control"
+										[(ngModel)]="item.statusPliAnaliseFormatado" readonly>
+								</div>
+								<div class="col-lg-4" *ngIf="item.statusPliAnalise == 7 || item.statusPliAnalise == 8">
+									<label for="cnpj" class="">Data:</label>
+									<input type="text" name="data" id="data" class="form-control"
+										[(ngModel)]="item.dataAnaliseFormatada" readonly>
+								</div>
+							</div>
+
+							<div class="form-group row" *ngIf="item.statusPliAnalise == 7">
+								<div class="col-lg-6">
+									<label for="codigoUtilizacaoFormatada" class="">Código de Utilização:</label>
+									<input type="text" name="codigoUtilizacaoFormatada" id="codigoUtilizacaoFormatada"
+										class="form-control" [(ngModel)]="item.codigoUtilizacaoFormatada" readonly />
+								</div>
+								<div class="col-lg-6">
+									<label for="codigoContaFormatada" class="">Código de Conta:</label>
+									<input type="text" name="codigoContaFormatada" id="codigoContaFormatada"
+										class="form-control" [(ngModel)]="item.codigoContaFormatada" readonly />
+								</div>
+							</div>
+
+							<div class="form-group row" *ngIf="item.motivo != null && item.motivo != ''">
+								<div class="col-lg-12">
+									<label class="required">Motivo:</label>
+									<textarea class="form-control ng-pristine ng-valid ng-touched"
+										maxlength="1000" name="motivo" [(ngModel)]="item.motivo" rows="3"
+										readonly>
+									</textarea>
+								</div>
+							</div>
+
+							<div class="form-group row" *ngIf="item.motivoPendencia != null && item.motivoPendencia != ''">
+								<div class="col-lg-8">
+									<label for="cnpj" class="">Analista da Pendência:</label>
+									<input type="text" name="analistaPend" id="analistaPend" class="form-control"
+										[(ngModel)]="item.nomeAnalistaPendencia" readonly />
+								</div>
+								<div class="col-lg-4">
+									<label for="cnpj" class="">Data da Pendência:</label>
+									<input type="text" name="dataPend" id="dataPend" class="form-control"
+										[(ngModel)]="item.dataPendenciaFormatada" readonly>
+								</div>
+							</div>
+
+							<div class="form-group row" *ngIf="item.motivoPendencia != null && item.motivoPendencia != ''">
+								
+								<div class="col-lg-12">
+									<label class="required">Motivo da Pendência:</label>
+									<textarea class="form-control ng-pristine ng-valid ng-touched"
+										maxlength="1000" name="motivoPendencia" [(ngModel)]="item.motivoPendencia" rows="3"s
+										readonly>
+									</textarea>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12" *ngIf="item.descricaoResposta != null && item.descricaoResposta != ''">
+							<section class="panel panel-danger">
+
+								<header class="panel-heading FixPanelHeading">
+
+									<h2 class="panel-title h5">Resposta da Pendência</h2>
+								</header>
+
+								<form class="form" role="form">
+									<article class="panel-body text-sm">
+
+										<div class="form-group row">
+											<div class="col-lg-12">
+												<label>Resposta:</label>
+												<textarea class="form-control ng-pristine ng-valid ng-touched"
+													[(ngModel)]="item.descricaoResposta"
+													#resposta
+													readonly
+													id="resposta" maxlength="1000" name="resposta" rows="3">
+				   								</textarea>
+											</div>
+										</div>
+
+										<div class="form-group row" *ngIf="item.anexo != null">
+											<div class="col-lg-6">
+												<b>Documentos Anexados:</b>
+											</div>
+										</div>
+										<div class="form-group row" *ngIf="item.anexo != null">
+											<div class="col-lg-6">
+												<span data-toggle="tooltip"
+													  title=""
+													  (click)="downloadFile()" 
+													  data-original-title="Download">
+													  <a class="btn btn-info btn-sm">
+														  <i class="fa fa-download"></i>
+													  </a>
+												</span>
+												<span> {{item.nomeAnexo}} </span>
+											</div>
+										</div>
+
+									</article>
+								</form>
+							</section>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a (click)="fechar()" class="btn btn-sm btn-default" data-dismiss="modal"><i
+						class="fa fa-long-arrow-left"></i>
+					Voltar</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalAnaliseVisualBackground class="modal-backdrop fade in" style="display: none;"></div>

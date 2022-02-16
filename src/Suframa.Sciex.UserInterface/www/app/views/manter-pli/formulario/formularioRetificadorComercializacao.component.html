@@ -1,0 +1,233 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Cadastrar PLI</app-titulo>
+			<app-sub-titulo>{{titulo}} PLI Retificador </app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+
+						<a routerLink="/manter-pli" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+						<a routerLink="/manter-pli/{{modelPli.idPLI}}/editarretificadora"  class="btn btn-primary btn-sm" *ngIf="somenteLeitura  && modelPli.codigoPLIStatus < 21"><i class="fa fa-pencil"></i> Editar</a>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="lblTipoPli" class="control-label text-nowrap" [class.required]="!desabilitado">Tipo de PLI:</label>
+								<input id="txtTipoPli"
+									   type="text"
+									   name="descricaoTipoPli"
+									   autocomplete="off"
+									   class="form-control"
+									   disabled="disabled"
+									   [(ngModel)]="descricaoTipoPli"/>
+							</div>
+							<div class="col-lg-4">
+								<label for="lblNumeroPLI" class="control-label text-nowrap" [class.required]="!desabilitado">Nº PLI:</label>
+								<input type="text"
+									   id="txtNumeroPLI"
+									   name="modelPli.numeroPLIConcatenado"
+									   autocomplete="off"
+									   class="form-control"
+									   disabled="disabled"
+									   [(ngModel)]="modelPli.numeroPLI"/>
+							</div>
+							<div class="col-lg-4">
+								<label for="lblAplicacaoPli" class="control-label text-nowrap" [class.required]="!desabilitado">Aplicação do PLI:</label>
+								<input id="txtAplicacaoPli"
+									   type="text"
+									   name="txtAplicacaoPli"
+									   autocomplete="off"
+									   class="form-control"
+									   disabled="disabled"
+									   [(ngModel)]="modelPli.descricaoAplicacao" />
+							</div>
+						</div>
+						<div class="line"></div>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="lblSetor" class="control-label text-nowrap" [class.required]="!desabilitado">Setor:</label>
+								<input id="txtSetor"
+									   type="text"
+									   name="txtSetor"
+									   autocomplete="off"
+									   class="form-control"
+									   style="text-transform:uppercase"
+									   disabled="disabled"
+									   [(ngModel)]="modelPli.descricaoSetor" />
+							</div>
+							<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="atualizar()">
+								<div class="col-lg-4">
+									<label for="lblCPF" class="control-label text-nowrap" [class.required]="!desabilitado">CPF Representante SISCOMEX:</label>
+									<input type="text" [attr.disabled]="somenteLeitura ? '' : null"
+										   id="txtCPF"
+										   name="cpf"
+										   autocomplete="off"
+										   class="form-control"
+										   [(ngModel)]="modelPli.numCPFRepLegalSISCO"
+										   (keyup)="removerHint()"
+										   cpfCnpj="true"
+										   maxlength="14"
+										   #cpf />
+								</div>
+							</form>
+
+							<div class="col-lg-4">
+								<label class="required">DI Referência:</label>
+								<input type="text"
+									   id="diReferencia"
+									   class="form-control"
+									   name="diReferencia"
+									   autocomplete="off"
+									   [(ngModel)]="modelPli.numeroDIReferencia"
+									   required
+									   [attr.disabled]="true"
+									   #referenciaDI />
+							</div>
+						</div>
+					</fieldset>
+					<div class="row m-t-sm form-group">
+						<div class="col-lg-4">
+							<div class="checkbox i-checks">
+								<label>
+									<input id="check" #optioncheckedTA type="checkbox" [attr.disabled]="somenteLeitura ? '' : null"
+										   name="options" /><i></i>	 Dispositivos de tecnologia assistiva
+								</label>
+							</div>
+						</div>
+						<div class="col-lg-8">
+							<div class="col-sm-11"
+								[ngClass]="{ 'has-error': arquivo.invalid && (arquivo.touched || arquivo.dirty) }">
+								<b>Anexar Documento </b><b style="color:red;">(Somente ZIP)</b>
+
+								<div [hidden]="ocultarInputAnexo">
+									<input type="file" accept="application/zip" id="arquivo"
+										name="arquivo" (change)="onFileChange($event)" #arquivo
+										style="display: block; padding: 5px; width: 44%;" required/>
+									<div class="text-danger">Tamanho Maximo: 10MB</div>
+									<div class="text-danger"
+										*ngIf="arquivo.invalid && (arquivo.touched || arquivo.dirty)">
+										<div *ngIf="arquivo.errors.required">
+											Inserir um arquivo valido!
+										</div>
+									</div>
+								</div>
+								<div [hidden]="!ocultarInputAnexo" class="row form-group">
+									<div class="col-lg-12">
+										<div class="col-lg-3">
+											<button class="btn btn-default btn-sm m-r-sm"
+												(click)="limparAnexo()" >
+												<i class="fa fa-eraser"></i>
+												Remover Anexo
+											</button>
+										</div>
+										<div class="col-lg-8">
+											<label style="font-weight: normal">{{modelPli.nomeAnexo}}</label>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+
+						<a routerLink="/manter-pli" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+						<button class="btn btn-primary btn-sm" (click)="formularioB.onSubmit();" *ngIf="mostrarBotao && modelPli.codigoPLIStatus < 21">Salvar</button>
+						<a routerLink="/manter-pli/{{modelPli.idPLI}}/editarretificadora" class="btn btn-primary btn-sm" *ngIf="somenteLeitura  && modelPli.codigoPLIStatus < 21"><i class="fa fa-pencil"></i> Editar</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>
+							Cancelar
+						</button>
+						<button type="button"
+								disableOnClick
+								class="btn btn-primary btn-sm"
+								(click)="formulario.onSubmit()"
+								*ngIf="!desabilitado">
+							<i class="fa fa-save"></i>
+							Salvar
+						</button>
+						<button type="button"
+									disableOnClick
+									class="btn btn-primary btn-sm"
+									[disabled]="somenteLeitura"
+									(click)="addLi()">
+								<i class="fa fa-plus"></i>
+								Adicionar LI
+						</button>
+					</div>
+					<h2 class="panel-title h5">{{subtituloPainel}}</h2>
+					
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate >
+						<div class="row form-group">
+							<div class="col-lg-12 display-flex">
+								<app-drop-list-select2 (valorModificado)="parametros.idMercadoria = $event"
+													  name="idMercadoria"
+													  id="idMercadoria"
+													  servico="Ncm"
+													  [(ngModel)]="parametros.idMercadoria"
+													  [isDisabled]="somenteLeitura || parametros.idMercadoria == null"
+													  [placeholder]="somenteLeitura ? '' : 'Informe o código ou a descrição da Mercadoria'"
+													  isCloseNormal="true"
+													  #mercadoria>
+								</app-drop-list-select2>
+								<div class="display-flex">
+									<span class="input-group-btn">
+										<button type="button"
+												class="btn btn-primary"
+												data-toggle="tooltip"
+												(click)="adicionarMercadoria()"
+												title="Incluir Mercadoria" [disabled]="somenteLeitura || parametros.idMercadoria == null">
+											<span class="fa fa-check"></span>
+										</button>
+									</span>
+								</div>
+
+							</div>
+						</div>
+						<app-manter-pli-mercadoria-grid [(lista)]="grid.lista"
+														[(total)]="grid.total"
+														[(size)]="grid.size"
+														[(page)]="grid.page"
+														[(parametros)]="parametros"
+														(retornaItem)="alterarMercadoria($event)"
+														[(isRetificador)]="isRetificador"
+														[(mostrarBotao)]="somenteLeitura">
+						</app-manter-pli-mercadoria-grid>
+					</form>
+				</article>
+			</section>
+		</div>
+	</div>
+</div>
+
+
+
+<app-modal-adicionar-li #appModalAddLi></app-modal-adicionar-li>

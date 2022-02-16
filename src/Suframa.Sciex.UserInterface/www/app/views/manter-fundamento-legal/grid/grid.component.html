@@ -1,0 +1,43 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-50 text-center">
+						<app-ordenacao field="Codigo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap th-300">
+						<app-ordenacao field="Descricao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição</app-ordenacao>
+					</th>
+					<!--//Nova NCM campo de Descrição Area-->
+					<th class="th-sortable unset-nowrap th-200">
+						<app-ordenacao field="TipoAreaBeneficio" [sorted]="sorted" (onChangeSort)="changeSort($event)">Área de Benefício</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-center">
+						{{item.codigo | formatCode:2}}
+					</td>
+					<td class="unset-nowrap">{{item.descricao}}</td>
+					<!--//Nova NCM campo de Descrição Area-->
+					<td class="unset-nowrap">{{item.descricaoArea}}</td>
+						
+					<td class="text-center">
+						<a routerLink="/fundamento-legal/{{item.idFundamentoLegal}}/editar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+						<a class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir" (click)="confirmarExclusao(item.idFundamentoLegal)"><i class="fa fa-trash-o"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

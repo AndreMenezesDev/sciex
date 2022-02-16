@@ -1,0 +1,221 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+
+	<div class="e row">
+		<div class="col-lg-12">
+			<section class="panel panel-default m-t">
+				<header class="panel-heading FixPanelHeading">
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+					<h2 class="panel-title h5">Detalhamento da LI</h2>
+				</header>
+				<form class="form" role="form">
+					<article class="panel-body">
+
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="alert alert-success alert-dados-li">
+									Dados da LI
+								</div>
+							</div>
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4 text-nowrap" style="color: #115A12;">
+								<label class="m-r-xs">Nro. LI:</label><span>{{modelPLIMercadoria.numeroLI == '0' || modelPLIMercadoria.numeroLI == '' || modelPLIMercadoria.numeroLI == null ? '--' : modelPLIMercadoria.numeroLI }}</span>
+							</div>
+
+							<div class="col-lg-4 text-nowrap" style="color: #550627;">
+								
+								<a
+								*ngIf="modelPLIMercadoria.numeroALI"
+								 routerLink="/consultar-pli/{{modelPLIMercadoria.idPliMercadoria}}/visualizar-detalhamento-ali/1" data-toggle="tooltip" title="" data-original-title="Mostrar ALI">
+								<label class="m-r-xs">Nro. ALI:</label><span>{{modelPLIMercadoria.numeroALI}}</span>							
+							    </a>
+
+								<a 
+								*ngIf="!modelPLIMercadoria.numeroLI">
+								<label class="m-r-xs">Nro. ALI:</label><span>--</span>
+								</a>						
+							</div>
+
+							<div class="col-lg-4 text-nowrap" style="color: #234884;">
+								<a routerLink="/consultar-pli/{{modelPLI.idPLI}}/visualizar" data-toggle="tooltip" title="" data-original-title="Mostrar PLI">
+									<label  class="m-r-xs">Nro. PLI:</label><span>{{ modelPLI.numeroPliConcatenado }}</span>
+								</a>								
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4 text-nowrap" style="color: #115A12;">
+								<label class="m-r-xs">Nro. Transmissão SERPRO:</label><span>{{modelPLIMercadoria.numeroTransmissaoSERPRO}}</span>
+							</div>
+
+							<div class="col-lg-4 text-nowrap">
+								<label class="m-r-xs">Data de Geração:</label><span>{{modelPLIMercadoria.dataGeracaoLI}}</span>
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Data Cancelamento LI:</label><span>{{modelPLIMercadoria.dataALICanceladaFormatada}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Empresa:</label><span>{{modelPLI.inscricaoCadastral}} | {{modelPLI.cnpj}} | {{modelPLI.razaoSocial}}</span>
+							</div>
+
+						</div>
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Utilizada:</label><span>{{modelPLIMercadoria.utilizadaDI}}</span>
+							</div>
+							<div class="col-lg-4">
+
+								<a *ngIf="modelPLIMercadoria.numeroDI != null && modelPLIMercadoria.numeroDI != '-'"
+								 routerLink="/consultar-pli/{{modelPLIMercadoria.idPliMercadoria}}/visualizar-detalhamento-di"
+								 data-toggle="tooltip"
+								 data-original-title="Mostrar DI">
+								 <label class="m-r-xs">DI:</label><span>{{modelPLIMercadoria.numeroDI}}</span>							
+								</a>
+								
+								<a *ngIf="modelPLIMercadoria.numeroDI == '-' || modelPLIMercadoria.numeroDI == null">
+									<label class="m-r-xs">DI:</label><span>--</span>
+								</a>
+							</div>
+							<div class="col-lg-4">
+								<label class="m-r-xs">Data DI:</label><span>{{modelPLIMercadoria.dataDIFormatada}}</span>
+							</div>
+						</div>
+
+
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Tipo de ALI:</label><span>{{modelPLIMercadoria.tipoALI}}</span>
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Data da ALI:</label><span>{{modelPLIMercadoria.dataALIFormatada}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Código NCM da Mercadoria:</label><span class="pull-right">{{modelPLIMercadoria.codigoNCMMercadoria}}</span>
+							</div>
+							<div class="col-lg-8">
+								<span>{{modelPLIMercadoria.descricaoNCMMercadoria}}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12" *ngIf="notComercializacao">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Código do Produto:</label><span class="pull-right">{{modelPLIMercadoria.codigoProdutoFormatado}}</span>
+							</div>
+							<div class="col-lg-8">
+								<span>{{modelPLIMercadoria.descricaoProduto}}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12" *ngIf="notComercializacao">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Código do Tipo:</label><span class="pull-right">{{modelPLIMercadoria.tipoProdutoFormatado}}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12" *ngIf="notComercializacao">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Código do Modelo:</label><span class="pull-right">{{modelPLIMercadoria.modeloProdutoFormatado}}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Código de Utilização:</label><span class="pull-right">{{ modelPLI.codigoUtilizacao }}</span>
+							</div>
+							<div class="col-lg-8">
+								<span>{{ modelPLI.descricaoUtilizacao }}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Código da Conta:</label><span class="pull-right">{{ modelPLI.codigoConta }}</span>
+							</div>
+							<div class="col-lg-8">
+								<span>{{ modelPLI.descricaoConta }}</span>
+							</div>
+						</div>
+
+						<div class="row col-lg-12">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Valor Original:</label><span class="pull-right">{{modelPLIMercadoria.valorTotalCondicaoVendaFormatado}}</span>
+							</div>
+							<div class="col-lg-8">
+								<label class="m-r-xs">Moeda:</label><span>{{ modelPLIMercadoria.codigoDescricaoMoeda }}</span>
+							</div>
+						</div>
+
+						<div class="row m-b-md col-lg-12">
+							<div class="col-lg-4">
+								<label class="m-r-xs">Valor US$:</label><span class="pull-right">{{modelPLIMercadoria.valorTotalCondicaoVendaDolarFormatado}}</span>
+							</div>
+						</div>
+
+					<div  *ngIf="modelPLIMercadoria.tipoALI != 'Normal'"> 	
+						<div class="row m-b-sm">
+							<div class="col-lg-12">
+								<label>ALI / LI Substituído</label>
+								<div style="border-bottom: 1px solid #000"></div>
+							</div>
+						</div>
+
+						<div class="row">  
+							<div class="col-lg-4" style="color: #550627;">
+								<a routerLink="/consultar-pli/{{modelPLI.idPliMercadoriaSubstitutivo}}/visualizar-detalhamento-ali-substitutivo" data-toggle="tooltip" title="" data-original-title="Mostrar ALI Referência">
+									<label class="m-r-xs">Nro. ALI Substituída:</label>
+									<span>{{modelPLI.numeroALISubstitutiva == null || modelPLI.numeroALISubstitutiva == null ? '--' : modelPLI.numeroALISubstitutiva }}</span>
+								</a>
+								
+							</div>
+
+							<div class="col-lg-4" style="color: #115A12;">
+							<a  
+							 routerLink="/consultar-pli/{{modelPLI.idPliMercadoriaSubstitutivo}}/visualizar-detalhamento-li-substitutivo" data-toggle="tooltip" title="" data-original-title="Mostrar LI Referência">	
+							<label class="m-r-xs">Nro. LI. Referência:</label><span>{{ modelPLI.numeroLIReferencia}}</span>
+							</a>	
+							</div>
+
+							<div class="col-lg-4" style="color: #234884;"></div>
+								<a routerLink="/consultar-pli/{{modelPLI.idPLISubstitutivo}}/visualizar-detalhamento-pli" data-toggle="tooltip" title="" data-original-title="Mostrar PLI">
+									<label class="m-r-xs">Nro. PLI Substituído:</label><span>{{modelPLI.numeroPliSubstitutivoConcatenado == null || modelPLI.numeroPliSubstitutivoConcatenado == null ? '--' : modelPLI.numeroPliSubstitutivoConcatenado }}</span>
+								</a>
+							</div>
+						</div>
+					</article>
+					<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+						<div class="pull-right">
+							<a (click)="voltar()"
+							   class="btn btn-default btn-sm">
+								<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+							</a>
+						</div>
+					</footer>
+				</form>
+			</section>
+		</div>
+	</div>
+
+</div>

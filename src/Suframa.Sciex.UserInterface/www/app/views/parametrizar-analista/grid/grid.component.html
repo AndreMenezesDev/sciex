@@ -1,0 +1,93 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead style="background-color: #00552b; color: white;">
+
+				<tr>
+					<th class="th-sortable unset-nowrap" rowspan="0">
+						<app-ordenacao field="analista.cpf" [sorted]="sorted" (onChangeSort)="changeSort($event)">CPF</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap" rowspan="0">
+						<app-ordenacao field="analista.nome" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nome</app-ordenacao>
+					</th>
+					<th style="border-right: 1px solid white;" colspan="3" scope="colgroup" class="text-center">Análise Visual</th>
+					<th colspan="3" scope="colgroup" class="text-center">Análise Listagem/Lote</th>
+				</tr>
+				<tr>
+					<th class="text-center" scope="col">Ativo</th>
+					<th class="text-center" scope="col">Bloqueado</th>
+					<th class="text-center" style="border-right: 1px solid white;" scope="col">Qtd</th>
+					<th class="text-center" scope="col">Ativo</th>
+					<th class="text-center" scope="col">Bloqueado</th>
+					<th class="text-center" scope="col">Qtd</th>
+				</tr>
+			</thead>
+			<tbody id="content">
+				<tr *ngFor="let item of lista">
+					<td>{{item.analista.cpf}}</td>
+					<td>
+						<a style="cursor:pointer" (click)="visualizarParametrizacao(item)"><b>{{item.analista.nome}}</b></a>
+					</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.statusAnaliseVisual === 0 ? 'btn-danger' : 'btn-primary'"
+							   (click)="item.statusAnaliseVisual === 0 ? confirmarAtivarAnalista(item, 3) : confirmarInativarAnalista(item,3)">
+								<i class="fa"
+								   [ngClass]="item.statusAnaliseVisual === 0 ? 'fa-times' : 'fa-check'">
+								</i>
+							</a>
+						</span>
+					</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.statusAnaliseVisualBloqueio === 1 ? 'btn-danger' : 'btn-primary'"
+							   (click)="item.statusAnaliseVisualBloqueio === 1 ? confirmarDesbloqueioAnalista(item, 1): confirmarBloquearAnalista(item, 1)">
+								<i class="fa"
+								   [ngClass]="item.statusAnaliseVisualBloqueio === 1 ? 'fa-lock' : 'fa-unlock'">
+								</i>
+							</a>
+						</span>
+					</td>
+					<td class="text-center">0</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.statusAnaliseLoteListagem === 0 ? 'btn-danger' : 'btn-primary'"
+							   (click)="item.statusAnaliseLoteListagem === 0 ? confirmarAtivarAnalista(item, 4) : confirmarInativarAnalista(item,4)">
+								<i class="fa"
+								   [ngClass]="item.statusAnaliseLoteListagem === 0 ? 'fa-times' : 'fa-check'">
+								</i>
+							</a>
+						</span>
+					</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.statusAnaliseLoteListagemBloqueio === 1 ? 'btn-danger' : 'btn-primary'"
+							   (click)="item.statusAnaliseLoteListagemBloqueio === 1 ? confirmarDesbloqueioAnalista(item, 2): confirmarBloquearAnalista(item, 2)">
+								<i class="fa"
+								   [ngClass]="item.statusAnaliseLoteListagemBloqueio === 1 ? 'fa-lock' : 'fa-unlock'">
+								</i>
+							</a>
+						</span>
+					</td>
+					<td class="text-center">0</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-modal-visualizar-parametrizacao #appModalVisualizarParametrizacao></app-modal-visualizar-parametrizacao>
+<app-modal-bloquear-analista #appModalBloquearAnalista></app-modal-bloquear-analista>

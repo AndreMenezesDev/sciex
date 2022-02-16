@@ -1,0 +1,126 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Manter Benefício</app-titulo>
+			<app-sub-titulo>Manter Benefício</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+
+				<header class="panel-heading">
+
+					<div [hidden]="ocultarFiltro" class="pull-right">
+						<a routerLink="/grupo-beneficio/cadastrar" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Novo</a>
+					</div>
+
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="txInscricaoCadastral" class="control-label">Código:</label>
+									<input #codigo
+										   type="text"
+										   id="txtInscricaoCadastral"
+										   class="form-control"
+										   name="inscricaoCadastral"
+										   maxlength="9"
+										   [(ngModel)]="parametros.codigo"
+										   onlyNumber="true"
+										   (keyup.enter)="buscar(true)"
+									/>
+								</div>
+							</div>
+							<div class="col-lg-7">
+								<label for="txtEmpresa" class="control-label">Descrição:</label>
+								<input #descricao
+									   type="text"
+									   id="txtEmpresa"
+									   class="form-control"
+									   name="empresa"
+									   [(ngModel)]="parametros.descricao"
+									   (keyup.enter)="buscar(true)"
+									   inputTextFilter="true"
+								/>
+							</div>
+						</div>
+						<div class="row">
+
+                            <div class="col-lg-4">
+								<label for="tipoFornecedor" class="control-label">Situação:</label>
+								<select name="tipoStatus"
+										id="tipoStatus"
+										class="form-control"
+										#situacao>
+									<option value="99" [selected]="selectOpcao">TODAS</option>
+									<option value="1"> Ativa </option>
+									<option value="0"> Inativa </option>
+								</select>
+                            </div>
+
+                            <div class="col-lg-4">
+								<label for="tipoFornecedor" class="control-label">Tipo de Benefício:</label>
+								<select name="tipoStatus"
+										id="tipoStatus"
+										class="form-control"
+										#tipobeneficio>
+									<option value="99" [selected]="selectTipoBeneficio">TODAS</option>
+									<option value="0"> N/A </option>
+                                    <option value="1"> Isenção </option>
+									<option value="2"> Redução </option>
+									<option value="3"> Suspensão </option>
+								</select>
+                            </div>
+
+						</div>
+					</form>
+
+				</article>
+
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+
+					<!--Botão temporário-->
+					<!--<button id="btnReprocessarPli" class="btn btn-sm btn-primary" *ngIf="ocultarBotaoReprocessar" style="text-align: left" type="submit" disableOnClick (click)="reprocessarPLI()">Reprocessar PLI</button>-->
+
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="$event.preventDefault(); buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section [hidden]="ocultarGrid" class="panel panel-default">
+
+				<app-manter-grupo-beneficio-grid [(lista)]="grid.lista"
+						   [(page)]="grid.page"
+						   [(size)]="grid.size"
+						   [(total)]="grid.total"
+						   [(parametros)]="parametros"
+						   (onChangeSize)="onChangeSize($event)"
+						   (onChangePage)="onChangePage($event)"
+						   (onChangeSort)="onChangeSort($event)"
+							[(formPai)]="formPai"
+						   >
+
+				</app-manter-grupo-beneficio-grid>
+
+			</section>
+		</div>
+	</div>
+
+
+</div>

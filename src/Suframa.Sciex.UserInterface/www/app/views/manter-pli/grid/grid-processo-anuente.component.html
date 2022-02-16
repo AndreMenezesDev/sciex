@@ -1,0 +1,31 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  [(isShowPanel)]="isShowPanel"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-170 unset-nowrap">Número Processo</th>
+					<th class="th-sortable unset-nowrap">Órgão Anuente</th>
+					<th *ngIf="!somenteLeitura" class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody> 
+				<tr *ngFor="let item of lista">
+					<td class="text-center">{{item.numeroProcesso}}</td>
+					<td class="unset-nowrap">{{item.descricao}}</td>									
+					<td *ngIf="!somenteLeitura" class="text-center">						
+						<a [ngClass]=" {'display-none': somenteLeitura}" style="cursor:pointer" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir" (click)="confirmarExclusao(item) "><i class="fa fa-trash-o"></i></a>
+					</td>					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

@@ -1,0 +1,25 @@
+<div class="input-group" *ngIf="!isSimpleMode">
+	<input type="text" class="form-control disabled"
+		   [(ngModel)]="model.nome"
+		   [attr.required]="isRequired ? 'required' : null"
+		   onkeypress="return false" />
+
+	<span class="input-group-btn">
+		<label class="btn btn-default" [attr.disabled]="isDisabled ? true : null">
+			<input type="file"
+				   (ngModel)="arquivo"
+				   (change)="onChange($event)"
+				   #fileInput />
+			<i class="fa fa-paperclip"></i>
+			Anexar
+		</label>
+	</span>
+</div>
+
+<label *ngIf="isSimpleMode" class="btn btn-sm btn-default" data-toggle="tooltip" title="Anexar" [attr.disabled]="isDisabled ? true : null">
+	<input type="file"
+		   (ngModel)="arquivo"
+		   (change)="onChange($event)"
+		   #fileInput />
+	<span class="fa fa-paperclip"></span>
+</label>

@@ -1,0 +1,47 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"		  
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div  class="table-responsive no-margin-bottom no-border">
+		<table id="table" class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="codigo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="descricao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Status</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">					
+					<td class="text-center">				
+					{{item.codigo | formatCode:2 }}</td>
+					<td class="unset-nowrap">{{item.descricao}}</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.status == 0 ? 'btn-danger' : 'btn-primary'"
+							   (click)="item.status == 0 ? confirmarAtivarStatus(item) : confirmarInativarStatus(item)">
+								<i class="fa"
+								   [ngClass]="item.status === 0 ? 'fa-times' : 'fa-check'">
+								</i>
+							</a>
+						</span>
+					</td>								
+					<td class="text-center">
+						<a routerLink="/via-transporte/{{item.idViaTransporte}}/editar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

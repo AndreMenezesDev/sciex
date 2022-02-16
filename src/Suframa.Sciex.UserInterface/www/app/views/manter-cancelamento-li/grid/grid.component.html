@@ -1,0 +1,47 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"		
+		  [(isHideCabecalho)]="isHide"
+		  [(isHidePaginacao)]="isHide"		  
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>					
+					<th class="th-sortable th-100 unset-nowrap">NCM</th>
+					<th class="th-sortable th-100 unset-nowrap">Descrição NCM</th>
+					<th class="th-sortable th-100 unset-nowrap">Nº LI</th>
+					<th class="th-sortable th-100 unset-nowrap">Data cadastro</th>
+
+					<th class="th-10" >
+						<input #checkedpli
+							   type="checkbox"
+							   name="optionsConsultarPLI"
+							   (click)="onChangeCheckAllGridPLI()" />
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index">
+
+					<td class="unset-nowrap">{{item.numeroNCM}}</td>
+					<td class="unset-nowrap">{{item.descricaoNCMMercadoria}}</td>
+					<td class="unset-nowrap">{{item.numeroLi}}</td>
+					<td class="unset-nowrap">{{item.dataCadastro | date: 'dd/MM/yyyy'}}</td>
+					<td >
+						<input id="check" #optionchecked type="checkbox"
+							   name="options"
+							   (change)="item.checkbox = !item.checkbox; removeCheckAll()"
+							   [checked]="item.checkbox"
+							   [(ngModel)]="check[i]"
+							   style="-webkit-transform: scale(1.5);" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

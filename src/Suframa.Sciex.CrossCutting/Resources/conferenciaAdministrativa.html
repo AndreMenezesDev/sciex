@@ -1,0 +1,58 @@
+{{> style}}
+<div class="text-center" style="width:100%">
+	<table>
+		<tbody>
+
+			{{> notificacaoCabecalho}}
+
+			<tr>
+				<td class="bold text-center border-sides-solid" colspan="2">
+					Notificação
+				</td>
+			</tr>
+
+			<tr>
+				<td class="bold text-center border-sides-solid" colspan="2">
+					<span>Vimos por meio desta comunicar que, após análise do pedido de serviço cadastral, <u>deverão ser apresentados os documentos originais abaixo listados a Unidade Cadastradora da SUFRAMA.</u> Para realização da conferência dos documentos realize um agendamento de Conferência Administrativa no site da suframa.</span>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="border-bottom-solid border-sides-solid" colspan="2">&nbsp;</td>
+			</tr>
+
+			<tr>
+				<td class="bold text-center border-sides-solid" colspan="2">
+					Justificativa
+				</td>
+			</tr>
+
+			<tr>
+				<td class="text-center border-sides-solid" colspan="2">
+					{{Justificativa}}
+				</td>
+			</tr>
+
+			<tr>
+				<td class="border-bottom-solid border-sides-solid" colspan="2">&nbsp;</td>
+			</tr>
+
+			<tr>
+				<td class="bold text-center border-sides-solid" colspan="2">
+					Lista de Documentos
+				</td>
+			</tr>
+
+			<tr>
+				<td class="text-left border-sides-solid border-bottom-solid" colspan="2">
+					{{#each Documentos}}
+					<span>- {{this}}&nbsp</span>
+					<br />
+					{{/each}}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<br />
+<br />

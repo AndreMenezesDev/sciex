@@ -1,0 +1,27 @@
+<div #appModalJustificativaErro id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Justificativa de Erro</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+					<div class="row form-group">
+						<div class="col-lg-12">
+							<div class="col-lg-12">
+								<label class="control-label">Justificativa de Erro:</label>
+								<textarea class="form-control" type="text" id="txtJustificativa" name="txtJustificativa" 
+								[(ngModel)]="model.descricaoJustificativaErro" rows="4" style="resize: none;" readonly></textarea>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-long-arrow-left m-r-xs"></span> Voltar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalJustificativaErroBackground class="modal-backdrop fade in" style="display: none;"></div>

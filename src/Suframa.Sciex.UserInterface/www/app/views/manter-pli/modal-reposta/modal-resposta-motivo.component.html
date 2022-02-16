@@ -1,0 +1,64 @@
+<div #appModalRespostaMotivo class="modal fade in" 
+							 tabindex="-1" role="dialog" 
+							 aria-hidden="true"
+							 style=" display: none; overflow: auto">
+		<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Responder PLI Pendente</h4>
+			</div>
+			<div class="modal-body">
+				<form  id="formResp" #formResp>
+					<div class="form-group row">
+
+						<div class="col-lg-12">
+							<label for="descricao" class="">PLI: {{model.ano}}/{{model.numeroPli | formatCode:6}}</label>
+						</div>
+					</div>
+					<div class="form-group row">
+
+						<div class="col-lg-12">
+							<label>Motivo da Pendência:</label>
+							<textarea class="form-control ng-pristine ng-valid ng-touched" id="justificativa"
+								maxlength="1000" name="justificativa" rows="3" readonly>{{model.descricaoMotivo}}</textarea>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<label class="required">Resposta:</label>
+							<textarea 
+									class="form-control" 
+									id="justificativa"
+									[(ngModel)]="model.descricaoResposta"
+									maxlength="500"
+									name="justificativa"
+									required
+									rows="3"
+									#resposta>
+							</textarea>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<b>Anexar Documento </b><b style="color:red;">(Somente ZIP)</b>
+							<input accept="application/zip" (change)="onFileChange($event)" #arquivo id="arquivo" name="arquivo"
+								style="display: block; padding: 5px; width: 80%;" type="file">
+							<div class="text-danger">Tamanho Maximo: 20MB</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a (click)="fechar()" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i>
+					Cancelar</a>
+				<a (click)="salvar()" class="btn btn-sm btn-primary" data-dismiss="modal" data-toggle="modal" data-backdrop="static" data-keyboard="false"><i
+						class="fa fa-save m-r-xs"></i> Salvar</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalRespostaMotivoBackground class="modal-backdrop fade in" style="display: none;"></div>

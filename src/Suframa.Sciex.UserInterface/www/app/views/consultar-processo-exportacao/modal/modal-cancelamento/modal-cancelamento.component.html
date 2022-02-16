@@ -1,0 +1,36 @@
+<div #appModalCancelar id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog modal-lg">
+<div class="modal-content">
+  <div class="modal-header bg-primary" style="padding: 10px 15px;">
+    <h4 class="modal-title" id="modalParecer">Confirmação</h4>
+  </div>
+    <div class="modal-body">
+      <h4> Deseja cancelar este Processo?</h4>
+    </div>
+    <div class="modal-body">
+    <div class="form-group row">
+             <div class="col-lg-12">
+              <label class="required">Justificativa:</label>
+              <textarea
+								 maxlength="500"
+                 class="form-control" style=" resize:none"
+                 id="justificativa" name="justificativa"
+                 rows="3" required=''
+                [(ngModel)]= "parametros.descricaoObservacao"
+                 >
+                </textarea>
+             </div>
+            </div>
+   </div>
+    <div class="modal-footer" style="padding: 10px 15px;">
+            <button type="button" (click)= "fechar()" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times m-r-xs"></i>Cancelar</button>
+            <button type="button" (click)= "cancelar()" class="btn btn-sm btn-primary" data-dismiss="modal"><i class="fa fa-check m-r-xs"></i>Confirmar</button>
+
+
+        </div>
+  </div>
+</div>
+
+</div>
+<div #appModalCancelarBackground class="modal-backdrop fade in" style="display: none;"></div>

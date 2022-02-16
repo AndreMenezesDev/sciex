@@ -1,0 +1,147 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Cadastrar Benefício</app-titulo>
+			<app-sub-titulo>Cadastrar Benefício</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<div class="pull-right">
+
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-default btn-sm"
+                                    (click)="cancelarOperacao()">
+                                <i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+                            </button>
+                            <button type="submit"
+                                    disableOnClick
+                                    class="btn btn-primary btn-sm"
+                                    (click)="formulario.onSubmit()">
+                                <i class="fa fa-save"></i> Salvar
+                            </button>
+
+                        </div>
+						<!--<a routerLink="/aladi/pesquisar" class="btn btn-default btn-sm"><i class="fa fa-long-arrow-left"></i> Cancelar</a>-->
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form  id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="validar()">
+						<fieldset>
+							<div class="row form-group">
+								<div class="col-lg-10">
+                                    <label for="txtEmpresa" class="control-label required">Descrição:</label>
+                                    <input #descricao
+                                           type="text"
+                                           class="form-control"
+                                           name="descricao"
+                                           inputTextFilter="true"
+                                           [(ngModel)]="modelGrupoBeneficio.descricao"
+                                           required
+                                    />
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+
+                                <div class="col-lg-3">
+									<div class="form-group">
+										<label for="status" class="control-label required">Tipo Benefício:</label>
+										<div class="radio i-checks" style="margin-right: 1px;">
+											<label>
+                                                <input #isencao type="radio" name="radio-tipo-beneficio"
+                                                          value="1" checked><i></i> Isenção
+											</label>
+											<label>
+                                                <input #reducao type="radio" name="radio-tipo-beneficio"
+                                                          value="2"><i></i> Redução
+                                            </label>
+                                            <label>
+                                                <input #suspensao type="radio" name="radio-tipo-beneficio"
+                                                          value="3"><i></i> Suspensão
+											</label>
+										</div>
+									</div>
+								</div>
+
+                                <div class="col-lg-2" style="margin-right: 50px;">
+                                    <label for="percentualBeneficio" class="control-label required">Percentual Beneficio:</label>`
+                                    <div class="form-group">
+                                     <input 
+                                            #percentualBeneficio
+                                            type="text"
+                                            id="txt-percentualBeneficio"
+                                            class="form-control"
+                                            name="percentualDescricao"
+                                            inputTextFilter="true"
+                                            (blur)="onBlurValidarPercentual()"
+                                            maxlength="10"
+                                            min="1"
+                                            max="100"
+                                            step=".001"
+                                            style="width: 90%;display: -webkit-inline-box;"
+                                            [(ngModel)]="modelGrupoBeneficio.valorPercentualReducao"
+                                            required=""
+                                        /> 
+                                        
+                                        <label style="float: right; margin-top: 10px;">%</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-2" style="margin-right: 3px;">
+                                    <label for="status" class="control-label required">Status:</label>
+                                    <div>
+                                        <label class="switch m-n">
+                                            <input #statustf type="checkbox" name="status">
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-sm-10">
+                                <div class="row form-group">
+
+                                    <label for="justificativa" class="control-label">Amparo Legal:</label>
+                                    <textarea   class="form-control"
+                                                name="text-amparo-legal"
+                                                #textAmparoLegal
+                                                rows="4"
+                                                style="resize: none;"
+                                                [(ngModel)]="modelGrupoBeneficio.descricaoAmparoLegal">
+                                     </textarea>
+
+                                </div>
+                            </div>
+
+						</fieldset>
+					</form>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<button type="submit"
+								disableOnClick
+								class="btn btn-primary btn-sm"
+								(click)="formulario.onSubmit()">
+							<i class="fa fa-save"></i> Salvar
+						</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<div class="modal-dialog">	
+	<div class="modal-content">
+		<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">			
+			<h4 class="modal-title">{{title || 'Confirmação'}}</h4>
+		</div>
+		<div class="modal-body">
+			<p>{{message}}</p>
+		</div>
+		<div class="modal-footer" style="padding: 8px 15px;">
+			<button type="button" class="btn btn-default btn-sm" (click)="noCofirm()" #cancelar><i class="fa fa-times"></i> Não</button>
+			<button type="button" class="btn btn-primary btn-sm" (click)="confirm()"><i class="fa fa-check"></i> Sim</button>
+		</div>
+	</div>
+</div>
+<div class="modal-background"></div>

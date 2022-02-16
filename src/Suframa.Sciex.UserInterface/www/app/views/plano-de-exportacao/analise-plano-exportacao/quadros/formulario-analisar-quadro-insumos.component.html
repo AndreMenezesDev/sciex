@@ -1,0 +1,174 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Insumos {{titulo}}</app-titulo>
+			<app-sub-titulo>Insumos dos tipos {{subtitulo}} </app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i
+								class="fa fa-long-arrow-left m-r-xs"></i>
+							Voltar</a>
+					</div>
+					<h2 class="panel-title h5">Dados do Produto</h2>
+				</header>
+				<div class="row" style="padding: 10px;">
+					<div class="col-lg-3">
+						<label for="numeroPlano" class="control-label text-nowrap">N° Plano:</label>
+						{{modelPE.numeroAnoPlanoFormatado}}
+					</div>
+					<div class="col-lg-3">
+						<label for="descricaoModalidade" class="control-label text-nowrap">Modalidade:</label>
+						{{modelPE.tipoModalidadeString}}
+					</div>
+					<div class="col-lg-3">
+						<label for="descricaoTipo" class="control-label text-nowrap">Tipo:</label>
+						{{modelPE.tipoExportacaoString}}
+					</div>
+				</div>
+				<div class="alert alert-success"
+					style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+					Dados do Produto
+				</div>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-2">
+								<label for="codigoProdutoExportacao" class="control-label text-nowrap">Produto:</label>
+								{{modelProduto.codigoProdutoExportacao}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-10">
+								<label for="codigoProdutoSuframa" class="control-label text-nowrap">Descrição:</label>
+								{{modelProduto.descCodigoProdutoSuframa}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="descCodigoTipoProduto" class="control-label text-nowrap">Tipo:</label>
+								{{modelProduto.descCodigoTipoProduto}}
+							</div>
+							<div class="col-lg-4">
+								<label for="codigoNCM" class="control-label text-nowrap">NCM:</label>
+								{{modelProduto.codigoNCM}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="descricaoModelo" class="control-label text-nowrap">Modelo:</label>
+								{{modelProduto.descricaoModelo}}
+							</div>
+							<div class="col-lg-4">
+								<label for="descCodigoUnidade" class="control-label text-nowrap">Unidade:</label>
+								{{modelProduto.descCodigoUnidade}}
+							</div>
+						</div>
+
+
+						<fieldset style="border: 1px solid #000; padding: 10px;">
+							<legend style="width: auto; border: 0;">Valores de Exportação</legend>
+							<div class="row form-group">
+								<div class="col-lg-4">
+									<label>Quantidade Total:</label>
+									{{modelProduto.qtdFormatado}}
+								</div>
+								<div class="col-lg-4">
+									<label>Valor Total(US$):</label>
+									{{modelProduto.valorDolarFormatado}}
+								</div>
+							</div>
+						</fieldset>
+					</fieldset>
+				</article>
+			</section>
+		</div>
+
+		<div class="col-lg-12">
+			<section class="panel panel-default">				
+				<header class="panel-heading">					
+					<h2 class="row panel-title h5" style="margin-left: 1px;">Lista de Insumos</h2>
+				</header>
+				<article>
+					<fieldset style="border: 1px solid #000; padding: 10px;" *ngIf="isQuadroNacional">
+						<legend style="width: auto; border: 0;">Valores Nacionais e Regionais</legend>
+						<div class="row form-group">
+							<div class="col-lg-4">
+								<label>Valor Total Insumos (R$):</label>
+								{{modelProduto.valorTotalInsumoFormatado}}
+							</div>
+						</div>
+					</fieldset>
+					<fieldset style="border: 1px solid #000; padding: 10px;" *ngIf="!isQuadroNacional">
+						<legend style="width: auto; border: 0;">Valores de Importação</legend>
+						<div class="row form-group">
+							<div class="col-lg-4">
+								<label>Valor Total FOB (US$):</label>
+								{{modelProduto.valorTotalFOBFormatado}}
+							</div>
+							<div class="col-lg-4">
+								<label>Vlr Total Frete (US$):</label>
+								{{modelProduto.valorTotalFreteFormatado}}
+							</div>
+							<div class="col-lg-4">
+								<label>Vlr Total CFR (US$):</label>
+								{{modelProduto.valorTotalCFRFormatado}}
+							</div>
+						</div>
+					</fieldset>
+					<div class="row col-lg-12" *ngIf="!visualizar">
+						<button type="button" class="btn btn-sm btn-primary" style="margin-left: 5px;" (click)="confirmarAprovarTodos()">
+							<span class="fa fa-paper-plane-o m-r-xs"></span>
+							Aprovar Todos
+						</button>
+					</div>
+					<div class="row col-lg-12">
+						<app-analisar-insumos-nacional-grid *ngIf="isQuadroNacional" 
+							[(visualizar)]="visualizar"
+							[(lista)]="grid.lista"
+							[(total)]="grid.total" 
+							[(size)]="grid.size" 
+							[(page)]="grid.page"
+							[(isUsuarioInterno)]="grid.isUsuarioInterno" 
+							[(parametros)]="parametros"
+							[(formPai)]="formPai" 
+							(onChangeSort)="onChangeSort($event)"
+							(onChangeSize)="onChangeSize($event)" 
+							(onChangePage)="onChangePage($event)">
+						</app-analisar-insumos-nacional-grid>
+
+						<app-analisar-insumos-importados-grid *ngIf="!isQuadroNacional" 
+							[(visualizar)]="visualizar"
+							[(lista)]="grid.lista"
+							[(total)]="grid.total" 
+							[(size)]="grid.size" 
+							[(page)]="grid.page"
+							[(isUsuarioInterno)]="grid.isUsuarioInterno" 
+							[(parametros)]="parametros"
+							[(formPai)]="formPai" 
+							(onChangeSort)="onChangeSort($event)"
+							(onChangeSize)="onChangeSize($event)" 
+							(onChangePage)="onChangePage($event)">
+						</app-analisar-insumos-importados-grid>
+
+					</div>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i
+								class="fa fa-long-arrow-left m-r-xs"></i>
+							Voltar</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+
+
+	</div>
+</div>

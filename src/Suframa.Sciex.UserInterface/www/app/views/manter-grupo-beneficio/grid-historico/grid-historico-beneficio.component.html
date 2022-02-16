@@ -1,0 +1,42 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-110 unset-nowrap">
+						<app-ordenacao field="acao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data/Hora Alteração</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="dataformatada" [sorted]="sorted" (onChangeSort)="changeSort($event)">Login</app-ordenacao>
+					</th>
+					<th class="th-sortable th-120 unset-nowrap">
+						<app-ordenacao field="cpfcnpjResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Responsável pela Alteração</app-ordenacao>
+					</th>
+					<th class="th-sortable th-180 unset-nowrap">
+						<app-ordenacao field="nomeResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Justificativa</app-ordenacao>
+					</th>
+					<th class="th-sortable th-250 unset-nowrap">
+					<app-ordenacao field="observacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Mudança</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="unset-nowrap">{{item.dataHoraAcaoString}}</td>
+					<td class="unset-nowrap">{{item.cpfCnpjResponsavel}}</td>
+					<td class="unset-nowrap">{{item.nomeResponsavel}}</td>
+					<td class="unset-nowrap">{{item.justificativa}}</td>
+					<td class="unset-nowrap">{{item.descricaoAcao}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

@@ -1,0 +1,37 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  [(isShowPanel)]="isShowPanel"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr [ngClass]="modelMercadoria.validarDetalhesMercadoria != undefined && modelMercadoria.validarDetalhesMercadoria.itemMercadoria">
+					<th class="th-sortable th-100 unset-nowrap">Código do Item</th>
+					<th class="th-sortable unset-nowrap">Descrição</th>
+					<th class="th-sortable th-100 unset-nowrap">Ref. Fabricante</th>
+					<th class="th-sortable th-100 unset-nowrap">Part Number</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-center">{{item.codigoDetalheMercadoria | formatCode:4}}</td>
+					<td class="unset-nowrap">{{item.descricaoDetalhe}}</td>
+					<td class="text-center">{{item.descricaoREFFabricante}}</td>
+					<td class="unset-nowrap">{{item.descricaoPartNumber}}</td>
+					<td class="text-center">
+						<a style="cursor:pointer" class="btn btn-default btn-sm" data-toggle="tooltip" title="" (data-original-title)="somenteLeitura ? 'Visualizar' : 'Alterar'" (click)="alterarDetalheMercadoria(item)"><i class="fa" [ngClass]="{'fa-pencil': !somenteLeitura, 'fa-file-text-o': somenteLeitura}"></i></a>
+						<a [ngClass]=" {'display-none': somenteLeitura}" style="cursor:pointer" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir" (click)="confirmarExclusao(item) "><i class="fa fa-trash-o"></i></a>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

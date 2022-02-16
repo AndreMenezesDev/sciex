@@ -1,0 +1,279 @@
+<app-grid 
+	[(page)]="page"
+	[(size)]="size"
+	[(total)]="total"
+	[(parametros)]="parametros"
+	(onChangeSize)="changeSize($event)"
+	(onChangePage)="changePage($event)"
+	[(isShowPanel)]="exibirCabecalhoGrid"
+>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped" *ngIf="isQuadroNacional">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap" >
+						<app-ordenacao field="ValorUnitario" [sorted]="sorted" (onChangeSort)="changeSort($event)">Vlr. Unitário (R$)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorTotal" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Total (R$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let ind = index">
+					<td class="text-left">{{item.quantidade | number : '1.5-5' }}</td>
+					<td class="text-left">{{item.valorUnitario | number : '1.4-4' }}</td>
+					<td class="text-left">{{item.valorTotal | number : '1.5-5' }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table table-striped" *ngIf="!isQuadroNacional">
+			<thead class="table-header-color">
+				<tr>
+					<th class="text-center th-100">Ações</th>	
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="NumeroSequencial" [sorted]="sorted" (onChangeSort)="changeSort($event)">Detalhe</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoPais" [sorted]="sorted" (onChangeSort)="changeSort($event)">País</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap" >
+						<app-ordenacao field="CodigoDescricaoMoeda" [sorted]="sorted" (onChangeSort)="changeSort($event)">Moeda</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorUnitario" [sorted]="sorted" (onChangeSort)="changeSort($event)">Vlr. Unitário<br>(FOB)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorFrete" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Frete<br>(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarFOB" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Insumo<br>(FOB)(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarCFR" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Insumo<br>(CRF)(US$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody *ngIf="path == 'analisar-detalhe-insumos' || path != 'editar-detalhe-insumos-novo'">				
+				<tr *ngFor="let item of lista; let ind = index">
+					
+					<!-- *ngIf="path == 'analisar-detalhe-insumos' && item.existeSolicitacaoDeAlteracao" -->
+					<td class="text-center">
+						<a 
+							*ngIf="path == 'analisar-detalhe-insumos'"
+							(click)="apagar(item)"
+							class="btn btn-danger btn-sm"
+							data-toggle="tooltip" 
+							title="" 
+							data-original-title="Excluir">
+								<i class="fa fa-trash"></i>
+						</a>
+						<a 
+							(click)="abrirModalVisualizarSolicitacao(item)"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip" 
+							title="" 
+							data-original-title="Visualizar">
+								<i class="fa fa-eye"></i>
+						</a>
+					</td>
+					<!-- ## SE FOR A TELA DE VISUALIZAR INSUMO, ATIVA OS LINKSS= ##-->
+					<td class="text-left">
+						{{item.numeroSequencial}}						
+					</td>
+					<td class="text-left">
+						<a *ngIf="!item.existeInsumoJaSolicitadoAlteracao 
+									&& item.existeSolicitacaoDeAlteracao 
+									&& path == 'detalhe-importado-visualizar' "
+							style="cursor: pointer; color: green;"
+							(click)="abrirModalSolicitacaoAlteracaoPais(item)">
+							{{item.codigoPais}} | {{item.descricaoPais}}
+						</a>
+						<label style="font-weight: 100;" class="text-left" *ngIf=" item.existeInsumoJaSolicitadoAlteracao 
+																					|| 
+																					(!item.existeSolicitacaoDeAlteracao) 
+													||
+													path == 'analisar-detalhe-insumos'">
+							{{item.codigoPais}} | {{item.descricaoPais}}						
+						</label>
+					</td>
+					<td class="text-left">
+						<a *ngIf="!item.existeInsumoJaSolicitadoAlteracao 
+									&& item.existeSolicitacaoDeAlteracao 
+									&& path == 'detalhe-importado-visualizar' "
+							style="cursor: pointer; color: green;"
+							(click)="abrirModalSolicitacaoAlteracaoMoeda(item)">
+							{{item.codigoDescricaoMoeda}}
+						</a>
+						<label style="font-weight: 100;" class="text-left" *ngIf="item.existeInsumoJaSolicitadoAlteracao 
+																					|| 
+																					(!item.existeSolicitacaoDeAlteracao ) 
+													||
+													path == 'analisar-detalhe-insumos'">
+							{{item.codigoDescricaoMoeda}}						
+						</label>
+					</td>
+					<td class="text-left">
+						<a *ngIf="!item.existeInsumoJaSolicitadoAlteracao 
+									&& item.existeSolicitacaoDeAlteracao 
+									&& path == 'detalhe-importado-visualizar' "
+							style="cursor: pointer; color: green;"
+							(click)="abrirModalSolicitacaoAlteracaoCoefTecnico(item)">
+							{{item.quantidade | number : '1.7-7' }}
+						</a>
+						<label style="font-weight: 100;" class="text-left" *ngIf="item.existeInsumoJaSolicitadoAlteracao 
+																					|| 
+																					(!item.existeSolicitacaoDeAlteracao) 
+													||
+													path == 'analisar-detalhe-insumos'">
+							{{item.quantidade | number : '1.7-7' }}						
+						</label>
+
+					</td>
+					<td class="text-left">
+						<a *ngIf="!item.existeInsumoJaSolicitadoAlteracao 
+									&& item.existeSolicitacaoDeAlteracao 
+									&& path == 'detalhe-importado-visualizar' "
+							style="cursor: pointer; color: green;"
+							(click)="abrirModalSolicitacaoAlteracaoValorUnitario(item)">
+							{{item.valorUnitario | number : '1.7-7' }}
+						</a>
+						<label style="font-weight: 100;" class="text-left" *ngIf="item.existeInsumoJaSolicitadoAlteracao 
+																					|| 
+																					(!item.existeSolicitacaoDeAlteracao ) 
+													||
+													path == 'analisar-detalhe-insumos'">
+							{{item.valorUnitario | number : '1.7-7' }}					
+						</label>
+					</td>
+					<td class="text-left" >
+						<a *ngIf="!item.existeInsumoJaSolicitadoAlteracao 
+									&& item.existeSolicitacaoDeAlteracao 
+									&& path == 'detalhe-importado-visualizar' "
+							style="cursor: pointer; color: green;"
+							(click)="abrirModalSolicitacaoAlteracaoValorFrete(item)">
+							{{item.valorFrete | number : '1.7-7' }}
+						</a>
+						<label style="font-weight: 100;" class="text-left" *ngIf="item.existeInsumoJaSolicitadoAlteracao 
+																					|| 
+																					(!item.existeSolicitacaoDeAlteracao ) 
+													||
+													path == 'analisar-detalhe-insumos'">
+							{{item.valorFrete | number : '1.7-7' }}				
+						</label>
+					</td>
+
+					<td class="text-left">
+						<label style="font-weight: 100;" >
+							{{item.valorDolarFOB | number : '1.7-7' }}				
+						</label>
+					</td>
+
+					<td class="text-left">
+						
+						<label style="font-weight: 100;">
+							{{item.valorDolarCFR | number : '1.7-7' }}				
+						</label>
+					</td>
+					
+				</tr>
+			</tbody>
+			
+			<tbody *ngIf="path == 'editar-detalhe-insumos-novo'">				
+				<tr *ngFor="let item of lista; let ind = index">
+					
+					<!-- *ngIf="path == 'analisar-detalhe-insumos' && item.existeSolicitacaoDeAlteracao" -->
+					<td class="text-center">
+						<a 
+							(click)="apagar(item)"
+							class="btn btn-danger btn-sm"
+							data-toggle="tooltip" 
+							title="" 
+							data-original-title="Excluir">
+								<i class="fa fa-trash"></i>
+						</a>
+					</td>
+
+					<!-- ## SE FOR A TELA DE VISUALIZAR INSUMO, ATIVA OS LINKSS= ##-->
+					<td class="text-left">
+						{{item.numeroSequencial}}						
+					</td>
+					<td class="text-left">
+						<label style="font-weight: 100;" class="text-left">
+							{{item.codigoPais}} | {{item.descricaoPais}}						
+						</label>
+					</td>
+					<td class="text-left">
+						<label style="font-weight: 100;" class="text-left" >
+							{{item.codigoDescricaoMoeda}}						
+						</label>
+					</td>
+					<td class="text-left">
+						<label style="font-weight: 100;" class="text-left">
+							{{item.quantidade | number : '1.7-7' }}						
+						</label>
+
+					</td>
+					<td class="text-left">
+						<label style="font-weight: 100;" class="text-left">
+							{{item.valorUnitario | number : '1.7-7' }}					
+						</label>
+					</td>
+					<td class="text-left" >
+						<label style="font-weight: 100;" class="text-left">
+							{{item.valorFrete | number : '1.7-7' }}				
+						</label>
+					</td>
+
+					<td class="text-left">
+						<label style="font-weight: 100;" >
+							{{item.valorDolarFOB | number : '1.7-7' }}				
+						</label>
+					</td>
+
+					<td class="text-left">
+						
+						<label style="font-weight: 100;">
+							{{item.valorDolarCFR | number : '1.7-7' }}				
+						</label>
+					</td>
+					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-modal-solicitacao-alteracao-valor-frete #ModalSolicitarAlteracaoValorFrete>
+</app-modal-solicitacao-alteracao-valor-frete>
+
+<app-modal-solicitacao-alteracao-quantidade-coeficiente-tecnico 
+	#ModalSolicitarAlteracaoQuantidadeCoeficienteTecnicoComponent>
+</app-modal-solicitacao-alteracao-quantidade-coeficiente-tecnico>
+
+<app-modal-pais 
+	#ModalPaisComponent>
+</app-modal-pais>
+
+<app-modal-moeda
+	#ModalMoedaComponent>
+</app-modal-moeda>
+
+<app-modal-solicitacao
+	#ModalSolicitacao>
+</app-modal-solicitacao>
+
+<app-modal-solicitacao-alteracao-valor-unitario 
+	#ModalSolicitacaoAlteracaoValorUnitario>
+</app-modal-solicitacao-alteracao-valor-unitario>
+

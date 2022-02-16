@@ -1,0 +1,462 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Manter Parâmetros</app-titulo>
+			<app-sub-titulo>{{titulo}} Parâmetros</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+
+						<a routerLink="/parametros"
+						   class="btn btn-default btn-sm"
+						   *ngIf="isVoltarVisible"><i class="fa fa-long-arrow-left m-r-xs"></i>Voltar</a>
+
+
+						<a routerLink="/parametros/{{model.idParametro}}/editar" class="btn btn-primary btn-sm" *ngIf="desabilitado"><i class="fa fa-pencil"></i> Editar</a>
+						<button id="botaoSalvar" #botaoSalvar type="submit" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-save"></i> Salvar</button>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" #formulario="ngForm"   ngNativeValidate (ngSubmit)="salvar()" >
+
+						<div class="row form-group">
+							<div class="col-lg-12">
+								<label for="txtDescricao"
+									   class="control-label"
+									   [class.required]="!desabilitado">
+									Descrição:
+								</label>
+								<input type="text"
+									   id="txtDescricao"
+									   name="txtDescricao"
+									   class="form-control"
+									   required
+									   maxlength="120"
+									   [disabled]="desabilitado"
+									   [(ngModel)]="model.descricao"
+									   inputTextFilter="true"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<section class="panel panel-default">
+									<header class="panel-heading">
+										<ul class="nav nav-tabs">
+											<li class="active">
+												<a #abaDadosMercadoria href="#gerais" data-toggle="tab">Dados da Mercadoria/Fornecedor</a>
+											</li>
+											<li class="" (click)="onClickEvent()">
+												<a #abaNegociacao href="#documentos"  data-toggle="tab">Dados da Negociação</a>
+											</li>
+										</ul>
+									</header>
+									<div class="tab-content">
+										<div class="tab-pane fade in active" id="gerais">
+
+											<article class="panel-body">
+												<div class="panel panel-default">
+													<div class="panel-heading"><h2 class="panel-title h5">Mercadoria</h2></div>
+													<div class="panel-body">
+
+														<div class="row form-group">
+
+															<div class="col-lg-6">
+																<label for="txtPais"
+																	   class="control-label">País:</label>
+																<!--[valorSelecionadoParent]="paisSelecionado"-->
+																<app-drop-list-select (valorModificado)="model.codigoPaiMercadoria = $event"
+																					  [(ngModel)]="model.codigoPaiMercadoria"
+																					  name="parametroCodigoPaiMercadoria"
+																					  [isDisabled]="desabilitado"
+																					  [isRequired]="false"
+																					  servico="Pais"
+																					  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																					  #pais>
+																</app-drop-list-select>
+															</div>
+														</div>
+
+														<div class="row form-group">
+
+															<div class="col-lg-6">
+																<label for="moeda" class="control-label">Moeda:</label>
+																<!--[valorSelecionadoParent]="moedaSelecionada"-->
+																<app-drop-list-select (valorModificado)="model.idMoeda = $event"
+																					  name="idMoeda"
+																					  [isDisabled]="desabilitado"
+																					  [isRequired]="false"
+																					  servico="Moeda"
+																					  [selMinimumInputLength]="3"
+																					  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																					  [(ngModel)]="model.idMoeda"
+																					  #moeda>
+																</app-drop-list-select>
+															</div>
+															<div class="col-lg-6">
+																<label for="incoterms" class="control-label">INCOTERMS:</label>
+																<!--[valorSelecionadoParent]="paisSelecionado"-->
+																<app-drop-list-select (valorModificado)="model.idIncoterms = $event"
+																					  [(ngModel)]="model.idIncoterms"
+																					  name="idIncoterms"
+																					  [isDisabled]="desabilitado"
+																					  [isRequired]="false"
+																					  servico="Incoterms"
+																					  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																					  #incorterms>
+																</app-drop-list-select>
+															</div>
+														</div>
+
+														<div class="row form-group">
+															<div class="col-md-6">
+																<label for="despacho" class="control-label">RFB de Despacho:</label>
+																<!--[valorSelecionadoParent]="paisSelecionado"-->
+																<app-drop-list-select (valorModificado)="model.idUnidadeReceitaFederalDespacho = $event"
+																					  [(ngModel)]="model.idUnidadeReceitaFederalDespacho"
+																					  name="idUnidadeReceitaFederalDespacho"
+																					  [isDisabled]="desabilitado"
+																					  [isRequired]="false"
+																					  servico="UnidadeReceitaFederal"
+																					  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																					  #unidadeReceitaFederal>
+																</app-drop-list-select>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group m-n">
+																	<label for="entrada" class="control-label">RFB de Entrada:</label>
+																	<!--[valorSelecionadoParent]="paisSelecionado"-->
+																	<app-drop-list-select (valorModificado)="model.idUnidadeReceitaFederalEntrada = $event"
+																						  [(ngModel)]="model.idUnidadeReceitaFederalEntrada"
+																						  name="idUnidadeReceitaFederalEntrada"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="false"
+																						  servico="UnidadeReceitaFederal"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #unidadeReceitaFederal>
+																	</app-drop-list-select>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="panel-body">
+														<div class="panel-group">
+															<div class="panel panel-default">
+																<div class="panel-heading"><h2 class="panel-title h5">Fornecedor</h2></div>
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-lg-6">
+																			<div class="form-group m-n">
+																				<label for="tipoFornecedor" class="control-label">Tipo de Fornecedor:</label>
+																				<select																						
+																						name="tipoFornecedor"
+																						id="tipoFornecedor"
+																						class="form-control"
+																						[(ngModel)]="model.tipoFornecedor"
+																						(change)="onChangeTipoFornecedor()"
+																						[disabled]="desabilitado">
+																					<option value="-1" disabled selected> Selecione uma opção </option>
+																					<option value="0">0 - TIPO DE FORNECEDOR NÃO INFORMADO</option>
+																					<option value="1">1 - O FABRICANTE/PRODUTOR É O EXPORTADOR</option>
+																					<option value="2">2 - O FABRICANTE/PRODUTOR NÃO É O EXPORTADOR</option>
+																					<option value="3">3 - O FABRICANTE/PRODUTOR É DESCONHECIDO</option>
+																				</select>
+																			</div>
+																		</div>
+																		<div *ngIf="!isFornecedorVisible" class="col-md-6">
+																			<div class="form-group m-n">
+																				<label for="fornecedor" class="control-label required">Fornecedor:</label>
+																				<app-drop-list-select id="idFornecedor"
+																									  (valorModificado)="model.idFornecedor = $event"
+																									   [(ngModel)]="model.idFornecedor"
+																									  name="idFornecedor"
+																									  [isDisabled]="desabilitado"
+																									  [isRequired]="true"
+																									  servico="Fornecedor"
+																									  [selMinimumInputLength]="2"
+																									  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																									  #fornecedor>
+																				</app-drop-list-select>
+																			</div>
+																		</div>
+																	</div>
+																	<br />
+																	<div class="row">
+																		<div *ngIf="!isFabricanteVisible" class="col-md-6">
+																			<div class="form-group m-n">
+																				<label for="fabricante" class="control-label required">Fabricante:</label>
+																				<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																									  (valorModificado)="model.idFabricante = $event"
+																									  [(ngModel)]="model.idFabricante"
+																									  name="idFabricante"
+																									  [isDisabled]="desabilitado"
+																									  [isRequired]="true"
+																									  servico="Fabricante"
+																									  [selMinimumInputLength]="2"
+																									  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																									  #fabricante>
+																				</app-drop-list-select>
+																			</div>
+																		</div>
+																		<div *ngIf="!isPaisOrigemVisible" class="col-md-6">
+																			<div class="form-group m-n">
+																				<label for="paisOrigem" class="control-label required">País Origem:</label>
+																				<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																									  (valorModificado)="model.codigoPaisOrigemFabricante = $event"
+																									  [(ngModel)]="model.codigoPaisOrigemFabricante"
+																									  name="codigoPaisOrigemFabricante"
+																									  [isDisabled]="desabilitado"
+																									  [isRequired]="true"
+																									  servico="Pais"																									  
+																									  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																									  #paisOrigemFabricante>
+																				</app-drop-list-select>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+										</div>
+										<div class="tab-pane fade active"
+											 *ngIf="habilitarMaxHeight == false ? 'maxHeightParametros' : '' "
+											 id="documentos">
+											<article class="panel-body">
+												<div class="panel panel-default">
+													<div class="panel-heading"><h2 class="panel-title h5">Acordos Tarifários</h2></div>
+													<div class="panel-body">
+														<div class="row form-group">
+															<div class="col-md-4">
+																<label for="tipo" class="control-label">Tipo:</label>
+																<select name="tipo"
+																		id="tipo"
+																		class="form-control"
+																		[(ngModel)]="model.tipoAcordoTarifario"
+																		[disabled]="desabilitado">
+																	<option [ngValue]="undefined" disabled selected> Selecione uma opção </option>
+																	<option value="2">2 - ALADI</option>
+																	<option value="3">3 - OMC</option>
+																	<option value="4">4 - SGPC</option>
+																</select>
+															</div>
+														</div>
+														<div class="row form-group">
+															<div class="col-md-12">
+																<label for="aladi" class="control-label">ALADI:</label>
+																<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																					  (valorModificado)="model.idAladi = $event"
+																					  [(ngModel)]="model.idAladi"
+																					  name="idAladi"
+																					  [isDisabled]="desabilitado"
+																					  [isRequired]="false"
+																					  servico="Aladi"
+																					  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																					  #aladi>
+																</app-drop-list-select>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group m-n">
+																	<label for="moeda" class="control-label">NALADI:</label>
+																	<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																						  (valorModificado)="model.idNaladi = $event"
+																						   [(ngModel)]="model.idNaladi"
+																						  name="idNaladi"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="false"
+																						  servico="Naladi"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #naladi>
+																	</app-drop-list-select>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="panel panel-default">
+													<div class="panel-heading"><h2 class="panel-title h5">Regime de Tributação</h2></div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-4">
+																<div class="form-group m-n">
+																	<label for="moeda" class="control-label">Regime Tributário:</label>
+																	<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																						  (valorModificado)="model.idRegimeTributario = $event"
+																						  [(ngModel)]="model.idRegimeTributario"
+																						  name="idRegimeTributario"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="false"
+																						  servico="RegimeTributario"
+																						  [selMinimumInputLength]="1"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #regimeTributario>
+																	</app-drop-list-select>
+																</div>
+															</div>
+														</div>
+														<br />
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group m-n">
+																	<label for="moeda" class="control-label">Fundamento Legal:</label>
+																	<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																						  (valorModificado)="model.idFundamentoLegal = $event"
+																						  [(ngModel)]="model.idFundamentoLegal"
+																						  name="idFundamentoLegal"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="false"
+																						  servico="FundamentoLegal"
+																						  [selMinimumInputLength]="2"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #fundamentoLegal>
+																	</app-drop-list-select> 
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="panel panel-default">
+													<div class="panel-heading"><h2 class="panel-title h5">Cobertura Cambial</h2></div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-4">
+																<div class="form-group m-n">
+																	<label for="coberturaCambial" class="control-label">Tipo de Cobertura:</label>
+																	<select name="parametroTipoCorbeturaCambial"
+																			id="parametroTipoCorbeturaCambial"
+																			[(ngModel)]="model.tipoCorbeturaCambial"
+																			[disabled]="desabilitado"
+																			(change)="onChangeCoberturaCambial()"
+																			class="form-control">
+																		<option [ngValue]="undefined" disabled selected> Selecione uma opção </option>
+																		<option value="1">1 - ATÉ 180 DIAS</option>
+																		<option value="2">2 – DE 180 ATÉ 360 DIAS</option>
+																		<option value="3">3 – ACIMA DE 360 DIAS</option>
+																		<option value="4">4 – SEM COBERTURA</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<br />
+														<div class="row">
+															<div *ngIf="!isModalidadeVisible" class="col-md-9">
+																<div class="form-group m-n">
+																	<label for="moeda" class="control-label required">Modalidade de Pagamento:</label>
+																	<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																						  (valorModificado)="model.idModalidadePagamento = $event"
+																						  [(ngModel)]="model.idModalidadePagamento"
+																						  name="idModalidadePagamento"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="true"
+																						  servico="ModalidadePagamento"
+																						  [selMinimumInputLength]="2"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #modalidadePagamento>
+																	</app-drop-list-select>
+																</div>
+															</div>
+															<div *ngIf="!isLimiteVisible" class="col-md-3">
+																<div class="form-group m-n">
+																	<label for="limitePgto" class="control-label required">Limite de Pagamento(Dias):</label>
+																	<input type="text"
+																		   name="parametroQuantidadeDiaLimite"
+																		   id="parametroQuantidadeDiaLimite"
+																		   [(ngModel)]="model.quantidadeDiaLimite"
+																		   [disabled]="desabilitado"
+																		   class="form-control"
+																		   maxlength="3"
+																		   required>
+																</div>
+															</div>
+														</div>
+														<br />
+														<div class="row">
+															<div *ngIf="!isInstituicaoVisible" class="col-md-12">
+																<div class="form-group m-n">
+																	<label for="instituicaoFInanceira" class="control-label required">Instituição Financeira:</label>
+																	<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																						  (valorModificado)="model.idInstituicaoFinanceira = $event"
+																						  [(ngModel)]="model.idInstituicaoFinanceira"
+																						  name="idInstituicaoFinanceira"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="true"
+																						  servico="InstituicaoFinanceira"
+																						  [selMinimumInputLength]="2"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #instituicaoFinanceira>
+																	</app-drop-list-select>
+																</div>
+															</div>
+														</div>
+														<br />
+														<div class="row">
+															<div *ngIf="!isMotivoVisible" class="col-md-12">
+																<div class="form-group m-n">
+																	<label for="motivo" class="control-label required">Motivo:</label>
+																	<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"
+																						  (valorModificado)="model.idMotivo = $event"
+																						  [(ngModel)]="model.idMotivo"
+																						  name="idMotivo"
+																						  id="idFornecedor"
+																						  [isDisabled]="desabilitado"
+																						  [isRequired]="true"
+																						  [selMinimumInputLength]="2"
+																						  servico="Motivo"
+																						  [placeholder]="desabilitado == true ? '' : 'Informe o código ou a descrição' "
+																						  #motivo>
+																	</app-drop-list-select>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</article>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</form>
+				</article>
+				<footer class="panel-footer clearfix">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+
+						<a routerLink="/parametros"
+						   class="btn btn-default btn-sm"
+						   *ngIf="isVoltarVisible"><i class="fa fa-long-arrow-left m-r-xs"></i>Voltar</a>
+
+						<a routerLink="/parametros/{{model.idParametro}}/editar" class="btn btn-primary btn-sm" *ngIf="desabilitado"><i class="fa fa-pencil"></i> Editar</a>
+						<button type="submit" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-save"></i> Salvar</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

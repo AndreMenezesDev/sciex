@@ -1,0 +1,43 @@
+<div class="calendar">
+	<section class="panel panel-primary b-a m-n">
+		<header class="panel-heading b-b">
+			<h2 class="panel-title h5">Calendário</h2>
+		</header>
+
+		<article class="panel-body no-padder" [class.disabled]="isDisabled">
+			<div class="bg-light dker m-l-n-xxs m-r-n-xxs calendar">
+				<div class="calendar" id="cal_mj">
+					<table class="table header">
+						<tbody>
+							<tr>
+								<td *ngIf="isSelectMonth" (click)="previousDate()"><i class="icon-arrow-left"></i></td>
+								<td colspan="5" class="year span6">
+									<div class="visualmonthyear m-t-xs">{{monthName()}} {{date?.getFullYear()}}</div>
+								</td>
+								<td *ngIf="isSelectMonth" (click)="nextDate()"><i class="icon-arrow-right"></i></td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="daysmonth table table">
+						<tbody>
+							<tr class="week_days">
+								<td *ngFor="let weekday of weekdays">{{weekday.shortName}}</td>
+							</tr>
+							<tr *ngFor="let week of weeks; let i = index">
+								<td [attr.colspan]="[7 - week.days.length]" *ngIf="i === 0 && week.days.length < 7">&nbsp;</td>
+								<td class="day"
+									[class.current-day]="isCurrentDate(day)"
+									[class.disabled]="isDisabledDate(day)"
+									(click)="selectDate(day)"
+									*ngFor="let day of week.days">
+									<a>{{day}}</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</article>
+		<div class="text-center font-bold" *ngIf="selectedDate">{{selectedDate | date: 'dd/MM/yyyy'}}</div>
+	</section>
+</div>

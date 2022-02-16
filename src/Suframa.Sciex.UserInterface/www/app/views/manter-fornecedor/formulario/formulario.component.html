@@ -1,0 +1,195 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Manter Fornecedor</app-titulo>
+			<app-sub-titulo>{{titulo}} Fornecedor</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+								<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+
+						<a routerLink="/fornecedor"
+						   class="btn btn-default btn-sm"
+						   *ngIf="isVoltarVisible"><i class="fa fa-long-arrow-left m-r-xs"></i>Voltar</a>
+
+						<a routerLink="/fornecedor/{{model.idFornecedor}}/editar"
+						   class="btn btn-primary btn-sm"
+						   *ngIf="desabilitado"><i class="fa fa-pencil m-r-xs"></i>Editar</a>
+
+						<button type="button"
+								disableOnClick
+								class="btn btn-primary btn-sm"
+								(click)="formulario.onSubmit()"
+								*ngIf="!desabilitado">
+							<i class="fa fa-save"></i> Salvar
+						</button>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario"
+						  class="form form-horinzontal"
+						  #formulario="ngForm"
+						  ngNativeValidate
+						  (ngSubmit)="salvar()">
+
+						<fieldset [disabled]="desabilitado">
+
+							<div class="row form-group">
+
+								<div *ngIf="habilitarCampoCodigo" class="col-lg-2 text-nowrap">
+									<label for="" class="">Código:</label>
+									<input id="txtCodigo"
+										   type="text"
+										   name="txtCodigo"
+										   class="form-control"
+										   [(ngModel)]="model.codigo"
+										   [readonly]="habilitarCampoCodigo"
+										   (blur)="onBlurEvent()"/>
+								</div>
+								<div class=""
+									 [ngClass]="habilitarCampoCodigo === false ? 'col-lg-12' : 'col-lg-10'">
+									<label for="txtRazaoSocial"
+										   class="control-label"
+										   [class.required]="!desabilitado">Razão Social:</label>
+									<input type="text"
+										   id="txtRazaoSocial"
+										   class="form-control"
+										   required name="model.razaoSocial"
+										   [(ngModel)]="model.razaoSocial"
+										   maxlength="60"
+										   inputTextFilter="true"/>
+								</div>
+
+							</div>
+
+							<div class="row form-group">
+
+								<div class="col-lg-6">
+									<label for="txLogradouro"
+										   class="control-label"
+										   [class.required]="!desabilitado">Logradouro:</label>
+									<input type="text"
+										   id="txtLogradouro"
+										   class="form-control"
+										   required name="model.logradouro"
+										   [(ngModel)]="model.logradouro"
+										   maxlength="40"
+										   inputTextFilter="true"/>
+								</div>
+
+								<div class="col-lg-2 text-nowrap">
+									<label for="txtNumero"
+										   class="control-label"
+										   [class.required]="!desabilitado">Número:</label>
+									<input type="text"
+										   id="txtNumero"
+										   class="form-control"
+										   required name="model.numero"
+										   [(ngModel)]="model.numero"
+										   maxlength="6"
+										   inputTextFilter="true"/>
+								</div>
+
+								<div class="col-lg-4">
+									<label for="txtComplemento"
+										   class="control-label">Complemento:</label>
+									<input type="text"
+										   id="txtComplemento"
+										   class="form-control"
+										   name="model.complemento"
+										   [(ngModel)]="model.complemento"
+										   maxlength="21"/>
+								</div>
+
+							</div>
+
+							<div class="row form-group">
+
+								<div class="col-lg-4 text-nowrap">
+									<label for="txtCidade"
+										   class="control-label"
+										   [class.required]="!desabilitado">Cidade:</label>
+									<input type="text"
+										   id="txtCidade"
+										   class="form-control"
+										   required name="model.cidade"
+										   [(ngModel)]="model.cidade"
+										   maxlength="25"
+										   inputTextFilter="true"/>
+								</div>
+
+								<div class="col-lg-4">
+									<label for="txtEstado"
+										   class="control-label"
+										   [class.required]="!desabilitado">Estado:</label>
+									<input type="text"
+										   id="txtEstado"
+										   class="form-control"
+										   required name="model.estado"
+										   [(ngModel)]="model.estado"
+										   maxlength="25"
+										   inputTextFilter="true"/>
+								</div>
+
+								<div class="col-lg-4">
+									<label for="txtPais"
+										   class="control-label text-nowrap"
+										   [class.required]="!desabilitado">País:</label>
+									<app-drop-list-select [valorSelecionadoParent]="paisSelecionado"														  
+														  (valorModificado)="model.codigoPais = $event"
+														  name="codigoPais"
+														   [isDisabled] ="desabilitado ? true : false"
+														   [isRequired] ="true"
+														  servico="Pais"
+														  placeholder="Informe o código ou a descrição"
+														  [(ngModel)]="model.codigoPais"
+														  #pais>
+									</app-drop-list-select>
+								</div>
+
+							</div>
+
+						</fieldset>
+
+					</form>
+				</article>
+				<footer class="panel-footer clearfix panel-footer-sciex">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<a routerLink="/fornecedor"
+						   class="btn btn-default btn-sm"
+						   *ngIf="isVoltarVisible"><i class="fa fa-long-arrow-left m-r-xs"></i>Voltar</a>
+						<a routerLink="/fornecedor/{{model.idFornecedor}}/editar"
+						   class="btn btn-primary btn-sm"
+						   *ngIf="desabilitado"><i class="fa fa-pencil m-r-xs"></i>Editar</a>
+						<button type="button"
+								disableOnClick
+								class="btn btn-primary btn-sm"
+								(click)="formulario.onSubmit()"
+								*ngIf="!desabilitado">
+							<i class="fa fa-save"></i> Salvar
+						</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

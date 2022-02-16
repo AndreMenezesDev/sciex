@@ -1,0 +1,83 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="InscricaoCadastral" [sorted]="sorted" (onChangeSort)="changeSort($event)"><br>Inscrição<br>Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Empresa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Empresa</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Prod.</app-ordenacao>
+					</th>					
+					<!-- <th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoProdutoSuframa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Prod. Suf.</app-ordenacao>
+					</th> -->
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap">
+						<app-ordenacao field="DescricaoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Produto</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoModelo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Modelo do Produto</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="QtdeInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Qtde Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="DataEnvio" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data Envio</app-ordenacao>
+					</th>
+					<th class="th-sortable th-200 unset-nowrap">
+						<app-ordenacao field="StatusLE" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-center">{{item.inscricaoCadastral}}</td>
+					<td class="text-center">{{item.razaoSocial}}</td>
+					<td class="text-center">{{item.codigoProduto}}</td>
+					<!-- <td class="text-center">{{item.codigoProdutoSuframa}}</td> -->
+					<td class="unset-nowrap">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap">{{item.descCodigoProdutoSuframa}}</td>
+					<td class="unset-nowrap">{{item.descricaoModelo}}</td>
+					<td class="unset-nowrap">{{item.qtdInsumo}}</td>
+					<td class="unset-nowrap">{{item.dataCadastroFormatada}}</td>
+					<td class="unset-nowrap">{{item.statusLEAlteracao != null
+															? item.descStatusLEAlteracao
+															: item.descStatusLE}}</td>
+					<td class="text-center">
+						<a routerLink="/analisar-listagem-exportacao/{{item.idLe}}/analisar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Analisar"><i class="fa fa-pencil"></i></a>
+						<!-- <a routerLink="/analisar-listagem-exportacao/{{item.idLe}}/analisar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Analisar"><i class="fa fa-pencil"></i></a> -->
+						<!-- <a routerLink="/manter-listagem-exportacao/{{item.idLe}}/editar" class="btn btn-default btn-sm" [ngClass]="item.statusLE > 1 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Incluir Insumos"><i class="i i-add-to-list"></i></a> -->
+					</td>
+				</tr>
+				<!-- <tr *ngFor="let item of lista">
+					<td class="text-center">{{item.codigoProduto}}</td>
+					<td class="unset-nowrap">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap">{{item.descCodigoProdutoSuframa}}</td>
+					<td class="unset-nowrap">{{item.descCodigoTipoProduto}}</td>
+					<td class="unset-nowrap">{{item.dataCadastroFormatada}}</td>
+					<td class="unset-nowrap">{{item.descStatusLE}}</td>
+					<td class="text-center">
+						<a routerLink="/manter-listagem-exportacao/{{item.idLe}}/visualizar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a routerLink="/manter-listagem-exportacao/{{item.idLe}}/editar" class="btn btn-default btn-sm" [ngClass]="item.statusLE > 1 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Incluir Insumos"><i class="i i-add-to-list"></i></a>
+						<a style="cursor:pointer" class="btn btn-danger btn-sm" data-toggle="tooltip" [ngClass]="item.statusLE > 1 ? 'disabled' : ''" title="" data-original-title="Excluir" (click)="confirmarExclusao(item.idLe)"><i class="fa fa-trash-o"></i></a>
+						<a style="cursor:pointer" [ngClass]="!item.isInsumos ? 'disabled' : ''" data-toggle="tooltip" class="btn btn-default btn-sm" (click)="confirmarEntrega(item)" title="" data-original-title="Entregar LE"><i class="i i-paperplane"></i></a>
+					</td> 
+				</tr>-->
+			</tbody>
+		</table>
+	</div>
+</app-grid>

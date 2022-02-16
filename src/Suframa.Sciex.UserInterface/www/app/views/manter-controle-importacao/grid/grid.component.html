@@ -1,0 +1,52 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="idPliAplicacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Aplicação</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="descricaoSetor" [sorted]="sorted" (onChangeSort)="changeSort($event)">Setor</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="IdCodigoConta" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código Conta</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="IdCodigoUtilizacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código Utilização</app-ordenacao>
+					</th>
+					<th class="th-100 text-center unset-nowrap">
+						Status
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="unset-">{{item.descricaoPliAplicacao}}</td>
+					<td class="unset-">{{item.descricaoSetor}}</td>
+					<td class="unset-">{{item.descricaoCodigoConta}}</td>
+					<td class="unset-nowrap">{{item.descricaoCodigoUtilizacao}}</td>
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.status == 0 ? 'btn-danger' : 'btn-primary'"
+							   (click)="item.status == 0 ? confirmarAtivarStatus(item) : confirmarInativarStatus(item)">
+								<i class="fa"
+								   [ngClass]="item.status === 0 ? 'fa-times' : 'fa-check'">
+								</i>
+							</a>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

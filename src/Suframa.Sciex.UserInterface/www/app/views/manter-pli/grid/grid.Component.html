@@ -1,0 +1,69 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="DataCadastro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="IdPLIAplicacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo de Aplicação</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoDocumento" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo de PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-200 unset-nowrap">
+						<app-ordenacao field="DataCadastro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data do Cadastro</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="StatusPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-center">{{item.ano}}/{{item.numeroPli | formatCode:6}}</td>
+					<td class="unset-nowrap">{{item.descricaoAplicacao}}</td>
+					<td class="unset-nowrap">{{item.descricaoTipoDocumento}}</td>
+					<td class="unset-nowrap">{{item.dataPliFormatada}}</td>
+					<td class="unset-nowrap">{{item.descricaoStatus}}</td>
+
+					<td class="text-center">
+						<a *ngIf="item.tipoDocumento == 1 && item.idPLIAplicacao == 2" routerLink="/manter-pli/{{item.idPLI}}/visualizar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a *ngIf="item.tipoDocumento == 2 && item.idPLIAplicacao == 2" routerLink="/manter-pli/{{item.idPLI}}/visualizarsubstitutivo" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a *ngIf="item.tipoDocumento == 1 && (item.idPLIAplicacao == 1 || item.idPLIAplicacao == 3 || item.idPLIAplicacao == 4)" routerLink="/manter-pli/{{item.idPLI}}/visualizarcomercializacao" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a *ngIf="item.tipoDocumento == 2 && (item.idPLIAplicacao == 1 || item.idPLIAplicacao == 3 || item.idPLIAplicacao == 4)" routerLink="/manter-pli/{{item.idPLI}}/visualizarcomercializacaosubstitutivo" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a *ngIf="item.tipoDocumento == 3 && item.idPLIAplicacao == 2" routerLink="/manter-pli/{{item.idPLI}}/visualizarretificadora" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a *ngIf="item.tipoDocumento == 3 && (item.idPLIAplicacao == 1 || item.idPLIAplicacao == 3 || item.idPLIAplicacao == 4)" routerLink="/manter-pli/{{item.idPLI}}/visualizarretificadoracomercializacao" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<!---->
+						<a *ngIf="item.codigoPLIStatus == 23 && item.statusAnaliseVisual == 1 && item.analiseVisualStatus == 9" (click)="abrirModalResposta(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Responder"><i class="i i-chat"></i></a>
+						<!---->
+						<a #editar *ngIf="item.tipoDocumento == 1 && item.idPLIAplicacao == 2" routerLink="/manter-pli/{{item.idPLI}}/editar" class="btn btn-default btn-sm" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i></a>
+						<a #editar *ngIf="item.tipoDocumento == 2 && item.idPLIAplicacao == 2" routerLink="/manter-pli/{{item.idPLI}}/editarsubstitutivo" class="btn btn-default btn-sm" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i></a>
+						<a #editar *ngIf="item.tipoDocumento == 1 && (item.idPLIAplicacao == 1 || item.idPLIAplicacao == 3 || item.idPLIAplicacao == 4)" routerLink="/manter-pli/{{item.idPLI}}/editarcomercializacao" class="btn btn-default btn-sm" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i></a>
+						<a #editar *ngIf="item.tipoDocumento == 2 && (item.idPLIAplicacao == 1 || item.idPLIAplicacao == 3 || item.idPLIAplicacao == 4)" routerLink="/manter-pli/{{item.idPLI}}/editarcomercializacaosubstitutivo" class="btn btn-default btn-sm" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i></a>
+						<a #editar *ngIf="item.tipoDocumento == 3 && item.idPLIAplicacao == 2" routerLink="/manter-pli/{{item.idPLI}}/editarretificadora" class="btn btn-default btn-sm" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i></a>
+						<a #editar *ngIf="item.tipoDocumento == 3 && (item.idPLIAplicacao == 1 || item.idPLIAplicacao == 3 || item.idPLIAplicacao == 4)" routerLink="/manter-pli/{{item.idPLI}}/editarretificadoracomercializacao" class="btn btn-default btn-sm" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" data-toggle="tooltip" title="" data-original-title="Alterar"><i class="fa fa-pencil"></i></a>
+						<!---->
+						<a style="cursor:pointer" class="btn btn-default btn-sm" data-toggle="tooltip" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" title="" data-original-title="Copiar" *ngIf="item.tipoDocumento < 2" (click)="confirmarCopiaPli(item)"><i class="fa fa-copy"></i></a>
+						<a style="cursor:pointer" class="btn btn-danger btn-sm" data-toggle="tooltip" [ngClass]="item.codigoPLIStatus >= 21 ? 'disabled' : ''" title="" data-original-title="Excluir" (click)="confirmarExclusao(item.idPLI)"><i class="fa fa-trash-o"></i></a>
+						<a style="cursor:pointer" [ngClass]="!item.isMercadorias ? 'disabled' : ''" data-toggle="tooltip" class="btn btn-default btn-sm" (click)="confirmarValidarPli(item)" title="" data-original-title="Validar"><span class="fa fa-check-square-o"></span></a>
+						<a style="cursor:pointer" [ngClass]="!item.isMercadorias ? 'disabled' : ''" data-toggle="tooltip" class="btn btn-default btn-sm" (click)="confirmarEntregaPli(item)" title="" data-original-title="Entregar"><i class="i i-paperplane"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-modal-mercadoria-pli #appModalMercadoriaPli></app-modal-mercadoria-pli>
+<app-modal-mercadoria-pli-comercializacao #appModalMercadoriaComercializacaoPli></app-modal-mercadoria-pli-comercializacao>
+<app-modal-resposta-motivo #appModalResposta></app-modal-resposta-motivo>

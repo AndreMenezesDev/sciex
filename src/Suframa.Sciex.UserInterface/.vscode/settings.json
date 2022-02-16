@@ -1,0 +1,8 @@
+{
+    "favorites.resources": [
+        "www\\app\\layout\\layout.component.html",
+        "www\\app\\route\\app-routing.module.ts",
+        "www\\app\\shared\\components\\grid\\grid.component.ts",
+        "www\\app\\views"
+    ]
+}

@@ -1,0 +1,94 @@
+<div #appModalSolicitarInclusaoInsumo 
+    id="1" 
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none;">
+
+        <div 
+            class="modal-dialog" 
+            style="width:1500px;margin-top: 10px;" 
+            style=" max-width: 60%; width: auto !important; margin-top: 10px; "
+        >
+
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px;">
+				<h4 class="modal-title" style="color: White;" id="modalParecer">Selecionar Insumos da LE</h4>
+			</div>
+			<div class="modal-body">
+				<section>					
+                    <div class="m-r-xs">
+                        <div class="col-lg-12">
+                            <div class="alert alert-success" style="background-color: #F0FFF0; border-color: #98FB98; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+                                Dados do Produto 
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-4" >
+                            <label class="m-r-xs">Produto:</label><span>{{ parametros.codigoProduto ? parametros.codigoProduto : '--' }}</span>
+                        </div>
+                        <div class="col-lg-8">
+                            <label class="m-r-xs">Descrição:</label><span >{{ infoModal.descCodigoProdutoSuframa ? infoModal.descCodigoProdutoSuframa : '--' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-4">
+                            <label class="m-r-xs">NCM:</label><span > {{ infoModal.codigoNCM ? infoModal.codigoNCM : '--'}}</span>
+                        </div>
+                        <div class="col-lg-8">
+                            <label class="m-r-xs">Tipo:</label><span> {{ infoModal.descCodigoTipoProduto ? infoModal.descCodigoTipoProduto : '--' }} </span>
+                        </div>
+                    </div>
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-4">
+                            <label class="m-r-xs">Unidade:</label><span > {{ infoModal.descCodigoUnidade ? infoModal.descCodigoUnidade : '--' }} </span>
+                        </div>
+                        <div class="col-lg-8">
+                            <label class="m-r-xs">Modelo:</label><span> {{ infoModal.descricaoModelo ? infoModal.descricaoModelo : '--' }}</span>
+                        </div>
+                    </div>					
+				</section>
+
+                <br><br>
+
+				<div class="row">
+					<div class="col-lg-12" style="margin-top: 20px; height: 600px; overflow-y : scroll;">						
+                        <app-grid-solicitar-inclusao-insumo 
+                            [(lista)]="grid.lista"
+                            [(total)]="grid.total" 
+                            [(size)]="grid.size"
+							[(page)]="grid.page" 
+                            [(parametros)]="parametros" 
+                            [(formPai)]="formPai"
+							(onChangeSort)="onChangeSort($event)" 
+                            (onChangeSize)="onChangeSize($event)"
+							(onChangePage)="onChangePage($event)">
+						</app-grid-solicitar-inclusao-insumo>                        
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button 
+                    type="button" 
+                    class="btn btn-sm btn-default" 
+                    (click)="confirmarCancelamento()">
+                        <span class="fa fa-times"></span> Cancelar 
+                </button>
+                <button 
+                    type="button" 
+                    class="btn btn-sm btn-primary" 
+                    (click)="confirmarSalvar()">
+                        <span class="fa fa-save"></span> Salvar 
+                </button>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalSolicitarInclusaoInsumoBackground class="modal-backdrop fade in" style="display: none;"></div>

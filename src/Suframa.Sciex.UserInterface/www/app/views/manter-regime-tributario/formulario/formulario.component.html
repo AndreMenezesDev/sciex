@@ -1,0 +1,78 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Manter Regime Tributário</app-titulo>
+			<app-sub-titulo>{{titulo}} Regime Tributário</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<a routerLink="/regime-tributario/{{model.idRegimeTributario}}/editar" class="btn btn-primary btn-sm" *ngIf="desabilitado"><i class="fa fa-pencil"></i> Editar</a>
+						<button type="button" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-save"></i> Salvar</button>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+						<fieldset [disabled]="desabilitado">
+							<div class="row">
+								<div class="col-lg-1">
+									<label for="txtCodigo" class="control-label text-nowrap" [class.required]="!desabilitado">Código:</label>
+									<input #codigo
+										   type="text"
+										   id="txtCodigo"
+										   autocomplete="off"
+										   class="form-control"
+										   required name="codigo1"
+										   [(ngModel)]="codigo1"
+										   [readonly]="habilitarCampoCodigo"
+										   onlyNumber="true"
+										   maxlength="1"
+										   (blur)="!habilitarCampoCodigo ? onBlurEvent() : null" />
+								</div>
+							</div>
+							<div class="line"></div>
+							<div class="row">
+								<div class="col-lg-12">
+									<label for="txtDescricao" class="control-label" [class.required]="!desabilitado">Descrição:</label>
+									<input type="text"
+										   id="txtDescricao"
+										   class="form-control"
+										   autocomplete="off"
+										   maxlength="120"
+										   required name="model.descricao"
+										   [(ngModel)]="model.descricao"
+										   inputTextFilter="true" />
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								*ngIf="isCancelarVisible"
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<a routerLink="/regime-tributario/{{model.idRegimeTributario}}/editar" class="btn btn-primary btn-sm" *ngIf="desabilitado"><i class="fa fa-pencil"></i> Editar</a>
+						<button type="button" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-save"></i> Salvar</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,83 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Enviar Estrutura Própria do Plano de Exportação</app-titulo>
+			<app-sub-titulo>Enviar Arquivo</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a style="cursor: pointer; background-color: #fff2ccff; color: black;"
+							 (click)="abrir()"
+							 class="btn btn-default btn-sm">
+						<i class="fa fa-question-circle"></i>
+						Ajuda</a>
+					</div>
+					<h2 class="panel-title h5">Envio de Estrutura Própria</h2>
+				</header>
+				<article class="panel-body">
+					<form method="POST" action="#" enctype="multipart/form-data">
+
+						<div class="form-group row m-l-lg m-t-lg">
+							<div class="col-sm-11"
+								[ngClass]="{ 'has-error': arquivo.invalid && (arquivo.touched || arquivo.dirty) }">
+								<b>Anexar Documento </b><b style="color:red;">(Somente arquivos ZIP ou PDF)</b>
+		
+								<div [hidden]="ocultarInputAnexo">
+									<input type="file" accept="application/zip,application/pdf" id="arquivo" name="arquivo"
+										(change)="onFileChange($event)" #arquivo
+										style="display: block; padding: 5px; width: 44%;" required />
+									<div class="text-danger">Tamanho Maximo: 10MB</div>
+									<div class="text-danger" *ngIf="arquivo.invalid && (arquivo.touched || arquivo.dirty)">
+										<div *ngIf="arquivo.errors.required">
+											Inserir um arquivo valido!
+										</div>
+									</div>
+								</div>
+								<div [hidden]="!ocultarInputAnexo" class="row form-group">
+									<div class="col-lg-12">
+										<div class="col-lg-3">
+											<button class="btn btn-default btn-sm m-r-sm" (click)="limparAnexo()">
+												<i class="fa fa-eraser"></i>
+												Remover Anexo
+											</button>
+										</div>
+										<div class="col-lg-8">
+											<label style="font-weight: normal">{{parametros.nomeAnexo}}</label>
+										</div>
+									</div>
+		
+								</div>
+							</div>
+						</div>
+						<!-- COMPONENT START -->
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12">
+									<app-upload-file [(maximoTamanhoArquivo)]="maximoTamanhoArquivo" #appUploadFile></app-upload-file>
+								</div>
+							</div>
+						</div>
+
+						<!-- COMPONENT END -->
+
+					</form>
+				</article>				
+
+				<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<!--<button type="reset" class="btn btn-sm btn-danger" #btnReset (click)="limpar()">Limpar</button>-->
+						<button type="submit" class="btn btn-sm btn-primary a" (click)="enviarArquivo($event)"><span class="i i-paperplane"></span> Enviar Arquivo</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+</div>
+
+<app-modal-estrutura-propria-pe #appModalEstruturaPropriaPE></app-modal-estrutura-propria-pe>

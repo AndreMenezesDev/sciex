@@ -1,0 +1,248 @@
+<div #appModalVisualizarParametrizacao class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal-lg">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Visualizar Parametrização</h4>
+			</div>
+
+			<div class="modal-body" style="overflow-y: auto; max-height: calc(100vh - 210px);">
+				<form>
+					<div class="form-group row">
+						<div class="col-lg-3">
+							<label>CPF:</label>
+							<input type="text"
+								   id="txtCPF"
+								   class="form-control"
+								   name="model.analista.cpf"
+								   [(ngModel)]="model.cpf"
+								   readonly />
+						</div>
+						<div class="col-lg-9">
+							<label>Nome:</label>
+							<input type="text"
+								   id="txtNome"
+								   class="form-control"
+								   name="model.analista.nome"
+								   [(ngModel)]="model.nome"
+								   readonly />
+						</div>
+					</div>
+
+					<section class="panel panel-default" style="overflow-y: auto; max-height: calc(100vh - 210px);">
+						<header class="panel-heading">
+							<h2 class="panel-title h5">Análise Visual</h2>
+						</header>
+						<article class="panel-body">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-lg-3 m-b-sm">
+										<label>Status:</label>
+										<input type="text"
+											   id="txtStatusAnaliseVisual"
+											   class="form-control"
+											   readonly
+											   name="model.statusAnaliseVisual"
+											   value="{{model.statusAnaliseVisual == 0 ? 'Inativo': 'Ativo'}}" />
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="data">Data:</label>
+										<input type="text"
+											   id="txtDataAnaliseVisual"
+											   class="form-control"
+											   name="model.dataAnaliseVisualInicio"
+											   value="{{model.dataAnaliseVisualInicio | date:'dd/MM/yyyy'}}" readonly />
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="dataorigem">Hora:</label>
+										<div class="input-group"
+											 style="display: flex;">
+											<input type="text"
+												   id="txtHoraAnaliseVisualInicio"
+												   class="form-control"
+												   style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseVisualInicio"
+												   value="{{model.horaAnaliseVisualInicio == null ? '--:--' : model.horaAnaliseVisualInicio | slice:0:5}}" readonly/>
+											<span class=" text-center" style="padding-left: 10px;padding-right: 10px; padding-top: 8px;">a</span>
+											<input type="text"
+												   id="txtHoraAnaliseVisualFim"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseVisualInicio"
+												   value="{{model.horaAnaliseVisualFim == null ? '--:--' : model.horaAnaliseVisualFim | slice:0:5}}" readonly/>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-3 m-b-sm">
+										<label>Bloqueio:</label>
+										<input type="text" id="txtStatusAnaliseVisualBloqueio"
+											   class="form-control" readonly
+											   name="model.statusAnaliseVisualBloqueio"
+											   value="{{model.statusAnaliseVisualBloqueio == 0 ? 'Desbloqueado': 'Bloqueado'}}"/>
+
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="txtDataAnaliseVisualBloqueioInicio">Data:</label>
+										<input type="text"
+											   id="txtDataAnaliseVisualBloqueioInicio"
+											   class="form-control"
+											   name="model.dataAnaliseVisualBloqueioInicio"
+											   value="{{model.dataAnaliseVisualBloqueioInicio | date:'dd/MM/yyyy'}}" readonly />
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="dataorigem">Hora:</label>
+										<div class="input-group" style="display: flex;">
+											<input type="text"
+												   id="txtHoraAnaliseVisualBloqueioInicio"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseVisualBloqueioInicio"
+												   value="{{model.horaAnaliseVisualBloqueioInicio == null ? '--:--' : model.horaAnaliseVisualBloqueioInicio | slice:0:5}}" readonly/>
+											<span class=" text-center" style="padding-left: 10px;padding-right: 10px; padding-top: 8px;">a</span>
+											<input type="text"
+												   id="txtHoraAnaliseVisualBloqueioInicio"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseVisualBloqueioInicio"
+												   value="{{model.horaAnaliseVisualBloqueioFim == null ? '--:--' : model.horaAnaliseVisualBloqueioFim | slice:0:5}}" readonly/>
+												 
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-6">
+										<label for="dataorigem">Status dos PLIs a serem desvinculados:</label>
+										<div class="form-check">
+											<div *ngFor="let option of model.listaStatusAnaliseVisual">
+												<label class="form-check-label" style="margin-right: 10px;">
+													<input type="checkbox"
+														   disabled=""
+														   name="options"
+														   [checked]="option.checked ? true : null" />
+													{{option.descricao}}
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					</section>
+
+					<section class="panel panel-default" style="overflow-y: auto; max-height: calc(100vh - 210px);">
+						<header class="panel-heading">
+							<h2 class="panel-title h5">Lote Listagem</h2>
+						</header>
+						<article class="panel-body">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-lg-3 m-b-sm">
+										<label>Status:</label>
+										<input type="text" id="txtStatusAnaliseLoteListagem"
+											   class="form-control" readonly
+											   name="model.statusAnaliseLoteListagem"
+											   value="{{model.statusAnaliseLoteListagem == 0 ? 'Inativo': 'Ativo'}}" />
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="dataorigem">Data:</label>
+										<input type="text"
+											   id="txtDataAnaliseLoteListagemInicio"
+											   class="form-control"
+											   name="model.dataAnaliseLoteListagemInicio"
+											   value="{{model.dataAnaliseLoteListagemInicio | date:'dd/MM/yyyy'}}" readonly />
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="dataorigem">Hora:</label>
+										<div class="input-group" style="display: flex;">
+											<input type="text"
+												   id="txtHoraAnaliseLoteListagemInicio"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseLoteListagemInicio"
+												   value="{{model.horaAnaliseLoteListagemInicio == null ? '--:--' : model.horaAnaliseLoteListagemInicio | slice:0:5}}" readonly/>
+											<span class=" text-center" style="padding-left: 10px;padding-right: 10px; padding-top: 8px;">a</span>
+											<input type="text"
+												   id="txtHoraAnaliseLoteListagemFim"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseLoteListagemFim"
+												   value="{{model.horaAnaliseLoteListagemFim == null ? '--:--' : model.horaAnaliseLoteListagemFim | slice:0:5}}" readonly/>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-3 m-b-sm">
+										<label>Bloqueio:</label>
+										<input type="text" id="txtStatusAnaliseLoteListagemBloqueio"
+											   class="form-control" readonly
+											   name="model.statusAnaliseLoteListagemBloqueio"
+											   value="{{model.statusAnaliseLoteListagemBloqueio == 0 ? 'Desbloqueado': 'Bloqueado'}}"/>
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="dataorigem">Data:</label>
+										<input type="text"
+											   id="txtDataAnaliseListagemLoteBloqueioInicio"
+											   class="form-control"
+											   name="model.dataAnaliseListagemLoteBloqueioInicio"
+											   value="{{model.dataAnaliseListagemLoteBloqueioInicio | date:'dd/MM/yyyy'}}" readonly />
+									</div>
+
+									<div class="col-lg-3 m-b-sm">
+										<label for="dataorigem">Hora:</label>
+										<div class="input-group" style="display: flex;">
+											<input type="text"												   
+												   id="txtHoraAnaliseLoteListagemBloqueioInicio"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseLoteListagemBloqueioInicio"
+												   value="{{model.horaAnaliseLoteListagemBloqueioInicio == null ? '--:--' : model.horaAnaliseLoteListagemBloqueioInicio | slice:0:5}}" readonly/>			  
+											<span class=" text-center" style="padding-left: 10px;padding-right: 10px; padding-top: 8px;">a</span>
+											<input type="text"
+												   id="txHoraAnaliseLoteListagemBloqueioFim"
+												   class="form-control" style="width: 50%;"
+												   maxlength="5"
+												   name="model.horaAnaliseLoteListagemBloqueioFim"
+												   value="{{model.horaAnaliseLoteListagemBloqueioFim == null ? '--:--' : model.horaAnaliseLoteListagemBloqueioFim | slice:0:5}}" readonly/>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-lg-6">
+										<label for="dataorigem">Status dos PLIs a serem desvinculados:</label>
+
+										<div *ngFor="let option of model.listaStatusAnaliseListagem">
+											<input type="checkbox"
+												   name="options"
+												   disabled=""
+												   [checked]="option.checked ? true : null" />
+											<label class="form-check-label" style="margin-right: 10px;">
+												{{option.descricao}}
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					</section>
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-times"></span> Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div #appModalVisualizarParametrizacaoBackground class="modal-backdrop fade in" style="display: none;"></div>

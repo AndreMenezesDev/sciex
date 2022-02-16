@@ -1,0 +1,24 @@
+<div #appModalDescricaoObservacaoSuframa class="modal fade in" tabindex="-1" role="dialog" aria-hidden="true"
+	style=" display: none; overflow: auto">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="modalParecer">Observação do Status</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row form-group">
+					<div class="col-lg-12">
+						<textarea class="form-control" style="resize: none" id="justificativa" maxlength="1000" name="justificativa" [(ngModel)]="model.descricaoObservacao" rows="5" disabled></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a (click)="fechar()" class="btn btn-sm btn-default btn-sm"><i
+					class="fa fa-long-arrow-left m-r-xs"></i>
+				Fechar
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div #appModalDescricaoObservacaoSuframaBackground class="modal-backdrop fade in" style="display: none;"></div>

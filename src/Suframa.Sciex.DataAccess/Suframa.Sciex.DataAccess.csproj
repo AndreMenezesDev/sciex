@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{75E29A91-1D70-4C43-BA0C-4CAB420C658D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Suframa.Sciex.DataAccess</RootNamespace>
+    <AssemblyName>Suframa.Sciex.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetCasClient">
+      <HintPath>..\..\lib\DotNetCasClient.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\..\packages\FluentValidation.7.3.2\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.Web.4.5.1\lib\net35\NLog.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.1.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.106.1.0\lib\net452\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.4.0.12\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Integration.Web.4.0.12\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Integration.WebApi.4.0.12\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandRepositorySciex.cs" />
+    <Compile Include="CommandStackSciex.cs" />
+    <Compile Include="Database\BaseEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfiguerRecintoAlfandega.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoDue.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCHistoricoInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicProrrogacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicDetalhe.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicitacaoAlteracao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSTParecerTecnico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParecerTecnicoProduto.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureEstruturaPropriaLE.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParecerComplementar.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParecerTecnico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCDetalheInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCProdutoPais.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCProduto.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRJProdutoEmpresaExportacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCStatus.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureProcesso.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRJUnidadeMedida.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoDetalheInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoHistorico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoArquivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoProdutoPais.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoProduto.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoPE.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTipoSolicAlteracao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewInsumoPadrao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLEInsumoErro.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLEInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLEProdutoHistorico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLEProduto.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSetorArmazenamento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoLeInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTipoDeclaracao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiArmazemEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiArquivoEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiArquivoEntradaEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiEntradaEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiArmazemEntradaEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiAdicaoEntradaEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiEmbalagemEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiEmbalagemEntradaEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiLiEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSequencial.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAliHistorico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAuditoriaAplicacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAuditoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePliAnaliseVisualAnexo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePliAnaliseVisual.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePliFornecedorFabricante.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoPliDetalheMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoPliMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoPli.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoPliProcessoAnuente.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoFornecedorFabricante.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAliArquivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAliEntradaArquivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureEstruturaPropriaPLI.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureEstruturaPropriaPLIArquivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLiArquivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLiHistoricoErro.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaPliDebito.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTipoEmbalagem.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViaTransporte.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewPais.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewProdutoEmpresaExportacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewRelatorioAnaliseProcessamentoPli.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureErroProcessamento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureErroMensagem.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLancamento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureCodigoLancamento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurerRepresentacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAli.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAliArquivoEnvio.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDi.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLi.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLiArquivoRetorno.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureLiSubstituida.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaPliMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaPliHistorico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaPliDetalheMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaPli.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaNCMBeneficio.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaGrupoBeneficio.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaFatoGerador.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaEmpresaAtuacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureNcmExcecao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePLIDetalheMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePLIProduto.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePLIProcessoAnuente.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewAtividadeEconomicaPrincipalEntity.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureNcm.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureControleImportacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureRegimeTributarioMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureCodigoUtilizacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureCodigoConta.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureOrgaoAnuente.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParametros.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureInstituicaoFinanceira.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureModalidadePagamento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureIncoterms.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureMotivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParametroConfiguracao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureImportador.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureMoeda.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePLI.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePLIAplicacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePLIMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParidadeValor.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParidadeCambial.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAnalista.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureFabricante.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureFornecedor.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePaiz.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureRegimeTesteTributario.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureRegimeTributarioTeste.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureFundamentoLegal.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureUnidadeReceitaFederal.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAladi.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDicionarioDropDown.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureControleExecucaoServico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureListaServico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiligenciaAtividadesSetor.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiligenciaAtividades.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDiligencia.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureInscricaoSuframaLegado.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureNaladi.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureParametroAnalista.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureRegimeTributario.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewImportador.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewUnidadeMedida.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewDetalheMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewMercadoria.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewNcm.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewProdutoEmpresa.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewMunicipio.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewSetor.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewSetorEmpresa.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureVWPessoaJuridicaAprovado.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureWorkflow.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureAgendaAtendimento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureArquivoInformacao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureCampoSistema.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureMotivoSituacaoInscricao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePedidoAlteracao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePessoaJuridicaInscricao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSituacaoInscricao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTipoUsuario.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePais.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureCep.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureArquivo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureDadosSolicitante.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePessoaFisica.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePessoaJuridica.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePessoaJuridicaAdministrador.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePessoaJuridicaInscricaoEstadual.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePessoaJuridicaSocio.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePorteEmpresa.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureProtocolo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureQuadroPessoal.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureRequerimento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureRequerimentoDocumento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSubclasseAtividade.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureServico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureStatusProtocolo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTaxaServico.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTipoDocumento.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureTipoRequerimento.cs" />
+    <Compile Include="Database\Context\DataAccessValidationException.cs" />
+    <Compile Include="Database\Context\DatabaseContextSciexProcedures.cs" />
+    <Compile Include="Database\Context\DatabaseContextSciex.cs" />
+    <Compile Include="Database\Context\DatabaseContextProcedures.cs" />
+    <Compile Include="Database\Context\DatabaseContext.cs" />
+    <Compile Include="Database\Context\DatabaseInterceptor.cs" />
+    <Compile Include="Database\Context\EntityErrorMessageHelper.cs" />
+    <Compile Include="Database\Context\FormattedDbEntityValidationException.cs" />
+    <Compile Include="Database\Context\IDatabaseContextSciex.cs" />
+    <Compile Include="Database\Context\IDatabaseContext.cs" />
+    <Compile Include="Database\Entities\AuditoriaAplicacaoEntity.cs" />
+    <Compile Include="Database\Entities\AuditoriaEntity.cs" />
+    <Compile Include="Database\Entities\EstruturaPropriaLEEntity.cs" />
+    <Compile Include="Database\Entities\ParecerComplementarEntity.cs" />
+    <Compile Include="Database\Entities\PlanoExportacaoDUEEntity.cs" />
+    <Compile Include="Database\Entities\PRCDetalheHistoricoInsumoEntity.cs" />
+    <Compile Include="Database\Entities\PRCHistoricoInsumoEntity.cs" />
+    <Compile Include="Database\Entities\ParecerTecnicoProdutoEntity.cs" />
+    <Compile Include="Database\Entities\ParecerTecnicoEntity.cs" />
+    <Compile Include="Database\Entities\PEInsumoDetalheEntity.cs" />
+    <Compile Include="Database\Entities\PEInsumoEntity.cs" />
+    <Compile Include="Database\Entities\PEHistoricoEntity.cs" />
+    <Compile Include="Database\Entities\PEProdutoPaisEntity.cs" />
+    <Compile Include="Database\Entities\PEProdutoEntity.cs" />
+    <Compile Include="Database\Entities\PEArquivoEntity.cs" />
+    <Compile Include="Database\Entities\PlanoExportacaoEntity.cs" />
+    <Compile Include="Database\Entities\LEInsumoErroEntity.cs" />
+    <Compile Include="Database\Entities\LEInsumoEntity.cs" />
+    <Compile Include="Database\Entities\LEProdutoHistoricoEntity.cs" />
+    <Compile Include="Database\Entities\LEProdutoEntity.cs" />
+    <Compile Include="Database\Entities\PRCDetalheInsumoEntity.cs" />
+    <Compile Include="Database\Entities\PRCSolicProrrogacaoEntity.cs" />
+    <Compile Include="Database\Entities\PRCInsumoEntity.cs" />
+    <Compile Include="Database\Entities\PRCProdutoPaisEntity.cs" />
+    <Compile Include="Database\Entities\PRCProdutoEntity.cs" />
+    <Compile Include="Database\Entities\PRCSolicDetalheEntity.cs" />
+    <Compile Include="Database\Entities\PRCStatusEntity.cs" />
+    <Compile Include="Database\Entities\TipoSolicAlteracaoEntity.cs" />
+    <Compile Include="Database\Entities\ProcessoEntity.cs" />
+    <Compile Include="Database\Entities\PRJUnidadeMedidaEntity.cs" />
+    <Compile Include="Database\Entities\PRCSolicitacaoAlteracaoEntity.cs" />
+    <Compile Include="Database\Entities\RecintoAlfandegaEntity.cs" />
+    <Compile Include="Database\Entities\SetorArmazenamentoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoLeInsumoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPaisProdutoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPEDetalheEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPEInsumoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPEArquivoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPELoteEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPEProdutoEntity.cs" />
+    <Compile Include="Database\Entities\STParecerTecnicoEntity.cs" />
+    <Compile Include="Database\Entities\TipoDeclaracaoEntity.cs" />
+    <Compile Include="Database\Entities\PliAnaliseVisualAnexoEntity.cs" />
+    <Compile Include="Database\Entities\PliAnaliseVisualEntity.cs" />
+    <Compile Include="Database\Entities\PliFornecedorFabricanteEntity.cs" />
+    <Compile Include="Database\Entities\AliHistoricoEntity.cs" />
+    <Compile Include="Database\Entities\RepresentacaoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPliProcessoAnuenteEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoFornecedorFabricanteEntity.cs" />
+    <Compile Include="Database\Entities\AliArquivoEntity.cs" />
+    <Compile Include="Database\Entities\AliEntradaArquivoEntity.cs" />
+    <Compile Include="Database\Entities\EstruturaPropriaPliArquivoEntity.cs" />
+    <Compile Include="Database\Entities\EstruturaPropriaPliEntity.cs" />
+    <Compile Include="Database\Entities\LiArquivoEntity.cs" />
+    <Compile Include="Database\Entities\LiHistoricoErroEntity.cs" />
+    <Compile Include="Database\Entities\ErroProcessamentoEntity.cs" />
+    <Compile Include="Database\Entities\ErroMensagemEntity.cs" />
+    <Compile Include="Database\Entities\LancamentoEntity.cs" />
+    <Compile Include="Database\Entities\CodigoLancamentoEntity.cs" />
+    <Compile Include="Database\Entities\AliArquivoEnvioEntity.cs" />
+    <Compile Include="Database\Entities\AliEntity.cs" />
+    <Compile Include="Database\Entities\DiEntity.cs" />
+    <Compile Include="Database\Entities\LiArquivoRetornoEntity.cs" />
+    <Compile Include="Database\Entities\LiEntity.cs" />
+    <Compile Include="Database\Entities\LiSubstituidaEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPliDetalheMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPliEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPliMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\TaxaPliDebitoEntity.cs" />
+    <Compile Include="Database\Entities\TaxaPliHistoricoEntity.cs" />
+    <Compile Include="Database\Entities\TaxaPliMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\TaxaPliDetalheMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\TaxaNCMBeneficioEntity.cs" />
+    <Compile Include="Database\Entities\TaxaGrupoBeneficioEntity.cs" />
+    <Compile Include="Database\Entities\TaxaFatoGeradorEntity.cs" />
+    <Compile Include="Database\Entities\TaxaEmpresaAtuacaoEntity.cs" />
+    <Compile Include="Database\Entities\TaxaPliEntity.cs" />
+    <Compile Include="Database\Entities\PliProdutoEntity.cs" />
+    <Compile Include="Database\Entities\TipoEmbalagemEntity.cs" />
+    <Compile Include="Database\Entities\ViaTransporteEntity.cs" />
+    <Compile Include="Database\Entities\ViewMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\NcmEntity.cs" />
+    <Compile Include="Database\Entities\ViewMunicipioEntity.cs" />
+    <Compile Include="Database\Entities\ViewInsumoPadraoEntity.cs" />
+    <Compile Include="Database\Entities\ViewNcmEntity.cs" />
+    <Compile Include="Database\Entities\NcmExcecaoEntity.cs" />
+    <Compile Include="Database\Entities\ControleImportacaoEntity.cs" />
+    <Compile Include="Database\Entities\RegimeTributarioMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\CodigoUtilizacaoEntity.cs" />
+    <Compile Include="Database\Entities\CodigoContaEntity.cs" />
+    <Compile Include="Database\Entities\MotivoEntity.cs" />
+    <Compile Include="Database\Entities\ModalidadePagamentoEntity.cs" />
+    <Compile Include="Database\Entities\InstituicaoFinanceiraEntity.cs" />
+    <Compile Include="Database\Entities\IncotermsEntity.cs" />
+    <Compile Include="Database\Entities\OrgaoAnuenteEntity.cs" />
+    <Compile Include="Database\Entities\ParametrosEntity.cs" />
+    <Compile Include="Database\Entities\ParametroConfiguracaoEntity.cs" />
+    <Compile Include="Database\Entities\ImportadorEntity.cs" />
+    <Compile Include="Database\Entities\ListaServicoEntity.cs" />
+    <Compile Include="Database\Entities\MoedaEntity.cs" />
+    <Compile Include="Database\Entities\ControleExecucaoServicoEntity.cs" />
+    <Compile Include="Database\Entities\PliAplicacaoEntity.cs" />
+    <Compile Include="Database\Entities\PliDetalheMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\PliEntity.cs" />
+    <Compile Include="Database\Entities\PliHistoricoEntity.cs" />
+    <Compile Include="Database\Entities\PliMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\PliProcessoAnuenteEntity.cs" />
+    <Compile Include="Database\Entities\ParidadeValorEntity.cs" />
+    <Compile Include="Database\Entities\ParidadeCambialEntity.cs" />
+    <Compile Include="Database\Entities\AladiEntity.cs" />
+    <Compile Include="Database\Entities\AnalistaEntity.cs" />
+    <Compile Include="Database\Entities\CalendarioEntity.cs" />
+    <Compile Include="Database\Entities\CalendarioAgendamentoEntity.cs" />
+    <Compile Include="Database\Entities\CalendarioDiaEntity.cs" />
+    <Compile Include="Database\Entities\CalendarioHoraEntity.cs" />
+    <Compile Include="Database\Entities\AgendaAtendimentoEntity.cs" />
+    <Compile Include="Database\Entities\ArquivoEntity.cs" />
+    <Compile Include="Database\Entities\CampoSistemaEntity.cs" />
+    <Compile Include="Database\Entities\ConsultaPublicaEntity.cs" />
+    <Compile Include="Database\Entities\ControleExecucaoJobEntity.cs" />
+    <Compile Include="Database\Entities\DicionarioDropDownEntity.cs" />
+    <Compile Include="Database\Entities\FornecedorEntity.cs" />
+    <Compile Include="Database\Entities\FabricanteEntity.cs" />
+    <Compile Include="Database\Entities\CredenciamentoEntity.cs" />
+    <Compile Include="Database\Entities\DiligenciaAnexosEntity.cs" />
+    <Compile Include="Database\Entities\DiligenciaAtividadesEntity.cs" />
+    <Compile Include="Database\Entities\DiligenciaAtividadesSetorEntity.cs" />
+    <Compile Include="Database\Entities\DiligenciaEntity.cs" />
+    <Compile Include="Database\Entities\MensagemPadraoEntity.cs" />
+    <Compile Include="Database\Entities\FeriadoEntity.cs" />
+    <Compile Include="Database\Entities\HistoricoSituacaoInscricaoEntity.cs" />
+    <Compile Include="Database\Entities\InscricaoCadastralCredenciamentoEntity.cs" />
+    <Compile Include="Database\Entities\InscricaoSuframaLegadoEntity.cs" />
+    <Compile Include="Database\Entities\InscricaoCadastralEntity.cs" />
+    <Compile Include="Database\Entities\JustificativaProtocoloEntity.cs" />
+    <Compile Include="Database\Entities\MotivoSituacaoInscricaoEntity.cs" />
+    <Compile Include="Database\Entities\NaladiEntity.cs" />
+    <Compile Include="Database\Entities\FundamentoLegal.cs" />
+    <Compile Include="Database\Entities\PaizEntity.cs" />
+    <Compile Include="Database\Entities\ParametroAnalista1Entity.cs" />
+    <Compile Include="Database\Entities\RegimeTributarioEntity.cs" />
+    <Compile Include="Database\Entities\RegimeTributarioTesteEntity.cs" />
+    <Compile Include="Database\Entities\ViewAtividadeEconomicaPrincipalEntity.cs" />
+    <Compile Include="Database\Entities\PRJProdutoEmpresaExportacaoEntity.cs" />
+    <Compile Include="Database\Entities\ViewProdutoEmpresaExportacaoEntity.cs" />
+    <Compile Include="Database\Entities\ViewSetorEmpresaEntity.cs" />
+    <Compile Include="Database\Entities\ViewProdutoEmpresaEntity.cs" />
+    <Compile Include="Database\Entities\ViewDetalheMercadoriaEntity.cs" />
+    <Compile Include="Database\Entities\ViewImportadorEntity.cs" />
+    <Compile Include="Database\Entities\ViewRelatorioAnaliseProcessamentoPliEntity.cs" />
+    <Compile Include="Database\Entities\ViewUnidadeMedidaEntity.cs" />
+    <Compile Include="Database\Entities\ViewSetorEntity.cs" />
+    <Compile Include="Database\Entities\UnidadeReceitaFederalEntity.cs" />
+    <Compile Include="Database\Entities\VWDocumentoEntity.cs" />
+    <Compile Include="Database\Entities\VWQuadroPessoalAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\VWPessoaJuridicaSocioAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\VWPessoaJuridicaInscricaoEstadualAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\VWPessoaJuridicaAtividadeAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\VWPessoaJuridicaAdministradorAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\VWPessoaFisicaAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\ProtocoloProcedure.cs" />
+    <Compile Include="Database\Entities\UsuarioInternoSetorEntity.cs" />
+    <Compile Include="Database\Entities\UsuarioPapelEntity.cs" />
+    <Compile Include="Database\Entities\ParametroDistribuicaoAutomaticaEntity.cs" />
+    <Compile Include="Database\Entities\ParametroAnalistaEntity.cs" />
+    <Compile Include="Database\Entities\ParametroAnalistaServicoEntity.cs" />
+    <Compile Include="Database\Entities\PedidoCorrecaoEntity.cs" />
+    <Compile Include="Database\Entities\PessoaFisicaAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaInscricaoEntity.cs" />
+    <Compile Include="Database\Entities\SituacaoInscricaoEntity.cs" />
+    <Compile Include="Database\Entities\TipoConsultaPublicaEntity.cs" />
+    <Compile Include="Database\Entities\ConferenciaDocumentoEntity.cs" />
+    <Compile Include="Database\Entities\TipoIncentivoEntity.cs" />
+    <Compile Include="Database\Entities\RecursoEntity.cs" />
+    <Compile Include="Database\Entities\ArquivoInformacaoEntity.cs" />
+    <Compile Include="Database\Entities\TipoUsuarioEntity.cs" />
+    <Compile Include="Database\Entities\FilaAnalistaEntity.cs" />
+    <Compile Include="Database\Entities\PapelEntity.cs" />
+    <Compile Include="Database\Entities\SeqInscricaoCadastralEntity.cs" />
+    <Compile Include="Database\Entities\UsuarioInternoEntity.cs" />
+    <Compile Include="Database\Entities\VWPessoaJuridicaAprovadoEntity.cs" />
+    <Compile Include="Database\Entities\WorkflowMensagemPadraoEntity.cs" />
+    <Compile Include="Database\Entities\WorkflowProtocoloEntity.cs" />
+    <Compile Include="Database\Entities\PaisEntity.cs" />
+    <Compile Include="Database\Entities\CepEntity.cs" />
+    <Compile Include="Database\Entities\ClasseAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\DivisaoAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\GrupoAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\MunicipioEntity.cs" />
+    <Compile Include="Database\Entities\NaturezaGrupoEntity.cs" />
+    <Compile Include="Database\Entities\NaturezaJuridicaEntity.cs" />
+    <Compile Include="Database\Entities\NaturezaQualificacaoEntity.cs" />
+    <Compile Include="Database\Entities\QualificacaoEntity.cs" />
+    <Compile Include="Database\Entities\SecaoAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\SetorEntity.cs" />
+    <Compile Include="Database\Entities\SetorAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\SubclasseAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\UnidadeCadastradoraEntity.cs" />
+    <Compile Include="Database\Entities\UnidadeSecundariaEntity.cs" />
+    <Compile Include="Database\Entities\DadosSolicitanteEntity.cs" />
+    <Compile Include="Database\Entities\ListaDocumentoEntity.cs" />
+    <Compile Include="Database\Entities\PessoaFisicaEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaAdministradorEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaAtividadeEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaInscricaoEstadualEntity.cs" />
+    <Compile Include="Database\Entities\PessoaJuridicaSocioEntity.cs" />
+    <Compile Include="Database\Entities\PorteEmpresaEntity.cs" />
+    <Compile Include="Database\Entities\ProtocoloEntity.cs" />
+    <Compile Include="Database\Entities\QuadroPessoalEntity.cs" />
+    <Compile Include="Database\Entities\RequerimentoDocumentoEntity.cs" />
+    <Compile Include="Database\Entities\RequerimentoEntity.cs" />
+    <Compile Include="Database\Entities\ServicoEntity.cs" />
+    <Compile Include="Database\Entities\StatusProtocoloEntity.cs" />
+    <Compile Include="Database\Entities\TaxaServicoEntity.cs" />
+    <Compile Include="Database\Entities\TipoDocumentoEntity.cs" />
+    <Compile Include="Database\Entities\TipoRequerimentoEntity.cs" />
+    <Compile Include="Database\Entities\UFEntity.cs" />
+    <Compile Include="Database\Entities\WorkflowSituacaoInscricaoEntity.cs" />
+    <Compile Include="Database\Entities\DiLiEntity.cs" />
+    <Compile Include="Database\Entities\DiEmbalagemEntradaEntity.cs" />
+    <Compile Include="Database\Entities\DiEmbalagemEntity.cs" />
+    <Compile Include="Database\Entities\DiArmazemEntity.cs" />
+    <Compile Include="Database\Entities\DiArmazemEntradaEntity.cs" />
+    <Compile Include="Database\Entities\DiArquivoEntity.cs" />
+    <Compile Include="Database\Entities\DiArquivoEntradaEntity.cs" />
+    <Compile Include="Database\Entities\DiAdicaoEntradaEntity.cs" />
+    <Compile Include="Database\Entities\DiEntradaEntity.cs" />
+    <Compile Include="Database\Entities\SequencialEntity.cs" />
+    <Compile Include="Database\IData.cs" />
+    <Compile Include="ICommandRepositorySciex.cs" />
+    <Compile Include="ICommandStackSciex.cs" />
+    <Compile Include="IQueryRepositorySciex.cs" />
+    <Compile Include="IQueryStackSciex.cs" />
+    <Compile Include="IUnitOfWorkSciex.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IQueryStack.cs" />
+    <Compile Include="LdapService\AutenticacaoLdap.cs" />
+    <Compile Include="LdapService\IAutenticacaoLdap.cs" />
+    <Compile Include="QueryRepositorySciex.cs" />
+    <Compile Include="QueryStackSciex.cs" />
+    <Compile Include="RestService\ApiDto\CadUsuarioApiDto.cs" />
+    <Compile Include="RestService\ApiDto\DefaultLegadoResApiDto.cs" />
+    <Compile Include="RestService\ApiDto\InscricaoSuframaApiDto.cs" />
+    <Compile Include="RestService\ApiDto\PessoaFisicaApiDto.cs" />
+    <Compile Include="RestService\ApiDto\PessoaJuridicaApiDto.cs" />
+    <Compile Include="RestService\ApiDto\RegistrarCadastroLegadoReqApiDto.cs" />
+    <Compile Include="RestService\ApiDto\RegistrarCadastroLegadoResApiDto.cs" />
+    <Compile Include="RestService\ApiDto\RegistrarDebitoReqApiDto.cs" />
+    <Compile Include="RestService\ApiDto\RegistrarDebitoResApiDto.cs" />
+    <Compile Include="RestService\ApiDto\RepresentanteLegalApiDto.cs" />
+    <Compile Include="RestService\ApiDto\TipoNaturezaUsuApiDto.cs" />
+    <Compile Include="RestService\ApiDto\SituacaoUsuarioLegadoApiDto.cs" />
+    <Compile Include="RestService\ApiDto\UsuarioPSSResDto.cs" />
+    <Compile Include="RestService\IIntegracaoLegadoApi.cs" />
+    <Compile Include="RestService\IIntegracaoPssApi.cs" />
+    <Compile Include="RestService\IntegracaoLegadoApi.cs" />
+    <Compile Include="RestService\AutenticacaoApi.cs" />
+    <Compile Include="RestService\ArredacacaoApi.cs" />
+    <Compile Include="RestService\CadastroApi.cs" />
+    <Compile Include="RestService\CadSufIntegracaoApi.cs" />
+    <Compile Include="RestService\IArredacacaoApi.cs" />
+    <Compile Include="RestService\IAutenticacaoApi.cs" />
+    <Compile Include="RestService\IntegracaoPssApi.cs" />
+    <Compile Include="RestService\RestClientBase.cs" />
+    <Compile Include="RestService\UsuarioApi.cs" />
+    <Compile Include="UnitOfWorkSciex.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="QueryStack.cs" />
+    <Compile Include="ICommandStack.cs" />
+    <Compile Include="QueryRepository.cs" />
+    <Compile Include="CommandRepository.cs" />
+    <Compile Include="IQueryRepository.cs" />
+    <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="ICommandRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specifications\ObjetivoSocialDescricaoSpecification.cs" />
+    <Compile Include="Specifications\ObjetivoSocialSpecification.cs" />
+    <Compile Include="CommandStack.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.DataTransferObject\Suframa.Sciex.CrossCutting.DataTransferObject.csproj">
+      <Project>{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}</Project>
+      <Name>Suframa.Sciex.CrossCutting.DataTransferObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting\Suframa.Sciex.CrossCutting.csproj">
+      <Project>{BC105E8E-3B81-494A-A61F-9B2EE18A77A5}</Project>
+      <Name>Suframa.Sciex.CrossCutting</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Suframa.Sciex.DataAccess.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+</Project>

@@ -1,0 +1,43 @@
+<div #appModalAddLi class="modal fade in"
+							 tabindex="-1" role="dialog"
+							 aria-hidden="true"
+							 style=" display: none; overflow: auto">
+		<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Adicionar LI</h4>
+			</div>
+			<div class="modal-body">
+				<form  id="formResp" #formResp>
+					<div class="form-group row">
+
+						<div class="col-lg-12">
+							<label for="descricao" class="">DI de Referência: {{model.numeroDIReferencia}}</label>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-lg-12">
+							<label class="required">LI - Adições:</label>
+							<select class="form-control" #liadicoes [(ngModel)]="model.idLiReferencia" name="adicoes">
+								<option [ngValue]="undefined">Selecione</option>
+								<option
+									*ngFor="let adicao of adicoes"
+									[ngValue]="adicao.id">
+									{{adicao.text}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a (click)="fechar()" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i>
+					Cancelar</a>
+				<a (click)="salvar()" class="btn btn-sm btn-primary" data-dismiss="modal" data-toggle="modal" data-backdrop="static" data-keyboard="false"><i
+						class="fa fa-save m-r-xs"></i> Salvar</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalAddLiBackground class="modal-backdrop fade in" style="display: none;"></div>

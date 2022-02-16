@@ -1,0 +1,36 @@
+<app-grid   [(lista)]="lista"
+			[(page)]="page"
+			[(size)]="size"
+			[(total)]="total"
+			[(parametros)]="parametros"
+			(onChangeSize)="changeSize($event)"
+			(onChangePage)="changePage($event)"
+			(onChangeSort)="changeSort($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-150 unset-nowrap text-left">
+						<app-ordenacao field="Cnpj" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							CNPJ
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 text-left">	
+						<app-ordenacao field="RazaoSocial" [sorted]="sorted" (onChangeSort)="changeSort($event)">					
+							Razão Social
+						</app-ordenacao>						
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+                <!-- <tr> -->
+					<td class="text-left">{{item.cnpj | cnpj}}</td>
+					<td class="text-left">{{item.razaoSocial}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

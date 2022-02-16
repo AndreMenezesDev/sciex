@@ -1,0 +1,104 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="NumeroPlano" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº Plano</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoModalidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Modalidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº Processo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DataCadastro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data Cadastro</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-left">{{item.numeroAnoPlanoFormatado}}</td>
+					<td class="text-left">{{item.tipoModalidadeString}}</td>
+					<td class="text-left">{{item.tipoExportacaoString}}</td>
+					<td class="text-left" *ngIf="item.tipoExportacao!='AP'">{{item.numeroAnoProcessoFormatado}}</td>
+					<td class="text-left" *ngIf="item.tipoExportacao=='AP'">                                   </td>
+					<td class="text-left">{{item.dataCadastroFormatada}}</td>
+					<td class="text-left">{{item.situacaoString}}</td>
+					<td class="text-center">
+						<a *ngIf="item.situacao == 5"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Solicitar Correção"
+							(click)="confirmarCorrecao(item)">
+							<i class="fa fa-pencil-square-o"></i>
+						</a>
+						<a routerLink="/manter-plano-exportacao/{{item.idPlanoExportacao}}/visualizar" 
+							*ngIf="item.situacao != 1 && item.situacao != 6 && item.tipoExportacao == 'AP'"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar">
+							<i class="fa fa-file-text-o"></i>
+						</a>
+						<a routerLink="/manter-plano-exportacao/{{item.idPlanoExportacao}}/visualizarcomprovacao" 
+							*ngIf="item.situacao != 1 && item.situacao != 6 && item.tipoExportacao == 'CO'"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar">
+							<i class="fa fa-file-text-o"></i>
+						</a>
+						<a routerLink="/manter-plano-exportacao/{{item.idPlanoExportacao}}/cadastrar" 
+							*ngIf="item.situacao == 1 && item.tipoExportacao == 'AP'"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Incluir Informações">
+							<i class="i  i-add-to-list"></i>
+						</a>
+						<a routerLink="/manter-plano-exportacao/{{item.idPlanoExportacao}}/cadastrarcomprovacao" 
+							*ngIf="item.situacao == 1 && item.tipoExportacao == 'CO'"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Incluir Informações">
+							<i class="i  i-add-to-list"></i>
+						</a>
+						<a routerLink="/manter-plano-exportacao/{{item.idPlanoExportacao}}/correcao" *ngIf="item.situacao == 6"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Corrigir">
+							<i class="fa fa-pencil"></i>
+						</a>
+						<a *ngIf="item.situacao == 1"
+							class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir Plano"
+							(click)="excluirInsumo(item)">
+							<i class="fa fa-trash-o"></i>
+						</a>
+						<a *ngIf="item.situacao == 6"
+							class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir Correção"
+							(click)="excluirCorrecaoInsumo(item)">
+							<i class="fa fa-trash-o"></i>
+						</a>
+						<a *ngIf="item.situacao == 1 || item.situacao == 6"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Validar"
+							(click)="validar(item)">
+							<i class="fa fa-check-square-o"></i>
+						</a>
+						<a *ngIf="item.situacao == 1 || item.situacao == 6"
+						class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Entregar"
+						(click)="confirmarEntrega(item)">
+						<i class="i i-paperplane"></i>
+						</a>
+						<a *ngIf="item.situacao != 1 && item.situacao != 6
+									&& item.tipoModalidade == 'S' && item.tipoExportacao == 'AP' "
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Copiar"
+							(click)="confirmarCopia(item)">
+							<i class="fa fa-copy"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

@@ -1,0 +1,77 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted" (onChangeSort)="changeSort($event)">Coeficiente Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap" *ngIf="isLEBloq">
+						<app-ordenacao field="SituacaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Situação</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap" *ngIf="isLEBloq">
+						<app-ordenacao field="TipoInsumoAlteracao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo de Alteração</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="unset-nowrap">{{item.codigoInsumo}}</td>
+					<td class="unset-nowrap">{{item.descricaoTipoInsumo}}</td>
+					<td class="unset-nowrap">{{item.codigoNCMFormatado}}</td>
+					<td class="unset-nowrap">{{item.descricaoInsumo}}</td>
+					<td class="unset-nowrap">{{item.valorCoeficienteTecnico}}</td>
+					<td class="unset-nowrap" *ngIf="isLEBloq">{{item.descricaoSituacaoInsumo}}</td>
+					<td class="unset-nowrap" *ngIf="isLEBloq">{{item.descricaoTipoInsumoAlteracao}}</td>
+					<td class="text-center">
+						<!---->
+						<a style="cursor:pointer" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar" 
+						(click)="visualizar(item)"><i class="fa fa-file-text-o"></i></a>
+						<!---->
+						<a *ngIf="!somenteLeitura && !isLEBloq" 
+							style="cursor:pointer" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Alterar" 
+							(click)="alterar(item)"><i class="fa fa-pencil"></i></a>
+						<!---->
+						<a *ngIf="!somenteLeitura && item.situacaoInsumo < 3 && isLEBloq" 
+							style="cursor:pointer" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Alterar" 
+							(click)="alterarBloqueado(item)"><i class="fa fa-pencil"></i></a>
+						<!---->
+						<a *ngIf="!somenteLeitura && (item.situacaoInsumo == null ||  parametros.statusLE == 1)" 
+						   style="cursor:pointer" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir" 
+						   (click)="confirmarExclusao(item.idLeInsumo)"><i class="fa fa-trash-o"></i></a>
+						<!---->
+						<a *ngIf="(!somenteLeitura && item.situacaoInsumo != null && (item.situacaoInsumo < 3 && parametros.statusLEAlteracao == 1))
+						||
+						(!somenteLeitura && item.situacaoInsumo == 2)" 
+							style="cursor:pointer" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Cancelar" 
+							(click)="cancelarInsumo(item)"><i class="fa fa-times"></i></a>
+						<!---->
+						<a *ngIf="item.ultimoInsumoErro != null" 
+							style="cursor:pointer" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar Erro" 
+							(click)="abrirMensagemErro(item)"><i class="fa fa-comment-o"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

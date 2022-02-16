@@ -1,0 +1,45 @@
+<div #appModalAdiamento id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel"><b>Prorrogação do Processo {{titulo}}</b></h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="row form-group">
+					<div class="col-lg-4">
+						<label class="m-r-xs">Data de validade:</label><span>{{model.dataValidadeFormatada}}</span>
+						<!-- <label class="m-r-xs">Data de validade:</label><span>-</span> -->
+					</div>
+					<div class="col-lg-6">
+						<label class="m-r-xs">Data de validade após a prorrogação:</label><span>{{model.dataValidadeProrrogadaFormatada}}</span>
+						<!-- <label class="m-r-xs">Data de validade após a prorrogação:</label><span>-</span> -->
+					</div>
+				</div>
+				<div class="row form-group" *ngIf="isProrrogacaoEspecial">
+					<div class="col-lg-12">
+						<label class="required">Justificativa:</label>
+						<textarea class="form-control"
+						maxlength="500"
+						id="justificativa"
+						style=" resize:none"
+						name="justificativa"
+						 rows="5"
+						 [(ngModel)]= "model.justificativa"
+						 required>
+						</textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a class="btn btn-sm btn-default" (click)="confirmarCancelar()" data-dismiss="modal"><i
+						class="fa fa-times m-r-xs"></i>Cancelar</a>
+				<a class="btn btn-sm btn-primary"  (click)="salvar()"><i class="fa fa-check m-r-xs"></i>Confirmar</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div #appModalAdiamentoBackground class="modal-backdrop fade in" style="display: none;"></div>

@@ -1,0 +1,155 @@
+<header class="bg-primary header header-md navbar navbar-fixed-top-xs box-shadow">
+  <div class="navbar-header aside-md bg-white">
+    <a class="btn btn-link visible-xs" data-toggle-class="nav-off-screen" data-target="#nav">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="painel.html" class="navbar-brand text-center">
+      <figure class="inline m-r-xs">
+        <img src="images/logo.png" alt="SUFRAMA">
+      </figure>
+    </a>
+    <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+      <i class="fa fa-cog"></i>
+    </a>
+  </div>
+  <ul class="nav navbar-nav hidden-xs">
+    <li>
+      <a href="#"><i class="i i-book"></i> PMN - Perfil Logado</a>
+    </li>
+    <li class="dropdown" data-toggle="tooltip" title="Acesso aos Sistemas">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="i i-grid"></i>
+      </a>
+      <div class="dropdown-menu list-quickaccess aside-lg bg-white on">
+        <div class="row m-l-none m-r-none m-t m-b text-center">
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v active">
+              <span class="m-b-xs block">
+                <i class="i i-book i-2x text-primary-lt"></i>
+              </span>
+              <small class="text-muted">PMN</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-users2 i-2x text-danger-lt"></i>
+              </span>
+              <small class="text-muted">SEG</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-rating3 i-2x text-success-lt"></i>
+              </span>
+              <small class="text-muted">CGIEX</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-data2 i-2x text-info-lt"></i>
+              </span>
+              <small class="text-muted">SAGAT</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-map2 i-2x text-muted"></i>
+              </span>
+              <small class="text-muted">SISPEX</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-vcard i-2x text-warning-lter"></i>
+              </span>
+              <small class="text-muted">CADASTRO</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-stats i-2x text-danger-lter"></i>
+              </span>
+              <small class="text-muted">SAD</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-layer2 i-2x text-info-lter"></i>
+              </span>
+              <small class="text-muted">SISREPRO</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-chat2 i-2x text-primary-lter"></i>
+              </span>
+              <small class="text-muted">COAR</small>
+            </a>
+          </div>
+          <div class="col-xs-4">
+            <a href="painel.html" class="padder-v">
+              <span class="m-b-xs block">
+                <i class="i i-study i-2x text-success-lter"></i>
+              </span>
+              <small class="text-muted">AVALIAÇÃO</small>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </li>
+    <li class="dropdown" data-toggle="tooltip" title="Seleção de Perfil">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="i i-users3"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li class="active">
+          <a href="painel.html">Perfil 1</a>
+        </li>
+        <li>
+          <a href="painel.html">Perfil 2</a>
+        </li>
+        <li>
+          <a href="painel.html">Perfil 2</a>
+        </li>
+      </ul>
+
+    </li>
+  </ul>
+  <form class="navbar-form navbar-left input-m-md m-t m-l-n-xs hidden-xs" action="resultado-pesquisa.html" role="search">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-sm bg-white b-white btn-icon"><i class="fa fa-search"></i></button>
+        </span>
+        <input type="search" class="form-control input-sm no-border" placeholder="Buscar no sistema...">
+      </div>
+    </div>
+  </form>
+
+  <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+
+    <li class="hidden-sm">
+      <a href="manual.html"><i class="i i-support"></i> <span class="hidden-sm hidden-md">Manual do Sistema</span></a>
+    </li>
+
+    <li class="hidden-sm hidden-md">
+      <a href="#">v0.0.0</a>
+    </li>
+    <li class="hidden-sm">
+      <ul id="rvfs-controllers" class="list-unstyled list-inline list-accessibility padder-h"></ul>
+
+    </li>
+    <li>
+      <a href="login.html"><span class="hidden-sm" *ngIf="authenticated">Sair</span> <i class="i i-logout"></i></a>
+    </li>
+  </ul>
+</header>

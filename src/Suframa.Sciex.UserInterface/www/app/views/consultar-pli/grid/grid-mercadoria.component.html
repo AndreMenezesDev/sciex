@@ -1,0 +1,44 @@
+<app-grid
+		  [(lista)]="lista"
+		  [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-200 unset-nowrap text-left">
+						<app-ordenacao field="CodigoNCMMercadoria" [sorted]="sorted" (onChangeSort)="changeSort($event)">Mercadoria</app-ordenacao>
+					</th>
+					<th class="th-sortable th-200 unset-nowrap text-center" *ngIf="notComercializacao">
+						<app-ordenacao field="CodigoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Produto ZFM</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-right">
+						<app-ordenacao field="ValorTotalCondicaoVenda" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Original</app-ordenacao>
+					</th>
+					<th class="th-sortable th-200 unset-nowrap text-right">
+						<app-ordenacao field="ValorTotalCondicaoVendaDolar" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor US$</app-ordenacao>
+					</th>
+					<th class="th-sortable th-250 unset-nowrap text-left">
+						<app-ordenacao field="IdMoeda" [sorted]="sorted" (onChangeSort)="changeSort($event)">Moeda de Origem</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-left font-bold"><a routerLink="/consultar-pli/{{item.idPLI}}/{{item.idPliMercadoria}}/visualizar-mercadoria-descricao">{{item.codigoNCMMercadoria}}</a></td>
+					<td class="text-center unset-nowrap" *ngIf="item != null && item.idPLIAplicacao != undefined && item.idPLIAplicacao != 1">{{item.codigoProdutoConcatenado}}</td>
+					<td class="unset-nowrap text-right">{{item.valorTotalCondicaoVendaFormatado}}</td>
+					<td class="unset-nowrap text-right">{{item.valorTotalCondicaoVendaDolarFormatado}}</td>
+					<td class="unset-nowrap text-left">{{item.codigoMoeda}} | {{item.descricaoMoeda}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

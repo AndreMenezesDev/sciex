@@ -1,0 +1,185 @@
+<section class="vbox">
+    <section class="scrollable">
+        <div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+
+            <!-- CONSULTAR TITLE BGN -->
+            <div class="row m-b-md tituloConsultar">
+                <div class="col-lg-6">
+                    <app-titulo>Minhas Solicitações de Alteração</app-titulo>
+                    <small></small>
+                </div>
+            </div>
+            <!-- CONSULTAR TITLE BGN -->
+
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <!-- FILTRO DE PESQUISA BGN -->
+                    <button 
+                        *ngIf="path != 'minhas-solicitacoes-alteracao'"
+                        (click)="voltar()"
+                        type="reset" 
+                        class="btn btn-sm btn-default pull-right" 
+                        style="margin-top: 7px; margin-right: 15px;">
+                        <i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+                    </button>
+
+                    <section class="panel panel-default filtroPesquisa">
+                        <header class="panel-heading">                            
+                            <h2 class="panel-title h5">Filtros de Pesquisa</h2>                            
+                        </header>
+                        <form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+                            <article class="panel-body" *ngIf="exibirFiltros">
+                                                                                
+                                <div class="row form-group">
+                                    <div class="col-lg-2">
+                                        <label for="cnpj" class="">Nº Processo:</label>
+                                        <input 
+                                            *ngIf="path != 'minhas-solicitacoes-alteracao'"
+                                            #numeroProcesso
+                                            [ngModelOptions]="{standalone: true}"
+                                            name="numeroAnoProcessoFormatado"
+                                            id="numeroAnoProcessoFormatado"
+                                            [(ngModel)]="numeroAnoProcesso"
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="____/aaaa"
+                                            mask-number [mask]="'9999/9999'" 
+                                            maxlength="9"
+                                            [attr.disabled]="path != 'minhas-solicitacoes-alteracao' ? true : null"
+                                            (keyup.enter)="validar(true)"
+                                        />
+                                        <input 
+                                            *ngIf="path == 'minhas-solicitacoes-alteracao'"
+                                            #numeroProcesso
+                                            [ngModelOptions]="{standalone: true}"
+                                            name="numeroAnoProcessoFormatado"
+                                            id="numeroAnoProcessoFormatado"
+                                            [(ngModel)]="parametros.numeroAnoProcessoFormatado"
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="____/aaaa"
+                                            mask-number [mask]="'9999/9999'" 
+                                            maxlength="9"
+                                            [attr.disabled]="path != 'minhas-solicitacoes-alteracao' ? true : null"
+                                            (keyup.enter)="validar(true)"
+                                        />
+                                   </div>
+                                    <div class="col-lg-2">
+                                        <label for="cnpj" class="">Nº Solicitação:</label>
+                                        <input 
+                                            #numeroSolicitacao
+                                            [ngModelOptions]="{standalone: true}"
+                                            name="numeroAnoSolicitacaoFormatado"
+                                            id="numeroAnoSolicitacaoFormatado"
+                                            [(ngModel)]="parametros.numeroAnoSolicitacaoFormatado"
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="____/aaaa"
+                                            mask-number [mask]="'9999/9999'" 
+                                            maxlength="9"         
+                                            (keyup.enter)="validar(true)"                                   
+                                        />
+                                        <!-- [attr.disabled]="path != 'minhas-solicitacoes-alteracao' ? true : null" -->
+                                   </div>
+                                    <div class="col-lg-4">
+                                       <label for="cnpj" class="">Data da Solicitação:</label>                                      
+                                       <div class="input-group" style="display: flex;">
+                                        <input #dataInicio
+                                               type="date"
+                                               id="dataInicio"
+                                               name="dataInicio"
+                                               min="0001-01-01" max="9999-12-31"
+                                               [(ngModel)]="parametros.dataInicioString"
+                                               class="form-control date"
+                                               style="width: 50%;"
+                                               maxlength="10"
+                                               autocomplete="off"
+                                               (keyup.enter)="validar(true)">
+                                        <span class="text-center" style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+                                        <input #dataFim
+                                               type="date"
+                                               id="dataFim"
+                                               name="dataFim"
+                                               min="0001-01-01" max="9999-12-31"
+                                               [(ngModel)]="parametros.dataFimString"
+                                               class="form-control date"
+                                               style="width: 50%;"
+                                               maxlength="10"
+                                               autocomplete="off"
+                                               (keyup.enter)="validar(true)">
+                                        </div>
+                                    </div>	
+                                    <div class="col-lg-2">
+                                        <label>Status:</label>
+                                        <select  [ngModelOptions]="{standalone: true}" 
+                                                id="status" 
+                                                nome="status" 
+                                                [(ngModel)]="parametros.status" 
+                                                class="form-control"
+                                                (keyup.enter)="validar(true)">
+                                                    <option value="99">TODOS</option>
+                                                    <option value="1">Em elaboração</option>
+                                                    <option value="2">Entregue</option>
+                                                    <option value="3">Em Análise</option>
+                                                    <option value="4">Finalizado</option>                                            
+                                        </select>
+                                    </div>															 
+                                  
+                                </div>
+                                
+                            </article>
+                            <footer *ngIf="exibirFiltros" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+                                <div class="pull-right">
+                                    <button 
+                                        (click)="validar(true)"
+                                        type="button" 
+                                        class="btn btn-sm btn-primary btnBuscar">
+                                            <span class="fa fa-search m-r-xs"></span> Buscar
+                                    </button>
+                                    <button 
+                                        (click)="limpar()"
+                                        class="btn btn-sm btn-default">
+                                            <span class="fa fa-eraser m-r-xs"></span> Limpar
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        (click)="exibirFiltros = false" 
+                                        class="btn btn-sm btn-default btnOcultar" 
+                                        style="margin-left: -1px;">
+                                            <span class="fa fa-magic m-r-xs"></span> Ocultar Filtros
+                                    </button>
+                                </div>
+                            </footer>
+
+                            <footer *ngIf="!exibirFiltros" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+                                <div class="pull-right">                                   
+                                    <button type="button" (click)="exibirFiltros = true" class="btn btn-sm btn-default btnOcultar" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+                                </div>
+                            </footer>
+                        </form>
+                    </section>
+                    <!-- FILTRO DE PESQUISA END -->
+
+
+                    <!-- GRID DE REGISTROS BGN -->
+                    <section class="panel panel-default tabelaConsultar">
+                        <app-solicitacoes-alteracao-grid
+                            [(lista)]="grid.lista"
+                            [(total)]="grid.total"
+                            [(size)]="grid.size"
+                            [(page)]="grid.page"
+                            [(parametros)]="parametros"
+                            [(formPai)] = "formPai"
+                            (onChangeSort)="onChangeSort($event)"
+                            (onChangeSize)="onChangeSize($event)"
+                            (onChangePage)="onChangePage($event)">
+                        </app-solicitacoes-alteracao-grid>          
+                    </section>
+                    <!-- GRID DE REGISTROS END -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

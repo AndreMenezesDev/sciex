@@ -1,0 +1,23 @@
+<div class="tab-pane">
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead class="thead-cadsuf">
+				<tr>
+					<th>Serviço</th>
+					<th class="th-100">Dias Atendimento</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let servico of servicos">
+					<td>{{servico.descricao}}</td>
+					<td>
+						<input type="text" class="form-control" maxlength="2" onlyNumber [(ngModel)]="servico.quantidadeDiasAnalise">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="pull-right">
+		<a class="btn btn-success" disableOnClick (click)="salvar()"><span class="fa fa-save"></span> Salvar</a>
+	</div>
+</div>

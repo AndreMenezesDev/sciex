@@ -1,0 +1,10 @@
+.current-day, .current-day a {
+	background-color: #00552b;
+	color: #FFF;
+	font-weight: bold;
+}
+
+.disabled, .disabled * {
+	color: #AAA !important;
+	pointer-events: none !important;
+}

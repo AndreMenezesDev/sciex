@@ -1,0 +1,60 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)"
+					>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoPais" [sorted]="sorted" (onChangeSort)="changeSort($event)">País Destino</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Numero" [sorted]="sorted" (onChangeSort)="changeSort($event)">DU-E</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DataAverbacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Averbação</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorDolar" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor (US$)</app-ordenacao>
+					</th>
+					<th class="text-center th-100" *ngIf="!somenteLeitura">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr *ngFor="let item of lista">
+
+					<td class="text-left">{{item.descricaoPais}}</td>
+					<td class="text-left">{{item.numero}}</td>
+					<td class="text-left">{{item.dataAverbacaoFormatada}}</td>
+					<td class="text-left">{{item.quantidade}}</td>
+					<td class="text-left">{{item.valorDolar}}</td>
+					<td class="text-center" *ngIf="!somenteLeitura">
+						<a
+							
+							(click)="alterar(item)"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Alterar Dados">
+							<i class="fa fa-pencil"></i>
+						</a>
+						<a
+							(click)="confirmarExclusao(item)"
+							class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-editar-documento-due #appModalEditarDocumentoDue></app-modal-editar-documento-due>

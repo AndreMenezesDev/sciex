@@ -1,0 +1,412 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="m-b-xs text-black">Realizar Análise Visual</h1>
+
+			<section class="panel panel-default m-t">
+				<header class="panel-heading FixPanelHeading">
+					<div class="row">
+						<div class="col-lg-6">
+							<h5 class="panel-title h5">Analisar PLI</h5>
+						</div>
+						<div [hidden]="!isRetificador" class="pull-right">
+							<button type="button" class="btn btn-primary btn-sm" (click)="buscarRelatorio()"><i class="fa fa-print"></i>Emitir Retificações</button>
+						</div>
+					</div>
+					
+				</header>
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+					<article class="panel-body">
+						<div class="row form-group">
+							<div class="col-lg-4">
+								<label for="pais" class="required">Situação:</label>
+								<select name="tipoStatus" id="tipoStatus" class="form-control" required #situacao
+									[(ngModel)]="parametros.statusPliAnalise" (change)="alterarSituacao()">
+									<option [ngValue]="undefined">Selecione uma opção</option>
+									<option value="7" [hidden]="isRetificador">07 - ANÁLISE VISUAL OK</option>
+									<option value="8" [hidden]="isRetificador">08 - ANÁLISE VISUAL NÃO OK</option>
+									<option value="9" [hidden]="isPendencia">09 - ANÁLISE VISUAL PENDENTE</option>
+									<option value="11" [hidden]="!isRetificador">11 - ANÁLISE VISUAL DEFERIDO</option>
+									<option value="12" [hidden]="!isRetificador">12 - ANÁLISE VISUAL INDEFERIDO</option>
+								</select>
+							</div>
+
+							<div class="col-lg-4" *ngIf="model.codigoPliAplicao == 3">
+								<label for="txtCodigo" class="control-label">Possui Projeto Aprovado?</label>
+								<input #projetoaprovado type="text" id="projetoaprovado" class="form-control"
+									name="projetoaprovado" autocomplete="off" readonly
+									[(ngModel)]="model.temProjetoAprovado" />
+							</div>
+						</div>
+						<div class="row form-group" *ngIf="parametros.statusPliAnalise == 7">
+							<div class="col-lg-6">
+								<label for="codUtilizacao" class="control-label" class="required">Código de
+									Utilização:</label>
+								<select name="codUtilizacao" id="" required #codigoUtilizacao class="form-control"
+									(change)="alterarCodigoUtilizacao()" [(ngModel)]="parametros.idUtilizacao">
+									<option *ngFor="let item of listaCodigoUtilizacao" [ngValue]="item.id">
+										{{item.text}}
+									</option>
+								</select>
+							</div>
+							<div class="col-lg-6" *ngIf="parametros.statusPliAnalise == 7">
+								<label for="codigoConta" class="control-label" class="required">Código da Conta:</label>
+								<select name="codigoConta" id="" required #codigoConta [(ngModel)]="parametros.idConta"
+									class="form-control">
+									<option *ngFor="let item of listaCodigoConta" [ngValue]="item.id">
+										{{item.text}}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row"
+							*ngIf="parametros.statusPliAnalise == 8 || parametros.statusPliAnalise == 9 || parametros.statusPliAnalise == 12">
+							<div class="col-lg-12">
+								<label class="required">Motivo:</label>
+								<textarea class="form-control ng-pristine ng-valid ng-touched" #motivo
+									[(ngModel)]="parametros.motivo" maxlength="500" name="motivo" rows="3">
+  								</textarea>
+							</div>
+						</div>
+					</article>
+					<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+						<div class="pull-right">
+							<a class="btn btn-sm btn-default" (click)="voltar()">
+								<span class="fa fa-long-arrow-left m-r-xs"></span>Cancelar</a>
+							<a class="btn btn-sm btn-primary" (click)="formulario.onSubmit()">
+								<span class="fa fa-save m-r-xs"></span>Salvar</a>
+						</div>
+					</footer>
+
+					<div class="row">
+						<div class="col-lg-12" *ngIf="model.motivoPendencia!= null && model.motivoPendencia != '' || model.descricaoResposta != null && model.descricaoResposta != ''">
+							<section class="panel panel-danger">
+								<header class="panel-heading FixPanelHeading">
+									<h2 class="panel-title h5">Pendência:</h2>
+								</header>
+								<form class="form" role="form">
+									<article class="panel-body text-sm" >
+										<div class="form-group row" *ngIf="model.motivoPendencia!= null && model.motivoPendencia != ''">
+											<div class="col-lg-12">
+												<label>Motivo Pendência:</label>
+												<textarea class="form-control ng-pristine ng-valid ng-touched"
+													[(ngModel)]="model.motivoPendencia"
+													#motivoPendencia
+													readonly
+													id="motivoPendencia" maxlength="1000" name="motivoPendencia" rows="3">
+				   								</textarea>
+											</div>
+										</div>
+
+										<div class="form-group row"  *ngIf="model.descricaoResposta != null && model.descricaoResposta != ''">
+											<div class="col-lg-12">
+												<label>Resposta:</label>
+												<textarea class="form-control ng-pristine ng-valid ng-touched"
+													[(ngModel)]="model.descricaoResposta"
+													#resposta
+													readonly
+													id="resposta" maxlength="1000" name="resposta" rows="3">
+				   								</textarea>
+											</div>
+										</div>
+
+										<div class="form-group row"  *ngIf="model.analiseVisualAnexo != null">
+											<div class="col-lg-6">
+												<b>Documentos Anexados:</b>
+											</div>
+										</div>
+										<div class="form-group row"  *ngIf="model.analiseVisualAnexo != null">
+											<div class="col-lg-6">
+												<span data-toggle="tooltip"
+													  title=""
+													  (click)="downloadFileAnaliseVisual()" 
+													  data-original-title="Download">
+													  <a class="btn btn-info btn-sm">
+														  <i class="fa fa-download"></i>
+													  </a>
+												</span>
+												<span> {{model.analiseVisualNomeAnexo}} </span>
+											</div>
+										</div>
+									</article>
+								</form>
+							</section>
+						</div>
+					</div>
+				</form>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-lg-12">
+
+			<section class="panel panel-default m-t">
+
+				<header class="panel-heading">
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+
+				<article class="panel-body text-sm">
+
+					<div class="row">
+
+						<div class="col-lg-12">
+
+							<div class="alert dados-pli-style">
+								Dados do PLI
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4 label-npli-color">
+							<label class="m-r-xs">Nº PLI:</label><span>{{ model.numeroPliConcatenado }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Data:</label><span>{{ model.dataEnvioPliFormatada }}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-4 text-nowrap">
+							<label class="m-r-xs">Tipo de PLI:</label><span>{{ model.descricaoTipoDocumento }}</span>
+						</div>
+
+						<div class="col-lg-4 text-nowrap">
+
+							<a *ngIf="model.numeroLIReferencia"
+								routerLink="/consultar-pli/{{model.idLiReferencia}}/visualizar-detalhamento-li?token={{token}}"
+								routerLinkActive="active" target="_blank" data-toggle="tooltip" title=""
+								data-original-title="Mostrar LI Referência">
+								<label class="m-r-xs">Nro. LI.
+									Referência:</label><span>{{ model.numeroLIReferencia}}</span>
+							</a>
+
+							<a *ngIf="model.numeroDIReferencia"
+								routerLink="/consultar-pli/{{model.idPliMercadoria}}/visualizar-detalhamento-di?token={{token}}"
+								routerLinkActive="active" target="_blank" data-toggle="tooltip" title=""
+								data-original-title="Mostrar DI Referência">
+								<label class="m-r-xs">Nro. DI.
+									Referência:</label><span>{{ model.numeroDIReferencia}}</span>
+							</a>
+
+							<a *ngIf="!model.numeroLIReferencia && !model.numeroDIReferencia">
+								<label class="m-r-xs">Nro. LI. Referência:</label><span>--</span>
+							</a>
+
+							<a *ngIf="!model.numeroDIReferencia && !model.numeroLIReferencia">
+								<label class="m-r-xs">Nro. DI. Referência:</label><span>--</span>
+							</a>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{ model.cnpj }}
+								| {{ model.razaoSocial }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-6">
+							<label class="m-r-xs">Endereço:</label><span>{{ model.endereco }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Número:</label><span>{{ model.numero }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-6">
+							<label class="m-r-xs">Complemento:</label><span>{{ model.complemento }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Bairro:</label><span>{{ model.bairro }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-6">
+							<label class="m-r-xs">Município:</label><span class="">{{ model.codigoMunicipio }} |
+								{{ model.municipio }}</span>
+						</div>
+
+						<div class="col-lg-2">
+							<label class="m-r-xs">UF:</label><span>{{ model.uf }}</span>
+						</div>
+
+						<div class="col-lg-2">
+							<label class="m-r-xs">CEP:</label><span>{{ model.cep }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Atividade Econômica:</label><span class="">{{ model.codigoCNAE }} |
+								{{ model.descricaoCNAE }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">País do Importador:</label><span class="">{{ model.paisCodigo }} |
+								{{model.paisDescricao }}</span>
+						</div>
+
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Telefone:</label><span>{{ model.telefone }}</span>
+						</div>
+
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">CPF Representante Legal:</label><span
+								class="">{{ model.numCPFRepLegalSISCO }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Código Aplicação:</label><span
+								class="pull-right">{{ model.codigoPliAplicao }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<span>{{ model.descricaoAplicacao }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4" style="color: #234884">
+							<label class="m-r-xs">Status do PLI:</label><span class="">{{ model.statusPli }} |
+								{{ model.descricaoStatus }}</span>
+						</div>
+
+						<div class="col-lg-4" style="color: #234884">
+							<label class="m-r-xs"><a
+									routerLink="/consultar-pli/{{model.idPLI}}/visualizar-mercadoria-pli?token={{token}}"
+									routerLinkActive="active" target="_blank">Visualizar Mercadorias do PLI</a></label>
+						</div>
+
+						<div class="col-lg-4" *ngIf="model.anexo != null && model.anexo.length > 0">
+							<b>Anexo:</b>
+							<span data-toggle="tooltip"
+									title=""
+									(click)="downloadFile()" 
+									data-original-title="Download">
+								<a class="btn btn-info btn-sm">
+									<i class="fa fa-download"></i>
+								</a>
+							</span>
+						  	<span> {{model.nomeAnexo}} </span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12" *ngIf="model.statusPliTecnologiaAssistiva == 1">
+
+						<div class="col-lg-4"
+							style="background-color: #e2f7ff; text-align: center; border-color: #196684">
+							<label class="m-r-xs" style="font-weight: bold;">PLI de Tecnologia assistiva</label>
+						</div>
+					</div>
+
+
+				</article>
+			</section>
+		</div>
+	</div>
+
+	<!-- INICIO CONTEUDO RELATORIO PDF -->
+	<article id="conteudoPdf" class="panel-body" [hidden]="ocultarConteudoPdf">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						 style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5>Superintendência da Zona Franca de Manaus</h5>
+			<h5>SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label class="control-label">RELATÓRIO DE RETIFICAÇÕES</label>
+		</div>
+
+		<div class="row form-group col-lg-12">
+			<div class="col-lg-12">
+				<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{ model.cnpj }} | {{ model.razaoSocial }}</span>
+			</div>
+		</div>
+		<div class="row col-lg-12">
+			<div class="col-lg-4">
+				<label class="m-r-xs">PLI RETIFICADOR:</label><span>{{ model.numeroPliConcatenado }}</span>
+			</div>
+			<div class="col-lg-4">
+				<label class="m-r-xs">DI de Referência:</label><span>{{ model.numeroDIReferencia}}</span>
+			</div>
+		</div>
+
+		<section id="grid">
+			<div *ngFor="let item of listaRelatorio">
+				<table class="table table-striped">
+					<thead class="table-header-color">
+						<tr>
+							<th style="font-size: x-small;" class="th-sortable th-100 unset-nowrap">Campo</th>
+							<th style="font-size: x-small;" class="th-sortable th-150 unset-nowrap">De</th>
+							<th style="font-size: x-small;" class="th-sortable th-150 unset-nowrap">Para</th>
+						</tr>
+					</thead>
+					<div class="form-group m-n pull-left">
+						<h6 style="font-weight: bold;font-size: 14px;">LI da Adição: {{item.numeroLiRetificador}}</h6>
+					</div>
+					<tbody>
+						<tr *ngFor="let item1 of item.lista">
+							<td style="font-size: x-small;">{{item1.campo}}</td>
+							<td style="font-size: x-small;">{{item1.valorAntigo}}</td>
+							<td style="font-size: x-small;">{{item1.valorNovo}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div *ngIf="item.lista == null || item.lista.total == 0">
+					<p class="text-center font-bold m-t-sm m-b-sm">Nenhum registro encontrado.</p>
+				</div>
+			</div>
+		</section>
+	</article>
+	<!-- FIM CONTEUDO RELATORIO PDF -->
+
+</div>

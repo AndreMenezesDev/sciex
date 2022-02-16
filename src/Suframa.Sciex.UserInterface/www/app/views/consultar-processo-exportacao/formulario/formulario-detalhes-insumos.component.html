@@ -1,0 +1,360 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Detalhe de Insumos {{titulo}}</app-titulo>
+			<app-sub-titulo>{{tituloCorrecao}}Detalhamento do Insumo do tipo {{subtitulo}} </app-sub-titulo>
+		</div>
+
+
+		<div class="col-lg-12 m-t-sm">
+
+			<div class="row col-lg-12" *ngIf="path == 'analisar-detalhe-insumos'">
+				<section class="panel panel-default">
+					<header class="panel-heading">
+						<div class="pull-right">
+							<a (click)="cancelar()" class="btn btn-sm btn-default btn-sm"><i
+									class="fa fa-long-arrow-left m-r-xs"></i>
+								Voltar
+							</a>
+						</div>
+						<h2 class="panel-title h5">Informações Produto</h2>
+					</header>
+					<article class="panel panel-body">
+						<div class="row" style="padding: 10px;">
+							<div class="col-lg-4">
+								<label for="numeroProcesso" class="control-label text-nowrap">
+									N° Processo:
+								</label>
+								{{modelProcesso.numeroAnoProcessoFormatado}}
+							</div>
+							<div class="col-lg-4">
+								<label for="modalidade" class="control-label text-nowrap">
+									Modalidade:
+								</label>
+								{{modelProcesso.tipoModalidadeString}}
+							</div>
+							<div class="col-lg-4">
+								<label for="status" class="control-label text-nowrap">
+									Status:
+								</label>
+								{{modelProcesso.tipoStatusString}}
+							</div>
+						</div>
+						<section class="panel panel-default">
+							<div class="alert alert-success"
+								style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+								Dados do Produto
+							</div>
+							<article class="panel-body">
+								<fieldset>
+									<div class="row">
+										<div class="col-lg-12">
+											<label for="codigoProdutoExportacao" class="control-label text-nowrap">
+												Produto:
+											</label>
+											{{modelProduto.codigoProdutoExportacao}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<label for="codigoProdutoSuframa" class="control-label text-nowrap">
+												Descrição:
+											</label>
+											{{modelProduto.descCodigoProdutoSuframa}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-8">
+											<label for="codigoTipoProduto" class="control-label text-nowrap">
+												Tipo:
+											</label>
+											{{modelProduto.descCodigoTipoProduto}}
+										</div>
+										<div class="col-lg-4">
+											<label for="codigoNCM" class="control-label text-nowrap">
+												NCM:
+											</label>
+											{{modelProduto.codigoNCM}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-8">
+											<label for="descricaoModelo" class="control-label text-nowrap">
+												Modelo:
+											</label>
+											{{modelProduto.descricaoModelo}}
+										</div>
+										<div class="col-lg-4">
+											<label for="codigoUnidade" class="control-label text-nowrap">
+												Unidade:
+											</label>
+											{{modelProduto.descCodigoUnidade}}
+										</div>
+									</div>
+
+								</fieldset>
+								<br>
+							</article>
+						</section>
+					</article>
+				</section>
+			</div>
+
+			<div class="row col-lg-12">
+				<section class="panel panel-default">
+					<header class="panel-heading">
+						<div class="pull-right" *ngIf="path != 'analisar-detalhe-insumos'">
+							<a (click)="cancelar()" class="btn btn-sm btn-default btn-sm">
+								<i class="fa fa-long-arrow-left m-r-xs"></i> Voltar
+							</a>
+						</div>
+						<h2 class="panel-title h5">Informações do Insumo</h2>
+					</header>
+					<article class="panel-body">
+						<section class="panel panel-default">
+							<div class="alert alert-success"
+								style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+								Dados do Insumo
+							</div>
+							<article class="panel-body">
+								<fieldset>
+
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="codigoInsumo" class="control-label text-nowrap">
+												Cód. Insumo:
+											</label>
+											{{modelInsumo.codigoInsumo}}
+										</div>
+										<div class="col-lg-8">
+											<label for="descricaoInsumo" class="control-label text-nowrap">
+												Descrição:
+											</label>
+											{{modelInsumo.descricaoInsumo}}
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-2">
+											<label for="codigoTipoProduto" class="control-label text-nowrap">
+												Tipo:
+											</label>
+											{{modelInsumo.tipoInsumo}} - {{modelInsumo.descricaoTipoInsumo}}
+										</div>
+										<div class="col-lg-2">
+											<label for="codigoNCM" class="control-label text-nowrap">
+												NCM:
+											</label>
+											{{modelInsumo.codigoNCM}}
+										</div>
+										<div class="col-lg-3">
+											<label for="codigoUnidade" class="control-label text-nowrap">
+												Unidade:
+											</label>
+											{{modelInsumo.codigoUnidade}} - {{modelInsumo.descCodigoUnidade}}
+										</div>
+										<div class="col-lg-3">
+											<label for="coefTecnico" class="control-label text-nowrap">
+												Coeficiente Técnico:
+											</label>
+											{{modelInsumo.valorCoeficienteTecnico}}
+										</div>
+									</div>
+
+									<div class="row" *ngIf="exibirCamposLabel()">
+										<div class="col-lg-4">
+											<label for="partNumber" class="control-label text-nowrap">
+												Part Number:
+											</label>
+											{{modelInsumo.descricaoPartNumber != null ? modelInsumo.descricaoPartNumber
+											: '-'}}
+										</div>
+										<div class="col-lg-3">
+											<label for="percentPerda" class="control-label text-nowrap">
+												Percentual Perda (%):
+											</label>
+											{{modelInsumo.valorPercentualPerda | number : '1.1-2'}}
+										</div>
+										<div class="col-lg-4">
+											<label for="qtdMaxInsumo" class="control-label text-nowrap">
+												Qtd. Max. Insumo:
+											</label>
+											{{modelInsumo.qtdMaxInsumo | number : '1.7-7' }}
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<label for="descricaoModelo" class="control-label text-nowrap">
+												Especificação Técnica:
+											</label>
+											{{modelInsumo.descricaoEspecificacaoTecnica}}
+										</div>
+									</div>	
+
+									<div class="row"
+										
+										*ngIf="exibirInputs()">
+											<div class="col-lg-4">
+												<label for="descricaoPartNumber" class="control-label text-nowrap">
+													Part Number:
+												</label>
+												<input (change)="flagPermiteSalvarDadosInsumos = true;"
+													id="descricaoPartNumber" type="text" name="descricaoPartNumber"
+													autocomplete="off" class="form-control"
+													[(ngModel)]="modelInsumo.descricaoPartNumber" />
+											</div>
+											<div class="col-lg-4">
+												<label for="valorPercentualPerda" class="control-label text-nowrap">
+													Percentual Perda(%):
+												</label>
+												<input (change)="flagPermiteSalvarDadosInsumos = true;"
+													id="valorPercentualPerda" type="text" name="valorPercentualPerda"
+													[prefix]="' '" formatar-numero-decimal5 class="form-control"
+													[(ngModel)]="modelInsumo.valorPercentualPerda" />
+											</div>
+											<div class="col-lg-4">
+												<label for="qtdMaximoInsumo" class="control-label text-nowrap">
+													Qtd. Max. Insumo:
+												</label>
+												<input id="qtdMaximoInsumo" type="text" name="qtdMaximoInsumo"
+													autocomplete="off" class="form-control"
+													[attr.disabled]="disabled ? true : true"
+													[(ngModel)]="modelInsumo.qtdMaxInsumo" />
+											</div>
+										</div>
+
+																	
+
+								</fieldset>
+							</article>
+						</section>
+					</article>
+				</section>
+			</div>
+
+			<div class="row col-lg-12">
+				<section class="panel panel-default">
+
+					<header class="panel-heading">
+						<h2 class="panel-title h5">Lista Insumos</h2>
+					</header>
+
+					<article class="panel-body">
+						<div class="col-lg-12">
+							<div>
+								<fieldset style="border: 1px solid #000; padding: 10px;">
+									<legend style="width: auto;border: 0;margin-bottom: 0px;">Valores Totais</legend>
+									<div class="row form-group">
+										<div class="col-lg-4">
+											<label for="codigoUnidade" class="control-label text-nowrap">
+												Quantidade Total:
+											</label>
+											{{ modelInsumo.valoresTotais | number : '1.7-7' }}
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</article>
+
+					<article class="panel-body">
+						<div style="margin-left:15px; margin-top: 30px;" class="col-lg-12 form-group"
+							*ngIf="camposAnalisarOuEditar()">
+							<div class="row">
+								<div class="col-lg-3">
+									<label>País:</label>
+									<app-drop-list-select2 #pais id="pais"
+										(valorModificado)="parametros.codigoPais = $event" name="pais" servico="Pais"
+										[(ngModel)]="parametros.codigoPais"
+										[placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'">
+									</app-drop-list-select2>
+								</div>
+
+								<div class="col-lg-3">
+									<label for="descricao" class="">Moeda:</label>
+									<app-drop-list-select #moeda id="moeda"
+										(valorModificado)="parametros.idMoeda = $event" name="idMoeda" servico="Moeda"
+										[selMinimumInputLength]="3"
+										[placeholder]="somenteLeitura ? '' : 'Selecione uma opção'"
+										[(ngModel)]="parametros.idMoeda">
+									</app-drop-list-select>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col-lg-3">
+									<label>Quantidade:</label>
+									<div class="ds-flex">
+										<input type="text" id="quantidade" class="form-control" maxlength="16"
+											formatar-numero-decimal5 [prefix]="' '" placeholder="0.00000"
+											[(ngModel)]="parametros.qtd" />
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<label>Valor Unitário FOB:</label>
+									<div class="ds-flex">
+										<input type="text" class="form-control" maxlength="18" id="valorUnitarioFob"
+											formatar-numero-decimal7 [prefix]="' '" placeholder="0.0000000"
+											[(ngModel)]="parametros.valorUnitarioFOB" />
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<label>Valor Frete(US$):</label>
+									<div class="ds-flex">
+										<input type="text" class="form-control" id="valorFrete" maxlength="18"
+											formatar-numero-decimal7 [prefix]="' '" placeholder="0.0000000"
+											[(ngModel)]="parametros.valorFrete" />
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<a style="margin-right: 32px; margin-top: 25px;"
+										class="btn btn-primary btn-sm pull-right" data-toggle="tooltip"
+										title="Incluir Insumos na Lista" (click)="incluirDetalhe()"
+										data-original-title="Incluir Insumos na Lista">
+										<i class="fa fa-plus"></i> Incluir Insumos na Lista
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel-body">
+							<app-grid-detalhe-processo-insumos [(lista)]="grid.lista" [(total)]="grid.total"
+								[(size)]="grid.size" [(page)]="grid.page" [(isUsuarioInterno)]="grid.isUsuarioInterno"
+								[(parametros)]="parametros" [(formPai)]="formPai" (onChangeSort)="onChangeSort($event)"
+								(onChangeSize)="onChangeSize($event)" (onChangePage)="onChangePage($event)"
+								[(isQuadroNacional)]="isQuadroNacional">
+							</app-grid-detalhe-processo-insumos>
+						</div>
+					</article>
+
+					<footer class="panel-footer clearfix" style="padding: 4px 15px!important;"
+						*ngIf="path != 'editar-detalhe-insumos-novo'">
+						<div class="pull-right">
+							<a class="btn btn-sm btn-default" (click)="cancelar()"><i
+									class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+						</div>
+					</footer>
+					<footer class="panel-footer clearfix" style="padding: 4px 15px!important;"
+						*ngIf="path == 'editar-detalhe-insumos-novo'">
+						<div class="pull-right">
+							<button type="button" disableOnClick 
+								class="btn btn-default btn-sm" (click)="cancelarOperacao()">
+								<i class="fa fa-times m-r-xs"></i>Cancelar
+							</button>
+							<button type="button" disableOnClick class="btn btn-primary btn-sm"
+								(click)="confirmarSalvar()">
+								<i class="fa fa-save"></i> Salvar
+							</button>
+						</div>
+					</footer>
+				</section>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+<!-- <app-modal-editar-detalhe-insumo #appModalEditarDetalheInsumo></app-modal-editar-detalhe-insumo>
+<app-modal-justificativa-erro #modalJustificativaErro></app-modal-justificativa-erro> -->

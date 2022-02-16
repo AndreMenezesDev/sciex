@@ -1,0 +1,125 @@
+<app-grid   [(lista)]="lista"
+			[(page)]="page"
+			[(size)]="size"
+			[(total)]="total"
+			[(parametros)]="parametros"
+			(onChangeSize)="changeSize($event)"
+			(onChangePage)="changePage($event)"
+			(onChangeSort)="changeSort($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-150 unset-nowrap text-left">
+						<app-ordenacao field="Codigo" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							Código
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 text-center">
+						<app-ordenacao field="Descricao" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							Descrição
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center">
+						<app-ordenacao field="TipoBeneficio" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							Tipo Benefício
+						</app-ordenacao>
+					</th>
+					<th class="th-sortable th-250 unset-nowrap text-center">
+						<app-ordenacao field="ValorPercentualReducao" [sorted]="sorted" (onChangeSort)="changeSort($event)">
+							% de Redução
+						</app-ordenacao>
+					</th>
+                    <th class="th-150 unset-nowrap">Data Cadastro</th>
+                    <th class="th-150 unset-nowrap">Amparo Legal</th>
+                    <th class="th-150 unset-nowrap">Status</th>
+					<th class="text-left th-100">NCM</th>
+					<th class="text-left th-100">Empresa<br>PD&I</th>
+					<th class="text-left th-100">Ação</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-left">{{item.codigo}}</td>
+					<td class="text-left">{{ item.descricao.substr(0, 67)}}</td>
+
+					<td class="text-center" *ngIf="item.tipoBeneficio==1" >Isenção</td>
+					<td class="text-center" *ngIf="item.tipoBeneficio==2" >Redução</td>
+					<td class="text-center" *ngIf="item.tipoBeneficio==3" >Suspensão</td>
+					<td class="text-center" *ngIf="item.tipoBeneficio==0" >Nenhum</td>
+
+					<td class="text-center">{{item.percentualConcatenado}}</td>
+					<td class="text-left">{{item.dataCadastro | date:'dd/MM/yyyy'}}</td>
+
+					<td class="text-center">
+						<a class="btn btn-default btn-sm" data-toggle="tooltip" title=""
+							   data-original-title="Visualizar Amparo Legal" (click)="AbrirModal(item.descricaoAmparoLegal,
+																								   item.percentualConcatenado, item.descricao,
+																								   item.tipoBeneficio, item.codigo)">
+						   <i class="fa fa-file-text-o"></i>
+						</a>
+					</td>
+
+					<td class="text-center">
+						<span>
+							<a style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon"
+							   [ngClass]="item.statusBeneficio == 0 ? 'btn-danger' : 'btn-primary'"
+							   (click)="abrirJustificativa(item)">
+								<i class="fa"
+								   [ngClass]="item.statusBeneficio === 0 ? 'fa-times' : 'fa-check'">
+								</i>
+							</a>
+						</span>
+					</td>
+
+					<td class="text-center">
+						<a
+							routerLink="/grupo-beneficio/{{item.idTaxaGrupoBeneficio}}/cadastrar-ncm-beneficio"
+							style="cursor:pointer"
+							class="btn btn-rounded btn-sm btn-icon btn-info"
+							data-toggle="tooltip" title="" data-original-title="Cadastrar NCM">
+							   <i class="fa fa-share"></i>
+						</a>
+					</td>
+					<td class="text-center">
+						<div *ngIf="item.codigo == 7">
+							<a
+								(click)="AbrirModalPDI()"
+								style="cursor:pointer"
+								class="btn btn-rounded btn-sm btn-icon btn-primary"
+								data-toggle="tooltip" title="" data-original-title="Empresa PD&I">
+								<i class="fa fa-clipboard"></i>
+							</a>
+						</div>
+					</td>
+					<td  class="text-left">
+						<a
+						    routerLink="/grupo-beneficio/{{item.codigo}}/alterar"
+							style="cursor:pointer"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							data-original-title="Editar">
+							   <i class="fa fa-pencil"></i>
+						</a>
+						<a
+							style="cursor:pointer"
+							class="btn btn-default btn-sm"
+							data-toggle="tooltip"
+							data-original-title="Histórico"
+							(click)="abrirHistorico(item)">
+							<i class="fa fa-history" aria-hidden="true"></i>
+						</a>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-amparo-legal-beneficio #appModalAmparoLegalBeneficio></app-modal-amparo-legal-beneficio>
+<app-modal-justificativa-status-grupo-beneficio #appModalJustificativa></app-modal-justificativa-status-grupo-beneficio>
+<app-modal-historico-beneficio #appModalBeneficioHistorico></app-modal-historico-beneficio>
+<app-modal-empresa-pdi #appModalEmpresaPDI></app-modal-empresa-pdi>

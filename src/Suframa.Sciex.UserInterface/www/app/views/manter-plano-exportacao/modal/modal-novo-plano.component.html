@@ -1,0 +1,86 @@
+<div #appModalNovoPlano id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="title">Novo Plano</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="confirmaSalvar()">
+
+					<div class="form-group row">
+						<div class="col-lg-5 m-l-lg">
+							<label for="modalidade" class="">Modalidade:</label>
+							<select #modalidade name="modalidade" id="modalidade" [disabled]="somenteLeitura" class="form-control"
+								[(ngModel)]="parametros.modalidade">
+								<option [ngValue]="undefined">Selecione</option>
+								<option value="S">SUSPENSÃO</option>
+								<option value="I">ISENÇÃO</option>
+							</select>
+						</div>
+						<div class="col-lg-5 m-l-lg" >
+							<label for="tipoExportacao" class="">TIPO:</label>
+							<select #tipoExportacao name="tipoExportacao" id="tipoExportacao" [disabled]="somenteLeitura"
+								class="form-control" [(ngModel)]="parametros.tipoExportacao">
+								<option [ngValue]="undefined">Selecione</option>
+								<option value="AP">APROVAÇÃO</option>
+								<option value="CO">COMPROVAÇÃO</option>
+							</select>
+						</div>
+			
+						<br>
+						<br>
+						<br>
+						<br>
+						<div class="col-lg-4 m-l-lg" *ngIf="parametros.tipoExportacao=='CO'">	
+							<label for="cpnj">Nº Processo</label>
+					    	<input [(ngModel)]="parametros.numeroProcesso" type="text" name="cnpj" id="cnpj" class="form-control" mask-number [mask]="'9999/9999'"  placeholder="nnnn/aaaa"/>
+						</div>
+
+					</div>
+					<div class="form-group row m-l-lg m-t-lg">
+						<div class="col-sm-11"
+							[ngClass]="{ 'has-error': arquivo.invalid && (arquivo.touched || arquivo.dirty) }">
+							<b>Anexar Documento </b><b style="color:red;">(Somente arquivos ZIP ou PDF)</b>
+	
+							<div [hidden]="ocultarInputAnexo">
+								<input type="file" accept="application/zip,application/pdf" id="arquivo" name="arquivo"
+									(change)="onFileChange($event)" #arquivo
+									style="display: block; padding: 5px; width: 44%;" required />
+								<div class="text-danger">Tamanho Maximo: 10MB</div>
+								<div class="text-danger" *ngIf="arquivo.invalid && (arquivo.touched || arquivo.dirty)">
+									<div *ngIf="arquivo.errors.required">
+										Inserir um arquivo valido!
+									</div>
+								</div>
+							</div>
+							<div [hidden]="!ocultarInputAnexo" class="row form-group">
+								<div class="col-lg-12">
+									<div class="col-lg-3">
+										<button class="btn btn-default btn-sm m-r-sm" (click)="limparAnexo()">
+											<i class="fa fa-eraser"></i>
+											Remover Anexo
+										</button>
+									</div>
+									<div class="col-lg-8">
+										<label style="font-weight: normal">{{parametros.nomeAnexo}}</label>
+									</div>
+								</div>
+	
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;" >
+				<button type="button" class="btn btn-sm btn-default" (click)="confirmaCancelar()"><span
+						class="fa fa-times"></span> Cancelar</button>
+				<button type="button" id="Cadastrar" class="btn btn-primary btn-sm" (click)="confirmaSalvar()"><span
+						class="fa fa-check"></span>Cadastrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalNovoPlanoBackground class="modal-backdrop fade in" style="display: none;"></div>

@@ -1,0 +1,31 @@
+<section id="content">
+	<section class="scrollable">
+		<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+			<div class="row m-b-md">
+				<div class="col-lg-12">
+					<h1 class="m-b-xs text-black">Parametrização</h1>
+				</div>
+			</div>
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<ul class="nav nav-tabs nav-justified">
+						<li routerLinkActive="active">
+							<a routerLink="distribuicao-automatica">Distribuição Automática</a>
+						</li>
+						<li routerLinkActive="active">
+							<a routerLink="analistas">Analistas</a>
+						</li>
+						<li routerLinkActive="active">
+							<a routerLink="servicos">Serviços</a>
+						</li>
+					</ul>
+				</header>
+				<div class="panel-body">
+					<div class="tab-content m-t-none">
+						<router-outlet></router-outlet>
+					</div>
+				</div>
+			</section>
+		</div>
+	</section>
+</section>

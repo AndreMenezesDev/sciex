@@ -1,0 +1,74 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="NumeroProcesso" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº Processo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="NumeroPlano" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº Plano</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap" *ngIf="isUsuarioInterno">
+						<app-ordenacao field="InscricaoSuframa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Inscrição Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap" *ngIf="isUsuarioInterno">
+						<app-ordenacao field="RazaoSocial" [sorted]="sorted" (onChangeSort)="changeSort($event)">Empresa</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoModalidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Modalidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoStatus" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>	<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DataStatus" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data Status</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-left">{{item.numeroAnoProcessoFormatado}}</td>
+					<td class="text-left">{{item.numeroAnoPlanoFormatado}}</td>
+					<td class="text-left" *ngIf="isUsuarioInterno">{{item.inscricaoSuframa}}</td>
+					<td class="text-left" *ngIf="isUsuarioInterno">{{item.razaoSocial}}</td>
+					<td class="text-left">{{item.tipoModalidadeString}}</td>
+					<td class="text-left">{{item.tipoStatusString}}</td>
+					<td class="text-left">{{item.dataStatusFormatada}}</td>
+					<td class="text-center">
+						<a (click)="abrirVisualizar(item.idProcesso)"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" 
+							data-original-title="Visualizar"><i class="fa fa-file-text-o"></i>
+						</a>
+						<!--<a routerLink="/relatorio-certificado-registro/{{item.idProcesso}}/visualizar"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Certificado"><i class="fa fa-cog fa-fw"></i>
+						</a>-->
+						<a (click)="abrirModalCertificado(item)"class="btn btn-default btn-sm" data-toggle="tooltip" title="" 
+						data-original-title="Certificado"><i class="fa fa-cog fa-fw"></i></a>
+						
+						<a *ngIf="item.tipoStatus != 'CA'" (click)="abrirModalCancelar(item)" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" 
+						data-original-title="Solicitar Cancelamento"><i class="fa fa-times"></i>
+						</a>
+
+						<a *ngIf="item.prorrogarExibir && item.tipoStatus != 'CA'" (click)="abrirModalAdiamento(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" 
+						data-original-title="Solicitar Prorrogação"><i class="i i-rotate"></i></a>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-certificado #appModalCertificado></app-modal-certificado>
+<app-modal-parecer #appModalParecer></app-modal-parecer>
+
+
+<app-modal-cancelar #appModalCancelar></app-modal-cancelar>
+<app-modal-adiamento #appModalAdiamento></app-modal-adiamento>

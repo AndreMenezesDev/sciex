@@ -1,0 +1,29 @@
+<div #appModalAliIndeferida id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<!-- MODAL HEADER BGN -->
+
+			<div class="modal-header bg-default" style="padding: 10px 15px; color: white; background-color: #5C4B7B">
+
+				<h4 class="modal-title" id="ajudaModalLabel"><b>Informação</b></h4>
+
+			</div>
+			<!-- MODAL HEADER END -->
+			<!-- MODAL BODY BGN -->
+			<div class="modal-body" style="background-color: #f2f4f8">
+				<p><b>Resposta do SISCOMEX:</b> <br />{{mensagem}}</p>
+			</div>
+			<!-- MODAL BODY END -->
+			<!-- MODAL FOOTER BGN -->
+			<div class="modal-footer" style="padding: 10px 15px;">
+
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-times"></span> Fechar</button>
+
+			</div>
+			<!-- MODAL FOOTER END -->
+
+		</div>
+	</div>
+</div>
+
+<div #appModalAliIndeferidaBackground class="modal-backdrop fade in" style="display: none;"></div>

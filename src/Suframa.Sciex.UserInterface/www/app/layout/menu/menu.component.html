@@ -1,0 +1,57 @@
+<div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+
+	<div class="clearfix wrapper dk nav-user hidden-xs">
+		<div class="dropdown">
+			<span class="" data-toggle="dropdown">
+				<span class="hidden-nav-xs clear">
+					<span class="block m-t-xs">
+						<strong class="text-lt">{{usuario}}</strong>
+					</span>
+					<span class="text-muted text-xs block" cpfCnpj="true">{{cpfcnpj}}</span>
+				</span>
+			</span>
+		</div>
+	</div>
+	<div class="clearfix wrapper dk nav-user hidden-xs showText" style="
+								background-color: #E6E9F4;
+								font-size: 11px;
+								color: #5c5989;
+								display: none;
+												">
+		<div class="dropdown">
+			<span class="" data-toggle="dropdown" aria-expanded="false">
+				<span class="hidden-nav-xs clear">
+					<span class="block m-t-xs">
+						<strong style="color: #32304f;">EMPRESA REPRESENTADA: <br><br></strong>
+						<strong class="text-lt">{{empresa}}</strong>
+					</span>
+					<span class="text-muted text-xs block" cpfcnpj="true">{{cnpj}}</span>
+				</span>
+			</span>
+		</div>
+	</div>
+	<nav class="nav-primary">
+		<div class="text-muted text-sm padder-h m-t-sm m-b-sm">Navegação</div>
+
+		<div class="nav nav-list" *ngFor="let group of Pss;trackBy: trackElement">
+			<li>
+				<a href="#" data-toggle="collapse" [attr.data-target]="'#' + group.id">
+					<span class="pull-right text-muted">
+						<i class="i i-circle-sm-o text-inactive"></i>
+						<i class="i i-circle-sm text-active"></i>
+					</span>
+					<i class="i i-stack icon"></i>
+					<strong>{{group.nome}}</strong>
+				</a>
+			</li>
+			<ul id="{{group.id}}" class="nav dk collapse out">
+				<li *ngFor="let item of group.funcoesSistema">
+					<a routerLink="{{item.url}}" routerLinkActive="active" class="auto" title="{{item.descricao}}" href="{{item.url}}">
+						<i class="i i-dot"></i>
+						<span>{{item.nome}}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+</div>

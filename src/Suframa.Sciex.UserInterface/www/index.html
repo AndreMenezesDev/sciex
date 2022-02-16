@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="app" lang="pt-br" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<title>SCIEX</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=9">
+
+	<meta name="viewport" content="width=device-width">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<base href="/" />
+
+
+
+</head>
+<body ondragover="blockDrop(event); return false;"
+	  ondragstart="blockDrop(event); return false;"
+	  ondrop="blockDrop(event); return false;"
+	  ondragenter="blockDrop(event); return false;"
+	  ondrag="blockDrop(event); return false;"
+	  ondragleave="blockDrop(event); return false;"
+	  class="corpo">
+
+	<app-root></app-root>
+	<script>
+		function blockDrop(ev) {
+			ev.preventDefault();
+			ev.stopPropagation();
+		}
+	</script>
+	<script src="assets/scripts/jquery-2.2.4.min.js" type="text/javascript"></script>
+	<script src="assets/scripts/bootstrap.min.js" type="text/javascript"></script>
+	<script src="assets/scripts/jquery.cookie.js" type="text/javascript"></script>
+	<script src="assets/scripts/jquery.mask.min.js" type="text/javascript"></script>
+	<script src="assets/scripts/rv-jquery-fontsize.min.js" type="text/javascript"></script>
+	<script src="assets/scripts/ie.js" type="text/javascript"></script>
+	<!--<script src="assets/scripts/main.js" type="text/javascript"></script>-->
+	<script src="assets/scripts/shared.js" type="text/javascript"></script>
+	<script src="assets/scripts/shared-externo.js" type="text/javascript"></script>
+	<!--<script src="assets/scripts/vendor.js"></script>-->
+	<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
+
+</body>
+</html>

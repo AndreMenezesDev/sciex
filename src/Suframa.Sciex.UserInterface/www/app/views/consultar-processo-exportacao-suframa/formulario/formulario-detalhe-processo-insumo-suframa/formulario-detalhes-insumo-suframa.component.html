@@ -1,0 +1,216 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Insumos {{titulo}}</app-titulo>
+			<app-sub-titulo>Insumos dos tipos {{subtitulo}} </app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i
+								class="fa fa-long-arrow-left m-r-xs"></i>
+							Voltar
+						</a>
+					</div>
+					<h2 class="panel-title h5">Informações</h2>
+				</header>
+				<div class="row" style="padding: 10px;">
+					<div class="col-lg-4">
+						<label for="numeroProcesso" class="control-label text-nowrap">
+							N° Processo: 
+						</label>
+						{{modelProcesso.numeroAnoProcessoFormatado}}
+					</div>
+					<div class="col-lg-4">
+						<label for="modalidade" class="control-label text-nowrap">
+							Modalidade: 
+						</label>
+						{{modelProcesso.tipoModalidadeString}}
+					</div>
+					<div class="col-lg-4">
+						<label for="status" class="control-label text-nowrap">
+							Status: 
+						</label>
+						{{modelProcesso.tipoStatusString}}
+					</div>
+				</div>
+				<div class="alert alert-success"
+					style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+					Dados do Produto
+				</div>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-2">
+								<label for="codigoProdutoExportacao" class="control-label text-nowrap">
+									Produto: 
+								</label>
+								{{modelProduto.codigoProdutoExportacao}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-10">
+								<label for="codigoProdutoSuframa" class="control-label text-nowrap">
+									Descrição: 
+								</label>
+								{{modelProduto.descCodigoProdutoSuframa}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="codigoTipoProduto" class="control-label text-nowrap">
+									Tipo: 
+								</label>
+								{{modelProduto.descCodigoTipoProduto}}
+							</div>
+							<div class="col-lg-4">
+								<label for="codigoNCM" class="control-label text-nowrap">
+									NCM: 
+								</label>
+								{{modelProduto.codigoNCM}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-8">
+								<label for="descricaoModelo" class="control-label text-nowrap">
+									Modelo: 
+								</label>
+								{{modelProduto.descricaoModelo}}
+							</div>
+							<div class="col-lg-4">
+								<label for="codigoUnidade" class="control-label text-nowrap">
+									Unidade: 
+								</label>
+								{{modelProduto.descCodigoUnidade}}
+							</div>
+						</div>
+
+					</fieldset>
+
+					<fieldset style="border: 1px solid #000; padding: 10px;">
+						<legend style="width: auto; border: 0;">Valores de Exportação</legend>
+						<div class="row form-group">
+							<div class="col-lg-4">
+								<label for="codigoUnidade" class="control-label text-nowrap">
+									Quantidade Total: 
+								</label>
+								{{modelProduto.quantidadeAprovado | number : '1.5-5' }}
+							</div>
+							<div class="col-lg-4">
+								<label for="codigoUnidade" class="control-label text-nowrap">
+									Valor Total(US$): 
+								</label>
+								{{modelProduto.valorDolarAprovado | number : '1.5-5' }}
+							</div>
+						</div>
+					</fieldset>
+				</article>
+				<div class="alert alert-success"
+						style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+						Detalhe do Insumo
+				</div>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="codigoInsumo" class="control-label text-nowrap">
+									Cód. Insumo: 
+								</label>
+								{{modelInsumo.codigoInsumo}}
+							</div>	
+							<div class="col-lg-8">
+								<label for="descricaoInsumo" class="control-label text-nowrap">
+									Descrição: 
+								</label>
+								{{modelInsumo.descricaoInsumo}}
+							</div>						
+						</div>
+						<div class="row">
+							<div class="col-lg-2">
+								<label for="codigoTipoProduto" class="control-label text-nowrap">
+									Tipo: 
+								</label>
+								{{modelInsumo.tipoInsumo}} - {{modelInsumo.descricaoTipoInsumo}} 
+							</div>
+							<div class="col-lg-2">
+								<label for="codigoNCM" class="control-label text-nowrap">
+									NCM: 
+								</label>
+								{{modelInsumo.codigoNCM}}
+							</div>
+							<div class="col-lg-3">
+								<label for="codigoUnidade" class="control-label text-nowrap">
+									Unidade: 
+								</label>
+								{{modelInsumo.codigoUnidade}} - {{infComplementar.descricaoUnidadeMedida}} 
+							</div>
+							<div class="col-lg-3">
+								<label for="coefTecnico" class="control-label text-nowrap">
+									Coeficiente Técnico: 
+								</label>
+								{{modelInsumo.valorCoeficienteTecnico}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="partNumber" class="control-label text-nowrap">
+									Part Number: 
+								</label>
+								{{modelInsumo.descricaoPartNumber}}
+							</div>
+							<div class="col-lg-3">
+								<label for="percentPerda" class="control-label text-nowrap">
+									Percentual Perda (%): 
+								</label>
+								{{modelInsumo.valorPercentualPerda | number : '1.1-2' }}
+							</div>
+							<div class="col-lg-4">
+								<label for="qtdMaxInsumo" class="control-label text-nowrap">
+									Qtd. Max. Insumo: 
+								</label>
+								{{modelInsumo.qtdMaxInsumo | number : '1.5-5' }} 
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<label for="descricaoModelo" class="control-label text-nowrap">
+									Especificação Técnica: 
+								</label>
+								{{modelInsumo.descricaoEspecificacaoTecnica}}
+							</div>
+						</div>
+						
+					</fieldset>
+				</article>
+				<section class="panel panel-default">
+					<header class="panel-heading">
+						<h2 class="panel-title h5">Registros</h2>
+					</header>	
+					<div class="panel-body">
+						<app-grid-formulario-detalhe-processo-insumos-suframa
+							[(lista)]="grid.lista"
+							 [(total)]="grid.total"
+							 [(size)]="grid.size"
+							 [(page)]="grid.page"
+							 [(isUsuarioInterno)]="grid.isUsuarioInterno"
+							 [(parametros)]="parametros"
+							 [(formPai)] = "formPai"
+							 (onChangeSort)="onChangeSort($event)"
+							 (onChangeSize)="onChangeSize($event)"
+							 (onChangePage)="onChangePage($event)"
+							 [(isQuadroNacional)]="isQuadroNacional"
+							 >
+						</app-grid-formulario-detalhe-processo-insumos-suframa>
+						
+					</div>
+				</section>
+				
+			</section>
+		</div>
+	</div>
+</div>

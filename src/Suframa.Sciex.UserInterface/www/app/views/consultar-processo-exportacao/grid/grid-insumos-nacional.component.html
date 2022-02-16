@@ -1,0 +1,74 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)"
+					>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="text-center th-100">Ações</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Insumo</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNcm" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted" (onChangeSort)="changeSort($event)">Coef. Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoUnidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Unidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoEspecificacaoTecnica" [sorted]="sorted" (onChangeSort)="changeSort($event)">Especificação Técnica</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoPartNumber" [sorted]="sorted" (onChangeSort)="changeSort($event)">Part Number</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Perc Perda(%)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Aprovada</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Aprovado (R$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				
+				<tr *ngFor="let item of lista">
+					<td class="text-center">
+						<a	(click)="abrirModalDetalheInsumo(item)"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Detalhe do Insumo"><i class="fa fa-list"></i>
+						</a>
+					</td>
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.tipoInsumo}}</td>
+					<td class="text-left">{{item.codigoNCM}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+					<td class="text-left">{{item.valorCoeficienteTecnico }}</td>
+					<td class="text-left">{{item.descCodigoUnidade}}</td>
+					<td class="text-left">{{item.descricaoEspecificacaoTecnica}}</td>
+					<td class="text-left">{{item.descricaoPartNumber}}</td>
+					<td class="text-left">{{item.valorPercentualPerda | number : '1.1-1'}}</td>
+					<td class="text-left">{{item.quantidadeAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.valorNacionalAprovado | number : '1.7-7'}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-detalhes-insumo #appModalDetalheInsumo></app-modal-detalhes-insumo>

@@ -1,0 +1,85 @@
+<div class="tab-pane">
+	<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="adicionarParametroAnalista()">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-lg-12">
+					<label>Unidade Cadastradora:</label><br>
+					<app-drop-list name="unidadeCadastradora"
+								   servico="UnidadeCadastradora"
+								   parametroChave="idUnidadeCadastradora"
+								   [(parametro)]="idUnidadeCadastradoraParametro"
+								   [(ngModel)]="idUnidadeCadastradora"
+								   (ngModelChange)="selecionarUnidadeCadastradora()"
+								   #unidadeCadastradoraDropList>
+					</app-drop-list>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-lg-12">
+					<label>Analista:</label><br>
+					<app-drop-list name="usuarioInterno"
+								   required
+								   servico="UsuarioInterno"
+								   parametroChave="idUnidadeCadastradora"
+								   [parametro]="idUnidadeCadastradora"
+								   [(ngModel)]="idUsuarioInterno"
+								   #usuarioInternoDropList>
+					</app-drop-list>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-lg-12">
+					<button type="submit" disableOnClick class="btn btn-success"><i class="fa fa-plus"></i> Adicionar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead class="thead-cadsuf">
+				<tr>
+					<th>Analista</th>
+					<th class="text-center">Protocolo</th>
+					<th>Serviços</th>
+					<th class="text-center">Agendamento</th>
+					<th class="text-center">Ação</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index;">
+					<td>{{item.nomeUsuarioInterno}}</td>
+					<td class="text-center">
+						<label class="radio-inline i-checks m-r">
+							<input type="radio" name="radioStatusProtocolo{{i}}" [value]="1" [(ngModel)]="item.isStatusAtivoProtocolo" (change)="atualizarStatusProtocolo(item, 1)"><i></i> Ativo
+						</label>
+						<label class="radio-inline i-checks">
+							<input type="radio" name="radioStatusProtocolo{{i}}" [value]="0" [(ngModel)]="item.isStatusAtivoProtocolo" (change)="atualizarStatusProtocolo(item, 0)"><i></i> Inativo
+						</label>
+					</td>
+					<td>
+						<span style="word-break: break-word !important; white-space: normal !important;" *ngIf="item.descricaoServicos.length > 0">{{'[' + item.descricaoServicos.join('; ') + ']'}}</span>
+					</td>
+					<td class="text-center">
+						<label class="radio-inline i-checks m-r">
+							<input type="radio" name="radioStatusAgendamento{{i}}" [value]="1" [(ngModel)]="item.isStatusAtivoAgendamento" (change)="atualizarStatusAgendamento(item, 1)"><i></i> Ativo
+						</label>
+						<label class="radio-inline i-checks">
+							<input type="radio" name="radioStatusAgendamento{{i}}" [value]="0" [(ngModel)]="item.isStatusAtivoAgendamento" (change)="atualizarStatusAgendamento(item, 0)"><i></i> Inativo
+						</label>
+					</td>
+					<td class="text-center">
+						<a class="btn btn-sm btn-success" data-toggle="tooltip" title="Adicionar Serviços" data-original-title="Adicionar Serviços" (click)="abrirModalServicos(item)"><span class="fa fa-plus"></span></a>
+						<a class="btn btn-sm btn-danger" data-toggle="tooltip" title="Excluir Analista" data-original-title="Excluir Analista" disableOnClick (click)="excluirParametroAnalista(item.idParametroAnalista)"><span class="fa fa-trash"></span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<app-modal-servicos #appModalServicos (onConfirmar)="confirmarModalServicos($event)"></app-modal-servicos>

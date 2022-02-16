@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Suframa.Sciex.ApplicationService</RootNamespace>
+    <AssemblyName>Suframa.Sciex.ApplicationService</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44343</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Suframa.Sciex.ApplicationService.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>Suframa.Sciex.ApplicationService.Debug.ruleset</CodeAnalysisRuleSet>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Audit.NET, Version=10.0.1.0, Culture=neutral, PublicKeyToken=571d6b80b242c87e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Audit.NET.10.0.1\lib\net45\Audit.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetCasClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\DotNetCasClient.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Fasterflect, Version=2.1.3.0, Culture=neutral, PublicKeyToken=38d18473284c1ca7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\fasterflect.2.1.3\lib\net40\Fasterflect.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.7.3.2\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="JWT, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JWT.3.1.1\lib\net46\JWT.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.4.0.12\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Integration.Web.4.0.12\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Integration.WebApi.4.0.12\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Swashbuckle.Core.5.6.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\appSettings.config">
+      <Link>appSettings.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="..\..\connectionStrings.config">
+      <Link>connectionStrings.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="..\..\NLog.config">
+      <Link>NLog.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\Desenvolvimento.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\Homologacao.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\web.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="logs\readme.txt" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
+    <Compile Include="CustomHeaderFilter.cs" />
+    <Compile Include="DropDown\CancelarProcessoController.cs" />
+    <Compile Include="DropDown\AnalistaAtivoPlanoDropDownController.cs" />
+    <Compile Include="DropDown\AnalistaAtivoLeDropDownController.cs" />
+    <Compile Include="DropDown\CodigoContaAnaliseDropDownController.cs" />
+    <Compile Include="DropDown\CodigoUtilizacaoAnaliseDropDownController.cs" />
+    <Compile Include="DropDown\AnalistaAtivoDropDownController.cs" />
+    <Compile Include="DropDown\InsumoDropDownController.cs" />
+    <Compile Include="DropDown\MunicipioDropDownController..cs" />
+    <Compile Include="DropDown\PaisDropDownController.cs" />
+    <Compile Include="DropDown\ParametrosDropDownController.cs" />
+    <Compile Include="DropDown\ConsultarPliStatusDropDownController.cs" />
+    <Compile Include="DropDown\PliAplicacaoFixoDropDownController.cs" />
+    <Compile Include="DropDown\LiStatusDropDownController.cs" />
+    <Compile Include="DropDown\LiAdicoesDropDownController.cs" />
+    <Compile Include="DropDown\PliTipoFixoDropDownController.cs" />
+    <Compile Include="DropDown\PliTipoDropDownController.cs" />
+    <Compile Include="DropDown\RegimeTributarioDropDownController.cs" />
+    <Compile Include="DropDown\RegimeTributarioListDropDownController.cs" />
+    <Compile Include="DropDown\RecintoAlfandegaDropDownController.cs" />
+    <Compile Include="DropDown\PRCSolicitacaoAlteracaoAnaliseDropDownController.cs" />
+    <Compile Include="DropDown\TipoCoberturaCambialDropDownController.cs" />
+    <Compile Include="DropDown\TipoAcordoTarifarioDropDownController.cs" />
+    <Compile Include="DropDown\RegimeTributarioOpcoesFixasDropDownController.cs" />
+    <Compile Include="DropDown\UnidadeReceitaFederalDropDownController.cs" />
+    <Compile Include="DropDown\DadosViewInsumoPadraoDropDownController.cs" />
+    <Compile Include="DropDown\ViewInsumoPadraoDropDownController.cs" />
+    <Compile Include="DropDown\LEProdutoDropDownController.cs" />
+    <Compile Include="DropDown\CodigoDescricaoInsumoDropDownController.cs" />
+    <Compile Include="DropDown\ViewUndMedEmpSufDropDownController.cs" />
+    <Compile Include="DropDown\ViewNcmEmpSufDropDownController.cs" />
+    <Compile Include="DropDown\ViewTipoProdEmpSufDropDownController.cs" />
+    <Compile Include="DropDown\ViewProdEmpSufDropDownController.cs" />
+    <Compile Include="DropDown\ViewUnidadeMedidaDropDownController.cs" />
+    <Compile Include="DropDown\ViewProdutoEmpresaDropDownController.cs" />
+    <Compile Include="DropDown\ControleImportacaoDropDownController.cs" />
+    <Compile Include="DropDown\OrgaoAnuenteDropDownController.cs" />
+    <Compile Include="DropDown\ViewMercadoriaDropDownController.cs" />
+    <Compile Include="DropDown\ViewNcmDropDownController.cs" />
+    <Compile Include="DropDown\CodigoUtilizacaoDropDownController.cs" />
+    <Compile Include="DropDown\NcmDropDownController.cs" />
+    <Compile Include="DropDown\MotivoDropDownController.cs" />
+    <Compile Include="DropDown\InstituicaoFinanceiraDropDownController.cs" />
+    <Compile Include="DropDown\ModalidadePagamentoDropDownController.cs" />
+    <Compile Include="DropDown\FundamentoLegalDropDownController.cs" />
+    <Compile Include="DropDown\CodigoContaDropDownController.cs" />
+    <Compile Include="DropDown\RegimeTributarioMercadoriaDropDownController.cs" />
+    <Compile Include="DropDown\ViewDetalheMercadoriaController.cs" />
+    <Compile Include="DropDown\ViewSetorDropDownController.cs" />
+    <Compile Include="DropDown\ViewMunicipioController.cs" />
+    <Compile Include="DropDown\PliAplicacaoDropDownController.cs" />
+    <Compile Include="DropDown\PliDropDownController.cs" />
+    <Compile Include="DropDown\PliStatusDropDownController.cs" />
+    <Compile Include="DropDown\NaladiDropDownController.cs" />
+    <Compile Include="DropDown\FabricanteDropDownController.cs" />
+    <Compile Include="DropDown\AladiDropDownController.cs" />
+    <Compile Include="DropDown\FornecedorDropDownController.cs" />
+    <Compile Include="DropDown\IncotermsDropDownController.cs" />
+    <Compile Include="DropDown\MoedaDropDownController.cs" />
+    <Compile Include="DropDown\MesesDropDownController.cs" />
+    <Compile Include="DropDown\UsuarioInternoParametroAnalistaDropDownController.cs" />
+    <Compile Include="DropDown\UsuarioInternoUsuarioInternoDropDownController.cs" />
+    <Compile Include="DropDown\TipoEstabelecimentoDropDownController.cs" />
+    <Compile Include="DropDown\UFDropDownController.cs" />
+    <Compile Include="Filters\ExceptionFilter.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Grid\ConsultarDesignarPlanoGridController.cs" />
+    <Compile Include="Grid\ConsultarDesignarLeGridController.cs" />
+    <Compile Include="Grid\ConsultarDesignarSolicitacaoGridController.cs" />
+    <Compile Include="Grid\ConsultarDIEntradaArquivoGridController.cs" />
+    <Compile Include="Grid\ConsultarProtocoloEnvioPEGridController.cs" />
+    <Compile Include="Grid\ErroProcessamentoPEGridController.cs" />
+    <Compile Include="Grid\ErroProcessamentoLeGridController.cs" />
+    <Compile Include="Grid\LEConsultarProdutoGridController.cs" />
+    <Compile Include="Grid\LEAnaliseInsumoGridController.cs" />
+    <Compile Include="Grid\LEInsumoGridController.cs" />
+    <Compile Include="Grid\LEAnaliseProdutoGridController.cs" />
+    <Compile Include="Grid\LEProdutoGridController.cs" />
+    <Compile Include="Grid\RecintoAlfandegaGridController.cs" />
+    <Compile Include="Grid\SetorArmazenamentoGridController.cs" />
+    <Compile Include="Grid\ConsultarProtocoloEnvioLEGridController.cs" />
+    <Compile Include="Services\CancelarController.cs" />
+    <Compile Include="Services\AprovarSolicitacaoController .cs" />
+    <Compile Include="Services\DueCorrecaoController.cs" />
+    <Compile Include="Services\InativarDUEController.cs" />
+    <Compile Include="Services\DeclaracaoUnicaExportacaoController.cs" />
+    <Compile Include="Services\DesignarAnalistaSolicitacaoController.cs" />
+    <Compile Include="Services\EntregarPlanoExportacaoComprovacaoController.cs" />
+    <Compile Include="Services\CorrigirDUEController.cs" />
+    <Compile Include="Services\NotificarEmailController.cs" />
+    <Compile Include="Services\ListarRegistroAlteracaoController.cs" />
+    <Compile Include="Services\AprovarSolicitacaoController .cs" />
+    <Compile Include="Services\CalculoParidadeValorParaInsumoController.cs" />
+    <Compile Include="Services\AprovarProrrogacaoController .cs" />
+    <Compile Include="Services\AprovarAnaliseLEProdutoInsumoController.cs" />
+    <Compile Include="Services\AprovarTodosInsumosEDetalhesAnaliseController.cs" />
+    <Compile Include="Services\BeneficioController.cs" />
+    <Compile Include="Services\BuscarValoresInsumoController.cs" />
+    <Compile Include="Services\AnaliseInsumoImportadoController.cs" />
+    <Compile Include="Services\CalculaParidadeController.cs" />
+    <Compile Include="Services\CalcularMoedaController.cs" />
+    <Compile Include="Services\CalculaCoeficienteTecnicoController.cs" />
+    <Compile Include="Services\CertificadoController.cs" />
+    <Compile Include="Services\CertificadoRegistroSuframaController.cs" />
+    <Compile Include="Services\HistoricoProcessoSuframaController.cs" />
+    <Compile Include="Services\ListarProcessoInsumoImportadoParaAnaliseController.cs" />
+    <Compile Include="Services\IncluirEditarDueController.cs" />
+    <Compile Include="Services\ReprovarSolicitacaoController.cs" />
+    <Compile Include="Services\PRCHistoricoInsumoSuframaController.cs" />
+    <Compile Include="Services\SelecionarProdutoEmAnalisePorIdProcessoController.cs" />
+    <Compile Include="Services\ServicoGerarParecerSUSALController.cs" />
+    <Compile Include="Services\ReprovarProrrogacaoController.cs" />
+    <Compile Include="Services\ConsultarProcessoImportacaoController.cs" />
+    <Compile Include="Services\DetalheInsumosController.cs" />
+    <Compile Include="Services\ConsultarLEInsumoController.cs" />
+    <Compile Include="Services\HistoricoProcessoController.cs" />
+    <Compile Include="Services\IncluirDetalheInsumoController.cs" />
+    <Compile Include="Services\LEAlterarInsumoController.cs" />
+    <Compile Include="Services\LECancelarInsumoController.cs" />
+    <Compile Include="Services\ExcluirLEInsumoController.cs" />
+    <Compile Include="Services\LESolicitarAlteracaoController.cs" />
+    <Compile Include="Services\ListarInsumosNacionalOuImportadoPorIdProdutoAnaliseController.cs" />
+    <Compile Include="Services\ListarInsumosNacionalOuImportadoPorIdProdutoParaCorrecaoController.cs" />
+    <Compile Include="Services\ListarParaAnaliseDetalheInsumoAnterioresPorIdInsumoController.cs" />
+    <Compile Include="Services\BuscarUltimoInsumoAnteriorPorIdInsumoAtualController.cs" />
+    <Compile Include="Services\ListarProcessoDetalhesPorIdProcessoInsumoController.cs" />
+    <Compile Include="Services\ListarProcessoInsumosNacionalOuImportadoPorIdInsumoSuframaController.cs" />
+    <Compile Include="Services\SalvarDetalhesInsumoECalcularAdicionaisController.cs" />
+    <Compile Include="Services\RecuperarNumeroAnoProcessoController.cs" />
+    <Compile Include="Services\SolicitacaoAlteracaoValorFreteController.cs" />
+    <Compile Include="Services\ValidaExistenciAlteracaoInsumoController.cs" />
+    <Compile Include="Services\ValidarPlanoExportacaoComprocavaoController.cs" />
+    <Compile Include="Services\ValorFreteController.cs" />
+    <Compile Include="Services\ValorUnitarioController.cs" />
+    <Compile Include="Services\SolicAlteracaoPaisController.cs" />
+    <Compile Include="Services\SolicitacaoAlteracaoValorUnitarioController.cs" />
+    <Compile Include="Services\SolicitacaoProcessoController.cs" />
+    <Compile Include="Services\ListarProcessoInsumosNacionalOuImportadoPorIdProdutoSuframaController.cs" />
+    <Compile Include="Services\ParecerTecnicoSuframaController.cs" />
+    <Compile Include="Services\ParecerTecnicoRelatorioSuframaController.cs" />
+    <Compile Include="Services\ParecerTecnicoRelatorioController.cs" />
+    <Compile Include="Services\ParecerTecnicoController.cs" />
+    <Compile Include="Services\CorrigirDadosInsumoController.cs" />
+    <Compile Include="Services\CorrigirInsumoController.cs" />
+    <Compile Include="Services\CorrigirPlanoExportacaoController.cs" />
+    <Compile Include="Services\CorrigirPEDetalheInsumoController.cs" />
+    <Compile Include="Services\ProcessoExportacaoSuframaController.cs" />
+    <Compile Include="Services\QuantidadeCoeficienteController.cs" />
+    <Compile Include="Services\SolicitacaoesAlteracaoController.cs" />
+    <Compile Include="Services\SolicitacaoPEProdutoController.cs" />
+    <Compile Include="Grid\SolicitacaoInsumoArquivoGridController.cs" />
+    <Compile Include="Grid\TipoDeclaracaoGridController.cs" />
+    <Compile Include="Grid\ConsultarDesignarPliGridController.cs" />
+    <Compile Include="Grid\ConsultarAnaliseVisualGridController.cs" />
+    <Compile Include="Grid\EmpresaPDIGridController.cs" />
+    <Compile Include="Grid\ErroProcessamentoAliGridController.cs" />
+    <Compile Include="Grid\ErroProcessamentoProtocoloEnvioGridController.cs" />
+    <Compile Include="Grid\DiLiGridController.cs" />
+    <Compile Include="Grid\ManterBeneficioGridController.cs" />
+    <Compile Include="Grid\MonitoramentoSiscomexGridController.cs" />
+    <Compile Include="Grid\CancelarLiGridController.cs" />
+    <Compile Include="Grid\BeneficioHistoricoGridController.cs" />
+    <Compile Include="Grid\NcmHistoricoGridController.cs" />
+    <Compile Include="Grid\SolicitacaoPliGridController.cs" />
+    <Compile Include="Grid\ConsultarProtocoloEnvioGridController.cs" />
+    <Compile Include="Grid\LiGridController.cs" />
+    <Compile Include="Grid\ErroProcessamentoGridController.cs" />
+    <Compile Include="Grid\RelatorioAnaliseAliGridController.cs" />
+    <Compile Include="Grid\PliDetalheMercadoriaGridController.cs" />
+    <Compile Include="Grid\NcmExcecaoGridController.cs" />
+    <Compile Include="Grid\ConsultarPliGridController.cs" />
+    <Compile Include="Grid\PliProcessoAnuenteGridController.cs" />
+    <Compile Include="Grid\TipoEmbalagemGridController.cs" />
+    <Compile Include="Grid\ViaTransporteGridController.cs" />
+    <Compile Include="Grid\ViewRelatorioAnaliseProcessamentoPliGridController.cs" />
+    <Compile Include="Grid\PliStatusRelatorioGridController.cs" />
+    <Compile Include="Grid\PliMercadoriaGridController.cs" />
+    <Compile Include="Grid\ViewMunicipioGridController.cs" />
+    <Compile Include="Grid\ViewNcmGridController.cs" />
+    <Compile Include="Grid\NcmGridController.cs" />
+    <Compile Include="Grid\ControleImportacaoGridController.cs" />
+    <Compile Include="Grid\RegimeTributarioMercadoriaGridController.cs" />
+    <Compile Include="Grid\PliGridController.cs" />
+    <Compile Include="Grid\CodigoUtilizacaoGridController.cs" />
+    <Compile Include="Grid\CodigoContaGridController.cs" />
+    <Compile Include="Grid\ParametrosGridController.cs" />
+    <Compile Include="Grid\ModalidadePagamentoGridController.cs" />
+    <Compile Include="Grid\MotivoGridController.cs" />
+    <Compile Include="Grid\InstituicaoFinanceiraGridController.cs" />
+    <Compile Include="Grid\FabricanteGridController.cs" />
+    <Compile Include="Grid\ParametroAnalista1GridController.cs" />
+    <Compile Include="Grid\FundamentoLegalGridController.cs" />
+    <Compile Include="Grid\FornecedorGridController.cs" />
+    <Compile Include="Grid\ParidadeCambialGridController.cs" />
+    <Compile Include="Grid\RegimeTributarioTesteGridController.cs" />
+    <Compile Include="Grid\UnidadeReceitaFederalGridController.cs" />
+    <Compile Include="Grid\NaladiGridController.cs" />
+    <Compile Include="Grid\AladiGridController.cs" />
+    <Compile Include="Grid\RegimeTributarioGridController.cs" />
+    <Compile Include="Grid\HistoricoSituacaoInscricaoGridController.cs" />
+    <Compile Include="Information\LogoutController.cs" />
+    <Compile Include="Information\SessaoController.cs" />
+    <Compile Include="Information\UsuarioLogadoController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ProrrogarSolicitacaoController.cs" />
+    <Compile Include="Grid\BeneficioNCMGridController.cs" />
+    <Compile Include="Grid\ConsultaEntradaDIProcessadoGridController.cs" />
+    <Compile Include="Services\CertificadoRegistroController.cs" />
+    <Compile Include="Services\AnalisarPlanoDeExportacaoController.cs" />
+    <Compile Include="Services\IndeferirPlanoExportacaoController.cs" />
+    <Compile Include="Services\ListarParaAnaliseDetalheInsumoPorIdInsumoController.cs" />
+    <Compile Include="Services\DeferirPlanoExportacaoController.cs" />
+    <Compile Include="Services\InformacoesAdicionaisProdutoController.cs" />
+    <Compile Include="Services\PlanoDeExportacaoController.cs" />
+    <Compile Include="Services\ConsultarNcmController.cs" />
+    <Compile Include="Services\DesignarAnalistaPlanoController.cs" />
+    <Compile Include="Services\DesignarAnalistaLEController.cs" />
+    <Compile Include="Services\ConsultarArquivoEstruturaPropriaController.cs" />
+    <Compile Include="Services\EstruturaPropriaPEArquivoController.cs" />
+    <Compile Include="Services\ListarDetalheInsumoPorIdInsumoController.cs" />
+    <Compile Include="Services\ListarProcessoInsumosNacionalOuImportadoPorIdInsumoController.cs" />
+    <Compile Include="Services\ListarProcessoInsumosNacionalOuImportadoPorIdProdutoController.cs" />
+    <Compile Include="Services\PEDetalheInsumoController.cs" />
+    <Compile Include="Services\PEInsumoQtdMaxFormatController.cs" />
+    <Compile Include="Services\PEInsumoController.cs" />
+    <Compile Include="Services\ListarInsumosNacionalOuImportadoPorCodigoProdutoController.cs" />
+    <Compile Include="Services\ExcluirInsumoController.cs" />
+    <Compile Include="Services\ListarInsumosNacionalOuImportadoPorIdProdutoController.cs" />
+    <Compile Include="Services\ProcessarPEController.cs" />
+    <Compile Include="Services\ProcessoProdutoController.cs" />
+    <Compile Include="Services\PlanoExportacaoAnexoController.cs" />
+    <Compile Include="Services\ProcessoExportacaoController.cs" />
+    <Compile Include="Services\SolicitacoesAlteracaoDetalheController.cs" />
+    <Compile Include="Services\SolicitarInclusaoInsumoController.cs" />
+    <Compile Include="Services\SolictitacoesAlteracaoDetalheInsumoController.cs" />
+    <Compile Include="Services\TransferirSaldoInsumoController.cs" />
+    <Compile Include="Services\ValidarPlanoExportacaoController.cs" />
+    <Compile Include="Services\EstruturaPropriaLEArquivoController.cs" />
+    <Compile Include="Services\PEPaisController.cs" />
+    <Compile Include="Services\PEProdutoController.cs" />
+    <Compile Include="Services\EntregarPlanoExportacaoController.cs" />
+    <Compile Include="Services\PlanoExportacaoController.cs" />
+    <Compile Include="Services\LEAnaliseProdutoController.cs" />
+    <Compile Include="Services\LEInsumoController.cs" />
+    <Compile Include="Services\LEEntregarProdutoController.cs" />
+    <Compile Include="Services\LEAnaliseInsumoController.cs" />
+    <Compile Include="Services\PliAddLiController.cs" />
+    <Compile Include="Services\LEProdutoController.cs" />
+    <Compile Include="Services\RelatorioAnaliseVisualRetificacoesController.cs" />
+    <Compile Include="Services\PliMercadoriaRetificadorController.cs" />
+    <Compile Include="Services\PliProdutoRetificadorController.cs" />
+    <Compile Include="Services\RecintoAlfandegaController.cs" />
+    <Compile Include="Services\SetorArmazenamentoController.cs" />
+    <Compile Include="Services\TipoDeclaracaoController.cs" />
+    <Compile Include="Services\ConsultarListagemPadraoController.cs" />
+    <Compile Include="Services\DiLiController.cs" />
+    <Compile Include="Services\DiController.cs" />
+    <Compile Include="Services\DistribuicaoAutomaticaController.cs" />
+    <Compile Include="Services\FuncoesController.cs" />
+    <Compile Include="Services\AliArquivoController.cs" />
+    <Compile Include="Services\AliHistoricoController.cs" />
+    <Compile Include="Services\CancelarLiController.cs" />
+    <Compile Include="Services\ConsultarProtocoloEnvioController.cs" />
+    <Compile Include="Services\EnviarArquivoAliCancelamentoController.cs" />
+    <Compile Include="Services\GerarDIArquivoSimulacaoController.cs" />
+    <Compile Include="Services\GerarLIArquivoCancelamentoSimulacaoController.cs" />
+    <Compile Include="Services\GerarLIArquivoSimulacaoController.cs" />
+    <Compile Include="Services\LerDIArquivoController.cs" />
+    <Compile Include="Services\ParametrizarAnalistaController.cs" />
+    <Compile Include="Services\PliAnaliseVisualRespostaController.cs" />
+    <Compile Include="Services\PliAnaliseVisualController.cs" />
+    <Compile Include="Services\DesignarAnalistaController.cs" />
+    <Compile Include="Services\PliFornecedorFabricanteController.cs" />
+    <Compile Include="Services\ProcessarArquivoALICancelamentoController.cs" />
+    <Compile Include="Services\LiController.cs" />
+    <Compile Include="Services\EnviarArquivoAliNormalController.cs" />
+    <Compile Include="Services\GerarArquivoALINormalController.cs" />
+    <Compile Include="Services\LerLIArquivoController.cs" />
+    <Compile Include="Services\ProcessarDiController.cs" />
+    <Compile Include="Services\ProcessarPliController.cs" />
+    <Compile Include="Services\ReceberArquivoAliController.cs" />
+    <Compile Include="Services\RegimeTributarioController.cs" />
+    <Compile Include="Services\RegimeTributarioTesteController.cs" />
+    <Compile Include="Services\RepresentanteLegalController.cs" />
+    <Compile Include="Services\GerarArquivoCancelamentoAliController.cs" />
+    <Compile Include="Services\ReceberArquivoLiCancelamentoController.cs" />
+    <Compile Include="Services\TipoEmbalagemController.cs" />
+    <Compile Include="Services\TrocaTokenController.cs" />
+    <Compile Include="Services\ConsultarPliController.cs" />
+    <Compile Include="Services\SolicitarGeracaoDebitoController.cs" />
+    <Compile Include="Services\ComplementarPLIController.cs" />
+    <Compile Include="Services\NcmExcecaoController.cs" />
+    <Compile Include="Services\PliMercadoriaController.cs" />
+    <Compile Include="Services\PliDetalheMercadoriaController.cs" />
+    <Compile Include="Services\PliProdutoController.cs" />
+    <Compile Include="Services\EstruturaPropriaPliArquivoController .cs" />
+    <Compile Include="Services\ValidarEstruturaPropriaLEController.cs" />
+    <Compile Include="Services\ValidarEstruturaPropriaController.cs" />
+    <Compile Include="Services\ViaTransporteController.cs" />
+    <Compile Include="Services\ViewImportadorController.cs" />
+    <Compile Include="Services\ViewMercadoriaController.cs" />
+    <Compile Include="Services\ViewNcmController.cs" />
+    <Compile Include="Services\NcmController.cs" />
+    <Compile Include="Services\ControleImportacaoController.cs" />
+    <Compile Include="Services\RegimeTributarioMercadoriaController.cs" />
+    <Compile Include="Services\PliController.cs" />
+    <Compile Include="Services\CodigoUtilizacaoController.cs" />
+    <Compile Include="Services\CodigoContaController.cs" />
+    <Compile Include="Services\IncotermsController.cs" />
+    <Compile Include="Services\ModalidadePagamentoController.cs" />
+    <Compile Include="Services\MotivoController.cs" />
+    <Compile Include="Services\ParametrosController.cs" />
+    <Compile Include="Services\EmitirAlertaParidadeCambialController.cs" />
+    <Compile Include="Services\ParidadeCambialSincronizarController.cs" />
+    <Compile Include="Services\ParametroAnalista1Controller.cs" />
+    <Compile Include="Services\FundamentoLegalController.cs" />
+    <Compile Include="Services\FornecedorController.cs" />
+    <Compile Include="Services\FabricanteController.cs" />
+    <Compile Include="Services\ParidadeCambialController.cs" />
+    <Compile Include="Services\UnidadeReceitaFederalController.cs" />
+    <Compile Include="Services\NaladiController.cs" />
+    <Compile Include="Services\AladiController.cs" />
+    <Compile Include="Services\ConsultarSituacaoUsuarioController.cs" />
+    <Compile Include="Information\MenuController.cs" />
+    <Compile Include="Information\LoginController.cs" />
+    <Compile Include="Services\PedidoCorrecaoController.cs" />
+    <Compile Include="Services\CaptchaController.cs" />
+    <Compile Include="Services\UsuarioInternoLogadoController.cs" />
+    <Compile Include="Services\UsuarioInternoController.cs" />
+    <Compile Include="Information\InformacaoController.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="TokenAuthorizationFilter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Suframa.Sciex.BusinessLogic\Suframa.Sciex.BusinessLogic.csproj">
+      <Project>{eb3469b6-8297-4f55-b0c7-4706a3f78c2f}</Project>
+      <Name>Suframa.Sciex.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.DataTransferObject\Suframa.Sciex.CrossCutting.DataTransferObject.csproj">
+      <Project>{afb3d36d-7929-41ac-a3dd-71dbddeb3dae}</Project>
+      <Name>Suframa.Sciex.CrossCutting.DataTransferObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.DependenceInjection\Suframa.Sciex.CrossCutting.DependenceInjection.csproj">
+      <Project>{68c1d524-2201-4874-b097-76d185968ef8}</Project>
+      <Name>Suframa.Sciex.CrossCutting.DependenceInjection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.Mapping\Suframa.Sciex.CrossCutting.Mapping.csproj">
+      <Project>{a0072ef6-b84a-4671-b692-d1bcb190145e}</Project>
+      <Name>Suframa.Sciex.CrossCutting.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting\Suframa.Sciex.CrossCutting.csproj">
+      <Project>{bc105e8e-3b81-494a-a61f-9b2ee18a77a5}</Project>
+      <Name>Suframa.Sciex.CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.DataAccess\Suframa.Sciex.DataAccess.csproj">
+      <Project>{75e29a91-1d70-4c43-ba0c-4cab420c658d}</Project>
+      <Name>Suframa.Sciex.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="ArquivoPliResposta\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="EstruturaPropriaLE\" />
+    <Folder Include="EstruturaPropriaPLI\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\DeclaracaoUnicaExportacao\" />
+    <Folder Include="Views\GerarArquivoALINormal\" />
+    <Folder Include="Views\LerLIArquivo\" />
+    <Folder Include="Views\ParametroDropDown\" />
+    <Folder Include="Views\SelecionarProdutoEmAnalisePorIdProcesso\" />
+    <Folder Include="Views\ViewImportador\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49709</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49709/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:49709/</IISAppRootUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este projeto faz referência a pacotes do NuGet que não estão presentes neste computador. Use a Restauração de Pacotes do NuGet para baixá-los.  Para obter mais informações, consulte http://go.microsoft.com/fwlink/?LinkID=322105. O arquivo ausente é {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

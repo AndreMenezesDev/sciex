@@ -1,0 +1,70 @@
+<app-grid [(lista)]="lista"
+		  [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="NumeroAli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº ALI</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº LI</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">NCM</th>
+					<th *ngIf="notComercializacao" class="th-sortable unset-nowrap text-center">PRODUTO</th>
+					<th *ngIf="notComercializacao" class="th-sortable unset-nowrap text-center">TIPO</th>
+					<th *ngIf="notComercializacao" class="th-sortable unset-nowrap text-center">MODELO</th>
+					<th class="th-sortable unset-nowrap text-left">
+						<app-ordenacao field="Status" [sorted]="sorted" (onChangeSort)="changeSort($event)">STATUS</app-ordenacao>
+					</th>
+
+					<th class="th-sortable th-100 unset-nowrap text-center">AÇÃO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="unset-nowrap font-bold"><a style="color: #550627" routerLink="/consultar-pli/{{item.idPliMercadoria}}/visualizar-detalhamento-ali/1">{{item.numeroAli}}</a></td>
+					<td class="unset-nowrap font-bold text-center"><a *ngIf="item.numeroLi > 0" style="color: #115A12;" routerLink="/consultar-pli/{{item.idPliMercadoria}}/visualizar-detalhamento-li">{{item.numeroLi}}</a><a *ngIf="item.numeroLi == 0">-</a></td>
+					<td class="unset-nowrap text-center">{{item.nomenclaturaComumMercosul}}</td>
+					<td *ngIf="notComercializacao" class="unset-nowrap text-center">{{item.codigoProduto}}</td>
+					<td *ngIf="notComercializacao" class="unset-nowrap text-center">{{item.tipoProduto}}</td>
+					<td *ngIf="notComercializacao" class="unset-nowrap text-center">{{item.codigoModeloProduto}}</td>
+					<td class="unset-nowrap text-left">{{item.descricaoStatus}}</td>
+					<td class="text-center">
+						<span>
+							<a *ngIf="item.status != 4 && item.status != 5"
+							   style="cursor:pointer"
+							   class=" btn btn-rounded btn-sm btn-icon btn-primary"
+							   data-toggle="tooltip" title="" data-original-title="Deferido">
+								<i class="fa fa-check"></i>
+							</a>
+							<a *ngIf="item.status == 4"
+							   style="cursor:pointer"
+							   class="btn btn-rounded btn-sm btn-icon btn-danger"
+							   routerLink="/consultar-pli/{{item.idPliMercadoria}}/relatorio-status-ali"
+							   data-toggle="tooltip" title="" data-original-title="Indeferido">
+								<i class="fa fa-times"></i>
+							</a>
+							<a *ngIf="item.status == 5"
+							   style="cursor:pointer"
+							   class="btn btn-rounded btn-sm btn-icon btn-danger"
+							   data-toggle="tooltip" title="" data-original-title="Indeferido"
+							   (click)="mostrarMensagemLi(item.idPliMercadoria)">
+								<i class="fa fa-times"></i>
+							</a>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<app-modal-ali-indeferida #appModalAliIndeferida></app-modal-ali-indeferida>
+

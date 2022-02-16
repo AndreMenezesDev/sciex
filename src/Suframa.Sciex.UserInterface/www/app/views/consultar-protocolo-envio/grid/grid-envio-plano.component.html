@@ -1,0 +1,69 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="codigoProdutoPexPam" [sorted]="sorted" (onChangeSort)="changeSort($event)">Produto Exportação</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="codigoProdutoSuframa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Produto Suframa</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Qtd</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="valorDolar" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						Data de Validação
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						Status de Validação
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						QTD de Erros
+					</th>
+
+				</tr>
+			</thead>
+
+			<tbody class="text-sm">
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="unset-nowrap text-center">{{item.codigoProdutoPexPam}}</td>
+					<td class="unset-nowrap text-center">{{item.codigoProdutoSuframa}}</td>
+					<td class="unset-nowrap text-center">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap text-center">{{item.quantidadeFormatado}}</td>
+					<td class="unset-nowrap text-center">{{item.valorDolarFormatado}}</td>
+					<td class="unset-nowrap text-center">{{item.dataValidacao}} </td>
+					<td class="unset-nowrap text-center">
+						<span *ngIf="item.situacaoValidacao == 2"><a style="cursor: default" class="btn btn-rounded btn-sm btn-icon btn-primary"><i class="fa fa-check"></i></a></span>
+						<span *ngIf="item.situacaoValidacao == 3"><a style="cursor: default" class="btn btn-rounded btn-sm btn-icon btn-danger"><i class="fa fa-times"></i></a></span>
+					</td>
+					<td class="unset-nowrap text-center">
+
+						<span *ngIf="item.situacaoValidacao == 2 ? true : false">{{item.qtdErros}}</span>
+
+						<a *ngIf="item.situacaoValidacao == 3 ? true : false"
+						   routerLink="/consultar-protocolo-envio-plano/{{item.idEstruturaPropria}}/{{item.loteId}}/visualizar-erros"
+						   style="cursor: pointer;"
+						   class="font-bold text-danger">{{item.qtdErros}}</a>
+
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+</app-grid>

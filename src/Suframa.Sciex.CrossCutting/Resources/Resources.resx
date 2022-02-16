@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AGUARDAR_FINALIZAR_PROTOCOLO" xml:space="preserve">
+    <value>Existe um protocolo em andamento vinculado ao seu CPF. Favor aguardar a conclusão ou cancelamento do mesmo para dar continuidade a sua solicitação.</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="brasao" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>brasao.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CADASTRO_NAO_ENCONTRADO" xml:space="preserve">
+    <value>Nenhum cadastro foi encontrado.</value>
+  </data>
+  <data name="CAMPO_NAO_INFORMADO" xml:space="preserve">
+    <value>Campo não informado.</value>
+  </data>
+  <data name="CEP_INVALIDO" xml:space="preserve">
+    <value>CEP inválido.</value>
+  </data>
+  <data name="CEP_JA_CADASTRADO" xml:space="preserve">
+    <value>Este CEP já foi cadastrado.</value>
+  </data>
+  <data name="CHAVE_PRECISA_SER_INFORMADA" xml:space="preserve">
+    <value>A chave precisa ser informada.</value>
+  </data>
+  <data name="CNPJ_JA_CADASTRADO" xml:space="preserve">
+    <value>Já existe um cadastro para este CNPJ informado.</value>
+  </data>
+  <data name="CNPJ_JA_CREDENCIADO" xml:space="preserve">
+    <value>Este CNPJ já possui credenciamento.</value>
+  </data>
+  <data name="CONFIRMA_EXCLUSAO" xml:space="preserve">
+    <value>Confirma a exclusão?</value>
+  </data>
+  <data name="CPF_JA_CREDENCIADO" xml:space="preserve">
+    <value>Este CPF já possui credenciamento.</value>
+  </data>
+  <data name="MUNICIPIO_JA_CADASTRADO" xml:space="preserve">
+    <value>Já existe uma unidade principal cadastrada para esse município.</value>
+  </data>
+  <data name="NUMERO_CNPJ_PRECISA_SER_INFORMADO" xml:space="preserve">
+    <value>O número CNPJ precisa ser informado.</value>
+  </data>
+  <data name="PESSOA_FISICA_NAO_INFORMADA" xml:space="preserve">
+    <value>Identificação de pessoa fisica não informada.</value>
+  </data>
+  <data name="PESSOA_JURIDICA_NAO_INFORMADA" xml:space="preserve">
+    <value>Identificação de pessoa juridica não informada.</value>
+  </data>
+  <data name="protocolo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>protocolo.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="REGISTRO_DUPLICADO" xml:space="preserve">
+    <value>Registro duplicado, não pode ser inserido.</value>
+  </data>
+  <data name="REGISTRO_JA_EXISTENTE" xml:space="preserve">
+    <value>O código da Natureza Jurídica já foi cadastrado.</value>
+  </data>
+  <data name="REPRESENTANTE_ENTIDADE_JA_CADASTRADO" xml:space="preserve">
+    <value>Este representante da entidade já foi cadastrado.</value>
+  </data>
+  <data name="REPRESENTANTE_JA_EXISTENTE" xml:space="preserve">
+    <value>Este representante da entidade já foi cadastrado.</value>
+  </data>
+  <data name="SETOR_JA_EXISTENTE" xml:space="preserve">
+    <value>Setor já cadastrado na base de dados da Suframa.</value>
+  </data>
+  <data name="SUBCLASSE_JA_EXISTENTE" xml:space="preserve">
+    <value>Código de Subclasse já cadastrado na base de dados da Suframa.</value>
+  </data>
+  <data name="TIPO_REQUERIMENTO_NAO_GERA_PROTOCOLO" xml:space="preserve">
+    <value>Este tipo de requerimento não gera protocolo.</value>
+  </data>
+  <data name="VALIDAR_CAMPO" xml:space="preserve">
+    <value>Validar o campo {0}.</value>
+  </data>
+  <data name="CNPJ_JA_POSSUI_CREDENCIAMENTO_DESTE_TIPO" xml:space="preserve">
+    <value>CNPJ já possui um credenciamento deste tipo</value>
+  </data>
+  <data name="REQUERIMENTO_EXISTENTE" xml:space="preserve">
+    <value>Existe requerimento associado.</value>
+  </data>
+  <data name="CPF_JA_CADASTRADO" xml:space="preserve">
+    <value>Já existe um cadastro para este CPF informado</value>
+  </data>
+  <data name="ALTERAÇÃO_REALIZADA_COM_SUCESSO" xml:space="preserve">
+    <value>Alteração realizada com sucesso.</value>
+  </data>
+  <data name="CADASTRO_REALIZADO_COM_SUCESSO" xml:space="preserve">
+    <value>Cadastro realizado com sucesso.</value>
+  </data>
+  <data name="CAMPO_OBRIGATORIO_NAO_INFORMADO" xml:space="preserve">
+    <value>Campo obrigatório não informado.</value>
+  </data>
+  <data name="CNPJ_INVALIDO" xml:space="preserve">
+    <value>CNPJ inválido.</value>
+  </data>
+  <data name="CNPJ_JA_ADICIONADO" xml:space="preserve">
+    <value>Este CNPJ já foi adicionado.</value>
+  </data>
+  <data name="CONFIRMAR_ALTERACAO" xml:space="preserve">
+    <value>Confirma a alteração?</value>
+  </data>
+  <data name="CONFIRMAR_EXCLUSAO" xml:space="preserve">
+    <value>Confirma a exclusão?</value>
+  </data>
+  <data name="CONFIRMAR_NOVO_CADASTRO" xml:space="preserve">
+    <value>Confirma o novo cadastro?</value>
+  </data>
+  <data name="CPF_INVALIDO" xml:space="preserve">
+    <value>CPF inválido.</value>
+  </data>
+  <data name="CPF_JA_ADICIONADO" xml:space="preserve">
+    <value>Este CPF já foi adicionado.</value>
+  </data>
+  <data name="DADO_NAO_ENCONTRADO" xml:space="preserve">
+    <value>Dado não encontrado.</value>
+  </data>
+  <data name="ESTA_ATIVIDADE_JA_FOI_INCLUIDA" xml:space="preserve">
+    <value>Esta atividade já foi incluída.</value>
+  </data>
+  <data name="EXCLUSAO_REALIZADA_COM_SUCESSO" xml:space="preserve">
+    <value>Exclusão realizada com sucesso.</value>
+  </data>
+  <data name="FAVOR_SELECIONAR_UM_ARQUIVO_NO_FORMADO_PDF" xml:space="preserve">
+    <value>Favor selecionar um arquivo no formato PDF.</value>
+  </data>
+  <data name="IMPRIMIR_GRU_EM_INSTANTES" xml:space="preserve">
+    <value>Por favor, tente imprimir a GRU referente ao pagamento da taxa de serviço dentro de alguns instantes no link abaixo: http://www4.suframa.gov.br/arrecadacao/gru/gru_reimpressao.aspx</value>
+  </data>
+  <data name="NENHUM_CADASTRO_FOI_ENCONTRADO" xml:space="preserve">
+    <value>Nenhum cadastro foi encontrado.</value>
+  </data>
+  <data name="NENHUM_DOCUMENTO_ADICIONADO" xml:space="preserve">
+    <value>Nenhum documento foi adicionado.</value>
+  </data>
+  <data name="NENHUM_PROTOCOLO_FOI_ENCONTRADO" xml:space="preserve">
+    <value>Nenhum protocolo foi encontrado.</value>
+  </data>
+  <data name="OPERACAO_REALIZADA_COM_SUCESSO" xml:space="preserve">
+    <value>Operação realizada com sucesso.</value>
+  </data>
+  <data name="PARA_REALIZAR_UMA_CONSULTA_INFORME_PELO_MENOS_UM_DOS_PARAMETROS" xml:space="preserve">
+    <value>Para realizar uma consulta informe pelo menos um dos parâmetros.</value>
+  </data>
+  <data name="SERVICO_INDISPONIVEL" xml:space="preserve">
+    <value>Serviço indisponível, tente novamente mais tarde.</value>
+  </data>
+  <data name="SUBLCASSE_JA_CADASTRADA_PARA_ESTE_SETOR" xml:space="preserve">
+    <value>Subclasse já cadastrada para este setor.</value>
+  </data>
+  <data name="TIPO_DOCUMENTO_JA_ADICIONADO" xml:space="preserve">
+    <value>Já foi adicionado um documento para este tipo de documento.</value>
+  </data>
+  <data name="UNIDADE_JA_CADASTRADA" xml:space="preserve">
+    <value>Já existe uma unidade principal cadastrada para esse município.</value>
+  </data>
+  <data name="CONSULTA_PROTOCOLO_NAO_PERMITIDO" xml:space="preserve">
+    <value>Esta consulta exibe apenas protocolos de serviços cadastrais de “Inscrição Cadastral / Credenciamento”, para consultar protocolos dos demais serviços é necessário acessar o sistema por meio de login e senha.</value>
+  </data>
+  <data name="CAPTCHA_INVALIDO" xml:space="preserve">
+    <value>O captcha é inválido.</value>
+  </data>
+  <data name="protocoloSituacaoCadastral" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>protocoloSituacaoCadastral.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="protocoloAgendaAtendimento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>protocoloAgendaAtendimento.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="NAO_POSSUI_INSCRICAO_CADASTRAL_ATIVA" xml:space="preserve">
+    <value>Não há uma Inscrição Cadastral ativa para este CPF/CNPJ</value>
+  </data>
+  <data name="INSCRICAO_CADASTRAL_NAO_ENCONTRASE_INATIVA_PARA_REALIZAR_UMA_REATIVACAO" xml:space="preserve">
+    <value>A inscrição cadastral não encontra-se inativa para realizar uma Reativação. É necessário estar inativa para isto.</value>
+  </data>
+  <data name="VOCE_NAO_PODE_EDITAR_UMA_DILIGENCIA_JA_FINALIZADA" xml:space="preserve">
+    <value>Você não pode editar uma diligência já finalizada.</value>
+  </data>
+  <data name="style" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>style.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="correcaoInformacaoRequerimento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>correcaoInformacaoRequerimento.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="notificacaoCabecalho" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>notificacaoCabecalho.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="conferenciaAdministrativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>conferenciaAdministrativa.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="indeferimento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>indeferimento.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="cancelamento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>cancelamento.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="cancelamentoAguardandoRecurso" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>cancelamentoAguardandoRecurso.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="deferimentoAtualizacaoDados" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>deferimentoAtualizacaoDados.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="deferimentoAtualizacaoDocumentos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>deferimentoAtualizacaoDocumentos.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="deferimentoCredenciamento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>deferimentoCredenciamento.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="deferimentoInscricaoCadastral" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>deferimentoInscricaoCadastral.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="deferimentoReativacao" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>deferimentoReativacao.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="USUARIO_NAO_PODE_SER_EXCLUIDO" xml:space="preserve">
+    <value>Usuário não pode ser excluído, pois não existe outro usuário com o mesmo papel na listagem.</value>
+  </data>
+  <data name="USUARIO_NAO_PODE_SER_INATIVADO" xml:space="preserve">
+    <value>Usuário não pode ser inativado, pois não existe outro usuário com o mesmo papel na listagem.</value>
+  </data>
+  <data name="atualizacaoDadosCadastrais" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>atualizacaoDadosCadastrais.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="credenciamento" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>credenciamento.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="USUARIO_INTERNO_JA_INCLUIDO" xml:space="preserve">
+    <value>O analista já foi incluído anteriormente.</value>
+  </data>
+  <data name="PESSOA_INEXISTENTE" xml:space="preserve">
+    <value>Esse CNPJ/CPF não possui acesso ao novo sistema de cadastro. Você será redirecionado para o link de Primeiro Acesso ao SCIEX.</value>
+  </data>
+  <data name="SESSAO_EXPIRADA" xml:space="preserve">
+    <value>Sua sessão expirou. Faça login novamente no sistema.</value>
+  </data>
+  <data name="USUARIO_INTERNO_INEXISTENTE" xml:space="preserve">
+    <value>Seu usuário não possui perfil atribuído ao sistema CADSUF. Comunique o coordenador de sua área.</value>
+  </data>
+  <data name="USUARIO_SENHA_INVALIDOS" xml:space="preserve">
+    <value>Login ou senha inválido.</value>
+  </data>
+  <data name="SEU_USUARIO_NAO_POSSUI_PERFIL_ATRIBUIDO_AO_SISTEMA_CADSUF_COMUNIQUE_O_COORDENADOR_DE_SUA_AREA" xml:space="preserve">
+    <value>Seu usuário não possui perfil atribuído ao sistema CADSUF. Comunique o coordenador de sua área.</value>
+  </data>
+  <data name="TAMANHO_DOCUMENTO_INVALIDO" xml:space="preserve">
+    <value>O Documento para ser anexado deve conter no máximo 20 MB</value>
+  </data>
+  <data name="CPF_JA_INSCRITO" xml:space="preserve">
+    <value>CPF já inscrito.</value>
+  </data>
+  <data name="CNPJ_JA_INSCRITO" xml:space="preserve">
+    <value>CNPJ Já inscrito.</value>
+  </data>
+  <data name="AGUARDAR_FINALIZAR_PROTOCOLO_PJ" xml:space="preserve">
+    <value>Existe um protocolo em andamento vinculado ao seu CNPJ. Favor aguardar a conclusão ou cancelamento do mesmo para dar continuidade a sua solicitação.</value>
+  </data>
+  <data name="LEGADO_ERRO_COMUNICACAO" xml:space="preserve">
+    <value>Falha na comunicação. Tente mais tarde.</value>
+  </data>
+  <data name="INFORMATIVO_PRIMEIRO_ACESSO" xml:space="preserve">
+    <value>&lt;b style="color:#00552b"&gt;CAROS USUÁRIOS&lt;/b&gt;, Para &lt;b style="color:#00552b"&gt;CADA TIPO&lt;/b&gt; de &lt;b style="color:#00552b"&gt;DOCUMENTO COMPROBATÓRIO&lt;/b&gt; exigido na solicitação de Inscrição Cadastral ou Credenciamento deverá ser anexado um &lt;b style="color:#00552b"&gt;ÚNICO&lt;/b&gt; arquivo PDF. O documento comprovante de domicílio na solicitação de &lt;b style="color:#00552b"&gt;INSCRIÇÃO CADASTRAL DE PESSOA JURÍDICA&lt;/b&gt; deverá ser o &lt;b style="color:#00552b"&gt;CONTRATO DE LOCAÇÃO, ESCRITURA PUBLICA, CERTIDÃO DO CARTÓRIO DE IMOVEIS, OU OUTRO QUE COMPROVE A POSSE OU USO DO IMÓVEL&lt;/b&gt;.</value>
+  </data>
+  <data name="paridadeCambial" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>paridadecambial.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="RELACIONAMENTO_EXISTE" xml:space="preserve">
+    <value>Exclusão não realizada. Item está associado a outro registro do sistema.</value>
+  </data>
+  <data name="ESTE_REGISTRO_NAO_PODE_SER_ALTERADO" xml:space="preserve">
+    <value>Operação não realizada. Este registro foi modificado por outro usuário. Realize a consulta novamente.</value>
+  </data>
+  <data name="ESTE_REGISTRO_NAO_PODE_SER_EXCLUIDO" xml:space="preserve">
+    <value>Exclusão não realizada. Este registro já foi removido. </value>
+  </data>
+</root>

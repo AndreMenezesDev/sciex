@@ -1,0 +1,74 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="NumeroLinha" [sorted]="sorted" (onChangeSort)="changeSort($event)">Linha</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="CodigoDestaque" [sorted]="sorted" (onChangeSort)="changeSort($event)">Destaque</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						<app-ordenacao field="CodigoUnidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Unidade de Medida</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						Data de Validação
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						Status de Validação
+					</th>
+					<th class="th-sortable unset-nowrap text-center">
+						QTD de Erros
+					</th>
+
+				</tr>
+			</thead>
+
+			<tbody class="text-sm">
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="unset-nowrap text-center">{{item.numeroLinha}}</td>
+					<td class="unset-nowrap text-center">{{item.tipoInsumo == 'P' ? 'Insumo LP'
+																: item.tipoInsumo == 'E' ? 'Insumo Extra LP'
+																: item.tipoInsumo == 'N' ? 'Insumo Nacional'
+																: item.tipoInsumo == 'R' ? 'Insumo Regional'
+																: '-'}}</td>
+					<td class="unset-nowrap text-center">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap text-center">{{item.codigoDestaque}}</td>
+					<td class="unset-nowrap text-center">{{item.descricaoUnidade}}</td>
+					<td class="unset-nowrap text-center">{{item.dataValidacao}} </td> <!--{{item.dataInicioProcessamento | slice: 11:16}}</td>-->
+					<td class="unset-nowrap text-center">
+						<span *ngIf="item.situacaoInsumo == 2"><a style="cursor: default" class="btn btn-rounded btn-sm btn-icon btn-primary"><i class="fa fa-check"></i></a></span>
+						<span *ngIf="item.situacaoInsumo == 3"><a style="cursor: default" class="btn btn-rounded btn-sm btn-icon btn-danger"><i class="fa fa-times"></i></a></span>
+					</td>
+					<td class="unset-nowrap text-center">
+
+						<span *ngIf="item.situacaoInsumo == 2 ? true : false">{{item.qtdErros}}</span>
+
+						<a *ngIf="item.situacaoInsumo == 3 ? true : false"
+						   routerLink="/consultar-protocolo-envio-le/{{item.idEstruturaPropriaLe}}/{{item.idSolicitacaoLeInsumo}}/visualizar-erros"
+						   (click)="DadosEstruturaPropria(item)"
+						   style="cursor: pointer;"
+						   class="font-bold text-danger">{{item.qtdErros}}</a>
+
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+</app-grid>

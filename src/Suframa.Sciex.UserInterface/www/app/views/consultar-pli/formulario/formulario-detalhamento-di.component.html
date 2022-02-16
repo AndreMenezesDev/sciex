@@ -1,0 +1,221 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+
+	<div class="row">
+
+		<div class="col-lg-12">
+
+			<section class="panel panel-default m-t">
+
+				<header class="panel-heading ">
+
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+
+				</header>
+
+				<article class="panel-body text-sm">
+
+					<div class="row form-group ">
+						<div class="col-lg-12">
+							<div class="alert alert-success" style="background-color: #E6E6FA; border-color: #836FFF; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+								Dados da DI
+							</div>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-4" style="color: #836FFF;">
+							<label class="m-r-xs" >Nº DI:</label><span>{{ model.numeroDI }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Data Registro:</label><span>{{ model.di.dataRegistroFormatada }}</span>
+						</div>
+
+						<div class="col-lg-4 text-nowrap">
+							<label class="m-r-xs">Data Desembaraço:</label><span>{{ model.di.dataDesembaracoFormatada }}</span>			
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Data Processamento:</label><span>{{ model.di.dataProcessamentoFormatada }}</span>
+						</div>						
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-12">
+							<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{model.cnpj}} | {{model.razaoSocial}}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-12">
+							<label class="m-r-xs">Tipo Declaração:</label><span>{{ model.di.tipoDeclaracaoDescricao }}</span>				
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Setor de Armazenamento:</label><span>{{ model.di.setorArmazenamentoDescricao }}</span>
+						</div>
+						<div class="col-lg-4">
+							<label class="m-r-xs">Local Alfândega:</label><span>{{ model.di.descricaoLocalAlfandega }}</span>
+						</div>			
+					</div>
+
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">URF de Entrada:</label><span>{{ model.di.urfEntradaFormatado }}</span>
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">URF de Despacho:</label><span>{{ model.di.urfDespachoFormatado }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Via de Transporte:</label><span>{{ model.di.viaTransporteDescricao }}</span>
+						</div>
+						<div class="col-lg-4">
+							<label class="m-r-xs">Multimodal:</label><span class="">{{ model.di.tipoMultimodalFormatado }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Total na Moeda Negociada:</label><span class="pull-right">{{ model.di.valorTotalMn }}</span>
+						</div>
+					</div>
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Total US$:</label><span class="pull-right">{{ model.di.valorTotalDolar }}</span>
+						</div>
+
+						<div class="col-lg-4 m-r-xs">
+							<b>
+								<a routerLink="/consultar-pli/{{model.idPliMercadoria}}/visualizar-detalhamento-di-adicoes"
+								data-toggle="tooltip"
+								data-original-title="Visualizar Adições">
+								<span style="color: #836FFF;">Visualizar Adições </span>
+								</a> 
+							</b>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="line line-dashed b-b line-lg pull-in"></div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Armazém</label>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<br />
+					</div>
+
+					<div class="col-lg-12 form-group">
+
+						<app-grid [(lista)]="model.di.listaArmazems"
+								[(page)]="page"
+								[(size)]="size"
+								[(total)]="totalArmazems"
+								[isHidePaginacao]="true"
+								[isHideCabecalho]="true"
+								[(parametros)]="parametros"
+								(onChangeSize)="changeSize($event)"
+								(onChangePage)="changePage($event)">
+
+							<div class="table-responsive no-margin-bottom no-border">
+								<table class="table table-striped">
+									<thead class="table-header-color">
+										<tr>
+											<th class="th-sortable th-170 unset-nowrap">Descrição</th>
+										</tr>
+									</thead>
+
+									<tbody> 
+										<tr *ngFor="let item of model.di.listaArmazems">
+											<td class="text-left">{{item.descricao}}</td>																	
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</app-grid>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="line line-dashed b-b line-lg pull-in"></div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Embalagem</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<br />
+					</div>
+
+					<div class="col-lg-12 form-group">
+						<app-grid [(lista)]="model.di.listaEmbalagems"
+								[(page)]="page"
+								[(size)]="size"
+								[(total)]="totalEmbalagems"
+								[isHidePaginacao]="true"
+								[isHideCabecalho]="true"
+								[(parametros)]="parametros"
+								(onChangeSize)="changeSize($event)"
+								(onChangePage)="changePage($event)">
+
+							<div class="table-responsive no-margin-bottom no-border">
+								<table class="table table-striped">
+									<thead class="table-header-color">
+										<tr>
+											<th class="th-sortable th-50 text-left">Embalagem</th>
+											<th class="th-sortable th-50 text-left">Descrição</th>
+											<th class="th-sortable th-100 text-left">Quantidade do Volume</th>
+										</tr>
+									</thead>
+
+									<tbody> 
+										<tr *ngFor="let item of model.di.listaEmbalagems">
+											<td class="text-left">{{item.codigoTipoEmbalagem}}</td>
+											<td class="text-left">{{item.descricao}}</td>
+											<td class="text-left">{{item.quantidadeVolumeCarga}}</td>																	
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</app-grid>
+					</div>
+
+				</article>
+				<footer class="panel-footer clearfix panel-footer-sciex">
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

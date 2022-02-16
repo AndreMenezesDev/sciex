@@ -1,0 +1,8 @@
+<span style="font-size: 13px;">Resultados por página:</span>
+<select (change)="changeSize($event.target)" class="form-control input-sm input-s-xs inline v-middle text-center">
+    <option
+			*ngFor="let item of [10,25,50,100]"
+			value="{{item}}"
+			selected="{{ item == size ? 'selected' : '' }}">{{item}}</option>
+	
+</select>

@@ -1,0 +1,699 @@
+	<!-- INICIO CONTEUDO RELATORIO APROVADO PDF -->
+	<article id="certificadoPDF1" class="panel-body" [hidden]="!(ocultarPdf === 1)">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						 style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5 style="font-weight: bold">SUPERINTENDÊNCIA DA ZONA FRANCA DE MANAUS</h5>
+			<h5 style="font-weight: bold">SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px;border-top: 1px solid black;margin-right: 40px"></div>
+				<label class="control-label">CERTIFICADO DE REGISTRO DE PLANO DE EXPORTAÇÃO - CRPE</label>
+			<div style="margin-left: 40px;border-bottom: 1px solid black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">EMPRESA EXPORTADORA</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 60px">
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Razão Social: <span style="font-weight: normal;">{{model.razaoSocial}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label">
+							Inscrição Suframa: <span style="font-weight: normal;">{{model.inscricaoCadastral}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CNPJ: <span style="font-weight: normal;">{{model.cnpj}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Endereço: <span style="font-weight: normal;">{{model.endereco}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CEP: <span style="font-weight: normal;">{{model.cep}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">DADOS DO PLANO - APROVAÇÃO</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+			<table>
+				<thead>
+					<tr>
+						<th class="col-sm-2" style="text-align: center;">PLANO</th>
+						<th class="col-sm-2" style="text-align: center;">Nº PROCESSO</th>
+						<th class="col-sm-2" style="text-align: center;">MODALIDADE</th>
+						<th class="col-sm-2" style="text-align: center;">DATA DE DEFERIMENTO</th>
+						<th class="col-sm-2" style="text-align: center;">DATA VALIDADE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">{{model.numeroPlano}}</td>
+						<td class="text-center">{{model.numeroProcesso}}</td>
+						<td class="text-center">{{model.modalidade}}</td>
+						<td class="text-center">{{model.dataDeferimento}}</td>
+						<!-- <td class="text-center">{{model.dataDeferimento | date: 'dd/MM/yyyy'}}</td> -->
+						<td class="text-center">{{model.dataValidade}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">VALORES APROVADOS</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+			<table>
+				<thead>
+					<tr>
+						<th class="col-sm-2" colspan="1" rowspan="2" style="text-align: center;">NACIONAL (R$)</th>
+						<th class="col-sm-2" colspan="2" style="text-align: center;">IMPORTAÇÃO (US$)</th>
+						<th class="col-sm-2" colspan="1" rowspan="2" style="text-align: center;">EXPORTAÇÃO (US$ - FOB)</th>
+					</tr>
+					<tr>
+						<!-- <td rowspan="1" class="text-center" style="font-weight: bold;">NACIONAL</td> -->
+						<td rowspan="2" class="text-center" style="font-weight: bold;">FOB</td>
+						<td rowspan="2" class="text-center" style="font-weight: bold;">CFR</td>
+						<!-- <td rowspan="1" class="text-center" style="font-weight: bold;">EXPORTAÇÃO</td> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">{{model.valorNacional}}</td>
+						<td class="text-center">{{model.valorImportacaoFOB}}</td>
+						<td class="text-center">{{model.valorImportacaoCFR}}</td>
+						<td class="text-center">{{model.valorExportacao}}</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="margin-top:20px;margin-left: 40px;border-style:solid;margin-right: 40px">
+				<label class="control-label" style="margin-left: 20px">
+					Código Identificador CRPE: {{model.codigoIdentificadorCRPE}}
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+				<label class="control-label" style="margin-left: 40px;margin-top:20px">
+					OBSERVAÇÕES
+				</label>
+				<div style="margin-left: 40px;border-top:solid 2px black;margin-left: 40px;margin-right: 40px"></div>
+					<p style="margin-top:20px;margin-left: 40px;margin-right: 40px;font-size: 14px; text-align: center; font-family: Calibri"> - O percentual de perda aprovado para este plano, deverá ficar à disposição da Receita Federal para fiscalização futura</p>
+				<div style="margin-top:20px;margin-left: 40px;border-bottom:solid 2px black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri;font-size: 16px;text-align: center">
+				Certificamos que de acordo com os termos da legislação em vigor a empresa industrial exportadora acima
+				identificada teve o Plano de Exportação <b style="color:blue">DEFERIDO</b> na Suframa para fins de usufruto dos beneficios fiscais previstos
+				na legislação.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri; font-size: 16px;text-align: center">
+				A aceitação do presente certificado está condicionada a verificação de sua autencidade na INTERNET no
+				endereço <b style="color:blue">http://www.suframa.gov.br</b> ou diretamente na Coordenação de Controle de Importação e Exportação - COIME.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top:30px;margin-left: 40px;color: blue;">Emitido em: {{dataEmissao}}</label>
+		</div>
+
+		<!-- <div class="form-group m-n text-right">
+			<label style="margin-top: 100px;margin-right: 40px;color: black;font-size: 16px; font-family: Calibri">Página 1 de 1</label>
+		</div> -->
+
+	</article>
+	<!-- FIM CONTEUDO RELATORIO APROVADO PDF -->
+
+	<!-- INICIO CONTEUDO RELATORIO ALTERADO PDF -->
+	<article id="certificadoPDF2" class="panel-body" [hidden]="!(ocultarPdf === 2)">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						 style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5 style="font-weight: bold">SUPERINTENDÊNCIA DA ZONA FRANCA DE MANAUS</h5>
+			<h5 style="font-weight: bold">SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px;border-top: 1px solid black;margin-right: 40px"></div>
+				<label class="control-label">CERTIFICADO DE REGISTRO DE PLANO DE EXPORTAÇÃO - CRPE</label>
+			<div style="margin-left: 40px;border-bottom: 1px solid black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">EMPRESA EXPORTADORA</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 60px">
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Razão Social: <span style="font-weight: normal;">{{model.razaoSocial}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label">
+							Inscrição Suframa: <span style="font-weight: normal;">{{model.inscricaoCadastral}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CNPJ: <span style="font-weight: normal;">{{model.cnpj}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Endereço: <span style="font-weight: normal;">{{model.endereco}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CEP: <span style="font-weight: normal;">{{model.cep}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">DADOS DO PLANO EXPORTAÇÃO - ALTERAÇÃO</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+			<table>
+				<thead>
+					<tr>
+						<th class="col-sm-2" style="text-align: center;">Nº PLANO</th>
+						<th class="col-sm-2" style="text-align: center;">Nº PROCESSO</th>
+						<th class="col-sm-2" style="text-align: center;">MODALIDADE</th>
+						<th class="col-sm-2" style="text-align: center;">data de DEFERIMENTO</th>
+						<th class="col-sm-2" style="text-align: center;">data de VALIDADE</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">{{model.numeroPlano}}</td>
+						<td class="text-center">{{model.numeroProcesso}}</td>
+						<td class="text-center">{{model.modalidade}}</td>
+						<td class="text-center">{{model.dataDeferimento}}</td>
+						<!-- <td class="text-center">{{model.dataDeferimento | date: 'dd/MM/yyyy'}}</td> -->
+						<td class="text-center">{{model.dataValidade}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">VALORES ALTERADOS</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+			<table>
+				<thead>
+					<tr>
+						<th class="col-sm-2" style="text-align: center;">ESPECIFICAÇÃO (US$)</th>
+						<th class="col-sm-2" style="text-align: center;">VALOR (US$)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">Insumos Importados (aprovados)</td>
+						<td class="text-center">{{model.insumosImportadosAprovados}}</td>
+					</tr>
+					<tr *ngFor="let item of model.listaAcrescimoSolicitacao">
+						<td class="text-center">Acréscimos - Solicitações {{item.numeroAnoSolicitacaoFormatado}}</td>
+						<td class="text-center">{{item.acrescimoSolicitacaoFormatado}}</td>
+					</tr>
+					<tr>
+						<td class="text-center">Total de Insumos a serem Importados</td>
+						<td class="text-center">{{model.totalInsumosImportados}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group m-n text-left">
+				<label class="control-label" style="margin-left: 40px;margin-top:20px">
+					OBSERVAÇÕES
+				</label>
+				<div style="margin-left: 40px;border-top:solid 2px black;margin-left: 40px;margin-right: 40px"></div>
+					<p style="margin-top:20px;margin-left: 40px;margin-right: 40px;font-size: 14px; text-align: center; font-family: Calibri"> - O percentual de perda aprovado para este plano, deverá ficar à disposição da Receita Federal para fiscalização futura</p>
+				<div style="margin-top:20px;margin-left: 40px;border-bottom:solid 2px black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri;font-size: 16px;text-align: center">
+				Certificamos que o Plano de Exportação especificado neste documento foi <b style="color:blue">ALTERADO</b>
+				a pedido da empresa acima identificada.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri; font-size: 16px;text-align: center">
+				A aceitação do presente certificado está condicionada a verificação de sua autencidade na INTERNET no
+				endereço <b style="color:blue">http://www.suframa.gov.br</b> ou diretamente na Coordenação de Controle de Importação e Exportação - COIME.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top:30px;margin-left: 40px;color: blue;">Emitido em: {{dataEmissao}}</label>
+		</div>
+
+		<!-- <div class="form-group m-n text-right">
+			<label style="margin-top: 100px;margin-right: 40px;color: black;font-size: 16px; font-family: Calibri">Página 1 de 1</label>
+		</div> -->
+
+	</article>
+	<!-- FIM CONTEUDO RELATORIO ALTERADO PDF -->
+
+	<!-- INICIO CONTEUDO RELATORIO CANCELAMENTO PDF -->
+	<article id="certificadoPDF3" class="panel-body" [hidden]="!(ocultarPdf === 3)">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						 style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5 style="font-weight: bold">SUPERINTENDÊNCIA DA ZONA FRANCA DE MANAUS</h5>
+			<h5 style="font-weight: bold">SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px;border-top: 1px solid black;margin-right: 40px"></div>
+				<label class="control-label">CERTIFICADO DE REGISTRO DE PLANO DE EXPORTAÇÃO - CRPE</label>
+			<div style="margin-left: 40px;border-bottom: 1px solid black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">EMPRESA EXPORTADORA</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 60px">
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Razão Social: <span style="font-weight: normal;">{{model.razaoSocial}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label">
+							Inscrição Suframa: <span style="font-weight: normal;">{{model.inscricaoCadastral}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CNPJ: <span style="font-weight: normal;">{{model.cnpj}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Endereço: <span style="font-weight: normal;">{{model.endereco}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CEP: <span style="font-weight: normal;">{{model.cep}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">DADOS DO PLANO EXPORTAÇÃO - CANCELAMENTO</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+			<table>
+				<thead>
+					<tr>
+						<th class="col-sm-2" style="text-align: center;">Nº PLANO</th>
+						<th class="col-sm-2" style="text-align: center;">Nº PROCESSO</th>
+						<th class="col-sm-2" style="text-align: center;">MODALIDADE</th>
+						<th class="col-sm-2" style="text-align: center;">Data de DEFERIMENTO</th>
+						<th class="col-sm-2" style="text-align: center;">Data de VALIDADE</th>
+						<th class="col-sm-2" style="text-align: center;">Data de CANCELAMENTO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">{{model.numeroPlano}}</td>
+						<td class="text-center">{{model.numeroProcesso}}</td>
+						<td class="text-center">{{model.modalidade}}</td>
+						<td class="text-center">{{model.dataDeferimento}}</td>
+						<!-- <td class="text-center">{{model.dataDeferimento | date: 'dd/MM/yyyy'}}</td> -->
+						<td class="text-center">{{model.dataValidade}}</td>
+						<td class="text-center">{{model.dataCancelamento}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="margin-top:20px;margin-left: 40px;border-style:solid;margin-right: 40px">
+				<label class="control-label" style="margin-left: 20px">
+					Código Identificador CRPE: {{model.codigoIdentificadorCRPE}}
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri;font-size: 16px;text-align: center">
+				Certificamos que o Plano de Exportação - PE especificado neste documento foi <b style="color:blue">CANCELADO</b> em {{model.dataCancelamento}}, a pedido
+				da empresa acima identificada.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri; font-size: 16px;text-align: center">
+				A aceitação do presente certificado está condicionada a verificação de sua autencidade na INTERNET no
+				endereço: <b style="color:blue">http://www.suframa.gov.br</b> ou diretamente na Coordenação de Controle de Importação e Exportação - COIME.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top:30px;margin-left: 40px;color: blue;">Emitido em: {{dataEmissao}}</label>
+		</div>
+
+		<!-- <div class="form-group m-n text-right">
+			<label style="margin-top: 100px;margin-right: 40px;color: black;font-size: 16px; font-family: Calibri">Página 1 de 1</label>
+		</div> -->
+
+	</article>
+	<!-- FIM CONTEUDO RELATORIO CANCELAMENTO PDF -->
+
+	<!-- INICIO CONTEUDO RELATORIO PRORROGAÇÃO PDF -->
+	<article id="certificadoPDF4" class="panel-body" [hidden]="!(ocultarPdf === 4)">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group m-n text-center">
+						<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+							 style="width: 9%;" />
+					</div>
+				</div>
+			</div>
+	
+			<div class="form-group m-n text-center">
+				<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+				<h5 style="font-weight: bold">SUPERINTENDÊNCIA DA ZONA FRANCA DE MANAUS</h5>
+				<h5 style="font-weight: bold">SUFRAMA</h5>
+			</div>
+	
+			<div class="form-group m-n text-center">
+				<div style="margin-left: 40px;border-top: 1px solid black;margin-right: 40px"></div>
+					<label class="control-label">CERTIFICADO DE REGISTRO DE PLANO DE EXPORTAÇÃO - CRPE</label>
+				<div style="margin-left: 40px;border-bottom: 1px solid black;margin-right: 40px"></div>
+			</div>
+	
+			<div class="form-group m-n text-center">
+				<label style="margin-top: 25px;" class="control-label">EMPRESA EXPORTADORA</label>
+				<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+			</div>
+			<div class="form-group m-n text-left">
+				<div style="margin-left: 60px">
+					<div class="row">
+						<div class="col-lg-8">
+							<label class="control-label">
+								Razão Social: <span style="font-weight: normal;">{{model.razaoSocial}}</span>
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label class="control-label">
+								Inscrição Suframa: <span style="font-weight: normal;">{{model.inscricaoCadastral}}</span>
+							</label>
+						</div>
+						<div class="col-lg-4">
+							<label class="control-label">
+								CNPJ: <span style="font-weight: normal;">{{model.cnpj}}</span>
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-8">
+							<label class="control-label">
+								Endereço: <span style="font-weight: normal;">{{model.endereco}}</span>
+							</label>
+						</div>
+						<div class="col-lg-4">
+							<label class="control-label">
+								CEP: <span style="font-weight: normal;">{{model.cep}}</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+			<div class="form-group m-n text-center">
+				<label style="margin-top: 25px;" class="control-label">DADOS DO PLANO EXPORTAÇÃO - PRORROGAÇÃO</label>
+				<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+			</div>
+			<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+				<table>
+					<thead>
+						<tr>
+							<th class="col-sm-2" style="text-align: center;">Nº PLANO</th>
+							<th class="col-sm-2" style="text-align: center;">Nº PROCESSO</th>
+							<th class="col-sm-2" style="text-align: center;">MODALIDADE</th>
+							<th class="col-sm-2" style="text-align: center;">Data de DEFERIMENTO</th>
+							<th class="col-sm-2" style="text-align: center;">Data de VALIDADE</th>
+							<th class="col-sm-2" style="text-align: center;">Data da PRORROGAÇÃO</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-center">{{model.numeroPlano}}</td>
+							<td class="text-center">{{model.numeroProcesso}}</td>
+							<td class="text-center">{{model.modalidade}}</td>
+							<td class="text-center">{{model.dataDeferimento}}</td>
+							<!-- <td class="text-center">{{model.dataDeferimento | date: 'dd/MM/yyyy'}}</td> -->
+							<td class="text-center">{{model.dataValidade}}</td>
+							<td class="text-center">{{model.dataProrrogacao}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	
+			<div class="form-group m-n text-left">
+				<div style="margin-top:20px;margin-left: 40px;border-style:solid;margin-right: 40px">
+					<label class="control-label" style="margin-left: 20px">
+						Código Identificador CRPE: {{model.codigoIdentificadorCRPE}}
+					</label>
+				</div>
+			</div>
+	
+			<div class="form-group m-n text-left">
+				<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri;font-size: 16px;text-align: center">
+					Certificamos que o Plano de Exportação - PE especificado neste documento foi <b style="color:blue">PRORROGADO</b> em {{model.dataProrrogacao}}, a pedido
+					da empresa acima identificada.
+				</p>
+			</div>
+	
+			<div class="form-group m-n text-left">
+				<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri; font-size: 16px;text-align: center">
+					A aceitação do presente certificado está condicionada a verificação de sua autencidade na INTERNET no
+					endereço: <b style="color:blue">http://www.suframa.gov.br</b> ou diretamente na Coordenação de Controle de Importação e Exportação - COIME.
+				</p>
+			</div>
+	
+			<div class="form-group m-n text-left">
+				<label style="margin-top:30px;margin-left: 40px;color: blue;">Emitido em: {{dataEmissao}}</label>
+			</div>
+	
+			<!-- <div class="form-group m-n text-right">
+				<label style="margin-top: 100px;margin-right: 40px;color: black;font-size: 16px; font-family: Calibri">Página 1 de 1</label>
+			</div> -->
+	
+	</article>
+	<!-- FIM CONTEUDO RELATORIO PRORROGAÇÃO PDF -->
+
+	<!-- INICIO CONTEUDO RELATORIO PRORROGAÇÃO EM CARÁTER ESPECIAL PDF -->
+	<article id="certificadoPDF5" class="panel-body" [hidden]="!(ocultarPdf === 5)">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						 style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5 style="font-weight: bold">SUPERINTENDÊNCIA DA ZONA FRANCA DE MANAUS</h5>
+			<h5 style="font-weight: bold">SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px;border-top: 1px solid black;margin-right: 40px"></div>
+				<label class="control-label">CERTIFICADO DE REGISTRO DE PLANO DE EXPORTAÇÃO - CRPE</label>
+			<div style="margin-left: 40px;border-bottom: 1px solid black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">EMPRESA EXPORTADORA</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 60px">
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Razão Social: <span style="font-weight: normal;">{{model.razaoSocial}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4">
+						<label class="control-label">
+							Inscrição Suframa: <span style="font-weight: normal;">{{model.inscricaoCadastral}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CNPJ: <span style="font-weight: normal;">{{model.cnpj}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="control-label">
+							Endereço: <span style="font-weight: normal;">{{model.endereco}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CEP: <span style="font-weight: normal;">{{model.cep}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<label style="margin-top: 25px;" class="control-label">DADOS DO PLANO EXPORTAÇÃO - PRORROGAÇÃO EM CARÁTER ESPECIAL</label>
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+		</div>
+		<div class="row" style="margin-top: 15px;margin-left: 40px;margin-right: 40px;">
+			<table>
+				<thead>
+					<tr>
+						<th class="col-sm-2" style="text-align: center;">Nº PLANO</th>
+						<th class="col-sm-2" style="text-align: center;">Nº PROCESSO</th>
+						<th class="col-sm-2" style="text-align: center;">MODALIDADE</th>
+						<th class="col-sm-2" style="text-align: center;">Data de DEFERIMENTO</th>
+						<th class="col-sm-2" style="text-align: center;">Data de VALIDADE</th>
+						<th class="col-sm-2" style="text-align: center;">Data da PRORROGAÇÃO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="text-center">{{model.numeroPlano}}</td>
+						<td class="text-center">{{model.numeroProcesso}}</td>
+						<td class="text-center">{{model.modalidade}}</td>
+						<td class="text-center">{{model.dataDeferimento}}</td>
+						<!-- <td class="text-center">{{model.dataDeferimento | date: 'dd/MM/yyyy'}}</td> -->
+						<td class="text-center">{{model.dataValidade}}</td>
+						<td class="text-center">{{model.dataProrrogacaoEspecial}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="margin-top:20px;margin-left: 40px;border-style:solid;margin-right: 40px">
+				<label class="control-label" style="margin-left: 20px">
+					Código Identificador CRPE: {{model.codigoIdentificadorCRPE}}
+				</label>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri;font-size: 16px;text-align: center">
+				Certificamos que o Plano de Exportação - PE especificado neste documento foi <b style="color:blue">PRORROGADO EM CARÁTER ESPECIAL</b> em {{model.dataProrrogacaoEspecial}}, a pedido
+				da empresa acima identificada.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<p style="margin-top:30px;margin-left: 40px;margin-right: 40px;font-weight: bold; font-family: Calibri; font-size: 16px;text-align: center">
+				A aceitação do presente certificado está condicionada a verificação de sua autencidade na INTERNET no
+				endereço: <b style="color:blue">http://www.suframa.gov.br</b> ou diretamente na Coordenação de Controle de Importação e Exportação - COIME.
+			</p>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top:30px;margin-left: 40px;color: blue;">Emitido em: {{dataEmissao}}</label>
+		</div>
+
+		<!-- <div class="form-group m-n text-right">
+			<label style="margin-top: 100px;margin-right: 40px;color: black;font-size: 16px; font-family: Calibri">Página 1 de 1</label>
+		</div> -->
+
+    </article>
+    <!-- FIM CONTEUDO RELATORIO PRORROGAÇÃO EM CARÁTER ESPECIAL PDF -->
+
+	
+

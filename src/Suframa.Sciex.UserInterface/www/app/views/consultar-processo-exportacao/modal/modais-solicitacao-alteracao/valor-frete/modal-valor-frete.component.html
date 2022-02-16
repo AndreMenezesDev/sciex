@@ -1,0 +1,313 @@
+<div #appModalValorFrete
+    id="1" 
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none;">
+
+        <div 
+            class="modal-dialog" 
+            style="width:1500px;margin-top: 10px;" 
+            style=" max-width: 60%; width: auto !important; margin-top: 10px; ">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                    <h4 class="modal-title" style="color: White;" id="modalParecer">Alteração do Insumo</h4>
+                </div>
+
+                <div class="modal-body" *ngIf="exibirModal">
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Insumo:</label>
+                            <span> {{dadosInsumo.codigoInsumo}}|{{dadosInsumo.descricaoInsumo}} </span>
+                        </div>
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs"> Detalhe: </label>
+                            <span>{{dadosInsumo.codigoDetalhe}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-8">
+                            <label class="m-r-xs"></label>  
+                            <span class="pull-right"></span>
+                        </div>								   
+                    </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Valor do Frete</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group">
+                                <div class="row col-lg-12">
+                                    <div class="col-lg-3">
+                                        <label>DE:</label>
+                                        <div class="ds-flex">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                disabled 
+                                                formatar-numero-decimal7 
+                                                [prefix]="' '"
+                                                value="{{ parametros.prcDetalheInsumoDE.valorFrete ? 
+                                                            (parametros.prcDetalheInsumoDE.valorFrete | number : '1.7-7')
+                                                                : '0,0000000'  }}"
+                                            /> 
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <label>PARA:</label>
+                                        <div class="ds-flex">
+                                            <input 
+                                                type="text" 
+                                                class="form-control" 
+                                                [(ngModel)]="valorPara" 
+                                                formatar-numero-decimal7 
+                                                [prefix]="' '"
+                                                (blur)="calcular()"
+                                            />                                          
+                                        </div>
+                                    </div>   
+                                    
+                                    <div class="col-lg-2" style="margin-top: 6px;">
+                                        <label></label>
+                                        <div class="ds-flex">
+                                            <a (click)="calcular()" class="btn btn-sm btn-primary m-l">                                             
+                                                <span class="fa fa-money"></span> Calcular 
+                                            </a>
+                                        </div>                                       
+                                    </div> 
+
+                                </div>
+                            </div>                         
+                        </div>  
+                    </div>
+
+                    <div class="row col-lg-12">
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="row col-lg-6">
+                            <fieldset style="border: 1px solid #000; padding: 10px;">
+                                <legend style="width: auto;border: 0;margin-bottom: 0px;">Valores Atuais</legend>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Paridade: </label>
+                                        <span class="pull-right">
+                                            {{ (parametros.valorFreteAlteracaoDe.paridade) ? 
+                                                 (parametros.valorFreteAlteracaoDe.paridade | number : '1.7-7')
+                                                         : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Qtde: </label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.quantidadeSaldo  ? 
+                                                 (parametros.prcInsumoDE.quantidadeSaldo | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Unitário CFR(US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.valorFreteAlteracaoDe.valorUnitarioCFR ? 
+                                                 (parametros.valorFreteAlteracaoDe.valorUnitarioCFR | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Valor(US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.valorDolarSaldo ? 
+                                                 (parametros.prcInsumoDE.valorDolarSaldo | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">                                        
+                                        <label class="m-r-xs">Comprovado (US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.prcInsumoDE.valorDolarComp ? 
+                                                 (parametros.prcInsumoDE.valorDolarComp | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                </div>
+                                <hr/>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total FOB(US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.valorFreteAlteracaoDe.valorTotalFOB ? 
+                                                (parametros.valorFreteAlteracaoDe.valorTotalFOB | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total CFR(US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.valorFreteAlteracaoDe.valorTotalCFR ? 
+                                                (parametros.valorFreteAlteracaoDe.valorTotalCFR | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Aprovado(US$):</label>
+                                        <span class="pull-right">
+                                            {{ parametros.valorFreteAlteracaoDe.valorAprovado ? 
+                                                (parametros.valorFreteAlteracaoDe.valorAprovado | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <fieldset style="border: 1px solid #000; padding: 10px;">
+                                <legend style="width: auto;border: 0;margin-bottom: 0px;">Valores Previstos</legend>
+                            
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Paridade: </label>
+                                        <span class="pull-right">
+                                            {{ (dadosPrevistos.paridade) ? 
+                                                 (dadosPrevistos.paridade | number : '1.7-7')
+                                                         : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Qtde: </label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.quantidadeSaldo  ? 
+                                                (dadosPrevistos.quantidadeSaldo | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Unitário CFR(US$):</label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.valorUnitarioCFR ? 
+                                                 (dadosPrevistos.valorUnitarioCFR | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Final(US$):</label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.saldoFinalUS ? 
+                                                 (dadosPrevistos.saldoFinalUS | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">                                        
+                                        <label class="m-r-xs">Acréscimo (US$):</label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.acrescimo ? 
+                                                 (dadosPrevistos.acrescimo | number : '1.7-7')
+                                                     : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <hr/>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total FOB(US$):</label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.valorTotalFOB ? 
+                                                (dadosPrevistos.valorTotalFOB | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total CFR(US$):</label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.valorTotalCFR ? 
+                                                (dadosPrevistos.valorTotalCFR | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Aprovado(US$):</label>
+                                        <span class="pull-right">
+                                            {{ dadosPrevistos.valorAprovado ? 
+                                                (dadosPrevistos.valorAprovado | number : '1.7-7')
+                                                    : '0,0000000'  }}
+                                        </span>
+                                    </div>								   
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row wrapper">
+                        <div class="col-lg-12"> -->
+                            <small>
+                                <b style="color: #FF0000">As informações apresentadas no quadro "Valores Previstos" são específicas da solicitação de alteração selecionada.</b>
+                            </small> 					
+                        <!-- </div>
+                        <div class="col-lg-12"> -->
+                            <br>
+                            <small>
+                                <b style="color: #FF0000">Para visualizar os "Valores Previstos" do insumo, de forma ampla, favor consultar o cálculo no Quadro III.</b>
+                            </small>						
+                        <!-- </div>
+                    </div> -->
+
+                </div>
+            
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-default" 
+                        (click)="confirmarCancelamento()">
+                            <span class="fa fa-times"></span> Cancelar 
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-primary" 
+                        (click)="confirmarSalvar()">
+                            <span class="fa fa-save"></span> Salvar 
+                    </button>
+                </div>
+
+		    </div>
+
+        </div>
+
+</div>
+
+<div #appModalValorFreteBackground class="modal-backdrop fade in" style="display: none;"></div>

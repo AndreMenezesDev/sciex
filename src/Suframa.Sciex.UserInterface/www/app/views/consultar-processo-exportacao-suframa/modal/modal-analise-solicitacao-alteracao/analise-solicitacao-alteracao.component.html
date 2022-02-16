@@ -1,0 +1,274 @@
+<div #appModalAnaliseSolicitacao
+    id="1" 
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none; overflow-y: auto;">
+
+        <div 
+            class="modal-dialog" 
+            style="width:1500px;margin-top: 10px;" 
+            style=" max-width: 60%; width: auto !important; margin-top: 10px; overflow-y: auto;">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                    <h4 class="modal-title" style="color: White;" id="modalParecer">Análise da solicitação por detalhe do insumo</h4>
+                </div>
+
+                <div class="modal-body" style="overflow-y: auto;">
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Insumo:</label>
+                            <span>{{descInsumo}}</span>
+                        </div>
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Detalhe:</label>
+                            <span>{{numeroSequencial}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-8">
+                            <label class="m-r-xs"></label>  
+                            <span class="pull-right"></span>
+                        </div>								   
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                
+                            <table class="table table-striped">
+                                <thead class="table-header-color">
+                                    <tr>
+                                        <!-- <th class="th-100 text-left">Ações</th> -->
+                                        <th class="th-sortable unset-nowrap text-left">
+                                            Ações
+                                        </th>	
+                                        <th class="th-sortable unset-nowrap text-left">
+                                            Status da Análise
+                                        </th>					
+                                        <th class="th-sortable unset-nowrap text-left">
+                                            Tipo de Alteração
+                                        </th>
+                                        <th class="th-sortable unset-nowrap text-left">
+                                            De
+                                        </th>						
+                                        <th class="th-sortable unset-nowrap text-left">
+                                            PARA
+                                        </th>							
+                                        <th class="th-sortable unset-nowrap text-left">
+                                            Justificativa
+                                        </th>	
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="listaDetalhe.length>0">				
+                                    <tr *ngFor="let item of listaDetalhe">
+                                        <td  class="text-center" >
+                                            <a *ngIf="(item.status == 1|| item.status == 3) && !item.isTransferenciaOuInsumoNovo" class="btn btn-primary btn-sm" (click)="aprovarSolicitacao(item)"><i class="fa fa-check" data-toggle="tooltip" title="" data-original-title="Aprovar"></i> </a>                                            
+                                            <a *ngIf="(item.status == 1|| item.status == 2)&& !item.isTransferenciaOuInsumoNovo" class="btn btn-danger btn-sm" (click)="abrirModalJustificativa(item)"><i class="fa fa-times"></i></a>
+                                        </td>                 
+                                        <td class="text-left">{{item.descricaoStatus}}</td>
+                                        <td class="text-left">{{item.descricaoTipoAlteracao}}</td>
+                                        <td class="text-left">{{item.descricaoDe}}</td>
+                                        <td class="text-left">{{item.descricaoPara}}</td>
+                                        <td class="text-left">{{item.justificativa}}</td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <article class="panel-body">							  
+                        <div class="panel-group m-b" id="accordion2">							  
+                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne"> 
+                             <h4 class="panel-heading">Valores Previstos</h4> 
+                          </a>
+                          <div id="collapseOne" class="panel-collapse collapse">
+                            <article class="panel-body text-sm">
+                            
+                            <div class="panel-body">
+                      
+                        <div class="row col-lg-6">
+                         <fieldset class="row form-group ml-mr-none h160">
+                            <legend>Valores DE</legend>
+                
+                            <div class="row form-group">
+                            <div class="col-lg-8">
+                             <label class="m-r-xs">Paridade:</label><span class="pull-right">{{paridade}}</span>
+                           </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Vlr.Unit.FOB(US$):</label><span class="pull-right">{{somatoriaValorUnitarioDeFOB}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Saldo Qtde:</label><span class="pull-right">{{quantidadeSaldoDe}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Saldo Valor(US$):</label><span class="pull-right">{{saldoValorDe}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Comprovado(US$):</label><span class="pull-right">{{valorComprovadoDe}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs"></label><span class="pull-right"></span>
+                             </div>								   
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Total FOB(US$):</label><span class="pull-right">{{valorTotalFOBDe}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Total CFR(US$):</label><span class="pull-right">{{valorTotalCFR}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Aprovado(US$):</label><span class="pull-right">{{valorAprovadoDe}}</span>
+                             </div>								   
+                            </div>
+                          </fieldset>
+                        </div>
+                        <div class="col-lg-6">
+                           <fieldset class="row form-group ml-mr-none h160">
+                            <legend>Valores PARA</legend>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Paridade:</label><span class="pull-right">{{paridade}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Vlr.Unit.FOB(US$):</label><span class="pull-right">{{somatoriaValorUnitarioDeFOBPara}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Saldo Qtde Final:</label><span class="pull-right">{{quantidadeSaldoPara}}</span>
+                             </div>								   
+                            </div>
+                            
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Saldo Final(US$):</label><span class="pull-right">{{saldoValorPara}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs"></label><span class="pull-right"></span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Acréscimo(US$):</label><span class="pull-right">{{valorAcrescimoPara}}</span>
+                             </div>								   
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Total FOB(US$):</label><span class="pull-right">{{valorTotalFOBPara}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Total CFR(US$):</label><span class="pull-right">{{valorTotalCFRPara}}</span>
+                             </div>								   
+                            </div>
+                            <div class="row form-group">
+                             <div class="col-lg-8">
+                              <label class="m-r-xs">Valor Aprovado(US$):</label><span class="pull-right">{{valorAprovadoPara}}</span>
+                             </div>								   
+                            </div>
+                          </fieldset>
+                        </div>
+                      </div>
+                                                        
+                            </article>
+                          </div>
+                        </div>		
+                    </article>
+                    <!--<div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Alterações Solicitadas para o Detalhe</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group" >
+                                <div class="row col-lg-12" style="margin-left: 15px;">
+                                    <div *ngIf="listaDetalhesSolicAlteracao == null">
+                                        <span class="fa fa-exclamation-triangle fa-1x text-danger" data-toggle="tooltip" title="Atenção"></span>
+                                            <b style="color: red;">Nenhuma Alteração Solicitada.</b>
+                                        <span class="fa fa-exclamation-triangle fa-1x text-danger" data-toggle="tooltip" title="Atenção"></span>    
+                                    </div>
+
+                                    <div>
+                                        <div *ngIf="listaDetalhesSolicAlteracao" class="row col-lg-12">
+                                            <div *ngFor="let item of listaDetalhesSolicAlteracao">
+                                                <div class="row form-group">
+                                                        <div class="col-lg-4">
+                                                            <label class="m-r-xs">Tipo de Alteração:</label><span>{{ item.descricaoTipoAlteracao ? item.descricaoTipoAlteracao : '--' }}</span>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="m-r-xs">De:</label><span>{{ item.descricaoDe ? item.descricaoDe : '--' }}</span>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="m-r-xs">Para:</label><span>{{ item.descricaoPara ? item.descricaoPara : '--'}}</span>
+                                                        </div>
+                                                                                                   
+                                                </div>
+                                            </div>
+                                            
+                                            <tr *ngFor="let item of listaDetalhesSolicAlteracao">
+                                                <td><b>Tipo de Alteração:</b> {{ item.descricaoTipoAlteracao ? item.descricaoTipoAlteracao : '--' }}</td>
+                                                <td style="margin-left: 20px;"><b>De:</b> {{ item.descricaoDe ? item.descricaoDe : '--' }}</td> 
+                                                <td style="margin-left: 20px;"><b>Para:</b> {{ item.descricaoPara ? item.descricaoPara : '--'}}</td>
+                                            </tr> 
+                                            
+                                        </div>
+                                    </div>    
+
+                                </div>
+                                   
+
+                                  
+                            </div>
+                        </div>  
+                    </div>-->
+
+
+                    <div class="row col-lg-12">
+                    </div>         
+            
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-default" 
+                        (click)="fechar()">
+                            <span class="fa fa-long-arrow-left m-r-xs"></span> Voltar
+                    </button>
+                </div>
+
+		    </div>   
+            </div>
+        
+        </div>
+
+</div>
+
+<div #appModalAnaliseSolicitacaoBackground class="modal-backdrop fade in" style="display: none;"></div> 
+
+<app-modal-justificativa-reprovacao #appModalJustificativaReprovacao></app-modal-justificativa-reprovacao>

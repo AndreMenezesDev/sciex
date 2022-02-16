@@ -1,0 +1,148 @@
+<!-- /194553192/01_suframa -->
+<div id='div-gpt-ad-1518637965272-0'>
+	<script>
+		googletag.cmd.push(function () { googletag.display('div-gpt-ad-1518637965272-0'); });
+	</script>
+</div>
+
+<section class="vbox">
+
+	<header class="bg-primary header header-md navbar navbar-fixed-top-xs box-shadow">
+		<div class="navbar-header aside-md bg-white">
+			<a class="btn btn-link visible-xs" data-toggle-class="nav-off-screen" data-target="#nav">
+				<i class="fa fa-bars"></i>
+			</a>
+			<a href="#" class="navbar-brand text-center">
+				<figure class="inline m-r-xs">
+					<img src="assets/images/logo-login.png" alt="SUFRAMA">
+				</figure>
+			</a>
+			<a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".user">
+				<i class="fa fa-cog"></i>
+			</a>
+		</div>
+		<ul class="nav navbar-nav hidden-xs">
+			<li>
+				<a href="#">SCIEX</a>
+			</li>
+		</ul>
+
+		<app-droplist-representacao #DropListRepresentacao></app-droplist-representacao>
+
+		<div *ngIf="isExibirRepresentacao">
+			<!--<ul class="nav navbar-nav hidden-xs">
+				<li>
+					<label class="text-info-dk" style="padding-left: 15px; padding-top: 15px; padding-bottom: 5px; color:#fdc302">Empresa
+						Representada:</label>
+					<label class="text-info-dk" style="padding-left: 15px; padding-top: 15px; padding-bottom: 5px; color:white">{{username}}
+						| {{razaoSocial}} </label>
+				</li>
+			</ul>-->
+			<ul class="nav navbar-nav hidden-xs hideText">
+				<li>
+					<label class="text-info-dk hidden-md hidden-sm" style="padding-left: 15px; padding-top: 15px; padding-bottom: 5px; color:#fdc302">Representar:</label>
+					<label data-toggle="tooltip" data-placement="bottom" title="" [attr.data-original-title]="descricaoEmpresa"
+						   class="text-info-dk text-nowrap hideThis"
+						   style="padding-left: 15px; padding-top: 15px; padding-bottom: 5px; color:white">
+						{{username}} | {{razaoSocial}}
+					</label>
+				</li>
+			</ul>
+		</div>
+
+		<!--<ul *ngIf="!isOcultarRepresentacao" class="nav navbar-nav hidden-xs">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					<i class="i i-users3" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Seleção de Empresa para Representação"></i>
+				</a>
+				<ul class="dropdown-menu">
+					<li *ngFor="let item of listaEmpresas; let i = index">
+						<a href="#" (click)="empresaSelecionada(item)">{{item.cnpj}} | {{item.razaoSocial}}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+		<div *ngIf="isEmpresaSelecionada">
+			<ul class="nav navbar-nav hidden-xs hideText">
+				<li (visible)="isEmpresaSelecionada">
+					<label class="text-info-dk hidden-md hidden-sm" style="padding-left: 15px; padding-top: 15px; padding-bottom: 5px; color:#fdc302">Representar:</label>
+					<label data-toggle="tooltip" data-placement="bottom" title="" [attr.data-original-title]="descricaoEmpresa"
+						   class="text-info-dk text-nowrap hideThis"
+						   style="padding-left: 15px; padding-top: 15px; padding-bottom: 5px; color:white">
+						{{empresa.cnpj}} | {{empresa.razaoSocialAbreviada}}
+					</label>
+				</li>
+			</ul>
+		</div>-->
+
+		<ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user user">
+			<li class="hidden-sm">
+				<a href="https://www4.suframa.gov.br/manuais/sciex/" target="_blank"><i class="i i-support"></i> Manual do Usuário</a>
+			</li>
+			<li class="hidden-xs hidden-md hidden-lg">
+				<a href="https://www4.suframa.gov.br/manuais/sciex/" target="_blank" data-toggle="tooltip" title="Manual do Usuário" data-placement="bottom"><i class="i i-support"></i></a>
+			</li>
+			<li class="hidden-sm">
+				<a href="#">1.0.2-beta25</a>
+			</li>
+			<li class="hidden-xs hidden-md hidden-lg">
+				<a href="#" data-toggle="tooltip" title="1.0.6-beta21" data-placement="bottom"><i class="i i-rating3 hidden-lg"></i></a>
+			</li>
+			<li class="hidden-xs hidden-lg">
+				<a href="#" data-toggle="tooltip" title="Sair" data-placement="bottom" (click)="logout()"><i class="i i-logout hidden-lg"></i></a>
+			</li>
+			<!--<li>
+				<ul id="rvfs-controllers" class="list-unstyled list-inline list-accessibility padder-h">
+					<li><a href="#" class="rvfs-decrease"><i class="fa fa-font" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Diminuir Letra"></i>-</a></li>
+					<li><a href="#" class="rvfs-reset disabled"><i class="fa fa-font" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tamanho Letra Padrão"></i></a></li>
+					<li><a href="#" class="rvfs-increase"><i class="fa fa-font" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Aumentar Letra"></i>+</a></li>
+					<li><a href="#" class="active-contrast"><i class="fa fa-adjust" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Contraste"></i></a></li>
+					<li><span class="rvfs-decrease"><i class="fa fa-font" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Diminuir Letra"></i>-</span></li>
+				<li><a class="rvfs-reset disabled"><i class="fa fa-font"	data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tamanho Letra Padrão"></i></a></li>
+				<li><span (click)="aumentarFonte()" class="rvfs-increase"><i class="fa fa-font" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Aumentar Letra"></i>+</span></li>
+				<li><span (click)="contrasteFuncao()" class="active-contrast"><i class="fa fa-adjust" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Contraste"></i></span></li>
+				</ul>
+			</li>-->
+			<li>
+				<a style="cursor: pointer;"><span class="hidden-md hidden-sm" (click)="logout()">Sair</span> <i class="i i-logout hidden-md hidden-sm"></i></a>
+			</li>
+		</ul>
+	</header>
+	<section>
+
+		<section class="hbox stretch">
+
+			<aside class="bg-white aside-md hidden-print" id="nav" *ngIf="!intranet">
+				<section class="vbox">
+					<section class="w-f scrollable">
+						<app-menu #menu></app-menu>
+					</section>
+					<footer class="footer hidden-xs no-padder text-center-nav-xs">
+						<a (click)="logout()" style="cursor: pointer;" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs" data-toggle="tooltip" title="Sair">
+							<i class="i i-logout"></i>
+						</a>
+						<a href="#nav" data-toggle-class="nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
+							<i class="i i-circleleft text-inactive"></i>
+							<i class="i i-circleright text-active"></i>
+						</a>
+					</footer>
+				</section>
+			</aside>
+			<section id="content">
+				<section class="hbox stretch">
+					<section>
+						<section class="vbox">
+							<section class="scrollable">
+								<router-outlet></router-outlet>
+							</section>
+						</section>
+					</section>
+				</section>
+				<a href="#" class="hide nav-off-screen-block" data-toggle-class="nav-off-screen" data-target="#nav"></a>
+			</section>
+		</section>
+	</section>
+</section>
+
+

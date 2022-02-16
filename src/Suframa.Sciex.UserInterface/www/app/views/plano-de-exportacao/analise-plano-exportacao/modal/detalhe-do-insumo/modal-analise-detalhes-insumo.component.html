@@ -1,0 +1,352 @@
+<div #appModalDetalhesInsumo id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog" style="width:1500px;margin-top: 10px;" style="
+    max-width: 65%;
+    width: auto !important;
+    margin-top: 10px;
+">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="title">Detalhe do Insumo</h4>
+			</div>
+			<div class="modal-body" style="max-height: calc(100vh - 210px);  overflow-y: auto;">
+				<form id="formularioB" #formularioB="ngForm">
+					
+					<div>
+
+						<div class="modal-footer" style="padding: 10px 5px; margin-right: -10px;">
+							<div>
+								<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-long-arrow-left"></span> Voltar</button>
+							</div>
+						</div>
+
+						<section class="panel panel-default">
+							<div class="alert alert-success"
+								style="background-color: #deffe1;border-color: #98FB98;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+								Detalhe do Insumo {{tituloCorrecao}}
+							</div>
+							<article class="panel-body">
+								<fieldset>
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="codigoInsumo" class="control-label text-nowrap">
+												Cód. Insumo: 
+											</label>
+											{{modelInsumo.codigoInsumo}}
+										</div>	
+										<div class="col-lg-8">
+											<label for="descricaoInsumo" class="control-label text-nowrap">
+												Descrição: 
+											</label>
+											{{modelInsumo.descricaoInsumo}}
+										</div>						
+									</div>
+									<div class="row">
+										<div class="col-lg-2">
+											<label for="codigoTipoProduto" class="control-label text-nowrap">
+												Tipo: 
+											</label>
+											{{modelInsumo.descTipoInsumo}}
+										</div>
+										<div class="col-lg-2">
+											<label for="codigoNCM" class="control-label text-nowrap">
+												NCM: 
+											</label>
+											{{modelInsumo.codigoNcm}}
+										</div>
+										<div class="col-lg-3">
+											<label for="codigoUnidade" class="control-label text-nowrap">
+												Unidade: 
+											</label>
+											{{modelInsumo.descCodigoUnidade}}
+										</div>
+										<div class="col-lg-3">
+											<label for="coefTecnico" class="control-label text-nowrap">
+												Coeficiente Técnico: 
+											</label>
+											{{modelInsumo.valorCoeficienteTecnico}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="partNumber" class="control-label text-nowrap">
+												Part Number: 
+											</label>
+											{{modelInsumo.descricaoPartNumber}}
+										</div>
+										<div class="col-lg-3">
+											<label for="percentPerda" class="control-label text-nowrap">
+												Percentual Perda (%): 
+											</label>
+											{{modelInsumo.valorPercentualPerda  | number : '1.1-1'}}
+										</div>
+										<div class="col-lg-4">
+											<label for="qtdMaxInsumo" class="control-label text-nowrap">
+												Qtd. Max. Insumo: 
+											</label>
+											{{modelInsumo.qtdMaxInsumo  | number : '1.7-7'}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<label for="descricaoModelo" class="control-label text-nowrap">
+												Especificação Técnica: 
+											</label>
+											{{modelInsumo.descricaoEspecificacaoTecnica}}
+										</div>
+									</div>
+									
+								</fieldset>
+							</article>
+						</section>
+	
+						<section class="panel panel-default">
+							<header class="panel-heading">
+								<h2 class="panel-title h5">Registros</h2>
+							</header>	
+							<div class="panel-body">
+								<app-grid-modal-analise-detalhe-processo-insumos
+									 [(visualizar)]="visualizar"
+									 [(lista)]="grid.lista"
+									 [(total)]="grid.total"
+									 [(size)]="grid.size"
+									 [(page)]="grid.page"
+									 [(parametros)]="parametros"
+									 [(formPai)] = "formPai"
+									 (onChangeSort)="onChangeSort($event)"
+									 (onChangeSize)="onChangeSize($event)"
+									 (onChangePage)="onChangePage($event)"
+									 [(isQuadroNacional)]="isQuadroNacional"
+									 >
+								</app-grid-modal-analise-detalhe-processo-insumos>
+								
+							</div>
+						</section>
+					</div>
+
+					<div *ngIf="isInsumoCorrigido">
+						<section class="panel panel-default">
+							<div class="alert alert-success"
+								style="background-color: #deffe1;border-color: #b4b4b4;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+								Detalhe do Insumo - Dados Anteriores
+							</div>
+							<article class="panel-body">
+								<fieldset>
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="codigoInsumo" class="control-label text-nowrap">
+												Cód. Insumo: 
+											</label>
+											{{modelInsumoAnterior.codigoInsumo}}
+										</div>	
+										<div class="col-lg-8">
+											<label for="descricaoInsumo" class="control-label text-nowrap">
+												Descrição: 
+											</label>
+											{{modelInsumoAnterior.descricaoInsumo}}
+										</div>						
+									</div>
+									<div class="row">
+										<div class="col-lg-2">
+											<label for="codigoTipoProduto" class="control-label text-nowrap">
+												Tipo: 
+											</label>
+											{{modelInsumoAnterior.descTipoInsumo}}
+										</div>
+										<div class="col-lg-2">
+											<label for="codigoNCM" class="control-label text-nowrap">
+												NCM: 
+											</label>
+											{{modelInsumoAnterior.codigoNcm}}
+										</div>
+										<div class="col-lg-3">
+											<label for="codigoUnidade" class="control-label text-nowrap">
+												Unidade: 
+											</label>
+											{{modelInsumoAnterior.descCodigoUnidade}}
+										</div>
+										<div class="col-lg-3">
+											<label for="coefTecnico" class="control-label text-nowrap">
+												Coeficiente Técnico: 
+											</label>
+											{{modelInsumoAnterior.valorCoeficienteTecnico}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="partNumber" class="control-label text-nowrap">
+												Part Number: 
+											</label>
+											{{modelInsumoAnterior.descricaoPartNumber}}
+										</div>
+										<div class="col-lg-3">
+											<label for="percentPerda" class="control-label text-nowrap">
+												Percentual Perda (%): 
+											</label>
+											{{modelInsumoAnterior.valorPercentualPerda  | number : '1.1-1'}}
+										</div>
+										<div class="col-lg-4">
+											<label for="qtdMaxInsumo" class="control-label text-nowrap">
+												Qtd. Max. Insumo: 
+											</label>
+											{{modelInsumoAnterior.qtdMaxInsumo  | number : '1.7-7'}}
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<label for="descricaoModelo" class="control-label text-nowrap">
+												Especificação Técnica: 
+											</label>
+											{{modelInsumoAnterior.descricaoEspecificacaoTecnica}}
+										</div>
+									</div>
+									
+								</fieldset>
+							</article>
+						</section>
+	
+						<section class="panel panel-default">
+							<header class="panel-heading">
+								<h2 class="panel-title h5">Registros</h2>
+							</header>	
+							<div class="panel-body">
+								<app-grid-modal-analise-detalhe-processo-insumos-anteriores
+									 [(visualizar)]="visualizar"
+									 [(lista)]="grid.lista2"
+									 [(total)]="grid.total2"
+									 [(size)]="grid.size2"
+									 [(page)]="grid.page2"
+									 [(parametros)]="parametros"
+									 [(formPai)] = "formPai"
+									 (onChangeSort)="onChangeSort($event)"
+									 (onChangeSize)="onChangeSize($event)"
+									 (onChangePage)="onChangePage($event)"
+									 [(isQuadroNacional)]="isQuadroNacional"
+									 >
+								</app-grid-modal-analise-detalhe-processo-insumos-anteriores>
+								
+							</div>
+						</section>
+					</div>
+					
+				</form>
+			</div>
+
+			<!-- <div class="modal-body" style="max-height: calc(100vh - 210px);  overflow-y: auto;" *ngIf="isInsumoCorrigido">
+				<form #formularioB="ngForm">
+					
+					<section class="panel panel-default">
+						<div class="alert alert-success"
+							style="background-color: #deffe1;border-color: #b4b4b4;color: #000;font-weight: bold;padding: 8px 15px;margin-bottom: 10px;font-size: 14px;">
+							Detalhe do Insumo - Dados Anteriores
+						</div>
+						<article class="panel-body">
+							<fieldset>
+								<div class="row">
+									<div class="col-lg-4">
+										<label for="codigoInsumo" class="control-label text-nowrap">
+											Cód. Insumo: 
+										</label>
+										{{modelInsumoAnterior.codigoInsumo}}
+									</div>	
+									<div class="col-lg-8">
+										<label for="descricaoInsumo" class="control-label text-nowrap">
+											Descrição: 
+										</label>
+										{{modelInsumoAnterior.descricaoInsumo}}
+									</div>						
+								</div>
+								<div class="row">
+									<div class="col-lg-2">
+										<label for="codigoTipoProduto" class="control-label text-nowrap">
+											Tipo: 
+										</label>
+										{{modelInsumoAnterior.descTipoInsumo}}
+									</div>
+									<div class="col-lg-2">
+										<label for="codigoNCM" class="control-label text-nowrap">
+											NCM: 
+										</label>
+										{{modelInsumoAnterior.codigoNcm}}
+									</div>
+									<div class="col-lg-3">
+										<label for="codigoUnidade" class="control-label text-nowrap">
+											Unidade: 
+										</label>
+										{{modelInsumoAnterior.descCodigoUnidade}}
+									</div>
+									<div class="col-lg-3">
+										<label for="coefTecnico" class="control-label text-nowrap">
+											Coeficiente Técnico: 
+										</label>
+										{{modelInsumoAnterior.valorCoeficienteTecnico}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4">
+										<label for="partNumber" class="control-label text-nowrap">
+											Part Number: 
+										</label>
+										{{modelInsumoAnterior.descricaoPartNumber}}
+									</div>
+									<div class="col-lg-3">
+										<label for="percentPerda" class="control-label text-nowrap">
+											Percentual Perda (%): 
+										</label>
+										{{modelInsumoAnterior.valorPercentualPerda  | number : '1.1-1'}}
+									</div>
+									<div class="col-lg-4">
+										<label for="qtdMaxInsumo" class="control-label text-nowrap">
+											Qtd. Max. Insumo: 
+										</label>
+										{{modelInsumoAnterior.qtdMaxInsumo  | number : '1.7-7'}}
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<label for="descricaoModelo" class="control-label text-nowrap">
+											Especificação Técnica: 
+										</label>
+										{{modelInsumoAnterior.descricaoEspecificacaoTecnica}}
+									</div>
+								</div>
+								
+							</fieldset>
+						</article>
+					</section>
+
+					<section class="panel panel-default">
+						<header class="panel-heading">
+							<h2 class="panel-title h5">Registros</h2>
+						</header>	
+						<div class="panel-body">
+							<app-grid-modal-analise-detalhe-processo-insumos-anteriores
+								 [(visualizar)]="visualizar"
+								 [(lista)]="grid.lista2"
+								 [(total)]="grid.total2"
+								 [(size)]="grid.size2"
+								 [(page)]="grid.page2"
+								 [(parametros)]="parametros"
+								 [(formPai)] = "formPai"
+								 (onChangeSort)="onChangeSort($event)"
+								 (onChangeSize)="onChangeSize($event)"
+								 (onChangePage)="onChangePage($event)"
+								 [(isQuadroNacional)]="isQuadroNacional"
+								 >
+							</app-grid-modal-analise-detalhe-processo-insumos-anteriores>
+							
+						</div>
+					</section>
+					
+				</form>
+			</div> -->
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<div>
+					<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-long-arrow-left"></span> Voltar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalDetalhesInsumoBackground class="modal-backdrop fade in" style="display: none;"></div>

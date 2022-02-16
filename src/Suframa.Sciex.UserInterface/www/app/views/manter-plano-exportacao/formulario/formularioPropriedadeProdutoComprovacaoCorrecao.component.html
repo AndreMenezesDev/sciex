@@ -1,0 +1,265 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Propriedade do Produto</app-titulo>
+			<app-sub-titulo>Correção das informações de exportação do produto do plano de Comprovação</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i>
+							Voltar</a>
+					</div>
+					<h2 class="panel-title h5">Dados do Produto</h2>
+				</header>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row form-group">
+							<div class="col-lg-3">
+							  <label class="m-r-xs">Nº Plano:</label>
+							  <span>{{modelPE.numeroAnoPlanoFormatado}}</span>
+							</div>
+							<div class="col-lg-3">
+							  <label class="m-r-xs">Modalidade:</label>
+								<span>{{modelPE.tipoModalidadeString}}</span>
+							</div>
+							<div class="col-lg-3">
+							  <label class="m-r-xs">Tipo:</label>
+							  <span>{{modelPE.tipoExportacaoString}}</span>
+							</div>
+						</div>
+						<div class="row form-group">
+							<div class="m-r-xs">
+							   <div class="col-lg-12">
+								 <div class="alert alert-success" style="background-color: #F0FFF0; border-color: #98FB98; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+								   Dados do Produto
+								 </div>
+							   </div>
+							 </div>
+						</div>
+						<div class="row">
+							<div class="col-lg-10">
+								<label class="m-r-xs">Descrição:</label>
+								<span type="text" id="codigoProdutoSuframa" name="codigoProdutoSuframa">
+									 {{modelProduto.descCodigoProdutoSuframa}}
+								</span>
+							</div>
+						</div>
+						<br/>
+						<div class="row">
+							<div class="col-lg-8">
+								<label class="m-r-xs">Tipo:</label>
+								<span id="codigoTipoProduto" type="text" name="codigoTipoProduto" autocomplete="off">
+									 {{modelProduto.descCodigoTipoProduto}}
+								</span>
+							</div>
+							<div class="col-lg-4">
+								<label class="m-r-xs">NCM:</label>
+								<span type="text" id="codigoNCM" name="codigoNCM" autocomplete="off">
+									 {{modelProduto.codigoNCM}}
+								</span>
+							</div>
+						</div>
+						<br/>
+						<div class="row">
+							<div class="col-lg-8">
+								<label class="m-r-xs">Modelo:</label>
+								<span id="descricaoModelo" type="text" name="descricaoModelo" autocomplete="off">
+									 {{modelProduto.descricaoModelo}}
+								</span>
+							</div>
+							<div class="col-lg-4">
+									<label class="m-r-xs">Unidade:</label>
+								<span type="text" id="codigoUnidade" name="codigoUnidade" autocomplete="off">
+									 {{modelProduto.descCodigoUnidade}}
+								</span>
+							</div>
+						</div>
+						<br/>
+					</fieldset>
+				</article>
+			</section>
+		</div>
+
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<h2 class="panel-title h5">Dados da Exportação</h2>
+				</header>
+				<div class="row form-group">
+					<div class="col-lg-12" style="width: 97%;">
+						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
+							<legend style="width: auto; border: 0;">Valores de Exportação</legend>
+							<div class="row form-group">
+								<div class="col-lg-4">
+									<label>Quantidade Total:</label>
+									<div class="ds-flex">
+										<input type="text" class="form-control" [(ngModel)]="modelProduto.qtdFormatado" disabled />
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<label>Valor Total(US$):</label>
+									<div class="ds-flex">
+										<input type="text" class="form-control" [(ngModel)]="modelProduto.valorDolarFormatado" disabled />
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+
+
+				<div class="row form-group" >
+
+					<div class="col-lg-12" style="width: 97%;">
+						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
+							<legend style="width: auto; border: 0;">Resumo por País</legend>
+							<div class="row has-error" *ngIf="validar">
+								<label for="status" class="control-label" style="display: flex; justify-content: center;">Necessário cadastro de no mínimo 1 registro</label>
+							</div>
+							<form>
+								<article class="panel-body">
+									<div class="row">
+										<table class="table table-striped">
+											<thead class="table-header-color">
+												<tr>
+													<th class="th-sortable unset-nowrap">
+														<app-ordenacao field="CodigoPais" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">País Destino</app-ordenacao>
+													</th>
+													<th class="th-sortable unset-nowrap">
+														<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">Quantidade</app-ordenacao>
+													</th>
+													<th class="th-sortable unset-nowrap">
+														<app-ordenacao field="ValorDolar" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">Valor (US$)</app-ordenacao>
+													</th>
+												</tr>
+											</thead>
+
+											<tbody *ngIf="totalpais != 0">
+												<tr *ngFor="let item of listaPais">
+													<td class="text-left">{{item.descricaoPais}}</td>
+													<td class="text-left" formatar-numero="true">{{item.quantidadeFormatado}}</td>
+													<td class="text-left" formatar-numero="true">{{item.valorDolarFormatado}}</td>
+												</tr>
+											</tbody>
+											<tbody *ngIf="totalpais == 0">
+												<td colspan="4" class="text-center" style="font-weight: bold;">Nenhum registro encontrado.</td>
+											</tbody>
+
+										</table>
+									</div>
+								</article>
+							</form>
+						</fieldset>
+					</div>
+				</div>
+
+				<div class="row form-group" >
+
+					<div class="col-lg-12" style="width: 97%;">
+						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
+							<legend style="width: auto; border: 0;">Documentos Comprobatórios</legend>
+							<div class="row col-lg-12 form-group" *ngIf="!isQuadroNacional && !isCorrecao">
+								<div class="row">
+									<div class="col-lg-4">
+										<label>País:</label>
+										<app-drop-list-select2 #pais id="pais"
+											(valorModificado)="parametros.codigoPais = $event" name="pais" servico="Pais"
+											[(ngModel)]="parametros.codigoPais" [isDisabled]="somenteLeitura"
+											[placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'">
+										</app-drop-list-select2>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4">
+										<label>DU-E:</label>
+										<div class="ds-flex">
+											<input type="text" class="form-control" [readonly]="somenteLeitura"
+												maxlength="15" placeholder=""
+												[(ngModel)]="parametros.numero" />
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<label>Data de Averbação:</label>
+										<div class="ds-flex">
+											<input #dataInicio
+										   type="date"
+										   id="dataInicio"
+										   name="dataInicio"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataAverbacao"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   [readonly]="somenteLeitura"
+										   >
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-4">
+										<label>Quantidade Total:</label>
+										<div class="ds-flex">
+											<input type="text" class="form-control" [readonly]="somenteLeitura"
+												maxlength="16" formatar-numero-decimal5 [prefix]="' '" placeholder="0.00000"
+												[(ngModel)]="parametros.quantidade" />
+										</div>
+									</div>
+									<div class="col-lg-4">
+										<label>Valor Total(US$):</label>
+										<div class="ds-flex">
+											<input type="text" class="form-control" [readonly]="somenteLeitura"
+												maxlength="18" formatar-numero-decimal7 [prefix]="' '"
+												placeholder="0.0000000" [(ngModel)]="parametros.valorDolar" />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row col-lg-12" *ngIf="!somenteLeitura && !isCorrecao">
+								<button (click)="incluirEditarItemLista()" type="button" class="btn btn-sm btn-primary pull-right"><span
+										class="fa fa-plus m-r-xs"></span>Incluir Item na Lista</button>
+										<br><br>
+							</div>
+
+							<div class="row col-lg-12">
+								<app-dados-comprobatorios-correcao-grid
+											[(somenteLeitura)]="somenteLeitura"
+											[(lista)]="gridDadosComprovacao.lista"
+											 [(total)]="gridDadosComprovacao.total"
+											 [(size)]="gridDadosComprovacao.size"
+											 [(page)]="gridDadosComprovacao.page"
+											 [(isUsuarioInterno)]="gridDadosComprovacao.isUsuarioInterno"
+											 [(parametros)]="parametros"
+											 [(formPai)] = "formPai"
+											 [(isCorrecao)]="isCorrecao"
+											 (onChangeSort)="onChangeSort($event)"
+											 (onChangeSize)="onChangeSize($event)"
+											 (onChangePage)="onChangePage($event)">
+								</app-dados-comprobatorios-correcao-grid>
+							</div>
+
+						</fieldset>
+					</div>
+				</div>
+
+			</section>
+		</div>
+
+
+		<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+			<div class="pull-right">
+				<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i>
+					Voltar</a>
+			</div>
+		</footer>
+	</div>
+</div>
+
+<app-modal-alterar-pais #appModalAlterarPais></app-modal-alterar-pais>

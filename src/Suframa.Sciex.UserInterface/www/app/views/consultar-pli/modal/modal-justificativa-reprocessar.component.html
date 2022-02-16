@@ -1,0 +1,34 @@
+<div #appModalJustificativaReprocessar id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog" style="width:700px">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Reprocessar PLI</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+					<div class="form-group row">
+						<div class="col-lg-6">
+							<label class="required">JUSTIFICATIVA:</label>
+							<textarea class="form-control ng-pristine ng-valid ng-touched"
+									  required
+									  id="justificativa"
+									  #justificativa
+									  [(ngModel)]="parametros.descricaoHistoricoPli"
+									  style="height: 118px; width: 665px; resize: none"
+									  maxlength="1000"
+									  name="justificativa"
+									  rows="3">	
+							</textarea>
+							<span class="help-block m-b-none">Quantidade de Caracteres: {{ 1000 - justificativa.value.length }}</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-times"></span> Cancelar</button>
+				<button type="button" id="Cadastrar" class="btn btn-primary btn-sm" (click)="formularioB.onSubmit()"><span class="fa fa-save"></span> Salvar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div #appModalJustificativaReprocessarBackground class="modal-backdrop fade in" style="display: none;"></div>

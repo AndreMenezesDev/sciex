@@ -1,0 +1,76 @@
+<app-grid 
+    [(page)]="page"
+    [(size)]="size"
+    [(total)]="total"
+    [(parametros)]="parametros"
+    (onChangeSize)="changeSize($event)"
+    (onChangePage)="changePage($event)"
+    [(isShowPanel)]="exibirCabecalhoGrid"
+>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-50">
+						<label class="checkbox m-n i-checks">
+                            <input
+								#checkAllButton
+								[attr.disabled]="(total == 0 || !total) ? true : null" 
+								type="checkbox" 
+								class="checkall" 
+								(click)="checkUncheckAll()">
+							<i></i>
+                        </label>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted" (onChangeSort)="changeSort($event)">Coef. Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="DescricaoUnidadeMedida" [sorted]="sorted" (onChangeSort)="changeSort($event)">Unidade</app-ordenacao>
+					</th>
+					<th class="th-sortable th-50">
+						<app-ordenacao field="DescricaoEspecTecnica" [sorted]="sorted" (onChangeSort)="changeSort($event)">Especificação Técnica</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+				
+				<tr *ngFor="let item of lista; let ind = index">
+					<td>
+						<label class="checkbox m-n i-checks">
+							<input 
+								type="checkbox" 
+								id="check-box-{{ind}}" 
+								[(ngModel)]="item.checkbox"
+							><i></i>
+						</label>
+					</td>
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.tipoInsumo}}</td>
+					<td class="text-left">{{item.codigoNCM}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+					<td class="text-left">{{item.valorCoeficienteTecnico}}</td>
+					<td class="text-left">{{item.descricaoUnidadeMedida}}</td>
+					<td class="text-left">{{item.descricaoEspecTecnica}}</td>
+				</tr> 
+				
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+
+<!-- <app-relatorio-parecer-tecnico #relatorio ></app-relatorio-parecer-tecnico> -->

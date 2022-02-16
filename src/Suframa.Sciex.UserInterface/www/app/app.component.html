@@ -1,0 +1,69 @@
+<app-loading></app-loading>
+
+<app-cabecalho-governo-federal></app-cabecalho-governo-federal>
+
+<app-layout *ngIf="authenticated"></app-layout>
+
+<div *ngIf="!authenticated && isExibirLogin">
+
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<section class="login-content" style="margin-top: 120px;">
+				
+				<section class="panel panel-default">
+					<article class="panel-body">
+
+						<div class="text-center">
+							<figure>
+								<img src="assets/images/logo-login.png" alt="SUFRAMA">
+							</figure>
+							<h1 class="h4"><!--Superintendência da Zona Franca de Manaus--></h1>
+						</div>
+						
+						<div class="form-group has-feedback">
+							<label for="captcha">Usuário:</label>
+							<a href="#" class="btn btn-link form-control-feedback" aria-label="Clique para ouvir as letras do captcha"><i class="fa fa-user"></i></a>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12">
+									<input type="text" class="form-control" placeholder="" autocomplete="off" required name="usuario"
+										   [(ngModel)]="usuario" (keyup.enter)="click()" />
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group has-feedback">
+							<label for="captcha">Senha:</label>
+							<div class="row">
+								<div class="col-xs-12 col-sm-12">
+									<input type="password" class="form-control" placeholder="Senha" name="senha" autocomplete="off" required
+										   [(ngModel)]="senha" (keyup.enter)="click()" />
+								</div>
+							</div>
+						</div>
+					</article>
+					<footer class="panel-footer">
+						<button class="btn btn-success btn-darken btn-block" type="button" style="font-weight: bold;"
+								(click)="click()">
+							ENTRAR
+						</button>
+					</footer>
+				</section>
+			</section>
+		</div>
+	</div>
+
+	<footer class="footer-bottom footer-fixed bg-white b-t">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3 text-center">
+					<p class="m-n">&copy; 2018 SUFRAMA <span class="hidden-xs">- Superintendência da Zona Franca de Manaus</span></p>
+				</div>
+				<div class="col-xs-3 text-right">
+					<ul class="list-inline m-b-none">
+						<li></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+</div>

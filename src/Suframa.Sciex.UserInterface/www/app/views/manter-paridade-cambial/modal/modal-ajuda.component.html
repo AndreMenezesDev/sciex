@@ -1,0 +1,17 @@
+<div #appModalAjuda id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #abedaa; color: #000;padding: 10px 15px; color: black;">
+				<h4 class="modal-title" id="ajudaModalLabel">Ajuda</h4>
+			</div>
+			<div class="modal-body">
+				<p><b>Baixar Arquivo: </b> O sistema estabelece uma conexão com o Banco Central, realiza o download do arquivo correspondente à data informada em "Data de Origem" e insere os valores das paridades em Real (R$) para a data informada em "Data de Paridade".</p>
+				<p><b>Copiar Paridade: </b> O sistema copia as paridades existentes para o campo "Data de Origem" e insere a informação para a data informada em "Data de Paridade".</p>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-times"></span> Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div #appModalAjudaBackground class="modal-backdrop fade in" style="display: none;"></div>

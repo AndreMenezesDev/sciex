@@ -1,0 +1,69 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)"
+					[(isShowPanel)]="exibirCabecalhoGrid"
+					>
+
+	<div class="table-responsive no-margin-bottom no-border" style="
+    width: auto;
+    overflow: scroll;
+    height: 300px;
+">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-10" >
+						<input #checkedpli
+							   type="checkbox"
+							   name="optionsConsultarPLI"
+							   (click)="onChangeCheckAllGridPLI()" />
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Insumo</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted" (onChangeSort)="changeSort($event)">Coef. Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoUnidadeMedida" [sorted]="sorted" (onChangeSort)="changeSort($event)">Unidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoEspecTecnica" [sorted]="sorted" (onChangeSort)="changeSort($event)">Especificação Técnica</app-ordenacao>
+					</th>
+					
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let ind = index">
+					<td >
+						<input id="check" #optionchecked type="checkbox"
+							   name="options"
+							   (change)="atualizarModel();"
+							   [(ngModel)]="item.checkbox"
+							   style="-webkit-transform: scale(1.5);" />
+					</td>
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.tipoInsumo}}</td>
+					<td class="text-left">{{item.codigoNCM}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+					<td class="text-left">{{item.valorCoeficienteTecnico}}</td>
+					<td class="text-left">{{item.codigoUnidadeMedida}}</td>
+					<td class="text-left">{{item.descricaoEspecTecnica}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

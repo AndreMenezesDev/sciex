@@ -1,0 +1,102 @@
+<div #appModalPais
+     id="1" 
+     class="modal fade in"
+     tabindex="-1" 
+     role="dialog" 
+     aria-hidden="false"
+     style="display: none; overflow-y: auto;"
+>
+
+    <div 
+        class="modal-dialog" 
+        style="width:1500px;margin-top: 10px;" 
+        style=" max-width: 60%; width: auto !important; margin-top: 10px; ">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                    <h4 class="modal-title" style="color: White;" id="modalParecer">Alteração do País</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Insumo:</label>
+                            <span>{{descInsumo}}</span>
+                        </div>
+                        <div class="col-lg-12" >
+                            <label class="m-r-xs">Detalhe:</label>
+                            <span>{{numeroSequencial}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-8">
+                            <label class="m-r-xs"></label>  
+                            <span class="pull-right"></span>
+                        </div>								   
+                    </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">País</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group">
+                                <div class="row col-lg-12">
+
+                                    <div class="col-lg-6" *ngIf="paisDe">
+                                        <label>DE:</label>
+                                        <div class="ds-flex">
+                                            <input type="text" class="form-control" [(ngModel)]="paisDe" disabled/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <label>PARA:</label>
+                                        <div class="ds-flex">
+                                            <app-drop-list-select2 
+                                                #pais 
+                                                id="pais"
+                                                (valorModificado)="parametros.codigoPais = $event" 
+                                                name="pais" 
+                                                servico="Pais"
+                                                [(ngModel)]="parametros.codigoPais" 
+                                                [placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'">
+                                            </app-drop-list-select2>                                   
+                                        </div>
+                                    </div>                   
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+
+                    <div class="row col-lg-12">
+                    </div>
+
+             
+            
+                <div class="modal-footer" style="padding: 10px 15px;">
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-default" 
+                        (click)="confirmarCancelamento()">
+                            <span class="fa fa-times"></span> Cancelar 
+                    </button>
+                    <button 
+                        type="button" 
+                        class="btn btn-sm btn-primary" 
+                        (click)="confirmarSalvar()">
+                            <span class="fa fa-save"></span> Salvar 
+                    </button>
+                </div>
+
+		    </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div #appModalPaisBackground class="modal-backdrop fade in" style="display: none;"></div>

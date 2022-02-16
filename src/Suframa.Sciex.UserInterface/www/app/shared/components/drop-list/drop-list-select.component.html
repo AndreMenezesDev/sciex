@@ -1,0 +1,46 @@
+
+<div>
+	<div style="margin-bottom:0px" class="form-group has-feedback">
+		<input id="valorInput"
+			   name="valorInput"
+			   #valorInput
+			   [required]="isRequired"
+			   [attr.readonly]="isDisabled ? 'true': null"
+			   [ngStyle]="{'border-radius':list != undefined && list.length > 0 ? '5px': '5px 0 0 5px'}"
+			   type="text"
+			   class="form-control selection"
+			   autocomplete="off"
+			   (keydown)="onKeyDown($event)"
+			   (keyup)="onKeyUp($event)"
+			   (focus)="onFocus()"
+			   (blur)="onBlur()"
+			   maxlength="500"
+			   tabindex="-1"
+			   [placeholder]="placeholder">
+	</div>
+
+	<span *ngIf="clearValue && !isDisabled && isCloseNormal" (click)="onClear(true)"
+		  style="cursor:pointer; position:center; right:60px; top: 0;" class="btn btn-link form-control-feedback">
+		<i class="fa fa-times"></i>
+	</span>
+
+	<span *ngIf="clearValue && !isDisabled && !isCloseNormal" (click)="onClear(true)"
+		  style="cursor:pointer; position:center; right:15px" class="btn btn-link form-control-feedback">
+		<i class="fa fa-times"></i>
+	</span>
+
+	<div  *ngIf="focused && !isDisabled" class="noSelectText" style="background-color:white; z-index:9999">
+		<ul #selecao *ngIf="openDrop" class="heroes" [ngStyle]="{'height':list != undefined && list.length > 5 ? '138px': 'auto'}" style="border:1px solid #87CEFA; width:auto; overflow: auto; margin-bottom:0">
+			<li *ngFor="let item of list; let i = index" tabindex="{{i}}"
+				[class.selected]="item === model"
+				(click)="onSelect(item)">				
+				<span class="badge" style="vertical-align: middle;"><span style="position: relative; top: -5px;">{{item.text.split('|')[0]}}</span></span> <span style="position: relative; top: -3px;">{{item.text.split('|')[1]}}</span>
+			</li>
+		</ul>
+		<div class="noSelectText">
+			<span style="padding:.3em; height:2em;pointer-events:none; display: block; background-color:#00552b; color:white; border:1px solid #87CEFA; border-radius:0px 0px 5px 5px;">{{mensagem}}</span>
+		</div>
+	</div>
+
+</div>
+

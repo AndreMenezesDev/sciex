@@ -1,0 +1,47 @@
+<div #appModalJustificativaGlosa id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+    style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content" *ngIf="!visualizar">
+            <div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+                <h4 class="modal-title" id="title">Justificativa</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <label>Justificativa:</label>
+                    <textarea class="form-control ng-pristine ng-valid ng-touched" id="justificativa" maxlength="1000"
+                        name="justificativa" rows="4" style="resize: none;" [(ngModel)]="parametros.descricaoJustificativaErro">
+                    </textarea>
+                </fieldset>
+            </div>
+            <div class="modal-footer" style="padding: 10px 15px;">
+                <a (click)="fechar()" class="btn btn-sm btn-default" data-dismiss="modal">
+                    <i class="fa fa-times m-r-xs"></i>Cancelar
+                </a>
+                <a class="btn btn-sm btn-primary" (click)="salvar()">
+                    <i class="fa fa-check m-r-xs"></i>Confirmar
+                </a>
+            </div>            
+        </div>
+        
+        <div class="modal-content" *ngIf="visualizar">
+            <div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+                <h4 class="modal-title" id="title" >Justificativa de Reprovação</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <label>Justificativa:</label>
+                    <textarea class="form-control ng-pristine ng-valid ng-touched" id="justificativa" maxlength="1000"
+                        name="justificativa" rows="4" style="resize: none;" [(ngModel)]="parametros.descricaoJustificativaErro" readonly>
+                    </textarea>
+                </fieldset>
+            </div>
+            <div class="modal-footer" style="padding: 10px 15px;">
+                <a (click)="fechar()" class="btn btn-sm btn-default" data-dismiss="modal">
+                    <i class="fa fa-times m-r-xs"></i>Fechar
+                </a>
+            </div>         
+        </div>
+    </div>
+</div>
+
+<div #appModalJustificativaGlosaBackground class="modal-backdrop fade in" style="display: none;"></div>

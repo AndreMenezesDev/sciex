@@ -1,0 +1,156 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+
+	<div class="row">
+
+		<div class="col-lg-12">
+
+			<section class="panel panel-default m-t">
+
+				<header class="panel-heading">
+
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+
+				</header>
+
+				<article class="panel-body text-sm">
+
+					<div class="row">
+
+						<div class="col-lg-12">
+
+							<div class="alert alert-success" style="background-color: #E6E6FA; border-color:  #836FFF; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+								Dados da DI <span class="fa fa-long-arrow-right"></span> Lista de Li <span class="fa fa-long-arrow-right"></span> Descrição da Adição - Li
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4" style="color:#836FFF;">
+							<label class="m-r-xs">Nº LI:</label><span>{{ modelDiLi.numeroLi }}</span>
+						</div>
+					</div>
+
+					<div class="row form-group col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Empresa:</label><span>{{model.inscricaoCadastral}} | {{ model.cnpj }} | {{ model.razaoSocial }}</span>
+						</div>
+
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="line line-dashed b-b line-lg pull-in"></div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Via de Transporte:</label><span class="pull-right">{{ modelDiLi.viaTransporte.codigo }}</span>
+						</div>
+						<div class="col-lg-8">
+							<span>{{ modelDiLi.viaTransporte.descricao }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Multimodal:</label><span class="pull-right">{{ modelDiLi.tipoMultimodalFormatado }}</span>
+						</div>
+					</div>
+
+					<div class="row form-group col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Fundamento Legal:</label><span class="pull-right">{{ modelDiLi.fundamentoLegal.codigo }}</span>
+						</div>
+						<div class="col-lg-8">
+							<span>{{ modelDiLi.fundamentoLegal.descricao }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Peso Liquido:</label><span class="pull-right">{{ modelDiLi.valorPesoLiquidoFormatado }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="line line-dashed b-b line-lg pull-in"></div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Moeda Frete:</label><span>{{ modelDiLi.moedaFreteDescricao }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Frete:</label><span class="pull-right">{{ modelDiLi.valorFreteFormatado }}</span>
+						</div>
+
+						<div class="col-lg-4 text-nowrap">
+							<label class="m-r-xs">Valor Frete na Moeda Negociada:</label><span class="pull-right">{{ modelDiLi.valorFreteMoedaNegociadaFormatado }}</span>			
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Frete USD:</label><span class="pull-right">{{ modelDiLi.valorFreteDolarFormatado }}</span>
+						</div>						
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="line line-dashed b-b line-lg pull-in"></div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Moeda Seguro:</label><span>{{ modelDiLi.moedaSeguroDescricao }}</span>
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Seguro:</label><span class="pull-right">{{ modelDiLi.valorSeguroFormatado }}</span>
+						</div>
+
+						<div class="col-lg-4 text-nowrap">
+							<label class="m-r-xs">Valor Seguro na Moeda Negociada:</label><span class="pull-right">{{ modelDiLi.valorSeguroMoedaNegociadaFormatado }}</span>			
+						</div>
+
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Seguro USD:</label><span class="pull-right">{{ modelDiLi.valorSeguroDolarFormatado }}</span>
+						</div>						
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="line line-dashed b-b line-lg pull-in"></div>
+					</div>
+
+					<div class="row col-lg-12">
+						<div class="col-lg-4">
+							<label class="m-r-xs">Valor Mercadoria Dolar:</label><span class="pull-right">{{ modelDiLi.valorMercadoriaDolarFormatado }}</span>
+						</div>
+						<div class="col-lg-6">
+							<label class="m-r-xs">Valor Mercadoria na Moeda Negociada:</label><span class="pull-right">{{ modelDiLi.valorMercadoriaMoedaNegociadaFormatado }}</span>
+						</div>
+					</div>
+					
+				</article>
+				<footer class="panel-footer clearfix panel-footer-sciex">
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,13 @@
+<section class="panel panel-default">
+
+	<header class="panel-heading">Digite seu usuário e senha</header>
+
+	<input type="text" class="form-control" placeholder="Digite CPF ou CNPJ sem máscara" required [(ngModel)]="usuario" (keyup.enter)="click();">
+
+	<input type="password" class="form-control" placeholder="Senha" required [(ngModel)]="senha" (keyup.enter)="click();">
+
+	<button class="btn btn-sm btn-primary" type="button"  (click)="click()">
+		<i class="fa fa-search"></i> Login
+	</button>
+
+</section>

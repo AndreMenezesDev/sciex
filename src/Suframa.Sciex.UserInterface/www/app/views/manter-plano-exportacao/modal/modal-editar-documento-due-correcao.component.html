@@ -1,0 +1,77 @@
+<div #appModalEditarDocumentoDueCorrecao class="modal fade in"
+							 tabindex="-1" role="dialog"
+							 aria-hidden="true"
+							 style=" display: none; overflow: auto">
+	<div class="modal-dialog" style="width: 30%;">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Editar Documentos Comprobatórios</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row col-lg-12">
+
+					<div class="row">
+						<div class="col-lg-4">
+							<label>País:</label>
+							<app-drop-list-select2 #pais id="pais"
+								(valorModificado)="parametros.codigoPais = $event" name="pais" servico="Pais"
+								[(ngModel)]="parametros.codigoPais" [isDisabled]="somenteLeitura"
+								[placeholder]="'Infome o código ou a descrição'">
+							</app-drop-list-select2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label>DU-E:</label>
+							<div class="ds-flex">
+								<input type="text" class="form-control" [readonly]=""
+									maxlength="15" placeholder=""
+									[(ngModel)]="parametros.numero" />
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<label>Data de Averbação:</label>
+							<div class="ds-flex">
+								<input #dataInicio
+							   type="date"
+							   id="dataInicio"
+							   name="dataInicio"
+							   min="0001-01-01" max="9999-12-31"
+							   class="form-control date"
+							   style="width: 100%;"
+							   maxlength="10"
+							   [(ngModel)]="parametros.dataAverbacao">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-4">
+							<label>Quantidade Total:</label>
+							<div class="ds-flex">
+								<input type="text" class="form-control" [readonly]=""
+									maxlength="16" formatar-numero-decimal5 [prefix]="' '" placeholder="0.00000"
+									[(ngModel)]="parametros.quantidade" />
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<label>Valor Total(US$):</label>
+							<div class="ds-flex">
+								<input type="text" class="form-control" [readonly]=""
+									maxlength="18" formatar-numero-decimal7 [prefix]="' '"
+									placeholder="0.0000000" [(ngModel)]="parametros.valorDolar" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a (click)="fechar()" class="btn btn-sm btn-default" data-dismiss="modal"><i class="fa fa-times"></i>
+					Cancelar</a>
+				<a (click)="EditarItemLista()" class="btn btn-sm btn-primary" data-dismiss="modal" data-toggle="modal" data-backdrop="static" data-keyboard="false"><i
+						class="fa fa-save m-r-xs"></i> Salvar</a>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div #appModalEditarDocumentoDueCorrecaoBackground class="modal-backdrop fade in" style="display: none;"></div>

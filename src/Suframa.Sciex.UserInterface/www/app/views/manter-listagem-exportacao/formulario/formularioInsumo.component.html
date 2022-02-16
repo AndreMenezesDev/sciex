@@ -1,0 +1,169 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>{{titulo}}</app-titulo>
+			<app-sub-titulo>{{subtitulo}}</app-sub-titulo>
+		</div>
+	</div> 
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default m-t">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+					<h2 class="panel-title h5">Dados do Produto</h2>
+				</header>
+
+				<article class="panel-body text-sm">
+
+					<div class="row">
+
+						<div class="col-lg-12">
+
+							<div class="alert alert-success" style="background-color: #F0FFF0; border-color:  #98FB98; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+								Dados do Produto
+							</div>
+
+						</div>
+					</div>
+
+					<div class="row col-lg-12">
+
+						<div class="col-lg-12">
+							<label class="m-r-xs">Código do Produto:</label><span>{{ model.codigoProduto }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Produto:</label><span>{{ model.descCodigoProdutoSuframa }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Tipo:</label><span>{{ model.descCodigoTipoProduto }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">NCM:</label><span>{{ model.descCodigoNCM }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Unidade:</label><span>{{ model.descCodigoUnidadeMedida }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Modelo:</label><span>{{ model.descricaoModelo }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Centro de Custo:</label><span>{{ model.descricaoCentroCusto }}</span>
+						</div>
+						<div class="col-lg-12">
+							<label class="m-r-xs">Código do Modelo:</label><span>{{ model.codigoModeloEmpresa }}</span>
+						</div>
+					</div>
+
+				
+
+				</article>
+				<footer class="panel-footer clearfix panel-footer-sciex">
+
+					<div class="pull-right">
+						<a (click)="voltar()"
+						   class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default m-t">
+				<header class="panel-heading">
+					<h2 class="panel-title h5" *ngIf="path == 'editar'">Adicione Insumos no Produto</h2>
+					<h2 class="panel-title h5" *ngIf="path == 'visualizar' || path == 'corrigir'">Insumos no Produto</h2>
+				</header>
+				<form>
+					<article class="panel-body">
+						<section class="panel panel-default">
+							<header class="panel-heading">
+								<div [hidden]="isLEBloq || ocultarFiltro" class="pull-right">
+									<button *ngIf="!somenteLeitura"  type="button" class="btn btn-primary btn-sm" (click)="cadastrar()"><i class="fa fa-plus"></i> Novo</button>
+								</div>
+								<div [hidden]="!ocultarFiltro" class="pull-right">
+									<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+								</div>
+								<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+							</header>
+							<article [hidden]="ocultarFiltro" class="panel-body">
+								<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+			
+									<div class="row">
+										<div class="col-lg-10">
+											<div class="form-group">
+												<label for="codigoNCM" class="control-label">NCM do Insumo:</label>
+												<app-drop-list-select2 (valorModificado)="parametros.idCodigoNCM = $event"
+																		(onSelected)="selecionaNCM($event)"
+																		name="codigoNcm"
+																		servico="ViewNcm"
+																		[(ngModel)]="parametros.idCodigoNCM"
+																		[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+																		#codigoNCM>
+												</app-drop-list-select2>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-4">
+											<label for="tipoInsumo" class="">Tipo Insumo:</label>
+											<select name="tipoInsumo"
+													id="tipoInsumo"
+													class="form-control"
+													[(ngModel)]="parametros.tipoInsumo">
+												<option [ngValue]="undefined">Todos</option>
+												<option value="P">P - Insumo Padrão</option>
+												<option value="E">E - Insumo Estrangeiro Extra Listagem Padrão</option>
+												<option value="N">N - Nacional</option>
+												<option value="R">R - Regional</option>
+											</select>
+										</div>
+									</div>
+								</form>
+							</article>
+							<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+								<div class="pull-right">
+									<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar()"><i class="fa fa-search"></i> Buscar</button>
+									<button #btnlimpar class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+									<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+								</div>
+							</footer>
+							
+						</section>
+					</article>
+
+					<article class="panel-body">
+						<section class="panel panel-default">
+							<div class="row">
+								<div class="col-lg-12">
+									<app-manter-le-insumo-grid [(lista)]="grid.lista"
+														 [(total)]="grid.total"
+														 [(size)]="grid.size"
+														 [(page)]="grid.page"
+														 [(parametros)]="parametros"
+														 [(isLEBloq)]="isLEBloq"
+														 [(somenteLeitura)]="somenteLeitura"
+														 (onChangeSort)="onChangeSort($event)"
+														 (onChangeSize)="onChangeSize($event)"
+														 (onChangePage)="onChangePage($event)">
+									</app-manter-le-insumo-grid>
+								</div>
+							</div>
+						</section>
+					</article>
+				</form>
+			</section>
+		</div>
+	</div>
+</div>
+
+<app-modal-novo-insumo #appModalNovoInsumo></app-modal-novo-insumo>

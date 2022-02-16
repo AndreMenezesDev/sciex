@@ -1,0 +1,80 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)"
+					[(isShowPanel)]="exibirCabecalhoGrid"
+					>
+
+	<div class="table-responsive no-margin-bottom no-border" style="
+    width: auto;
+    overflow: scroll;
+    height: 300px;
+">
+		<table class="table table-striped" *ngIf="isQuadroNacional">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap" >
+						<app-ordenacao field="ValorUnitario" [sorted]="sorted" (onChangeSort)="changeSort($event)">Vlr. Unitário (R$)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorTotal" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Total (R$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let ind = index">
+					<td class="text-left">{{item.quantidade | number : '1.5-5' }}</td>
+					<td class="text-left">{{item.valorUnitario | number : '1.4-4' }}</td>
+					<td class="text-left">{{item.valorTotal | number : '1.5-5' }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table class="table table-striped" *ngIf="!isQuadroNacional">
+			<thead class="table-header-color">
+				<tr>
+
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoPais" [sorted]="sorted" (onChangeSort)="changeSort($event)">País</app-ordenacao>
+					</th>					
+					<th class="th-sortable unset-nowrap" >
+						<app-ordenacao field="CodigoDescricaoMoeda" [sorted]="sorted" (onChangeSort)="changeSort($event)">Moeda</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorUnitario" [sorted]="sorted" (onChangeSort)="changeSort($event)">Vlr. Unitário<br>(FOB)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorFrete" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Frete<br>(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarFOB" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Insumo<br>(FOB)(US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable">
+						<app-ordenacao field="ValorDolarCFR" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Insumo<br>(CRF)(US$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let ind = index">
+					<td class="text-left">{{item.codigoPais}} | {{item.descricaoPais}}</td>
+					<td class="text-left">{{item.codigoDescricaoMoeda}}</td>
+					<td class="text-left">{{item.quantidade | number : '1.5-5' }}</td>
+					<td class="text-left">{{item.valorUnitario | number : '1.5-5' }}</td>
+					<td class="text-left">{{item.valorFrete | number : '1.5-5' }}</td>
+					<td class="text-left">{{item.valorDolarFOB | number : '1.5-5' }}</td>
+					<td class="text-left">{{item.valorDolarCFR | number : '1.5-5' }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

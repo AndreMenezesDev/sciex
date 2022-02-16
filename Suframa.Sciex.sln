@@ -1,0 +1,137 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.DataAccess", "src\Suframa.Sciex.DataAccess\Suframa.Sciex.DataAccess.csproj", "{75E29A91-1D70-4C43-BA0C-4CAB420C658D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.BusinessLogic", "src\Suframa.Sciex.BusinessLogic\Suframa.Sciex.BusinessLogic.csproj", "{EB3469B6-8297-4F55-B0C7-4706A3F78C2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{49B33254-5F69-4189-A534-58D4D7877FEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{50997052-D3BD-4065-B6F1-2EBF95FEAE47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.DataAccess.Tests", "tests\Suframa.Sciex.DataAccess.Tests\Suframa.Sciex.DataAccess.Tests.csproj", "{0CCEE242-3E06-44E6-A817-BE0F7CA78FC8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27BA3EAA-E30A-4BE3-A1B5-0F01E97FE32F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		appSettings.config = appSettings.config
+		CodeMaid.config = CodeMaid.config
+		connectionStrings.config = connectionStrings.config
+		generate-enums.cmd = generate-enums.cmd
+		NLog.config = NLog.config
+		readme.md = readme.md
+		sonar-project.properties = sonar-project.properties
+		ToDo.txt = ToDo.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CrossCutting", "src\Suframa.Sciex.CrossCutting\Suframa.Sciex.CrossCutting.csproj", "{BC105E8E-3B81-494A-A61F-9B2EE18A77A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.ApplicationService", "src\Suframa.Sciex.ApplicationService\Suframa.Sciex.ApplicationService.csproj", "{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CrossCutting.DependenceInjection", "src\Suframa.Sciex.CrossCutting.DependenceInjection\Suframa.Sciex.CrossCutting.DependenceInjection.csproj", "{68C1D524-2201-4874-B097-76D185968EF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CrossCutting.DataTransferObject", "src\Suframa.Sciex.CrossCutting.DataTransferObject\Suframa.Sciex.CrossCutting.DataTransferObject.csproj", "{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CrossCutting.Mapping", "src\Suframa.Sciex.CrossCutting.Mapping\Suframa.Sciex.CrossCutting.Mapping.csproj", "{A0072EF6-B84A-4671-B692-D1BCB190145E}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Suframa.Sciex.UserInterface(1)", "src\Suframa.Sciex.UserInterface\", "{751A353F-15DF-4347-B336-B548EF7E7709}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50198"
+		Debug.AspNetCompiler.PhysicalPath = "src\Suframa.Sciex.UserInterface\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50198\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50198"
+		Release.AspNetCompiler.PhysicalPath = "src\Suframa.Sciex.UserInterface\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50198\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50198"
+		SlnRelativePath = "src\Suframa.Sciex.UserInterface\"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{6332FEE7-0768-424F-9418-E5D4EEFA0E9A}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Suframa.Sciex.Database.Master", "db\Suframa.Sciex.Database.Master\Suframa.Sciex.Database.Master.sqlproj", "{B23C87E4-B013-4154-8CDF-ACB8FDF97005}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CommandLine", "src\Suframa.Sciex.CommandLine\Suframa.Sciex.CommandLine.csproj", "{AC432426-7707-4B67-9B10-F5C2AA5A6F23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75E29A91-1D70-4C43-BA0C-4CAB420C658D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E29A91-1D70-4C43-BA0C-4CAB420C658D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E29A91-1D70-4C43-BA0C-4CAB420C658D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E29A91-1D70-4C43-BA0C-4CAB420C658D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB3469B6-8297-4F55-B0C7-4706A3F78C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB3469B6-8297-4F55-B0C7-4706A3F78C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB3469B6-8297-4F55-B0C7-4706A3F78C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB3469B6-8297-4F55-B0C7-4706A3F78C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCEE242-3E06-44E6-A817-BE0F7CA78FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCEE242-3E06-44E6-A817-BE0F7CA78FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCEE242-3E06-44E6-A817-BE0F7CA78FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC105E8E-3B81-494A-A61F-9B2EE18A77A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC105E8E-3B81-494A-A61F-9B2EE18A77A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC105E8E-3B81-494A-A61F-9B2EE18A77A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC105E8E-3B81-494A-A61F-9B2EE18A77A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C1D524-2201-4874-B097-76D185968EF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C1D524-2201-4874-B097-76D185968EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C1D524-2201-4874-B097-76D185968EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C1D524-2201-4874-B097-76D185968EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0072EF6-B84A-4671-B692-D1BCB190145E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0072EF6-B84A-4671-B692-D1BCB190145E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0072EF6-B84A-4671-B692-D1BCB190145E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0072EF6-B84A-4671-B692-D1BCB190145E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{751A353F-15DF-4347-B336-B548EF7E7709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{751A353F-15DF-4347-B336-B548EF7E7709}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AC432426-7707-4B67-9B10-F5C2AA5A6F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC432426-7707-4B67-9B10-F5C2AA5A6F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC432426-7707-4B67-9B10-F5C2AA5A6F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC432426-7707-4B67-9B10-F5C2AA5A6F23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{75E29A91-1D70-4C43-BA0C-4CAB420C658D} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{EB3469B6-8297-4F55-B0C7-4706A3F78C2F} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{0CCEE242-3E06-44E6-A817-BE0F7CA78FC8} = {49B33254-5F69-4189-A534-58D4D7877FEA}
+		{BC105E8E-3B81-494A-A61F-9B2EE18A77A5} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{8B2C1FB1-0122-44C9-9D89-418C1FFAADC9} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{68C1D524-2201-4874-B097-76D185968EF8} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{AFB3D36D-7929-41AC-A3DD-71DBDDEB3DAE} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{A0072EF6-B84A-4671-B692-D1BCB190145E} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{751A353F-15DF-4347-B336-B548EF7E7709} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+		{6332FEE7-0768-424F-9418-E5D4EEFA0E9A} = {27BA3EAA-E30A-4BE3-A1B5-0F01E97FE32F}
+		{B23C87E4-B013-4154-8CDF-ACB8FDF97005} = {6332FEE7-0768-424F-9418-E5D4EEFA0E9A}
+		{AC432426-7707-4B67-9B10-F5C2AA5A6F23} = {50997052-D3BD-4065-B6F1-2EBF95FEAE47}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9DE873E-19CA-46FD-9DF4-BB5E1915EFF7}
+	EndGlobalSection
+EndGlobal

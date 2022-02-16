@@ -1,0 +1,69 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Enviar PLI</app-titulo>
+			<app-sub-titulo>Enviar PLI</app-sub-titulo>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<a style="cursor: pointer; background-color: #fff2ccff; color: black;"
+							 (click)="abrir()"
+							 class="btn btn-default btn-sm">
+						<i class="fa fa-question-circle"></i>
+						Ajuda</a>
+					</div>
+					<h2 class="panel-title h5">Envio de PLI - Estrutura Própria</h2>
+				</header>
+				<article class="panel-body">
+					<form method="POST" action="#" enctype="multipart/form-data">
+
+						<!-- COMPONENT START -->
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-lg-12">
+									<app-upload-file #appUploadFile></app-upload-file>
+								</div>
+							</div>
+						</div>
+
+						<!-- COMPONENT END -->
+
+						<div class="row form-group">
+
+							<div class="col-lg-12">
+
+								<div class="checkbox i-checks">
+
+									<label>
+										<input id="check" #optionchecked type="checkbox"
+													 name="options" /><i></i>	 Dispositivos de tecnologia assistiva
+									</label>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</form>
+				</article>				
+
+				<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<!--<button type="reset" class="btn btn-sm btn-danger" #btnReset (click)="limpar()">Limpar</button>-->
+						<button type="submit" class="btn btn-sm btn-primary a" (click)="enviarArquivo($event)"><span class="i i-paperplane"></span> Enviar Arquivo</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+</div>
+
+<app-modal-estrutura-propria-pli #appModalEstruturaPropriaPli></app-modal-estrutura-propria-pli>
+<div #appModalEstruturaPropriaPliBackground class="modal-backdrop fade in" style="display: none;"></div>

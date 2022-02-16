@@ -1,0 +1,259 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Manter NCM de Exceção</app-titulo>
+			<app-sub-titulo>{{titulo}} NCM de Exceção</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+										disableOnClick
+										*ngIf="isCancelarVisible"
+										class="btn btn-default btn-sm"
+										(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<button type="button"
+										disableOnClick class="btn btn-primary btn-sm"
+										(click)="formulario.onSubmit()"
+										*ngIf="!desabilitado">
+							<i class="fa fa-save"></i> Salvar
+						</button>
+					</div>
+
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+
+						<div class="row form-group">
+							<div class="col-lg-12">
+								<label for="" class="required">NCM:</label>
+								<app-drop-list-select (valorModificado)="parametros.idNcm = $event;habilitaSetor = habilitaData = true;"
+													  (limparObjetosAuxiliares)="habilitaSetor = habilitaUF = habilitaData = false; limparItens();"
+																			name="idNcm"
+																			servico="Ncm"
+																			[selMinimumInputLength]="3"
+																			placeholder="Informe o código ou a descrição"
+																			[(ngModel)]="model.idNcmExcecao"
+																			[isRequired]="true"
+																			#ncm>
+								</app-drop-list-select>
+							</div>
+
+						</div>
+
+						<div class="row form-group">
+							<div class="col-lg-3">
+								<label for="" class="required">Setor:</label>
+								<app-drop-list name="model.codigoSetor"
+															 servico="ViewSetor"
+															 [(ngModel)]="model.codigoSetor"
+															 placeholder="Selecione uma opção"
+															 (change)="getSelectedOptionText($event)"
+														     [isDisabled]="!habilitaSetor"
+															 required
+															 #setor>
+								</app-drop-list>
+							</div><!-- FIELD SETOR -->
+
+							<div class="col-lg-2">
+								<label for="dataorigem" class="required">Início da Vigência:</label>
+								<input #dataInicioVigencia
+											 type="date"
+											 min="0001-01-01" max="9999-12-31"
+											 id="dataInicioVigencia"
+											 name="dataInicioVigencia"
+											 [(ngModel)]="model.dataInicioVigencia"
+											 class="form-control date"
+											 maxlength="10"
+											 autocomplete="off"									   
+											[disabled]="!habilitaData"
+											(keyup)="onKeyUp($event)"
+											 required />
+							</div><!-- FIELD INÍCIO DA VIGÊNCIA -->
+						</div>
+
+						<div class="row form-group">
+
+							<div class="col-lg-2">
+								<label for="" class="required">UF:</label>
+								<app-drop-list name="model.uf"
+															 servico="UF"
+															 [(ngModel)]="siglaUf"
+															 placeholder="--"
+															 (change)="carregarGrid(true)"
+															 [isDisabled]="!habilitaUF"
+															 required
+															 #uf>
+								</app-drop-list>
+							</div><!-- FIELD UF -->
+
+						</div>
+
+						<div class="row form-group">
+							<div class="col-lg-5">
+								<section class="panel panel-default">
+									<header class="panel-heading">
+										<h2 class="panel-title h5">Municípios</h2>
+									</header>
+									<form class="form" role="form">
+										<div class="row wrapper">
+											<div class="col-lg-12">
+												<div class="input-group">
+													<input #filtroMunicipio name="filtro" type="text" class="form-control input-sm" placeholder="Buscar" (input)="filtrarListaMunicipio()">
+													<span class="input-group-btn">
+														<button class="btn btn-sm btn-default" type="reset" (click)="limparMunicipiosSelecionados()"><i class="fa fa-eraser"></i> Limpar</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</form>
+									<div class="table-responsive">
+										<table class="table table-striped">
+											<thead class="thead-cadsuf display-block">
+												<tr>
+													<th class="th-10">
+														<input #checkedMunicipio
+																	 type="checkbox"
+																	 name="optionsMunicipio"
+																	 (click)="onChangeCheckAllGridMunicipio()"
+																	 style="-webkit-transform: scale(1.5);" />
+													</th>
+													<th>
+														Código
+													</th>
+													<th style="width: 100%;">
+														Município
+													</th>
+												</tr>
+											</thead>
+											<tbody class="display-block" style="overflow-y: auto; overflow-x: hidden; height: 323px;">
+												<tr *ngFor="let item of listaFiltrada; let i = index">
+													<td>
+														<input type="checkbox"
+																	 name="options"
+																	 value="{{item.checkbox}}"
+																	 (change)="item.checkbox = !item.checkbox; removeCheckAll()"
+																	 [checked]="item.checkbox"
+																	 [(ngModel)]="check1[i]"
+																	 style="-webkit-transform: scale(1.5);" />
+													</td>
+													<td>
+														{{item.codigoMunicipio}}
+													</td>
+													<td style="width: 100%;">
+														{{item.descricao}}
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</section>
+								<div style="margin-top: -15px; font-weight: bold;">Quantidade Encontrada: {{totalEncontrado}}</div>
+							</div>
+							<div class="col-lg-1">
+								<button type="button" class="btn btn-primary btn-lg" (click)="addItem()">
+									<span class="fa fa-long-arrow-right"></span>
+								</button>
+								<button type="button" class="btn btn-primary btn-lg m-t" (click)="removeItem()">
+									<span class="fa fa-long-arrow-left"></span>
+								</button>
+							</div>
+							<div class="col-lg-5">
+								<section class="panel panel-default">
+									<header class="panel-heading">
+										<h2 class="panel-title h5">Municípios Associados</h2>
+									</header>
+									<form class="form" role="form">
+										<div class="row wrapper">
+											<div class="col-lg-12">
+												<div class="input-group">
+													<input #filtroMunicipioAssociados name="filtro" type="text" class="form-control input-sm" placeholder="Buscar" (input)="filtrarListaMunicipioAssociados()">
+													<span class="input-group-btn">
+														<button class="btn btn-sm btn-default" type="reset" (click)="limparMunicipiosAssociados()"><i class="fa fa-eraser"></i> Limpar</button>
+													</span>
+												</div>
+											</div>
+										</div>
+									</form>
+									<div class="table-responsive">
+										<table class="table table-striped">
+											<thead class="thead-cadsuf display-block">
+												<tr style="border-bottom: 1px solid #eee;">
+													<th class="th-10">
+														<input #checkedSelecionada
+																	 type="checkbox"
+																	 name="optionsMunicipio"
+																	 (click)="onChangeCheckAllGridMunicipioSelecionada()"
+																	 style="-webkit-transform: scale(1.5);" />
+													</th>
+													<th>
+														Código
+													</th>
+													<th style="width: 100%;">
+														Município
+													</th>
+													<th class="th-100">
+														UF
+													</th>
+												</tr>
+											</thead>
+											<tbody class="display-block" style="overflow-y: auto; overflow-x: hidden; height: 323px;">
+												<tr *ngFor="let item of listaSelecionada; let i = index" style="border-bottom: 1px solid #eee;">
+													<td>
+														<input type="checkbox"
+																	 name="options"
+																	 value="{{item.checkbox}}"
+																	 (change)="item.checkbox = !item.checkbox; removeCheckAll();"
+																	 [checked]="item.checkbox"
+																	 [(ngModel)]="check2[i]"
+																	 style="-webkit-transform: scale(1.5);" />
+													</td>
+													<td>
+														{{item.codigoMunicipio}}
+													</td>
+													<td style="width: 100%;">
+														{{item.descricaoMunicipio}}
+													</td>
+													<td class="th-100">
+														{{item.uf}}
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</section>
+								<div style="margin-top: -15px; font-weight: bold;">Quantidade Selecionada: {{listaSelecionada.length}}</div>
+							</div>
+						</div>
+
+					</form>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<button type="button"
+										disableOnClick
+										*ngIf="isCancelarVisible"
+										class="btn btn-default btn-sm"
+										(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Cancelar
+						</button>
+						<button type="button"
+										disableOnClick
+										class="btn btn-primary btn-sm"
+										(click)="formulario.onSubmit()"
+										*ngIf="!desabilitado">
+							<i class="fa fa-save"></i> Salvar
+						</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

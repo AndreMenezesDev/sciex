@@ -1,0 +1,234 @@
+<div #appModalSolicitacaoDetalhada
+    id="1"
+    class="modal fade in"
+    tabindex="-1" 
+    role="dialog" 
+    aria-hidden="false"
+    style="display: none; overflow-y: scroll;">
+
+        <div 
+            class="modal-dialog" 
+            style="width:1500px;margin-top: 10px;" 
+            style=" max-width: 60%; width: auto !important; margin-top: 10px; ">
+
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary" style="padding: 10px 15px;">
+                    <h4 class="modal-title" style="color: White;" id="modalParecer">Solicitações do Detalhe</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-12" *ngIf="insumoStatusUm">
+                            <label class="m-r-xs">Insumo:</label>
+                            <span>{{insumoStatusUm.codigoInsumo}}|{{insumoStatusUm.descricaoInsumo}}</span>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-lg-8">
+                            <label class="m-r-xs"></label>  
+                            <span class="pull-right"></span>
+                        </div>								   
+                    </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h5 class="panel-title">Alterações Solicitadas para o Detalhe!</h5>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row form-group" *ngIf="listaSolicitacaoDetalhe != null">
+                                <div *ngFor="let item of listaSolicitacaoDetalhe">
+                                    <div class="row form-group">
+                                            <div class="col-lg-4">
+                                                <label class="m-r-xs">Tipo de Alteração:</label><span>{{ item.descricaoTipoAlteracao ? item.descricaoTipoAlteracao : '--' }}</span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label class="m-r-xs">De:</label><span>{{ item.descricaoDe ? item.descricaoDe : '--' }}</span>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <label class="m-r-xs">Para:</label><span>{{ item.descricaoPara ? item.descricaoPara : '--'}}</span>
+                                            </div>
+                                                                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group" *ngIf="listaSolicitacaoDetalhe == null || listaSolicitacaoDetalhe == undefined">
+                                <h3 class="text-center" ><strong>Nenhuma Alteração encontrada.</strong></h3>
+                            </div>
+                        </div>  
+                    </div>
+
+
+                    <div class=panel-body>
+
+                        <div class="col-lg-6">
+    
+                            <fieldset class="row form-group ml-mr-none h160">
+                                <legend>Valores Atuais</legend>
+    
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Paridade(US$):</label>
+                                        <span class="pull-right">
+                                            {{  paridadeValoresStatusUm > 0 ?
+                                                    (paridadeValoresStatusUm | number : '1.7-7') :
+                                                        '0,0000000'
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Vlr.Unit.FOB(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorUnitarioFOB | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Unitário CFR(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorUnitarioCRF | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Qtde:</label>
+                                        <span class="pull-right">{{ valorSaldoQuantidade | number : '1.7-7'}}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Valor(US$):</label>
+                                        <span class="pull-right">{{ somatorioSaldoValor | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs"> Valor Comprovado(US$):</label>
+                                        <span class="pull-right">{{ valorSaldoComprovado | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs"></label>
+                                        <span class="pull-right"></span>
+                                    </div>
+                                </div>
+                                <hr width="80%">
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total FOB(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorTotalFOB | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total CFR(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorTotalCRF | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Aprovado():</label>
+                                        <span class="pull-right">{{ valorTotalAprovado | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                             
+    
+                        </fieldset>
+                        </div>
+
+                        <div class="col-lg-6">
+    
+                            <fieldset class="row form-group ml-mr-none h160">
+                                <legend>Valores Previstos</legend>
+    
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Paridade(US$):</label>
+                                        <span class="pull-right">
+                                            {{ 
+                                                paridadeValoresStatusDois > 0 ? 
+                                                    (paridadeValoresStatusDois | number :  '1.7-7') : 
+                                                        '0,0000000'                                                                
+                                            }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Vlr.Unit.FOB(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorUnitarioFOBPrevisto | number :  '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Qtde Final:</label>
+                                        <span class="pull-right">{{valorSaldoQuantidadePrevista | number :  '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Saldo Final(US$):</label>
+                                        <span class="pull-right">{{somatorioSaldoFinal | number :  '1.7-7'  }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs"></label>
+                                        <span class="pull-right"></span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Acréscimo(US$):</label>
+                                        <span class="pull-right">{{valorSaldoAcrescimo | number :  '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs"></label>
+                                        <span class="pull-right"></span>
+                                    </div>
+                                </div>
+                                <hr width="80%">
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total FOB(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorTotalFOBPrevisto | number :  '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Total CFR(US$):</label>
+                                        <span class="pull-right">{{ somatorioValorTotalCRFPrevisto | number : '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-lg-8">
+                                        <label class="m-r-xs">Valor Aprovado(US$):</label>
+                                        <span class="pull-right">{{ valorTotalAprovadoPrevisto | number :  '1.7-7' }}</span>
+                                    </div>
+                                </div>
+                        </fieldset>
+
+                        </div>
+
+                    </div>    
+
+                    <div class="modal-footer" style="padding: 10px 15px;">
+                        <button 
+                            type="button" 
+                            class="btn btn-sm btn-default" 
+                            (click)="fechar()">
+                            <i class="fa fa-long-arrow-left m-r-xs"></i>Voltar                                
+                        </button>
+                    </div>
+
+		        </div>
+            </div>
+        </div>
+    
+</div>
+<div #appModalSolicitacaoDetalhadaBackground class="modal-backdrop fade in" style="display: none;"></div> 

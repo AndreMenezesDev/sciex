@@ -1,0 +1,93 @@
+<app-grid-cancelar-li [(page)]="page"
+					  [(size)]="size"
+					  [(total)]="total"
+					  [(parametros)]="parametros"
+					  (onChangeSize)="changeSize($event)"
+					  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-10" *ngIf="ocultarbotaocheck">
+						<input #checkedpli
+							   type="checkbox"
+							   name="optionsConsultarPLI"
+							   (click)="onChangeCheckAllGridPLI()" />
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="idPliMercadoria" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="numeroLi" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº LI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap">
+						<app-ordenacao field="numeroReferencia" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº de LI de Referência</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="numeroNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable th-300 unset-nowrap">
+						<app-ordenacao field="descricaoNCMMercadoria" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap">
+						<app-ordenacao field="dataCadastro" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data Status</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap">
+						<app-ordenacao field="status" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index">
+					<td>
+						<input *ngIf="item.status == 1 && item.statusAli == 3" id="check" #optionchecked type="checkbox"
+							   name="options"
+							   (change)="item.checkbox = !item.checkbox; removeCheckAll()"
+							   [checked]="item.checkbox"
+							   [(ngModel)]="check[i]"
+							   style="-webkit-transform: scale(1.5);" />
+					</td>
+					<!-- <td>{{item.numeroPLIFormatado}}</td> -->
+					<td>
+						<a  routerLink="/manter-cancelar-li/{{item.idPLI}}/visualizar-detalhamento-pli" data-toggle="tooltip" 
+								title="" data-original-title="Mostrar LI">{{item.numeroPLIFormatado}}</a>
+					</td>
+
+					<td class="unset-nowrap">
+						<a  routerLink="/manter-cancelar-li/{{item.idPliMercadoria}}/visualizar-detalhamento-li" data-toggle="tooltip" 
+							title="" data-original-title="Mostrar LI">{{item.numeroLi}}
+						</a>						
+					</td>
+					<td class="unset-nowrap">
+						<a  
+							*ngIf="item.numeroReferencia == '-' "
+							routerLink="/manter-cancelar-li/{{item.idPliMercadoriaRefrencia}}/visualizar-detalhamento-li" data-toggle="tooltip" 
+							title="" data-original-title="Mostrar LI">--
+						</a>
+						<!-- {{item.numeroReferencia != null || item.numeroReferencia != '' ? item.numeroReferencia : '-'}} -->
+						<a  
+							*ngIf="item.numeroReferencia != '-' "
+							routerLink="/manter-cancelar-li/{{item.idPliMercadoriaRefrencia}}/visualizar-detalhamento-li" data-toggle="tooltip" 
+							title="" data-original-title="Mostrar LI">{{item.numeroReferencia}}
+						</a>
+
+					</td>
+					<td class="unset-nowrap">{{item.numeroNCM}}</td>
+					<td class="unset-nowrap">{{item.descricaoNCMMercadoria}}</td>
+					<td class="unset-nowrap">{{item.dataStatusFormatada}}</td>
+					<td class="unset-nowrap">
+						<span>{{item.descricaoStatusAcao}}</span>
+					</td>
+					<td class="text-center">
+						<a (click)="abrirJanelaHistorico(item.numeroLi)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Histórico"><i class="i i-history"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid-cancelar-li>
+
+<app-modal-historico-li #appModalHistoricoLI></app-modal-historico-li>

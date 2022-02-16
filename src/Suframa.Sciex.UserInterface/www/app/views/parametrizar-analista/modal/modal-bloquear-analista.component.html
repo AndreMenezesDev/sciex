@@ -1,0 +1,88 @@
+﻿<div #appModalBloquearAnalista id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false" style="display: none;">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">{{tipoSistema == 1 || tipoSistema == 2 ? 'Bloquear': 'Ativar'}} Analista</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formulario" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+					<div class="form-group row">
+						<div class="col-lg-3">
+							<label>CPF:</label>
+							<input type="text" id="txtCPF" class="form-control" name="model.cpf" [(ngModel)]="model.cpf" readonly />
+						</div>
+						<div class="col-lg-8">
+							<label>Nome:</label>
+							<input type="text" id="txtNome" class="form-control" name="model.nome" [(ngModel)]="model.nome" readonly />							
+					
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-lg-4">
+							<label for="appt-time1" [class.required]="true">{{descricaoHora_Bloqueio_Atendimento}}</label>
+							<div class="input-group" style="display: flex;">
+								<input type="time"
+									   id="txtHoraAnaliseLoteListagemInicio"
+									   class="form-control" style="width: 50%;"
+									   name="model.horaAnaliseLoteListagemInicio"									
+									   [(ngModel)]="horaInicio"
+									   required	
+									    oninput="setCustomValidity('')"	
+									  />
+								<span class="text-center" style="padding-left: 10px;padding-right: 10px; padding-top: 8px;">a</span>
+								<input #validarHoraFim type="time" 
+									   id="txtHoraAnaliseLoteListagemFim"
+									   class="form-control" style="width: 50%;"						
+									   name="model.horaAnaliseLoteListagemFim"
+									   [(ngModel)]="horaFim"
+									   required
+									    oninput="setCustomValidity('')"										
+									    />
+								
+							</div>
+						</div>
+						<div *ngIf="tipoSistema == 1 || tipoSistema == 2  ? true: false" class="col-lg-6">
+							<label  for="dataorigem">Status dos PLIs a serem desvinculados:</label>
+							<div class="form-check">
+								<div *ngIf="tipoSistema == 1 ? true: false">
+									<div *ngFor="let option of model.listaStatusAnaliseVisual">
+										<label class="form-check-label" style="margin-right: 10px;">										
+											<input type="checkbox"
+												   name="options"
+												   value="{{option.checked}}"
+												   [checked]="option.checked ? true : null"
+													(change)="option.checked = !option.checked"
+												    />
+											{{option.descricao}}
+										</label>
+									</div>
+								</div>
+
+								<div *ngIf="tipoSistema == 2 ? true: false">
+									<div *ngFor="let option of model.listaStatusAnaliseListagem">
+										<label class="form-check-label" style="margin-right: 10px;">
+											<input type="checkbox"
+												   name="options"
+												   value="{{option.checked}}"
+												   [checked]="option.checked ? true : null"
+													(change)="option.checked = !option.checked"
+												    />
+											{{option.descricao}}
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<button type="button" class="btn btn-sm btn-default" (click)="fechar()"><span class="fa fa-times"></span> Cancelar</button>
+				<a id="Salvar"  disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()"><i class="fa fa-save"></i> Salvar</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div #appModalBloquearAnalistaBackground class="modal-backdrop fade in" style="display: none;"></div>

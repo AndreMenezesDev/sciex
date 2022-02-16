@@ -1,0 +1,210 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Plano de Exportação</app-titulo>
+			<app-sub-titulo>Informações do Plano </app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<!-- <a routerLink="/plano-de-exportacao" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a> -->
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+					</div>
+					<h2 class="panel-title h5">Dados do Plano</h2>
+				</header>
+				<article class="panel-body">
+					<fieldset>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="numeroPlano" class="control-label text-nowrap">N° Plano:</label>
+								{{model.numeroAnoPlanoFormatado}}
+							</div>
+							<div class="col-lg-4">
+								<label for="descricaoModalidade" class="control-label text-nowrap">Modalidade:</label>
+								{{model.tipoModalidadeString}}
+							</div>
+							<div class="col-lg-4">
+								<label for="descricaoTipo" class="control-label text-nowrap">Tipo:</label>
+								{{model.tipoExportacaoString}}
+							</div>
+						</div>
+						<div class="line"></div>
+						<div class="row">
+							<div class="col-lg-8">
+								<div class="form-group">
+                                    <label class="control-label ">Anexos do Plano:</label>
+                                    <a *ngIf="temArquivo"
+                                        (click)="downloadAnexo()"
+                                        class="btn btn-primary btn-sm">
+                                            <i class="fa fa-download" data-toggle="tooltip" title="" data-original-title="Download" ></i> 
+                                    </a>
+									<span *ngIf="!temArquivo">Arquivo não anexado pelo usuário</span>
+                                </div>
+							</div>
+						</div>
+					</fieldset>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+
+						<a (click)="voltar()" class="btn btn-sm btn-default btn-sm"><i class="fa fa-long-arrow-left m-r-xs"></i> Voltar</a>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading d-f">
+					<div class="panel-title h5 pull-left">Produto no Plano de Exportação</div>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal">
+						<div *ngFor="let item of listaProdutos">
+							<div class="panel-group m-b" id="accordion">
+								<section class="panel panel-default">
+									<header class="panel-heading pos-rlt">
+
+										<a class="accordion-toggle font-bold"
+										   data-toggle="collapse"
+										   data-parent="#accordion"
+										   [href]="'#pe'+item.idPEProduto"
+										   (click)="abrirListaMercadorias(item.idPEProduto)">
+											<i class="fa fa-plus-square-o a" id="{{item.idPEProduto}}"></i>
+											{{item.descricaoModelo | uppercase}} 
+										</a>
+
+										<div class="collapse-btn-excluir">
+											<div class="pull-right" *ngIf="!visualizar">
+												<a routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-propriedade-produto" 
+												class="btn btn-sm btn-default" data-toggle="tooltip" title="Dados do Produto" ><span class="fa fa-pencil-square-o"></span></a>
+												
+												<a 												  
+													routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-quadro-nacional" 
+													style="background-color: #008B8B;" class="btn btn-sm btn-primary" data-toggle="tooltip" 
+													title="Dados do Insumo Nacional ou Regional" >
+													<span class="fa  fa-plus-square"></span> Quadro II
+											  	</a>
+												
+												<a 	routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-quadro-importado"  
+												style="background-color: #2F4F4F;" class="btn btn-sm btn-primary" 
+												data-toggle="tooltip" title="Dados do Insumo Importado" >
+												<span class="fa  fa-plus-square"></span> Quadro III
+											   	</a>
+											</div>
+
+											<div class="pull-right" *ngIf="visualizar">
+												<a routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/visualizar-propriedade-produto" 
+												class="btn btn-sm btn-default" data-toggle="tooltip" title="Dados do Produto" ><span class="fa fa-pencil-square-o"></span></a>
+												
+												<a 												  
+													routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/visualizar-quadro-nacional" 
+													style="background-color: #008B8B;" class="btn btn-sm btn-primary" data-toggle="tooltip" 
+													title="Dados do Insumo Nacional ou Regional" >
+													<span class="fa  fa-plus-square"></span> Quadro II
+											  	</a>
+												
+												<a 	routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/visualizar-quadro-importado"  
+												style="background-color: #2F4F4F;" class="btn btn-sm btn-primary" 
+												data-toggle="tooltip" title="Dados do Insumo Importado" >
+												<span class="fa  fa-plus-square"></span> Quadro III
+											   	</a>
+											</div>
+										</div>
+
+									</header>
+
+									<div id="pe{{item.idPEProduto}}" class="panel-collapse collapse">
+										<article class="panel-body">
+											<div class="row form-group">
+												<div class="row form-group ">
+													<div class="col-lg-12">
+														<div class="alert alert-success" style="background-color: #E6E6FA; border-color: #836FFF; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+															Dados do Produto
+														</div>
+													</div>
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Produto Exportação:</label><span>{{ item.codigoProdutoExportacao }}</span>
+													</div>				
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Produto:</label><span>{{ item.descCodigoProdutoSuframa }}</span>
+													</div>
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Tipo:</label><span>{{item.descCodigoTipoProduto}}</span>
+													</div>
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">NCM:</label><span>{{ item.codigoNCM }}</span>	
+													</div>
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Unidade:</label><span>{{ item.descCodigoUnidade }}</span>
+													</div>		
+												</div>
+
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Modelo:</label><span>{{ item.descricaoModelo }}</span>
+													</div>
+												</div>
+											</div>
+
+											<div class="row form-group">
+												<div class="row form-group ">
+													<div class="col-lg-12">
+														<div class="alert alert-success" style="background-color: #E6E6FA; border-color: #836FFF; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+															Dados da Exportação
+														</div>
+													</div>
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Qtd. Total Exportação:</label><span>{{ item.qtdFormatado }}</span>
+													</div>				
+												</div>
+							
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Vlr. Total Exportação(US$):</label><span>{{ item.valorDolarFormatado }}</span>
+													</div>
+												</div>
+											</div>
+
+										</article>
+									</div>
+
+								</section>
+
+							</div>
+						</div>
+
+					</form>
+
+				</article>
+			</section>
+		</div>
+	</div>
+</div>
+
+
+

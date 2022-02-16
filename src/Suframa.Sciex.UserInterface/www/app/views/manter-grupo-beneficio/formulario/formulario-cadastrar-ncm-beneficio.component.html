@@ -1,0 +1,135 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<app-titulo>Cadastrar NCM com Benefício</app-titulo>
+			<app-sub-titulo>Formulário Cadastrar NCM com Benefício</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<div class="pull-right">
+
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-default btn-sm"
+                                    (click)="cancelarOperacao()">
+                                <i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+                            </button>
+
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-primary btn-sm"
+                                    (click)="formulario.onSubmit()">
+                                <i class="fa fa-save"></i> Incluir
+                            </button>
+
+
+                        </div>
+						<!--<a routerLink="/aladi/pesquisar" class="btn btn-default btn-sm"><i class="fa fa-long-arrow-left"></i> Cancelar</a>-->
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+						<fieldset>
+							<div class="row form-group">
+
+								<div class="col-lg-8">
+                                    <label for="txtEmpresa" class="control-label required">Benefício:</label>
+                                    <input #beneficio
+                                           type="text"
+                                           id="txt-descricao"
+                                           class="form-control"
+                                           name="empresa"
+                                           inputTextFilter="true"
+                                           [(ngModel)]="parametros.beneficio"
+                                           readonly
+                                    />
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label for="txtEmpresa" class="control-label required">Tipo de Benefício: </label>
+                                        <input #tipobeneficio
+                                                type="text"
+                                                name="tipo-beneficio"
+                                                class="form-control"
+                                                value="{{parametros.tipoBeneficio}} - {{parametros.percentualBeneficio | percent}}"
+                                                checked="checked"
+                                                readonly
+                                        />
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-lg-11" style="margin-right: 2px;">
+                                    <label for="percentualBeneficio" class="control-label required">Código NCM:</label>
+
+                                    <app-drop-list-select (valorModificado)="parametros.CodigoNCM = $event"
+														  name="codigoMunicipio"
+														  [isRequired]="false"
+														  servico="Ncm"
+                                                          [selMinimumInputLength]="3"
+                                                          placeholder="Informe o código ou a descrição"
+														  #codigoNcm>
+                                    </app-drop-list-select>
+
+                                </div>
+                            </div>
+
+						</fieldset>
+					</form>
+                </article>
+
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<div class="pull-right">
+
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-default btn-sm"
+                                    (click)="cancelarOperacao()">
+                                <i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+                            </button>
+
+                            <button type="button"
+                                    disableOnClick
+                                    class="btn btn-primary btn-sm"
+                                    (click)="formulario.onSubmit()">
+                                <i class="fa fa-save"></i> Incluir
+                            </button>
+                        </div>
+					</div>
+                </footer>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section [hidden]="ocultarGrid" class="panel panel-default">
+
+                            <app-cadastrar-ncm-beneficio-grid [(lista)]="grid.lista"
+                                    [(page)]="grid.page"
+                                    [(size)]="grid.size"
+                                    [(total)]="grid.total"
+                                    [(idTaxaGrupoBeneficio)] ="idTaxaGrupoBeneficio"
+                                    [(parametros)]="parametros"
+                                    (onChangeSize)="onChangeSize($event)"
+                                    (onChangePage)="onChangePage($event)"
+                                    (onChangeSort)="onChangeSort($event)">
+                            </app-cadastrar-ncm-beneficio-grid>
+
+                        </section>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+
+</div>

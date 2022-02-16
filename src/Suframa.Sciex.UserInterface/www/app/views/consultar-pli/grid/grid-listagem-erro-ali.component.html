@@ -1,0 +1,35 @@
+<app-grid
+		  [(lista)]="lista"
+		  [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-150 unset-nowrap text-left">
+						<app-ordenacao field="IdPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">LOCAL DO ERRO</app-ordenacao>
+					</th>
+					<th class="th-sortable th-500 unset-nowrap text-left-xs">
+						<app-ordenacao field="CodigoNivelErro" [sorted]="sorted" (onChangeSort)="changeSort($event)">MENSAGEM DO ERRO</app-ordenacao>
+					</th>
+					<th class="th-sortable th-160 unset-nowrap text-left-xs">
+						<app-ordenacao field="IdPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">ORIGEM DO ERRO</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of lista">
+					<td class="text-left unset-nowrap">{{item.localErro}}</td>
+					<td class="unset-nowrap text-left">{{item.descricao}}</td>
+					<td class="unset-nowrap text-left">{{item.origemErro}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

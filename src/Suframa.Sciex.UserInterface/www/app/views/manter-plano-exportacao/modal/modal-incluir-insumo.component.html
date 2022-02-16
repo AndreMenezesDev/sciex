@@ -1,0 +1,100 @@
+<div #appModalIncluirInsumo id="1" class="modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+	style="display: none;">
+	<div class="modal-dialog" style="width:1500px;margin-top: 10px;" style="
+    max-width: 60%;
+    width: auto !important;
+    margin-top: 10px;
+">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="title">Selecionar Insumos da LE</h4>
+			</div>
+			<div class="modal-body" style="max-height: calc(100vh - 210px);  overflow-y: auto;">
+				<form id="formularioB" #formularioB="ngForm" ngNativeValidate (ngSubmit)="confirmaSalvar()">
+					
+					<section class="panel panel-default">
+						<header class="panel-heading">
+							<h2 class="panel-title h5">Dados do Produto</h2>
+						</header>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-2">
+									<label for="codigoProdutoExportacao" class="control-label text-nowrap">Produto:</label>
+									<input id="codigoProdutoExportacao" type="text" name="codigoProdutoExportacao" autocomplete="off"
+										class="form-control" disabled="disabled"
+										[(ngModel)]="modelProduto.codigoProdutoExportacao" />
+								</div>
+								<div class="col-lg-10">
+									<label for="descCodigoProdutoSuframa" class="control-label text-nowrap">Descrição:</label>
+									<input type="text" id="descCodigoProdutoSuframa" name="descCodigoProdutoSuframa"
+										autocomplete="off" class="form-control" disabled="disabled"
+										[(ngModel)]="modelProduto.descCodigoProdutoSuframa" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-8">
+									<label for="DescCodigoTipoProduto" class="control-label text-nowrap">Tipo:</label>
+									<input id="DescCodigoTipoProduto" type="text" name="DescCodigoTipoProduto" autocomplete="off"
+										class="form-control" disabled="disabled"
+										[(ngModel)]="modelProduto.descCodigoTipoProduto" />
+								</div>
+								<div class="col-lg-4">
+									<label for="codigoNCM" class="control-label text-nowrap">NCM:</label>
+									<input type="text" id="codigoNCM" name="codigoNCM"
+										autocomplete="off" class="form-control" disabled="disabled"
+										[(ngModel)]="modelProduto.codigoNCM" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-8">
+									<label for="descricaoModelo" class="control-label text-nowrap">Modelo:</label>
+									<input id="descricaoModelo" type="text" name="descricaoModelo" autocomplete="off"
+										class="form-control" disabled="disabled"
+										[(ngModel)]="modelProduto.descricaoModelo" />
+								</div>
+								<div class="col-lg-4">
+									<label for="DescCodigoUnidade" class="control-label text-nowrap">Unidade:</label>
+									<input type="text" id="DescCodigoUnidade" name="DescCodigoUnidade"
+										autocomplete="off" class="form-control" disabled="disabled"
+										[(ngModel)]="modelProduto.descCodigoUnidade" />
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<section class="panel panel-default">
+						<header class="panel-heading">
+							<h2 class="panel-title h5">Insumos da LE</h2>
+						</header>	
+						<div class="panel-body">
+							<app-grid-modal-insumos
+								[(lista)]="grid.lista"
+								 [(total)]="grid.total"
+								 [(size)]="grid.size"
+								 [(page)]="grid.page"
+								 [(isUsuarioInterno)]="grid.isUsuarioInterno"
+								 [(parametros)]="parametros"
+								 [(formPai)] = "formPai"
+								 (onChangeSort)="onChangeSort($event)"
+								 (onChangeSize)="onChangeSize($event)"
+								 (onChangePage)="onChangePage($event)"
+								 (atualizarListaModal)="atulizarSelecaoLista($event)"
+								 >
+							</app-grid-modal-insumos>
+							
+						</div>
+					</section>
+					
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<div>
+					<button type="button" class="btn btn-sm btn-default" (click)="confirmaCancelar()"><span class="fa fa-times"></span> Cancelar</button>
+					<button type="button" id="Cadastrar" class="btn btn-primary btn-sm" (click)="confirmaSalvar()"><span class="fa fa-check"></span>Salvar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalIncluirInsumoBackground class="modal-backdrop fade in" style="display: none;"></div>

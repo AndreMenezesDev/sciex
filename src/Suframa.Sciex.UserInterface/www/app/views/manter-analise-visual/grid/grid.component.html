@@ -1,0 +1,90 @@
+<section class="panel panel-default no-margin-bottom">
+	<header *ngIf="isShowPanel" class="panel-heading">
+		<div *ngIf="parametros.exportarListagem" class="pull-right">
+			<div class="pull-right">
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" id="exportar" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar <i class="fa fa-caret-down"></i></button>
+				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="exportar">
+					<li role="presentation">
+						<a style="cursor:pointer" role="menuitem" (click)="exportar(1)"><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
+					</li>
+					<li role="presentation">
+						<a style="cursor:pointer" role="menuitem" (click)="exportar(2)"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<h2 class="panel-title h5">Registros</h2>
+	</header>
+
+	<app-grid-cabecalho [(size)]="size" (onChangeSize)="changeSize($event)" *ngIf="total > 0 && !isHideCabecalho"></app-grid-cabecalho>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="NumeroPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="TipoDocumento" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo de PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center">
+						<app-ordenacao field="InscricaoCadastral" [sorted]="sorted" (onChangeSort)="changeSort($event)">Inscrição Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable th-250 unset-nowrap">
+						<app-ordenacao field="RazaoSocial" [sorted]="sorted" (onChangeSort)="changeSort($event)">Empresa</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 text-center">
+						<app-ordenacao field="DataEnvioPliFormatada" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 text-left">
+						<app-ordenacao field="StatusPliAnalise" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+					</tr>
+			</thead>
+	
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="text-left">{{item.ano}}/{{item.numeroPli | formatCode:6}}</td>
+					<td class="unset-nowrap">{{item.descricaoTipoDocumento}}</td>
+					<td class="text-center">{{item.inscricaoCadastral}}</td>
+					<td class="unset-nowrap">{{item.razaoSocial}}</td>
+					<td class="text-center">{{item.dataEnvioPliFormatada}}</td>
+					<td class="text-left">{{item.statusPliAnaliseFormatado}}</td>
+					
+					<td class="text-left">
+						<span>
+							<a routerLink="/consultar-analisevisual/{{item.idPLI}}/analisar" *ngIf="item.idPliAnalise == null || item.statusPliAnalise == 2" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Análisar"><i class="fa fa-eye"></i></a>
+							<a (click)="abrirModalVisualizar(item)" *ngIf="item.statusPliAnalise == 7 || item.statusPliAnalise == 8 || item.statusPliAnalise == 9 || item.statusPliAnalise == 11 || item.statusPliAnalise == 12" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+							
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div *ngIf="total == 0 || total == null && isShowPanel">
+		<p class="text-center font-bold m-t-sm m-b-sm">Nenhum registro encontrado.</p>
+	</div>
+
+	<footer *ngIf="total > 0 && !isHidePaginacao" class="panel-footer" style="background-color: white!important; padding-bottom: 8px; padding-top: 8px;">
+		<div class="row">
+			<div class="col-sm-4" style="background-color: white!important;">
+				<small class="text-muted inline m-t-sm m-b-sm">Mostrando {{(page*size)-size+1}}-{{(page*size) < total ? (page*size) : total}} de {{total}} itens</small>
+			</div>
+			<app-paginacao [widthPagination]="10"
+						   [(page)]="page"
+						   [(size)]="size"
+						   [(total)]="total"
+						   [hidden]="false"
+						   (change)="changePage($event)">
+			</app-paginacao>
+		</div>
+	</footer>
+
+	<footer *ngIf="total > 0" class="panel-footer clearfix" style="padding-top: 18px; padding-bottom: 18px;"></footer>
+</section>
+
+<app-modal-analise-visual #appModalAnaliseVisual></app-modal-analise-visual> 

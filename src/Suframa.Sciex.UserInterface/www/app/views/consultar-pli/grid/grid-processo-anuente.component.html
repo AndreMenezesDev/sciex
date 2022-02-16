@@ -1,0 +1,27 @@
+<app-grid [(lista)]="lista"
+		  [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  [(parametros)]="parametros"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-170 unset-nowrap">Número Processo</th>
+					<th class="th-sortable unset-nowrap">Órgão Anuente</th>
+				</tr>
+			</thead>
+
+			<tbody> 
+				<tr *ngFor="let item of lista">
+					<td class="text-left">{{item.numeroProcesso}}</td>
+					<td class="unset-nowrap">{{item.descricao}}</td>																		
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+

@@ -1,0 +1,34 @@
+<app-grid [(page)]="page"
+          [(size)]="size"
+          [(total)]="total"
+          (onChangeSize)="changeSize($event)"
+          (onChangePage)="changePage($event)">
+
+    <div class="table-responsive">
+        <table class="table table-striped b-t b-light">
+            <thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="Codigo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Descricao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição</app-ordenacao>
+					</th>
+					<th class="text-center th-120">Ações</th>
+				</tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let item of lista">
+					<td class="text-center">{{item.codigo}}</td>
+                    <td>{{item.descricao}}</td>
+					<td class="text-center">
+						<a routerLink="/regime-tributario-teste/{{item.idRegimeTributario}}/visualizar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+						<a routerLink="/regime-tributario-teste/{{item.idRegimeTributario}}/editar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Editar"><i class="fa fa-pencil"></i></a>
+						<a class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Deletar" (click)="confirmarExclusao(item.idRegimeTributario)"><i class="fa fa-trash-o"></i></a>
+					</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-grid>

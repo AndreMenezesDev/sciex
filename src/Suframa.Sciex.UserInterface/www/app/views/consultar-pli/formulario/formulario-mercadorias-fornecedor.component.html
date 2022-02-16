@@ -1,0 +1,231 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+
+	<div class="e row">
+		<div class="col-lg-12">
+			<section class="panel panel-default m-t">
+				<header class="panel-heading FixPanelHeading">
+					<div class="pull-right">
+						<a (click)="voltar()" class="btn btn-default btn-sm">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</a>
+					</div>
+					<h2 class="panel-title h5">Descrição do Fornecedor/Anuente/Destaque</h2>
+				</header>
+				<form class="form" role="form">
+					<article class="panel-body text-sm">
+
+						<div class="row">
+							<div class="col-lg-12">
+								<div *ngIf="modelPLI != null && modelPLI.idPLIAplicacao != undefined && modelPLI.idPLIAplicacao != 1" class="alert alert-success" style="background-color: #e2f7ff; border-color: #196684; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+									Dados do PLI <span class="fa fa-long-arrow-right"></span> Descrição do Produto/Mercadoria <span class="fa fa-long-arrow-right"></span> Lista de Mercadorias <span class="fa fa-long-arrow-right"></span> Descrição do Fornecedor/Anuente/Destaque
+								</div>
+								<div *ngIf="modelPLI != null && modelPLI.idPLIAplicacao != undefined && modelPLI.idPLIAplicacao == 1" class="alert alert-success" style="background-color: #e2f7ff; border-color: #196684; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+									Dados do PLI <span class="fa fa-long-arrow-right"></span> Descrição da Mercadoria <span class="fa fa-long-arrow-right"></span> Lista de Mercadorias <span class="fa fa-long-arrow-right"></span> Descrição do Fornecedor/Anuente/Destaque
+								</div>
+							</div>
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12" style="color: #234884;">
+								<label class="m-r-xs">Nº PLI:</label><span>{{modelPLI.numeroPliConcatenado}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Empresa:</label><span>{{modelPLI.inscricaoCadastral}} |  {{modelPLI.cnpj}} | {{modelPLI.razaoSocial}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12" *ngIf="modelPLI != null && modelPLI.idPLIAplicacao != undefined && modelPLI.idPLIAplicacao != 1">
+
+							<div class="col-lg-8">
+								<label class="m-r-xs">Produto ZFM:</label><span>{{modelPLIMercadoria.codigoProdutoConcatenado}} | {{modelPLIMercadoria.descricaoProduto}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Código Mercadoria:</label><span>{{modelPLIMercadoria.codigoNCMMercadoria}} | {{modelPLIMercadoria.descricaoNCMMercadoria}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12 form-group">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Nr. Destaque Mercadoria:</label><span>{{modelPLIMercadoria.numeroNCMDestaque}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Dados Fornecedor</label>
+							</div>
+
+						</div>
+
+						<div class="col-lg-12 form-group">
+							<div style="border-bottom: 1px solid #000"></div>
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Fornecedor:</label><span>{{modelPliFornecedorFabricante.descricaoFornecedor}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Endereço:</label>{{modelPliFornecedorFabricante.descricaoLogradouroFornecedor}}
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Número:</label><span>{{modelPliFornecedorFabricante.numeroFornecedor}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Complemento:</label><span>{{modelPliFornecedorFabricante.descricaoComplementoFornecedor}}</span>
+							</div>
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Cidade:</label><span>{{modelPliFornecedorFabricante.descricaoCidadeFornecedor}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12 form-group">
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Estado:</label><span>{{modelPliFornecedorFabricante.descricaoEstadoFornecedor}}</span>
+							</div>
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">País Aquisição Mercadoria:</label><span>{{modelPliFornecedorFabricante.codigoDescricaoPaisFornecedorConcatenado}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Dados Fabricante</label>
+							</div>
+
+						</div>
+
+						<div class="col-lg-12">
+							<div style="border-bottom: 1px solid #000"></div>
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Tipo Fabricante:</label><span>{{modelPLIMercadoria.descricaoTipoFornecedor}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-12">
+								<label class="m-r-xs">Fabricante:</label><span>{{modelPliFornecedorFabricante.descricaoFabricante}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Endereço:</label>{{modelPliFornecedorFabricante.descricaoLogradouroFabricante}}
+							</div>
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Número:</label>{{modelPliFornecedorFabricante.numeroFabricante}}
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Complemento:</label><span>{{modelPliFornecedorFabricante.descricaoComplementoFabricante}}</span>
+							</div>
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Cidade:</label><span>{{modelPliFornecedorFabricante.descricaoCidadeFabricante}}</span>
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12 form-group">
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">Estado:</label><span>{{modelPliFornecedorFabricante.descricaoEstadoFabricante}}</span>
+							</div>
+
+							<div class="col-lg-6">
+								<label class="m-r-xs">País Origem Mercadoria:</label><span>{{modelPliFornecedorFabricante.codigoDescricaoPaisFabricanteConcatenado}}</span>
+																					
+
+							</div>
+
+						</div>
+
+						<div class="row col-lg-12">
+
+							<div class="col-lg-4">
+								<label class="m-r-xs">Dados Anuentes</label>
+							</div>
+
+						</div>
+
+						<div class="col-lg-12">
+							<div style="border-bottom: 1px solid #000"></div>
+						</div>
+
+						<div class="row">
+							<br />
+						</div>
+
+						<div class="col-lg-12 form-group">
+
+							<app-manter-pli-processo-anuente-grid [(lista)]="grid.lista"
+																  [(page)]="grid.page"
+																  [(size)]="grid.size"
+																  [(total)]="grid.total"
+																  [(parametros)]="parametros">
+							</app-manter-pli-processo-anuente-grid>
+
+						</div>
+
+					</article>
+					<footer class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+						<div class="pull-right">
+							<a (click)="voltar()" class="btn btn-default btn-sm">
+								<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+							</a>
+						</div>
+					</footer>
+				</form>
+			</section>
+		</div>
+
+	</div>
+
+</div>

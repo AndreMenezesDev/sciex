@@ -1,0 +1,73 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)">
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable unset-nowrap" *ngIf="isUsuarioInterno">
+						<app-ordenacao field="InscricaoCadastral" [sorted]="sorted" (onChangeSort)="changeSort($event)"><br>Inscrição<br>Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap" *ngIf="isUsuarioInterno">
+						<app-ordenacao field="Empresa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Empresa</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Prod.</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoProdutoSuframa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Prod. Suf.</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNCM" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Desc. Produto</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoModelo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Modelo do Produto</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="QtdeInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Qtde Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap">
+						<app-ordenacao field="DataEnvio" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data Envio</app-ordenacao>
+					</th>
+					<th class="th-sortable th-200 unset-nowrap">
+						<app-ordenacao field="StatusLE" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable th-200 unset-nowrap">
+						<app-ordenacao field="StatusLEAlteracao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status da Alteração</app-ordenacao>
+					</th>
+					<th class="th-sortable th-100 unset-nowrap" *ngIf="isUsuarioInterno">
+						<app-ordenacao field="NomeResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista</app-ordenacao>
+					</th>
+					<th class="text-center th-100">Ações</th>
+				</tr>
+			</thead>
+
+			<tbody *ngIf="total > 0">
+				<tr *ngFor="let item of lista">
+					<td class="text-center" *ngIf="isUsuarioInterno">{{item.inscricaoCadastral}}</td>
+					<td class="unset-nowrap text-left" *ngIf="isUsuarioInterno">{{item.razaoSocial}}</td>
+					<td class="text-center">{{item.codigoProduto}}</td>
+					<td class="text-center">{{item.codigoProdutoSuframa}}</td>
+					<td class="unset-nowrap">{{item.codigoNCM}}</td>
+					<td class="unset-nowrap text-left">{{item.descCodigoProdutoSuframa}}</td>
+					<td class="unset-nowrap text-left">{{item.descricaoModelo}}</td>
+					<td class="unset-nowrap">{{item.qtdInsumo}}</td>
+					<td class="unset-nowrap">{{item.dataCadastroFormatada}}</td>
+					<td class="unset-nowrap">{{item.statusLEString}}</td>
+					<td class="unset-nowrap">{{item.statusLEAlteracaoString}}</td>
+					<td class="unset-nowrap text-left" *ngIf="isUsuarioInterno">{{item.nomeResponsavel}}</td>
+					<td class="text-center">
+						<a routerLink="/consultar-listagem-exportacao/{{item.idLe}}/consultar" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Visualizar"><i class="fa fa-file-text-o"></i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>

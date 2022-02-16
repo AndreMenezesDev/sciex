@@ -1,0 +1,144 @@
+<div #appModalModalTransferenciaInsumo class="modal modal-Xwide  fade in" tabindex="-1" role="dialog"
+	aria-hidden="false" style="display: none;">
+	<div class="modal-dialog modal-lg-2">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title">Transferência de Saldo entre Insumos</h4>
+			</div>
+      <div class="modal-body" style="overflow-y: auto; max-height: calc(200vh - 210px);">
+        <form>
+          <div class="form-group row">
+            <div class="m-r-xs">
+              <div class="col-lg-12">
+                <div class="alert alert-success" style="background-color: #F0FFF0; border-color: #98FB98; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+                  Insumo Origem
+                </div>
+              </div>
+            </div>
+            <div class="row col-lg-12">
+              <div class="col-lg-4" >
+                <label class="m-r-xs">Cód Insumo:</label><span>{{insumoOrigem.codigoInsumo}}</span>
+              </div>
+              <div class="col-lg-8">
+                <label class="m-r-xs">Descrição:</label><span>{{insumoOrigem.descricaoInsumo}}</span>
+              </div>                
+            </div>
+            <div class="row col-lg-12">                
+              <div class="col-lg-2">
+                <label class="m-r-xs">Tipo:</label><span>{{insumoOrigem.tipoInsumo}}</span>
+              </div>                    
+              <div class="col-lg-2">
+                <label class="m-r-xs">NCM:</label><span>{{insumoOrigem.codigoNCM}}</span>
+              </div>
+              <div class="col-lg-3">
+                <label class="m-r-xs">Unidade:</label><span>{{insumoOrigem.descCodigoUnidade}}</span>
+              </div>                    
+              <div class="col-lg-3">
+                <label class="m-r-xs">Coeficiente Técnico:</label><span>{{insumoOrigem.valorCoeficienteTecnico}}</span>
+              </div>
+            </div>
+            <div class="row col-lg-12">                
+              <div class="col-lg-4">
+                <label class="m-r-xs">Part Number:</label><span>{{insumoOrigem.descricaoPartNumber}}</span>
+              </div>
+              <div class="col-lg-3">
+                <label class="m-r-xs">Percentual Perda(%):</label><span>{{insumoOrigem.valorPercentualPerda | number : '1.1-2'}}</span>
+              </div>                                
+              <div class="col-lg-3">
+                <label class="m-r-xs">Qtd. Max. Insumo:</label><span>{{insumoOrigem.qtdMaxInsumo | number : '1.5-5'}}</span>
+              </div>
+            </div>                  
+            <div class="row col-lg-12">
+              <div class="col-lg-12">
+                <label class="m-r-xs">Especificação Técnica:</label><span>{{insumoOrigem.descricaoEspecificacaoTecnica}}</span>
+              </div>                
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="m-r-xs">
+              <div class="col-lg-12">
+                <div class="alert alert-info" style="background-color: #E0FFFF; border-color: #B0E0E6; color: #000; font-weight: bold;   padding: 8px 15px; margin-bottom: 10px; font-size: 14px;">
+                  Insumo Destino
+                </div>
+              </div>
+            </div>
+            <div class="row col-lg-12">
+              <div class="form-group">
+                <label class="col-lg-2 control-label " >Código do Insumo:</label>
+                <div class="col-lg-8">
+                      <app-drop-list-select2 (valorModificado)="parametros.codigoInsumo = $event" 
+                          #insumo
+                          name="insumo" 
+                          id="insumo"                       
+                          required
+                          servico="Insumo"
+                          [isDisabled]="desabilitado"
+                          msgErro="Insumo não cadastrado."
+                          [selMinimumInputLength]="3"
+                          [(ngModel)]="parametros.codigoInsumo"
+                          [parametro]="parametros.codigoProdutoExportacao"
+                          parametroChave="codigoProdutoExportacao"
+                          placeholder="Informe o código ou a descrição"
+                          (click)="pesquisarInsumoDestino($event)">
+                      </app-drop-list-select2>         
+                  </div>
+              </div>
+              <div class="col-lg-8">
+                <label class="m-r-xs">Descrição:</label><span>{{insumoDestino.descricaoInsumo}}</span>
+              </div>
+            </div>
+            <div class="row col-lg-12">
+              <div class="col-lg-3">
+                <label class="m-r-xs">Tipo:</label><span>{{insumoDestino.tipoInsumo}}</span>
+              </div>
+              <div class="col-lg-3">
+                <label class="m-r-xs">NCM:</label><span>{{insumoDestino.codigoNCM}}</span>
+              </div>
+              <div class="col-lg-3">
+                <label class="m-r-xs">Unidade:</label><span>{{insumoDestino.descricaoUnidadeMedida}}</span>
+              </div>
+            </div>
+            <div class="row col-lg-12">
+              <div class="col-lg-3">
+                <label class="m-r-xs">Coeficiente Técnico:</label><span>{{insumoDestino.valorCoeficienteTecnico}}</span>
+              </div>           
+              <div class="col-lg-3">
+                <label class="m-r-xs">Qtd. Max. Insumo:</label><span>0</span>
+              </div>
+            </div>
+            <div class="row col-lg-12">
+              <div class="col-lg-12">
+                <label class="m-r-xs">Especificação Técnica:</label><span>{{insumoDestino.descricaoEspecTecnica}}</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label" >Part Number:</label>
+              <div class="col-lg-4">
+                <input type="text"
+                       id="partNumber"
+                       class="form-control"                 
+                       name="partNumber" 
+                       [(ngModel)]="parametros.descricaoPartNumber" />                                
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label" >Perc. Perda(%):</label>
+              <div class="col-lg-4">
+                <input type="number"
+                       id="valorPercentualPerda"
+                       class="form-control"   
+                       name="valorPercentualPerda" 
+                       [(ngModel)]="parametros.valorPercentualPerda"/>                                
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="modal-footer" style="padding: 10px 15px;">
+          <a class="btn btn-sm btn-default" (click)="fechar()" data-dismiss="modal"><span class="fa fa-times"></span> Cancelar</a>
+          <a class="btn btn-sm btn-success" (click)="salvar()"><span class="fa fa-check"></span> Salvar</a>
+        </div>     
+      </div>
+		</div>
+	</div>
+</div>
+<div #appModalModalTransferenciaInsumoBackground class="modal-backdrop fade in" style="display: none;"></div>

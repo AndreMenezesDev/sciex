@@ -1,0 +1,46 @@
+
+<section class="panel panel-default no-margin-bottom">
+	<header *ngIf="isShowPanel" class="panel-heading">
+		<div *ngIf="parametros.exportarListagem" class="pull-right">
+			<div class="pull-right">
+				<!--<button class="btn btn-sm btn-primary" *ngIf="!ocultarBotaoReprocessar" style="text-align: left" type="submit" disableOnClick (click)="reprocessarPLI()"> Reprocessar PLI</button>-->
+				<button type="button" class="btn btn-default btn-sm dropdown-toggle" id="exportar" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar <i class="fa fa-caret-down"></i></button>
+				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="exportar">
+					<li role="presentation">
+						<a style="cursor:pointer" role="menuitem" (click)="exportar(1)"><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
+					</li>
+					<li role="presentation">
+						<a style="cursor:pointer" role="menuitem" (click)="exportar(2)"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<h2 class="panel-title h5">Registros</h2>
+	</header>
+
+	<app-grid-cabecalho [(size)]="size" (onChangeSize)="changeSize($event)" *ngIf="total > 0 && !isHideCabecalho"></app-grid-cabecalho>
+
+	<ng-content></ng-content>
+
+	<div *ngIf="total == 0 || total == null && isShowPanel">
+		<p class="text-center font-bold m-t-sm m-b-sm">Nenhum registro encontrado.</p>
+	</div>
+
+	<footer *ngIf="total > 0 && !isHidePaginacao" class="panel-footer" style="background-color: white!important; padding-bottom: 8px; padding-top: 8px;">
+		<div class="row">
+			<div class="col-sm-4" style="background-color: white!important;">
+				<small class="text-muted inline m-t-sm m-b-sm">Mostrando {{(page*size)-size+1}}-{{(page*size) < total ? (page*size) : total}} de {{total}} itens</small>
+			</div>
+			<app-paginacao [widthPagination]="10"
+						   [(page)]="page"
+						   [(size)]="size"
+						   [(total)]="total"
+						   [hidden]="false"
+						   (change)="changePage($event)">
+			</app-paginacao>
+		</div>
+	</footer>
+
+	<footer *ngIf="total > 0" class="panel-footer clearfix" style="padding-top: 18px; padding-bottom: 18px;"></footer>
+</section>
+

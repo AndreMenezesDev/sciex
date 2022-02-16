@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EB3469B6-8297-4F55-B0C7-4706A3F78C2F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Suframa.Sciex.BusinessLogic</RootNamespace>
+    <AssemblyName>Suframa.Sciex.BusinessLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Audit.NET, Version=10.0.1.0, Culture=neutral, PublicKeyToken=571d6b80b242c87e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Audit.NET.10.0.1\lib\net45\Audit.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetCasClient">
+      <HintPath>..\..\lib\DotNetCasClient.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="FluentValidation, Version=7.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.7.3.2\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Handlebars, Version=1.8.1.0, Culture=neutral, PublicKeyToken=22225d0bf33cd661, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Handlebars.Net.1.9.0\lib\net40\Handlebars.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.4.4.12\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenHtmlToPdf, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenHtmlToPdf.1.12.0.0\lib\net45\OpenHtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.4.0.12\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Integration.Web.4.0.12\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.WebApi, Version=4.0.12.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SimpleInjector.Integration.WebApi.4.0.12\lib\net45\SimpleInjector.Integration.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AliArquivoEnvio\AliArquivoEnvioBll.cs" />
+    <Compile Include="AliArquivoEnvio\IAliArquivoEnvioBll.cs" />
+    <Compile Include="AliArquivo\AliArquivoBll.cs" />
+    <Compile Include="AliArquivo\IAliArquivoBll.cs" />
+    <Compile Include="AliHistorico\AliHistoricoBll.cs" />
+    <Compile Include="AliHistorico\IAliHistoricoBll.cs" />
+    <Compile Include="Ali\AliBll.cs" />
+    <Compile Include="Ali\IAliBll.cs" />
+    <Compile Include="AnaliseInsumoImportado\AnaliseInsumoImportadoBll.cs" />
+    <Compile Include="AnaliseInsumoImportado\IAnaliseInsumoImportadoBll.cs" />
+    <Compile Include="BeneficioNCM\IManterBeneficioNCMBll.cs" />
+    <Compile Include="BeneficioNCM\ManterBeneficioNCMBll.cs.cs" />
+    <Compile Include="Beneficio\IManterBeneficioBll.cs" />
+    <Compile Include="Beneficio\ManterBeneficioBll.cs" />
+    <Compile Include="Auditoria\IAuditoriaBll.cs" />
+    <Compile Include="Auditoria\AuditoriaBll.cs" />
+    <Compile Include="CalculoParidade\CalcularParidadeBll.cs" />
+    <Compile Include="CalculoParidade\ICalcularParidadeBll.cs" />
+    <Compile Include="Cancelamento\CancelamentoBll.cs" />
+    <Compile Include="Cancelamento\ICancelamentoBll.cs" />
+    <Compile Include="CancelarLi\ICancelarLiBll.cs" />
+    <Compile Include="CancelarLi\CancelarLiBll.cs" />
+    <Compile Include="CertificadoRegistroSuframa\CertificadoRegistroSuframaBll.cs" />
+    <Compile Include="CertificadoRegistroSuframa\ICertificadoRegistroSuframaBll.cs" />
+    <Compile Include="CertificadoRegistro\CertificadoRegistroBll.cs" />
+    <Compile Include="CertificadoRegistro\ICertificadoRegistroBll.cs" />
+    <Compile Include="ComplementarPLI\ComplementarPLIBll.cs" />
+    <Compile Include="ComplementarPLI\IComplementarPLIBll.cs" />
+    <Compile Include="ConsultarEntradaDI\ConsultarEntradaDIProcessadoBll.cs" />
+    <Compile Include="ConsultarEntradaDI\IConsultarEntradaDIProessadoBll.cs" />
+    <Compile Include="ConsultarEntradaDI\ConsultarEntradaDIBll.cs" />
+    <Compile Include="ConsultarEntradaDI\IConsultarEntradaDIBll.cs" />
+    <Compile Include="ConsultarProcessoExportacao\ConsultarProcessoExportacaoBll.cs" />
+    <Compile Include="ConsultarProcessoExportacao\IConsultarProcessoExportacaoBll.cs" />
+    <Compile Include="ConsultarProtocoloEnvio\ConsultarProtocoloEnvioBll.cs" />
+    <Compile Include="ConsultarProtocoloEnvio\IConsultarProtocoloEnvioBll.cs" />
+    <Compile Include="ConsultarPli\ConsultarPliBll.cs" />
+    <Compile Include="ConsultarPli\IConsultarPliBll.cs" />
+    <Compile Include="DeferirPlanoExportacao\DeferirPlanoExportacaoBll.cs" />
+    <Compile Include="DeferirPlanoExportacao\IDeferirPlanoExportacaoBll.cs" />
+    <Compile Include="DesignarPli\IDesignarPliBll.cs" />
+    <Compile Include="DesignarPli\DesignarPliBll.cs" />
+    <Compile Include="DetalheInsumos\DetalheInsumosBll.cs" />
+    <Compile Include="DetalheInsumos\IDetalheInsumosBll.cs" />
+    <Compile Include="DistribuicaoAutomatica\IDistribuicaoAutomaticaBll.cs" />
+    <Compile Include="DistribuicaoAutomatica\DistribuicaoAutomaticaBll.cs" />
+    <Compile Include="DI\DiBll.cs" />
+    <Compile Include="DI\IDiBll.cs" />
+    <Compile Include="ErroProcessamentoAli\ErroProcessamentoAliBll.cs" />
+    <Compile Include="ErroProcessamentoAli\IErroProcessamentoAliBll.cs" />
+    <Compile Include="ErroProcessamentoProtocoloEnvio\ErroProcessamentoProtocoloEnvioBll.cs" />
+    <Compile Include="ErroProcessamentoProtocoloEnvio\IErroProcessamentoProtocoloEnvioBll.cs" />
+    <Compile Include="ErroProcessamento\ErroProcessamentoBll.cs" />
+    <Compile Include="ErroProcessamento\IErroProcessamentoBll.cs" />
+    <Compile Include="EstruturaPropriaLEArquivo\EstruturaPropriaLEArquivoBll.cs" />
+    <Compile Include="EstruturaPropriaLEArquivo\IEstruturaPropriaLEArquivoBll.cs" />
+    <Compile Include="EstruturaPropriaPEArquivo\EstruturaPropriaPEArquivoBll.cs" />
+    <Compile Include="EstruturaPropriaPEArquivo\IEstruturaPropriaPEArquivoBll.cs" />
+    <Compile Include="EstruturaPropriaPliArquivo\EstruturaPropriaPliArquivoBll.cs" />
+    <Compile Include="EstruturaPropriaPliArquivo\IEstruturaPropriaPliArquivoBll.cs" />
+    <Compile Include="EstruturaPropriaPLI\EstruturaPropriaPliBll.cs" />
+    <Compile Include="EstruturaPropriaPLI\IEstruturaPropriaPliBll.cs" />
+    <Compile Include="HistoricoProcessoSuframa\HistoricoProcessoSuframaBll.cs" />
+    <Compile Include="HistoricoProcessoSuframa\IHistoricoProcessoSuframaBll.cs" />
+    <Compile Include="HistoricoProcesso\HistoricoProcessoBll.cs" />
+    <Compile Include="HistoricoProcesso\IHistoricoProcessoBll.cs" />
+    <Compile Include="IncluirDetalheInsumo\IncluirDetalheInsumoBll.cs" />
+    <Compile Include="Insumo\IInsumoBll.cs" />
+    <Compile Include="Insumo\InsumoBll.cs" />
+    <Compile Include="LEAnalise\ILEAnaliseProdutoBll.cs" />
+    <Compile Include="LEAnalise\ILEAnaliseInsumoBll.cs" />
+    <Compile Include="LEAnalise\LEAnaliseProdutoBll.cs" />
+    <Compile Include="LEAnalise\LEAnaliseInsumoBll.cs" />
+    <Compile Include="LEConsultar\ILEConsultarInsumoBll.cs" />
+    <Compile Include="LEConsultar\ILEConsultarProdutoBll.cs" />
+    <Compile Include="LEConsultar\LEConsultarInsumoBll.cs" />
+    <Compile Include="LEConsultar\LEConsultarProdutoBll.cs" />
+    <Compile Include="LE\ILEInsumoBll.cs" />
+    <Compile Include="LE\ILEProdutoBll.cs" />
+    <Compile Include="LE\LEInsumoBll.cs" />
+    <Compile Include="LE\LEProdutoBll.cs" />
+    <Compile Include="LI\ILiBll.cs" />
+    <Compile Include="LI\LiBll.cs" />
+    <Compile Include="MinhaSolicitacaoAlteracaoDetalhe\IMinhaSolicitacaoAlteracaoDetalheBll.cs" />
+    <Compile Include="MinhaSolicitacaoAlteracaoDetalhe\MinhaSolicitacaoAlteracaoDetalheBll.cs" />
+    <Compile Include="MinhaSolicitacaoAlteracao\IMinhaSolicitacaoAlteracaoBll.cs" />
+    <Compile Include="MinhaSolicitacaoAlteracao\MinhaSolicitacaoAlteracaoBll.cs" />
+    <Compile Include="Ncm\NcmExcluirValidation.cs" />
+    <Compile Include="Ncm\NcmExisteRelacionamentoValidation.cs" />
+    <Compile Include="Ncm\NcmValidation.cs" />
+    <Compile Include="Ncm\NcmBll.cs" />
+    <Compile Include="Ncm\INcmBll.cs" />
+    <Compile Include="NcmExcecao\INcmExcecaoBll.cs" />
+    <Compile Include="NcmExcecao\NcmExcecaoBll.cs" />
+    <Compile Include="NotiificarEmail\INotificarEmailBll.cs" />
+    <Compile Include="NotiificarEmail\NotificarEmailBll.cs" />
+    <Compile Include="Pais\IPaisBll.cs" />
+    <Compile Include="Pais\PaisBll.cs" />
+    <Compile Include="ParametrizacaoAnalista\IParametrizarAnalistaBll.cs" />
+    <Compile Include="ParametrizacaoAnalista\ParametrizarAnalistaBll.cs" />
+    <Compile Include="ParecerTecnicoSuframa\IParecerTecnicoSuframaBll.cs" />
+    <Compile Include="ParecerTecnicoSuframa\ParecerTecnicoSuframaBll.cs" />
+    <Compile Include="ParecerTecnico\IParecerTecnicoBll.cs" />
+    <Compile Include="ParecerTecnico\ParecerTecnicoBll.cs" />
+    <Compile Include="PEDetalheInsumo\IPEDetalheInsumoBll.cs" />
+    <Compile Include="PEDetalheInsumo\PEDetalheInsumoBll.cs" />
+    <Compile Include="PEInsumos\IPEInsumoBll.cs" />
+    <Compile Include="PEInsumos\PEInsumoBll.cs" />
+    <Compile Include="AnalisePlanoDeExportacao\IAnalisePlanoDeExportacaoBll.cs" />
+    <Compile Include="AnalisePlanoDeExportacao\AnalisePlanoDeExportacaoBll.cs" />
+    <Compile Include="PlanoExportacao\IPEPaisBll.cs" />
+    <Compile Include="PlanoExportacao\IPEProdutoBll.cs" />
+    <Compile Include="PlanoExportacao\IPlanoExportacaoBll.cs" />
+    <Compile Include="PlanoExportacao\PEPaisBll.cs" />
+    <Compile Include="PlanoExportacao\PEProdutoBll.cs" />
+    <Compile Include="PlanoExportacao\PlanoExportacaoBll.cs" />
+    <Compile Include="PliAnaliseVisual\IPliAnaliseVisualBll.cs" />
+    <Compile Include="PliAnaliseVisual\PliAnaliseVisualBll.cs" />
+    <Compile Include="PliFornecedorFabricante\IPliFornecedorFabricanteBll.cs" />
+    <Compile Include="PliFornecedorFabricante\PliFornecedorFabricanteBll.cs" />
+    <Compile Include="PliTipo\IPliTipoBll.cs" />
+    <Compile Include="PliTipo\PliTipoBll.cs" />
+    <Compile Include="ProcessoExportacao\IProcessoExportacaoBll.cs" />
+    <Compile Include="ProcessoExportacao\ProcessoExportacaoBll.cs" />
+    <Compile Include="ProcessoExportacaoSuframa\IProcessoExportacaoSuframaBll.cs" />
+    <Compile Include="ProcessoExportacaoSuframa\ProcessoExportacaoSuframaBll.cs" />
+    <Compile Include="ProcessoInsumoSuframa\IProcessoInsumoSuframaBll.cs" />
+    <Compile Include="ProcessoInsumoSuframa\ProcessoInsumoSuframaBll.cs" />
+    <Compile Include="ProcessoInsumos\IProcessoInsumoBll.cs" />
+    <Compile Include="ProcessoInsumos\ProcessoInsumoBll.cs" />
+    <Compile Include="ProcessoProduto\IProcessoProdutoBll.cs" />
+    <Compile Include="ProcessoProduto\ProcessoProdutoBll.cs" />
+    <Compile Include="ProcessoSolicitacaoAlteracao\IProcessoInsumoBll.cs" />
+    <Compile Include="ProcessoSolicitacaoAlteracao\ProcessoInsumoBll.cs" />
+    <Compile Include="ProrrogarSolicitacao\IProrrogarSolicitacaoBll.cs" />
+    <Compile Include="ProrrogarSolicitacao\ProrrogarSolicitacaoBll.cs" />
+    <Compile Include="Pss\IUsuarioPssBll.cs" />
+    <Compile Include="Pss\UsuarioPSSBll.cs" />
+    <Compile Include="PliProduto\IPliProdutoBll.cs" />
+    <Compile Include="PliProduto\PliProdutoExcluirValidation.cs" />
+    <Compile Include="PliProduto\PliProdutoBll.cs" />
+    <Compile Include="PliProduto\PliProdutoValidation.cs" />
+    <Compile Include="PliStatusRelatorio\IPliStatusRelatorioBll.cs" />
+    <Compile Include="PliStatusRelatorio\PliStatusRelatorioBll.cs" />
+    <Compile Include="RecintoAlfandega\IRecintoAlfandegaBll.cs" />
+    <Compile Include="RecintoAlfandega\RecintoAlfandegaBll.cs" />
+    <Compile Include="RegimeTributario\IRegimeTributarioBll.cs" />
+    <Compile Include="RegimeTributario\IRegimeTributarioTesteBll.cs" />
+    <Compile Include="RegimeTributario\RegimeTributarioBll.cs" />
+    <Compile Include="RegimeTributario\RegimeTributarioDeletarValidation.cs" />
+    <Compile Include="RegimeTributario\RegimeTributarioExcluirValidation.cs" />
+    <Compile Include="RegimeTributario\RegimeTributarioExisteRelacionamentoValidation.cs" />
+    <Compile Include="RegimeTributario\RegimeTributarioTesteBll.cs" />
+    <Compile Include="RegimeTributario\RegimeTributarioValidation.cs" />
+    <Compile Include="ServicoGerarParecerSuspensao\IServicoGerarParecerSuspensaoBll.cs" />
+    <Compile Include="ServicoGerarParecerSuspensao\ServicoGerarParecerSuspensaoBll.cs" />
+    <Compile Include="SetorArmazenamento\ISetorArmazenamentoBll.cs" />
+    <Compile Include="SetorArmazenamento\SetorArmazenamentoBll.cs" />
+    <Compile Include="SolicitacaoLE\ISolicitacaoLeBll.cs" />
+    <Compile Include="SolicitacaoLE\SolicitacaoLeBll.cs" />
+    <Compile Include="SolicitacaoLEInsumo\ISolicitacaoLEInsumoBll.cs" />
+    <Compile Include="SolicitacaoLEInsumo\SolicitacaoLEInsumoBll.cs" />
+    <Compile Include="SolicitacaoPE\ISolicitacaoPEBll.cs" />
+    <Compile Include="SolicitacaoPE\SolicitacaoPEBll.cs" />
+    <Compile Include="SolicitacaoPliDetalheMercadoria\ISolicitacaoPliDetalheMercadoriaBll.cs" />
+    <Compile Include="SolicitacaoPliDetalheMercadoria\SolicitacaoPliDetalheMercadoriaBll.cs" />
+    <Compile Include="SolicitacaoPliFornecedorFabricante\ISolicitacaoPliFornecedorFabricanteBll.cs" />
+    <Compile Include="SolicitacaoPliFornecedorFabricante\SolicitacaoPliFornecedorFabricanteBll.cs" />
+    <Compile Include="SolicitacaoPliMercadoria\ISolicitacaoPliMercadoriaBll.cs" />
+    <Compile Include="SolicitacaoPliMercadoria\SolicitacaoPliMercadoriaBll.cs" />
+    <Compile Include="SolicitacaoPliprocessoAnuente\ISolicitacaoPliProcessoAnuenteBll.cs" />
+    <Compile Include="SolicitacaoPliprocessoAnuente\SolicitacaoPliProcessoAnuenteBll.cs" />
+    <Compile Include="SolicitacaoPli\ISolicitacaoPliBll.cs" />
+    <Compile Include="SolicitacaoPli\SolicitacaoPliBll.cs" />
+    <Compile Include="Solicitacao\ISolicitacaoBll.cs" />
+    <Compile Include="Solicitacao\SolicitacaoBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\Moeda\ICalcularMoedaBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\Moeda\CalcularMoedaBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\Pais\ISolicAlteracaoPaisBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\Pais\SolicAlteracaoPaisBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\QuantidadeCoeficiente\IQuantidadeCoeficienteBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\QuantidadeCoeficiente\QuantidadeCoeficienteBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\ValorFrete\IValorFreteBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\ValorFrete\ValorFreteBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\ValorUnitario\IValorUnitarioBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\ValorUnitario\ValorUnitarioBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\SolicitacaoAlteracao\ISolicitacaoAlteracaoBll.cs" />
+    <Compile Include="SolicitacoesAlteracao\SolicitacaoAlteracao\SolicitacaoAlteracaoBll.cs" />
+    <Compile Include="SolicitarInclusaoInsumo\ISolicitarInclusaoInsumoBll.cs" />
+    <Compile Include="SolicitarInclusaoInsumo\SolicitarInclusaoInsumoBll.cs" />
+    <Compile Include="TipoCoberturaCambial\ITipoCoberturaCambialBll.cs" />
+    <Compile Include="TipoCoberturaCambial\TipoCoberturaCambialBll.cs" />
+    <Compile Include="TipoAcordoTarifario\ITipoAcordoTarifarioBll.cs" />
+    <Compile Include="TipoAcordoTarifario\TipoAcordoTarifarioBll.cs" />
+    <Compile Include="PliStatus\IPliStatusBll.cs" />
+    <Compile Include="PliStatus\PliStatusBll.cs" />
+    <Compile Include="Pli\IPliBll.cs" />
+    <Compile Include="Pli\PliBll.cs" />
+    <Compile Include="Pli\PliExcluirValidation.cs" />
+    <Compile Include="Pli\PliExisteRelacionamentoValidation.cs" />
+    <Compile Include="Pli\PliValidation.cs" />
+    <Compile Include="Representacao\IRepresentacaoBll.cs" />
+    <Compile Include="Representacao\RepresentacaoBll.cs" />
+    <Compile Include="SolicitarGeracaoDebito\ISolicitarGeracaoDebitoBll.cs" />
+    <Compile Include="SolicitarGeracaoDebito\SolicitarGeracaoDebitoBll.cs" />
+    <Compile Include="TipoDeclaracao\TipoDeclaracaoBll.cs" />
+    <Compile Include="TipoDeclaracao\ITipoDeclaracaoBll.cs" />
+    <Compile Include="TipoEmbalagem\ITipoEmbalagemBll.cs" />
+    <Compile Include="TipoEmbalagem\TipoEmbalagemBll.cs" />
+    <Compile Include="TransferenciaInsumo\ITransferirSaldoInsumoBll.cs" />
+    <Compile Include="TransferenciaInsumo\TransferirSaldoInsumoBll.cs" />
+    <Compile Include="ViaTransporte\IViaTransporteBll.cs" />
+    <Compile Include="ViaTransporte\ViaTransporteBll.cs" />
+    <Compile Include="ViewImportador\IViewImportadorBll.cs" />
+    <Compile Include="ViewImportador\ViewImportadorBll.cs" />
+    <Compile Include="ViewInsumoPadrao\IViewInsumoPadraoBll.cs" />
+    <Compile Include="ViewInsumoPadrao\ViewInsumoPadraoBll.cs" />
+    <Compile Include="ViewMercadoria\IViewMercadoriaBll.cs" />
+    <Compile Include="ViewMercadoria\ViewMercadoriaBll.cs" />
+    <Compile Include="ViewDetalheMercadoria\IViewDetalheMercadoriaBll.cs" />
+    <Compile Include="ViewDetalheMercadoria\ViewDetalheMercadoriaBll.cs" />
+    <Compile Include="OrgaoAnuente\IOrgaoAnuenteBll.cs" />
+    <Compile Include="OrgaoAnuente\OrgaoAnuenteBll.cs" />
+    <Compile Include="ViewMunicipio\IViewMunicipioBll.cs" />
+    <Compile Include="ViewMunicipio\ViewMunicipioBll.cs" />
+    <Compile Include="ViewProdutoEmpresaExportacao\IViewProdEmpSufBll.cs" />
+    <Compile Include="ViewProdutoEmpresaExportacao\ViewProdEmpSufBll.cs" />
+    <Compile Include="ViewProdutoEmpresa\IViewProdutoEmpresaBll.cs" />
+    <Compile Include="ViewProdutoEmpresa\ViewProdutoEmpresaBll.cs" />
+    <Compile Include="ViewNcm\IViewNcmBll.cs" />
+    <Compile Include="ViewNcm\ViewNcmBll.cs" />
+    <Compile Include="ViewRelatorioAnaliseProcessamentoPli\IViewRelatorioAnaliseProcessamentoPli.cs" />
+    <Compile Include="ViewRelatorioAnaliseProcessamentoPli\ViewRelatorioAnaliseProcessamentoPli.cs" />
+    <Compile Include="ViewSetorMercadoria\IViewSetorMercadoriaBll.cs" />
+    <Compile Include="ViewSetorMercadoria\ViewSetorMercadoriaBll.cs" />
+    <Compile Include="ViewSetor\ViewSetorBll.cs" />
+    <Compile Include="ViewSetor\IViewSetorBll.cs" />
+    <Compile Include="ControleImportacao\IControleImportacaoBll.cs" />
+    <Compile Include="ControleImportacao\ControleImportacaoBll.cs" />
+    <Compile Include="RegimeTributarioMercadoria\RegimeTributarioMercadoriaBll.cs" />
+    <Compile Include="RegimeTributarioMercadoria\IRegimeTributarioMercadoriaBll.cs" />
+    <Compile Include="CodigoUtilizacao\CodigoUtilizacaoBll.cs" />
+    <Compile Include="CodigoUtilizacao\ICodigoUtilizacaoBll.cs" />
+    <Compile Include="CodigoConta\CodigoContaBll.cs" />
+    <Compile Include="CodigoConta\ICodigoContaBll.cs" />
+    <Compile Include="Aladi\AladiExcluirValidation.cs" />
+    <Compile Include="Aladi\AladiValidation.cs" />
+    <Compile Include="Aladi\AladiExisteRelacionamentoValidation.cs" />
+    <Compile Include="Fabricante\FabricanteExcluirValidation.cs" />
+    <Compile Include="Fabricante\FabricanteExisteRelacionamentoValidation.cs" />
+    <Compile Include="Fabricante\FabricanteDeletarValidation.cs" />
+    <Compile Include="Fabricante\FabricanteValidation.cs" />
+    <Compile Include="Fornecedor\FornecedorExcluirValidation.cs" />
+    <Compile Include="Fornecedor\FornecedorExisteRelacionamentoValidation.cs" />
+    <Compile Include="Fornecedor\FornecedorDeletarValidation.cs" />
+    <Compile Include="Fornecedor\FornecedorValidation.cs" />
+    <Compile Include="FundamentoLegal\FundamentoLegaExcluirValidation.cs" />
+    <Compile Include="FundamentoLegal\FundamentoLegalExisteRelacionamentoValidation.cs" />
+    <Compile Include="FundamentoLegal\FundamentoLegalDeletarValidation.cs" />
+    <Compile Include="FundamentoLegal\FundamentoLegalValidation.cs" />
+    <Compile Include="Importador\ImportadorBll.cs" />
+    <Compile Include="Importador\IImportadorBll.cs" />
+    <Compile Include="Incoterms\IncotermsBll.cs" />
+    <Compile Include="Incoterms\IIncotermsBll.cs" />
+    <Compile Include="ModalidadePagamento\ModalidadePagamentoBll.cs" />
+    <Compile Include="ModalidadePagamento\IModalidadePagamentoBll.cs" />
+    <Compile Include="Motivo\MotivoBll.cs" />
+    <Compile Include="Motivo\IMotivoBll.cs" />
+    <Compile Include="InstituicaoFinanceira\InstituicaoFinanceiraBll.cs" />
+    <Compile Include="InstituicaoFinanceira\IInstituicaoFinanceiraBll.cs" />
+    <Compile Include="Aladi\AladiBll.cs" />
+    <Compile Include="Aladi\IAladiBll.cs" />
+    <Compile Include="Arquivo\ArquivoSalvarValidation.cs" />
+    <Compile Include="Arquivo\ArquivoValidation.cs" />
+    <Compile Include="CampoSistema\CampoSistemaBll.cs" />
+    <Compile Include="CampoSistema\ICampoSistemaBll.cs" />
+    <Compile Include="Captcha\CaptchaBll.cs" />
+    <Compile Include="Captcha\ICaptchaBll.cs" />
+    <Compile Include="Arquivo\ArquivoBll.cs" />
+    <Compile Include="Arquivo\IArquivoBll.cs" />
+    <Compile Include="BaseBll.cs" />
+    <Compile Include="Captcha\CaptchaValidation.cs" />
+    <Compile Include="ControleExecucaoServico\IControleExecucaoServicoBll.cs" />
+    <Compile Include="ControleExecucaoServico\ControleExecucaoServicoBll.cs" />
+    <Compile Include="Fornecedor\FornecedorBll.cs" />
+    <Compile Include="Fornecedor\IFornecedorBll.cs" />
+    <Compile Include="Fabricante\IFabricanteBll.cs" />
+    <Compile Include="Fabricante\FabricanteBll.cs" />
+    <Compile Include="FundamentoLegal\IFundamentoLegalBll.cs" />
+    <Compile Include="FundamentoLegal\FundamentoLegalBll.cs" />
+    <Compile Include="HistoricoSituacaoInscricao\IHistoricoSituacaoInscricaoBll.cs" />
+    <Compile Include="HistoricoSituacaoInscricao\HistoricoSituacaoInscricaoBll.cs" />
+    <Compile Include="IUsuarioLogado.cs" />
+    <Compile Include="ListaServico\ListaServicoBll.cs" />
+    <Compile Include="ListaServico\IListaServicoBll.cs" />
+    <Compile Include="Moeda\MoedaBll.cs" />
+    <Compile Include="Moeda\IMoedaBll.cs" />
+    <Compile Include="Naladi\NaladiExcluirValidation.cs" />
+    <Compile Include="Naladi\NaladiExisteRelacionamentoValidation.cs" />
+    <Compile Include="Naladi\NaladiValidation.cs" />
+    <Compile Include="Naladi\NaladiBll.cs" />
+    <Compile Include="Naladi\INaladiBll.cs" />
+    <Compile Include="Naladi\NaladiDeletarValidation.cs" />
+    <Compile Include="ParametroAnalista1\IParametroAnalista1Bll.cs" />
+    <Compile Include="ParametroAnalista1\ParametroAnalista1Bll.cs" />
+    <Compile Include="Menu\IMenuBll..cs" />
+    <Compile Include="Menu\MenuBll.cs" />
+    <Compile Include="IValidation.cs" />
+    <Compile Include="MensagemPadrao\IMensagemPadraoBll.cs" />
+    <Compile Include="MensagemPadrao\MensagemPadraoBll.cs" />
+    <Compile Include="Notificacao\INotificacaoBll.cs" />
+    <Compile Include="Notificacao\NotificacaoBll.cs" />
+    <Compile Include="Parametros\IParametrosBll.cs" />
+    <Compile Include="Parametros\ParametrosValidation.cs" />
+    <Compile Include="Parametros\ParametrosExcluirValidation.cs" />
+    <Compile Include="Parametros\ParametrosExisteRelacionamentoValidation.cs" />
+    <Compile Include="Parametros\ParametrosBll.cs" />
+    <Compile Include="ParidadeCambial\IParidadeCambialBll.cs" />
+    <Compile Include="ParidadeCambial\ParidadeCambialBll.cs" />
+    <Compile Include="PliAplicacao\PliAplicacaoBll.cs" />
+    <Compile Include="PliAplicacao\PliAplicacaoExcluirValidation.cs" />
+    <Compile Include="PliAplicacao\PliAplicacaoExisteRelacionamentoValidation.cs" />
+    <Compile Include="PliAplicacao\PliAplicacaoValidation.cs" />
+    <Compile Include="PliAplicacao\IPliAplicacaoBll.cs" />
+    <Compile Include="PliDetalheMercadoria\PliDetalheMercadoriaBll.cs" />
+    <Compile Include="PliDetalheMercadoria\PliDetalheMercadoriaExcluirValidation.cs" />
+    <Compile Include="PliDetalheMercadoria\PliDetalheMercadoriaExisteRelacionamentoValidation.cs" />
+    <Compile Include="PliDetalheMercadoria\PliDetalheMercadoriaValidation.cs" />
+    <Compile Include="PliDetalheMercadoria\IPliDetalheMercadoriaBll.cs" />
+    <Compile Include="PliHistorico\PliHistoricoBll.cs" />
+    <Compile Include="PliHistorico\PliHistoricoExcluirValidation.cs" />
+    <Compile Include="PliHistorico\PliHistoricoExisteRelacionamentoValidation.cs" />
+    <Compile Include="PliHistorico\PliHistoricoValidation.cs" />
+    <Compile Include="PliHistorico\IPliHistoricoBll.cs" />
+    <Compile Include="PliMercadoria\PliMercadoriaBll.cs" />
+    <Compile Include="PliMercadoria\PliMercadoriaExcluirValidation.cs" />
+    <Compile Include="PliMercadoria\PliMercadoriaExisteRelacionamentoValidation.cs" />
+    <Compile Include="PliMercadoria\PliMercadoriaValidation.cs" />
+    <Compile Include="PliMercadoria\IPliMercadoriaBll.cs" />
+    <Compile Include="PliProcessoAnuente\PliProcessoAnuenteBll.cs" />
+    <Compile Include="PliProcessoAnuente\PliProcessoAnuenteExcluirValidation.cs" />
+    <Compile Include="PliProcessoAnuente\PliProcessoAnuenteExisteRelacionamentoValidation.cs" />
+    <Compile Include="PliProcessoAnuente\PliProcessoAnuenteValidation.cs" />
+    <Compile Include="PliProcessoAnuente\IPliProcessoAnuenteBll.cs" />
+    <Compile Include="TipoUsuario\ITipoUsuarioBll.cs" />
+    <Compile Include="TipoUsuario\TipoUsuarioBll.cs" />
+    <Compile Include="UnidadeReceitaFederal\UnidadeReceitaFederalRelacionamentoValidation.cs" />
+    <Compile Include="UnidadeReceitaFederal\UnidadeReceitaFederalExcluirValidation.cs" />
+    <Compile Include="UnidadeReceitaFederal\UnidadeReceitaFederalDeletarValidation.cs" />
+    <Compile Include="UnidadeReceitaFederal\UnidadeReceitaFederalValidation.cs" />
+    <Compile Include="UnidadeReceitaFederal\UnidadeReceitaFederalBll.cs" />
+    <Compile Include="UnidadeReceitaFederal\IUnidadeReceitaFederalBll.cs" />
+    <Compile Include="UsuarioLogado.cs" />
+    <Compile Include="PedidoCorrecao\IPedidoCorrecaoBll.cs" />
+    <Compile Include="PedidoCorrecao\PedidoCorrecaoBll.cs" />
+    <Compile Include="Usuario\IUsuarioInformacoesBll.cs" />
+    <Compile Include="Usuario\UsuarioInformacoesBll.cs" />
+    <Compile Include="ViewUnidadeMedida\IViewUnidadeMedidaBll.cs" />
+    <Compile Include="ViewUnidadeMedida\ViewUnidadeMedidaBll.cs" />
+    <Compile Include="Servico\IServicoBll.cs" />
+    <Compile Include="Servico\ServicoBll.cs" />
+    <Compile Include="Usuario\IUsuarioBll.cs" />
+    <Compile Include="Usuario\UsuarioBll.cs" />
+    <Compile Include="Municipio\IMunicipioBll.cs" />
+    <Compile Include="Municipio\MunicipioBll.cs" />
+    <Compile Include="IBaseBll.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UF\IUFBll.cs" />
+    <Compile Include="UF\UFBll.cs" />
+    <Compile Include="Validation.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <Compile Include="IncluirDetalheInsumo\IIncluirDetalheInsumoBll.cs" />
+    <None Include="packages.config" />
+    <None Include="Suframa.Sciex.BusinessLogic.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.DataTransferObject\Suframa.Sciex.CrossCutting.DataTransferObject.csproj">
+      <Project>{afb3d36d-7929-41ac-a3dd-71dbddeb3dae}</Project>
+      <Name>Suframa.Sciex.CrossCutting.DataTransferObject</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting.Mapping\Suframa.Sciex.CrossCutting.Mapping.csproj">
+      <Project>{a0072ef6-b84a-4671-b692-d1bcb190145e}</Project>
+      <Name>Suframa.Sciex.CrossCutting.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.CrossCutting\Suframa.Sciex.CrossCutting.csproj">
+      <Project>{bc105e8e-3b81-494a-a61f-9b2ee18a77a5}</Project>
+      <Name>Suframa.Sciex.CrossCutting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Suframa.Sciex.DataAccess\Suframa.Sciex.DataAccess.csproj">
+      <Project>{75E29A91-1D70-4C43-BA0C-4CAB420C658D}</Project>
+      <Name>Suframa.Sciex.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Release\Suframa.Sciex.BusinessLogic.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+</Project>

@@ -1,0 +1,133 @@
+﻿<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Cadastrar PLI</app-titulo>
+			<app-sub-titulo>Consultar PLI</app-sub-titulo>
+		</div>
+	</div> 
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div [hidden]="ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-primary btn-sm" (click)="cadastrar()"><i class="fa fa-plus"></i> Novo</button>
+					</div>
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+
+						<div class="row">
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="txtCodigo" class="control-label">Nº PLI:</label>
+									<input #npli
+										   type="text"
+										   id="npli"
+										   class="form-control"
+										   name="npli"
+										   maxlength="11"
+										   autocomplete="off"
+										    [(ngModel)]="parametros.Numero"
+										   placeholder="aaaa/nnnnnn"
+										   formatarNumeroPli="true"										   
+										   (keyup.enter)="buscar(true)" />
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<label for="txtDescricao" class="">Aplicação do PLI:</label>
+								<app-drop-list 
+											   id="idAplicacaoPLI"
+											   name="idAplicacaoPLI"
+											   placeholder="TODOS"
+											   servico="PliAplicacao"
+											    [(ngModel)]="parametros.idPliAplicacao"
+											   #aplicacaoPLI>
+								</app-drop-list>
+							</div>
+
+							<div class="col-lg-3">
+								<label for="txtDescricao" class="">Status:</label>
+								<app-drop-list name="idStatusPLI"
+											   id="idStatusPLI"
+											   placeholder="TODOS"
+											   servico="PliStatus"
+											    [(ngModel)]="parametros.idPliStatus"
+											    #statusPLI
+											  >
+								</app-drop-list>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="dataorigem" class="">Data do Cadastro:</label>
+								<div class="input-group" style="display: flex;">
+									<input #dataInicio
+										   type="date"
+										   id="dataInicio"
+										   name="dataInicio"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataInicio"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   (keyup.enter)="buscar(true)">
+									<span class="text-center" style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+									<input #dataFim
+										   type="date"
+										   id="dataFim"
+										   name="dataFim"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataFim"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   (keyup.enter)="buscar(true)">
+								</div>
+							</div>
+
+							<div class="col-lg-3">
+								<label for="txtDescricao" class="">Tipo de PLI:</label>
+								<app-drop-list id="idTipoPLI"
+											   name="idTipoPLI"
+											   placeholder="TODOS"
+											   servico="PliTipo"
+											   [(ngModel)]="parametros.tipoDocumento"
+											   #tipoPLI>
+								</app-drop-list>
+							</div>
+						</div>
+					</form>
+				</article>
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button #btnlimpar class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+	<div class="row">
+		<div [hidden]="ocultarGrid" class="col-lg-12">
+
+			<app-manter-pli-grid [(lista)]="grid.lista"
+								 [(total)]="grid.total"
+								 [(size)]="grid.size"
+								 [(page)]="grid.page"
+								 [(parametros)]="parametros"
+								 (onChangeSort)="onChangeSort($event)"
+								 (onChangeSize)="onChangeSize($event)"
+								 (onChangePage)="onChangePage($event)">
+			</app-manter-pli-grid>
+		</div>
+	</div>
+</div>
+
+<app-modal-novo-pli #appModalNovoPli></app-modal-novo-pli>

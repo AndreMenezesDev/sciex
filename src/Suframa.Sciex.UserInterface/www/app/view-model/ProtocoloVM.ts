@@ -1,0 +1,44 @@
+import { tipoDocumentoVM } from './TipoDocumentoVM';
+import { workflowMensagemPadraoVM } from './WorkflowMensagemPadraoVM';
+import { mensagemPadraoVM } from './MensagemPadraoVM';
+
+export class protocoloVM {
+	ano?: number;
+	cpfCnpj: string;
+	dataAlteracao?: Date;
+	dataCancelamento?: Date;
+	dataDesignacao?: Date;
+	dataInclusao?: Date;
+	dataInclusaoFinal?: Date;
+	dataInclusaoInicial?: Date;
+	descricaoServico: string;
+	descricaoUsuario: string;
+	diasRestantes?: number;
+	idProtocolo?: number;
+	idRequerimento?: number;
+	idServico?: number;
+	idStatusProtocolo: number;
+	idUnidadeCadastradora?: number;
+	idUsuarioInterno?: number;
+	inscricaoCadastral: number;
+	isAnalise: boolean;
+	isComPendencia: boolean;
+	isContinuarAnalise: boolean;
+	isGeraCobranca: boolean;
+	isInicioAnalise: boolean;
+	isSelecionado?: boolean;
+	justificativa: string;
+	mensagensPadrao: mensagemPadraoVM[];
+	nomeRazaoSocial: string;
+	nomeUnidadeCadastradora: string;
+	nomeUsuarioInterno: string;
+	numeroProtocolo: string;
+	numeroSequencial?: number;
+	protocoloHtml: string;
+	situacao: string;
+	statusProtocoloGrupo: number;
+	statusServico: number;
+	tipoOrigem: number;
+	tiposDocumentos: tipoDocumentoVM[];
+	workflows: any[];
+}

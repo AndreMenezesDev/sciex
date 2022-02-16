@@ -1,0 +1,150 @@
+<section class="panel panel-default no-margin-bottom">
+	<header *ngIf="isShowPanel" class="panel-heading">
+		<div *ngIf="parametros.exportarListagem" class="pull-right">
+			<button class="btn btn-sm btn-primary" *ngIf="total > 0" style="text-align: left" type="submit" disableOnClick (click)="designar()"><i class="fa fa-user"></i>Designar</button>
+			<button type="button" class="btn btn-default btn-sm dropdown-toggle" id="exportar" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar <i class="fa fa-caret-down"></i></button>
+			<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="exportar">
+				<li role="presentation">
+					<a style="cursor:pointer" role="menuitem" (click)="exportar(1)"><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
+				</li>
+				<li role="presentation">
+					<a style="cursor:pointer" role="menuitem" (click)="exportar(2)"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+				</li>
+			</ul>
+		</div>
+		<h2 class="panel-title h5">Registros</h2>
+	</header>
+
+	<app-grid-cabecalho [(size)]="size" (onChangeSize)="changeSize($event)" *ngIf="total > 0 && !isHideCabecalho"></app-grid-cabecalho>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead class="table-header-color">
+				<tr>
+					<th class="th-sortable th-20 unset-nowrap">
+						<input type="checkbox" [(ngModel)]="masterSelected" name="list_name" (change)="checkUncheckAll()"/>
+					</th>
+					<th class="th-sortable th-80 unset-nowrap" *ngIf="isPli">
+						<app-ordenacao field="NumeroPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Nº PLI</app-ordenacao>
+					</th>
+					<th class="th-sortable th-80 unset-nowrap" *ngIf="isLe">
+						<app-ordenacao field="CodigoProduto" [sorted]="sorted" (onChangeSort)="changeSort($event)">Código Produto</app-ordenacao>
+					</th>
+					<th class="th-sortable th-80 unset-nowrap" *ngIf="isPlano">
+						<app-ordenacao field="NumeroPlano" [sorted]="sorted" (onChangeSort)="changeSort($event)">N° Plano</app-ordenacao>
+					</th>
+					<th class="th-sortable th-80 unset-nowrap" *ngIf="isSolic">
+						<app-ordenacao field="NumeroSolicitacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">N° da Solicitação</app-ordenacao>
+					</th>
+					<th class="th-sortable th-80 unset-nowrap" *ngIf="isSolic">
+						<app-ordenacao field="NumeroProcesso" [sorted]="sorted" (onChangeSort)="changeSort($event)">N° do Processo</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isPli || isLe">
+						<app-ordenacao field="InscricaoCadastral" [sorted]="sorted" (onChangeSort)="changeSort($event)">Inscrição Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isPlano">
+						<app-ordenacao field="NumeroInscricaoCadastral" [sorted]="sorted" (onChangeSort)="changeSort($event)">Inscrição Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isSolic">
+						<app-ordenacao field="InscricaoSuframa" [sorted]="sorted" (onChangeSort)="changeSort($event)">Inscrição Cadastral</app-ordenacao>
+					</th>
+					<th class="th-sortable th-250 unset-nowrap">
+						<app-ordenacao field="RazaoSocial" [sorted]="sorted" (onChangeSort)="changeSort($event)">Empresa</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isPli">
+						<app-ordenacao field="PliAnaliseVisual.CpfAnalista" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista Designado</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-center" *ngIf="isPli">
+						<app-ordenacao field="DataEnvioPli" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-left" *ngIf="isPli">
+						<app-ordenacao field="PliAnaliseVisual.StatusAnalise" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isLe">
+						<app-ordenacao field="CpfResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista Designado</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-center" *ngIf="isLe">
+						<app-ordenacao field="DataEnvio" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-left" *ngIf="isLe">
+						<app-ordenacao field="StatusLE" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isPlano">
+						<app-ordenacao field="CpfResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista Designado</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-center" *ngIf="isPlano">
+						<app-ordenacao field="DataEnvio" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-left" *ngIf="isPlano">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
+					</th>
+					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isSolic">
+						<app-ordenacao field="NomeResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista Designado</app-ordenacao>
+					</th>
+					<th class="th-sortable th-110 unset-nowrap  text-center" *ngIf="isSolic">
+						<app-ordenacao field="DataAlteracao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+				<tr *ngFor="let item of lista; let i = index">
+					<td class="text-left"><input type="checkbox" #checkSelecionado id="check" name="check" (change)="isAllSelected()" [(ngModel)]="item.check"/></td>
+					<!-- Numero -->
+					<td class="text-left" *ngIf="isPli">{{item.ano}}/{{item.numeroPli | formatCode:6}}</td>
+					<td class="text-left" *ngIf="isLe">{{item.codigoProduto}}</td>
+					<td class="text-left" *ngIf="isPlano">{{item.numeroAnoPlanoFormatado}}</td>
+					<td class="text-left" *ngIf="isSolic">{{item.numeroAnoSolicitacaoFormatado}}</td>
+
+					<!-- Numero Processo se for Solicitacao -->
+					<td class="text-left" *ngIf="isSolic">{{item.numeroAnoProcessoFormatado}}</td>
+
+					<!-- Insc. Cadastral -->
+					<td class="text-center" *ngIf="isPli || isLe">{{item.inscricaoCadastral}}</td>
+					<td class="text-center" *ngIf="isPlano">{{item.numeroInscricaoCadastral}}</td>
+					<td class="text-center" *ngIf="isSolic">{{item.processoVM.inscricaoSuframa}}</td>
+
+					<td class="unset-nowrap" *ngIf="isSolic">{{item.processoVM.razaoSocial}}</td>
+					<td class="unset-nowrap" *ngIf="!isSolic">{{item.razaoSocial}}</td>
+
+					<!-- Analista/Data/Status -->
+					<td class="text-center" *ngIf="isPli">{{item.analistaDesignado}}</td>
+					<td class="text-center" *ngIf="isPli">{{item.dataEnvioPliFormatada}}</td>
+					<td class="text-left" *ngIf="isPli">{{item.analiseVisualStatusFormatado}}</td>
+
+					<td class="text-center" *ngIf="isLe">{{item.nomeResponsavel}}</td>
+					<td class="text-center" *ngIf="isLe">{{item.dataEnvioFormatada}}</td>
+					<td class="text-left" *ngIf="isLe">{{item.descStatusLE}}</td>
+
+					<td class="text-center" *ngIf="isPlano">{{item.nomeResponsavel}}</td>
+					<td class="text-center" *ngIf="isPlano">{{item.dataEnvioFormatada}}</td>
+					<td class="text-left" *ngIf="isPlano">{{item.situacaoString}}</td>
+					
+					<td class="text-center" *ngIf="isSolic">{{item.nomeResponsavel}}</td>
+					<td class="text-center" *ngIf="isSolic">{{item.dataAlteracaoFormatada}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div *ngIf="total == 0 || total == null && isShowPanel">
+		<p class="text-center font-bold m-t-sm m-b-sm">Nenhum registro encontrado.</p>
+	</div>
+
+	<footer *ngIf="total > 0 && !isHidePaginacao" class="panel-footer" style="background-color: white!important; padding-bottom: 8px; padding-top: 8px;">
+		<div class="row">
+			<div class="col-sm-4" style="background-color: white!important;">
+				<small class="text-muted inline m-t-sm m-b-sm">Mostrando {{(page*size)-size+1}}-{{(page*size) < total ? (page*size) : total}} de {{total}} itens</small>
+			</div>
+			<app-paginacao [widthPagination]="10"
+						   [(page)]="page"
+						   [(size)]="size"
+						   [(total)]="total"
+						   [hidden]="false"
+						   (change)="changePage($event)">
+			</app-paginacao>
+		</div>
+	</footer>
+
+	<footer *ngIf="total > 0" class="panel-footer clearfix" style="padding-top: 18px; padding-bottom: 18px;"></footer>
+</section>

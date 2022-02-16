@@ -1,0 +1,155 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Cadastrar Produto</app-titulo>
+			<app-sub-titulo>Cadastrar LE</app-sub-titulo>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</button>
+						<button type="button" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-plus m-r-xs"></i> Incluir Produto</button>
+					</div>
+					<h2 class="panel-title h5">{{tituloPanel}}</h2>
+				</header>
+				<article class="panel-body">
+					<form id="formulario" class="form form-horinzontal" #formulario="ngForm" ngNativeValidate (ngSubmit)="salvar()">
+						<fieldset [disabled]="desabilitado">
+							<div class="row">
+								<div class="col-lg-10">
+									<div class="form-group">
+										<label for="codigoProduto" class="control-label required">Código Produto Suframa:</label>
+										<app-drop-list-select2 (valorModificado)="parametros.idCodigoProdutoSuframa = $event"
+																name="codigoProduto"
+																[isDisabled]="somenteLeitura"
+																required
+																servico="ViewProdEmpSuf"
+																[(ngModel)]="parametros.idCodigoProdutoSuframa"
+																[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+																#codigoProduto>
+										</app-drop-list-select2>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-10">
+									<div class="form-group">
+										<label for="codigoTipoProduto" class="control-label required">Tipo do Produto Suframa:</label>
+										<app-drop-list-select2 (valorModificado)="parametros.idCodigoTipoProduto = $event"
+																name="codigoTipoProduto"
+																[isDisabled]="parametros.idCodigoProdutoSuframa == null"
+																required
+																servico="ViewTipoProdEmpSuf"
+																[(ngModel)]="parametros.idCodigoTipoProduto"
+																[parametro]="parametros.idCodigoProdutoSuframa"
+																parametroChave="idCodigoProdutoSuframa"
+																[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+																#codigoTipoProduto>
+										</app-drop-list-select2>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-10">
+									<div class="form-group">
+										<label for="codigoNCM" class="control-label required">NCM do Produto Suframa:</label>
+										<app-drop-list-select2 (valorModificado)="parametros.idCodigoNCM = $event"
+																name="codigoNCM"
+																[isDisabled]="parametros.idCodigoTipoProduto == null"
+																required
+																servico="ViewNcmEmpSuf"
+																[(ngModel)]="parametros.idCodigoNCM"
+																[parametro]="parametros.idCodigoProdutoSuframa"
+																parametroChave="idCodigoProdutoSuframa"
+																[parametro1]="parametros.idCodigoTipoProduto"
+																parametroChave1="idCodigoTipoProduto"
+																[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+																#codigoNCM>
+										</app-drop-list-select2>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-10">
+									<div class="form-group">
+										<label for="idUnidadeComercializada" class="control-label required">Unidade de Medida:</label>
+										<app-drop-list-select2 (valorModificado)="parametros.idUnidadeMedida = $event"
+																name="idUnidadeComercializada"
+																[isDisabled]="parametros.idCodigoNCM == null"
+																servico="ViewUndMedEmpSuf"
+																[(ngModel)]="parametros.idUnidadeMedida"
+																[parametro]="parametros.idCodigoNCM"
+																parametroChave="idCodigoNCM"
+																[placeholder]="somenteLeitura ? '' : 'Digite a sigla ou a descrição'"
+																selMinimumInputLength="1"
+																#unidadeMedida>
+										</app-drop-list-select2>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-10">
+									<label for="descricaoModeloProduto" class="control-label text-nowrap required">Modelo do Produto:</label>
+									<input type="text"
+										id="descricaoModeloProduto"
+										required
+										[attr.readonly]="parametros.idUnidadeMedida == null ? 'true': null"
+										name="descricaoModeloProduto"
+										autocomplete="off"
+										class="form-control"
+										maxlength="255"
+										[(ngModel)]="parametros.descricaoModelo"
+										#modeloProduto/>
+								</div>
+							</div>
+							<div class="line"></div>
+							<div class="row">
+								<div class="col-lg-5">
+									<label for="descricaoCentroCusto" class="control-label text-nowrap">Centro de Custo:</label>
+									<input type="text"
+										id="descricaoCentroCusto"
+										[attr.readonly]="parametros.idUnidadeMedida == null ? 'true': null"
+										name="descricaoCentroCusto"
+										autocomplete="off"
+										class="form-control"
+										maxlength="10"
+										[(ngModel)]="parametros.descricaoCentroCusto" />
+								</div>
+								<div class="col-lg-5">
+									<label for="descricaoModeloEmpresa" class="control-label text-nowrap">Código do Modelo na Empresa:</label>
+									<input type="text"
+										id="descricaoModeloEmpresa"
+										[attr.readonly]="parametros.idUnidadeMedida == null ? 'true': null"
+										name="descricaoModeloEmpresa"
+										autocomplete="off"
+										class="form-control"
+										maxlength="30"
+										[(ngModel)]="parametros.codigoModeloEmpresa" />
+								</div>
+							</div>
+						</fieldset>
+					</form>
+				</article>
+				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
+					<div class="pull-right">
+						<button type="button"
+								disableOnClick
+								class="btn btn-default btn-sm"
+								(click)="cancelarOperacao()">
+							<i class="fa fa-long-arrow-left m-r-xs"></i>Voltar
+						</button><button type="button" disableOnClick class="btn btn-primary btn-sm" (click)="formulario.onSubmit()" *ngIf="!desabilitado"><i class="fa fa-plus m-r-xs"></i> Incluir Produto</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+</div>

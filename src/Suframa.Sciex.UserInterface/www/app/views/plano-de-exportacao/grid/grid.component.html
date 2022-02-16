@@ -1,0 +1,160 @@
+<app-grid [(page)]="page"
+		  [(size)]="size"
+		  [(total)]="total"
+		  (onChangeSize)="changeSize($event)"
+		  (onChangePage)="changePage($event)"
+          [(parametros)]="parametros"
+          >
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table table-striped">
+			<thead style="background-color: #00552b; color: white;">
+                <tr>   
+                    <th class="th-250 text-center">
+                        <label>Ações</label>
+                    </th>                  
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="NumeroPlano" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Nº Plano
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="RazaoSocial" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Empresa
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="TipoModalidade" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Modalidade
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="TipoExportacao" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Tipo
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="Situacao" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Status
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="NomeResponsavel" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Analista
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="DataStatus" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)"> Dt Status
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="DataEnvio" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)">  Dt Recebimento
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="NumeroProcesso" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)">  Processo
+                        </app-ordenacao>
+                    </th>
+                    
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="Fluxo" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)">  Fluxo > 70%
+                        </app-ordenacao>
+                    </th>
+                    <th class="th-sortable">
+                        <app-ordenacao 
+                            field="Perda" 
+                            [sorted]="sorted" 
+                            (onChangeSort)="changeSort($event)">  Perda > 2%
+                        </app-ordenacao>
+                    </th>       
+                                                                
+                </tr>
+            </thead>
+			<tbody id="content" *ngIf="total > 0">
+				
+                    <tr *ngFor="let item of lista">  
+                        <td class="text-center">
+                            <a *ngIf="item.situacao != 3"
+                                routerLink="/analisar-plano-exportacao/{{item.idPlanoExportacao}}/visualizar-info-plano"  
+                                class="btn btn-default btn-sm" 
+                                data-toggle="tooltip" 
+                                title="" 
+                                data-original-title="Visualizar">
+                                    <i class="fa fa-file-text-o"></i>
+                            </a>
+                            <a *ngIf="item.situacao == 3"
+                                routerLink="/analisar-plano-exportacao/{{item.idPlanoExportacao}}/analisar-info-plano"  
+                                class="btn btn-default btn-sm" 
+                                data-toggle="tooltip" 
+                                title="" 
+                                data-original-title="Analisar">
+                                    <i class="fa fa-gear"></i>
+                            </a>
+                            <a *ngIf="item.situacao == 3"
+                                class="btn btn-primary btn-sm" 
+                                data-toggle="tooltip" 
+                                title="" 
+                                data-original-title="Deferir"
+                                (click)="confirmarDeferir(item.idPlanoExportacao)">
+                                    <i class="fa fa-check-square-o"></i>
+                            </a>
+                            <a *ngIf="item.situacao == 3"
+                                (click)="confirmarIndeferimento(item)"
+                                class="btn btn-danger btn-sm" 
+                                data-toggle="tooltip" 
+                                title="" 
+                                data-original-title="Indeferir">
+                                    <i class="fa fa-times"></i>
+                            </a>
+                        </td>                      
+                        <td>{{item.numeroAnoPlanoFormatado}}</td>
+                        <td> 
+                            <a 
+                            data-toggle="tooltip" 
+                            [attr.title]="item.numeroInscricaoCadastral +'-'+ item.razaoSocial" 
+                            [attr.data-original-title]="item.razaoSocial"> 
+                                {{ item.razaoSocial }}
+                            </a>
+                        </td>  
+                        <td>{{ item.tipoModalidadeString }}</td>
+                        <td>{{ item.tipoExportacaoString }}</td>
+                        <td>{{ item.situacaoString }}</td>
+                        <td>{{ item.nomeResponsavel}}</td>                        
+                        <td>{{ item.dataStatusFormatada}}</td>
+                        <td>{{ item.dataEnvioFormatada}}</td>
+                        <td>
+                            {{ item.numeroAnoProcessoFormatado ? item.numeroAnoProcessoFormatado : '-' }}
+                        </td>
+                        <td>{{ item.qtdFluxoMenor70porcentoString}}</td>
+                        <td>{{ item.qtdPerdaMaior2porcentoString}}</td>                                                 
+                    </tr>
+                    
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-justicar-indeferir #modalJustificativaIndeferir></app-modal-justicar-indeferir>

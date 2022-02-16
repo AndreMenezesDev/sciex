@@ -1,0 +1,108 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railopacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-sm-6">
+			<app-titulo>Cadastrar Listagem de Exportação</app-titulo>
+			<app-sub-titulo>Consultar Listagem de Exportação</app-sub-titulo>
+		</div>
+	</div> 
+	<div class="row">
+		<div class="col-md-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<div [hidden]="ocultarFiltro" class="pull-right">
+						<a routerLink="/manter-listagem-exportacao/cadastrar" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Novo</a>
+					</div>
+					<div [hidden]="!ocultarFiltro" class="pull-right">
+						<button type="button" class="btn btn-sm btn-default" style="margin-left: -1px;" (click)="ocultar()"><span class="fa fa-magic m-r-xs"></span>Exibir Filtros</button>
+					</div>
+					<h2 class="panel-title h5">Filtros de Pesquisa</h2>
+				</header>
+				<article [hidden]="ocultarFiltro" class="panel-body">
+					<form id="formBusca" class="form form-horinzontal" role="form" #formBusca="ngForm" ngNativeValidate>
+
+						<div class="row">
+							<div class="col-lg-10">
+								<div class="form-group">
+									<label for="codigoProduto" class="control-label">Código Produto Suframa:</label>
+									<app-drop-list-select2 (valorModificado)="parametros.codigoProdutoSuframa = $event"
+																name="codigoProduto"
+																[isDisabled]="somenteLeitura"
+																servico="ViewProdEmpSuf"
+																[(ngModel)]="parametros.codigoProdutoSuframa"
+																[placeholder]="somenteLeitura ? '' : 'Digite o código ou a descrição'"
+																#codigoProdutoSuframa>
+									</app-drop-list-select2>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-4">
+								<label for="tipoStatus" class="">Status:</label>
+								<select name="tipoStatus"
+										id="tipoStatus"
+										class="form-control"
+										[(ngModel)]="parametros.statusLE">
+									<option [ngValue]="undefined">Todos</option>
+									<option value="1">Em Elaboração</option>
+									<option value="2">Entregue</option>
+									<option value="3">Aguardando Aprovação</option>
+									<option value="4">Aprovada</option>
+									<option value="5">Bloqueada</option>
+								</select>
+							</div>
+							<div class="col-lg-6">
+								<label for="dataorigem" class="">Data do Cadastro:</label>
+								<div class="input-group" style="display: flex;">
+									<input #dataInicio
+										   type="date"
+										   id="dataInicio"
+										   name="dataInicio"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataInicio"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   (keyup.enter)="buscar(true)">
+									<span class="text-center" style="padding-right: 15px; padding-top: 8px; margin-left: 15px;">a</span>
+									<input #dataFim
+										   type="date"
+										   id="dataFim"
+										   name="dataFim"
+										   min="0001-01-01" max="9999-12-31"
+										   [(ngModel)]="parametros.dataFim"
+										   class="form-control date"
+										   style="width: 50%;"
+										   maxlength="10"
+										   autocomplete="off"
+										   (keyup.enter)="buscar(true)">
+								</div>
+							</div>
+						</div>
+					</form>
+				</article>
+				<footer [hidden]="ocultarFiltro" class="panel-footer clearfix" style="padding-top: 5px; padding-bottom: 5px;">
+					<div class="pull-right">
+						<button class="btn btn-sm btn-primary" type="submit" disableOnClick (click)="buscar(true)"><i class="fa fa-search"></i> Buscar</button>
+						<button #btnlimpar class="btn btn-sm btn-default" type="reset" (click)="limpar()"><i class="fa fa-eraser"></i> Limpar</button>
+						<button type="button" class="btn btn-sm btn-default" (click)="ocultar()" style="margin-left: -1px;"><span class="fa fa-magic m-r-xs"></span>Ocultar Filtros</button>
+					</div>
+				</footer>
+			</section>
+		</div>
+	</div>
+	<div class="row">
+		<div [hidden]="ocultarGrid" class="col-lg-12">
+
+			<app-manter-listagem-exportacao-grid [(lista)]="grid.lista"
+								 [(total)]="grid.total"
+								 [(size)]="grid.size"
+								 [(page)]="grid.page"
+								 [(parametros)]="parametros"
+								 (onChangeSort)="onChangeSort($event)"
+								 (onChangeSize)="onChangeSize($event)"
+								 (onChangePage)="onChangePage($event)">
+			</app-manter-listagem-exportacao-grid>
+		</div>
+	</div>
+</div>

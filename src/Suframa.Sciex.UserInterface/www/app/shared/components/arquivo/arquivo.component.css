@@ -1,0 +1,14 @@
+input[type="file"] {
+  display: none;
+}
+
+.disabled {
+	pointer-events: none;
+	background-color: #eee;
+}
+
+input:focus {
+	outline: none !important;
+	box-shadow: none !important;
+	border-color: lightgrey !important;
+}

@@ -1,0 +1,59 @@
+<div #appModalDesignarAnalista class="modal fade in" id="1" tabindex="-1" role="dialog" aria-hidden="true"
+	style=" display: none; overflow: auto">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header bg-primary" style="padding: 10px 15px; color: white;">
+				<h4 class="modal-title" id="ajudaModalLabel">Designar/Redesignar Analista</h4>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group row">
+						<div class="col-lg-12" *ngIf="isPli">
+							<div class="form-group">
+								<label for="analista" class="">Analista:</label>
+								<app-drop-list id="analista"
+											   name="analista"
+											   placeholder="Todos"
+											   servico="AnalistaAtivo"
+											   [(ngModel)]="parametros.idAnalistaDesignado">
+								</app-drop-list>
+							</div>
+						</div>
+						<div class="col-lg-12" *ngIf="isLe">
+							<div class="form-group">
+								<label for="analista" class="">Analista:</label>
+								<app-drop-list id="analista"
+											   name="analista"
+											   placeholder="Todos"
+											   servico="AnalistaAtivoLe"
+											   [(ngModel)]="parametros.idAnalistaDesignado">
+								</app-drop-list>
+							</div>
+						</div>
+						<div class="col-lg-12" *ngIf="isPlano || isSolic">
+							<div class="form-group">
+								<label for="analista" class="">Analista:</label>
+								<app-drop-list id="analista"
+											   name="analista"
+											   placeholder="Todos"
+											   servico="AnalistaAtivoPlano"
+											   [(ngModel)]="parametros.idAnalistaDesignado">
+								</app-drop-list>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer" style="padding: 10px 15px;">
+				<a class="btn btn-sm btn-default" (click)="fechar()">
+					<i class="fa fa-times"></i> Cancelar
+				</a>
+				<a class="btn btn-sm btn-primary" (click)="salvar()">
+					<i class="fa fa-save m-r-xs"></i> Salvar
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div #appModalDesignarAnalistaBackground class="modal-backdrop fade in" style="display: none;"></div>
