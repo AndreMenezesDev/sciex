@@ -35,10 +35,12 @@
 
 				<tr *ngFor="let item of lista">
 					<td class="text-center" *ngIf="!somenteLeitura">
-						<div *ngIf="item.situacaoAnalise == 2 || item.situacaoAnalise == 4">
-							<a (click)="abrirModalJustificativaErro(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Justificativa do erro"><i class="fa fa-comment-o"></i></a>
-							<a (click)="alterar(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Corrigir"><i class="fa fa-pencil"></i></a>
-							<a (click)="Inativar(item)"class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Inativar"><i class="fa fa-times"></i></a>
+						<div >
+							<a (click)="abrirModalJustificativaErro(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Justificativa do erro" *ngIf="item.situacaoAnalise == 2 || item.situacaoAnalise == 4" ><i class="fa fa-comment-o"></i></a>
+							<a (click)="alterarCorrecao(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Corrigir" *ngIf="item.situacaoAnalise == 2 || item.situacaoAnalise == 4" ><i class="fa fa-pencil"></i></a>
+							<a (click)="Inativar(item)" class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Inativar" *ngIf="item.situacaoAnalise == 2 || item.situacaoAnalise == 4" ><i class="fa fa-times"></i></a>
+							<a (click)="alterar(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Alterar Dados" *ngIf="item.situacaoAnalise == 6"><i class="fa fa-pencil"></i></a>
+							<a (click)="confirmarExclusao(item)"class="btn btn-danger btn-sm" data-toggle="tooltip" title="" data-original-title="Excluir" *ngIf="item.situacaoAnalise == 6"><i class="fa fa-trash-o"></i></a>
 						</div>
 					</td>
 					<td class="text-left font-bold" [ngClass]="{'textGreen':item.situacaoAnalise == 1,
@@ -57,4 +59,5 @@
 	</div>
 </app-grid>
 <app-modal-editar-documento-due-correcao #appModalEditarDocumentoDueCorrecao></app-modal-editar-documento-due-correcao>
+<app-modal-editar-documento-due #appModalEditarDocumentoDue></app-modal-editar-documento-due>
 <app-modal-justificativa-erro-due #appModalJustificativaErroDue></app-modal-justificativa-erro-due>
