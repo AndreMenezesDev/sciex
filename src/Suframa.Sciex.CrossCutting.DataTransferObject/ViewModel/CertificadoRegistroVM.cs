@@ -41,5 +41,9 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string InsumosImportadosAprovados { get; set; }
 		public List<PRCSolicitacaoAlteracaoVM> ListaAcrescimoSolicitacao { get; set; }
 		public string TotalInsumosImportados { get; set; }
+
+		public string ExportacoesRealizadasDolar { get; set; }
+		public string ExportacoesRealizadasReal { get; set; }
+
 	}
 }

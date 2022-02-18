@@ -11,7 +11,8 @@ enum TipoCertificado {
 	ALTERADO = 2,
 	CANCELADO = 3,
 	PRORROGADO = 4,
-	PRORROGADO_ESPECIAL = 5
+	PRORROGADO_ESPECIAL = 5,
+	COMPROVADO = 6
 }
 
 @Component({
@@ -35,7 +36,7 @@ export class RelatorioCertificadoRegistroComponent {
 		private route: ActivatedRoute
 	) {
 		//this.path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
-		this.idStatus = this.route.snapshot.params['idStatus'];		
+		this.idStatus = this.route.snapshot.params['idStatus'];
 	}
 
     emitirCertificado(idStatus){
@@ -46,13 +47,13 @@ export class RelatorioCertificadoRegistroComponent {
 			}, 1000);
 			resolve(null);
 		}).then(()=>{
-			setTimeout(() => {				
+			setTimeout(() => {
 				this.gerarCertificadoPDF();
 			}, 4000);
 		});
 
 		// let relatorioPDF = new Promise (resolve=>{
-		// 	setTimeout(() => {				
+		// 	setTimeout(() => {
 		// 		this.gerarCertificadoPDF();
 		// 	}, 4000);
 		// 	resolve(null);
@@ -95,7 +96,7 @@ export class RelatorioCertificadoRegistroComponent {
 			resolve(null);
 		});
 
-		Promise.all([renderizarHtml,liberarTela]);		
+		Promise.all([renderizarHtml,liberarTela]);
 	}
 
 	public buscarDados(id: number) {
@@ -110,7 +111,7 @@ export class RelatorioCertificadoRegistroComponent {
 
 		this.dataEmissao = day + " de " + monthExt + " de " + year;
 		//
-				
+
 		this.applicationService.get(this.servico,id).subscribe((result:any) => {
 			this.model = result;
 			switch (result.tipo) {
@@ -132,6 +133,9 @@ export class RelatorioCertificadoRegistroComponent {
 
 				case 'PE':
 					this.ocultarPdf = Number(TipoCertificado.PRORROGADO_ESPECIAL)
+					break;
+				case 'CO':
+					this.ocultarPdf = Number(TipoCertificado.COMPROVADO)
 					break;
 			}
 		});
