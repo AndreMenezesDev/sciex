@@ -1,23 +1,13 @@
-﻿using FluentValidation;
-using Suframa.Sciex.CrossCutting.DataTransferObject;
-using Suframa.Sciex.CrossCutting.DataTransferObject.Dto;
+﻿using Suframa.Sciex.CrossCutting.DataTransferObject;
 using Suframa.Sciex.CrossCutting.DataTransferObject.Enum;
 using Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel;
 using Suframa.Sciex.DataAccess;
 using Suframa.Sciex.DataAccess.Database.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Net.Http;
-using System.Configuration;
 using Suframa.Sciex.BusinessLogic.Pss;
-using System.Text;
-using System.Web.UI;
-using Suframa.Sciex.CrossCutting.Mensagens;
-using Suframa.Sciex.CrossCutting.Compressor;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
+
 using NLog;
 
 namespace Suframa.Sciex.BusinessLogic
@@ -292,7 +282,10 @@ namespace Suframa.Sciex.BusinessLogic
 					CodigoProdutoExportacao = q.CodigoProdutoExportacao,
 					CodigoProdutoSuframa = q.CodigoProdutoSuframa,
 					CodigoNCM = q.CodigoNCM,
-					
+					QuantidadeComprovado = q.QuantidadeComprovado==null || q.QuantidadeComprovado==0 ? 0: q.QuantidadeComprovado,
+					ValorDolarComprovado = q.ValorDolarComprovado == null || q.ValorDolarComprovado == 0 ? 0 : q.ValorDolarComprovado,
+					ValorNacionalComprovado = q.ValorNacionalComprovado == null || q.ValorNacionalComprovado == 0 ? 0 : q.ValorNacionalComprovado,
+
 					TipoProduto = q.TipoProduto,
 					DescricaoModelo = q.DescricaoModelo,
 					QuantidadeAprovado = q.QuantidadeAprovado,

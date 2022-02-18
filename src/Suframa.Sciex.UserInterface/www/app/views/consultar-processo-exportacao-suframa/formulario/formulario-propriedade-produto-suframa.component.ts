@@ -25,6 +25,8 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 	@Input() sorted: string;
 	@Input() page: number;
 	idProduto: any;
+	servicoDocumentosComprobatorios = "DocumentosComprobatoriosGrid"
+	grid: any = { sort: {} };
 
 	constructor(
 		private route: ActivatedRoute,
@@ -73,4 +75,22 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 		
 		this.router.navigate([url]);
 	}
+
+	documentosComprobatorios(){
+		var objeto : any = {};
+		objeto.idPEProdutoPais = Number(this.idProduto);
+		objeto.sort = this.grid.sort;
+		objeto.size = this.grid.size;
+		objeto.page = this.grid.page;
+
+		this.applicationService.get(this.servicoDocumentosComprobatorios,objeto).subscribe((result :any)=>{
+			console.log(result)
+	
+			this.grid.lista = result.items;
+			
+			this.grid.total = result.total;
+
+		})
+	}
+
 }

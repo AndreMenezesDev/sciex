@@ -123,6 +123,24 @@
 									</label>
 									{{modelProduto.valorDolarAprovado | number : '1.2-2'}}
 								</div>
+								<div class="col-lg-4">
+									<label for="codigoUnidade" class="control-label text-nowrap">
+										Quantidade Total(US$): 
+									</label>
+									{{modelProduto.quantidadeComprovado | number : '1.2-2'}}
+								</div>
+								<div class="col-lg-4">
+									<label for="codigoUnidade" class="control-label text-nowrap">
+										Valor Total(R$): 
+									</label>
+									{{modelProduto.valorDolarComprovado | number : '1.2-2'}}
+								</div>
+								<div class="col-lg-4">
+									<label for="codigoUnidade" class="control-label text-nowrap">
+										Valor Total(R$): 
+									</label>
+									{{modelProduto.valorNacionalComprovado | number : '1.2-2'}}
+								</div>
 							</div>
 						</fieldset>
 					</div>
@@ -147,6 +165,12 @@
 												<th class="th-sortable unset-nowrap">
 													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor (US$)</app-ordenacao>
 												</th>
+												<th class="th-sortable unset-nowrap">
+													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Comprovado (US$)</app-ordenacao>
+												</th>
+												<th class="th-sortable unset-nowrap">
+													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Comprovado(US$)</app-ordenacao>
+												</th>
 											</tr>
 										</thead>
 							
@@ -155,6 +179,8 @@
 												<td class="text-left">{{item.descricaoPais}}</td>
 												<td class="text-left">{{item.quantidadeAprovado | number : '1.2-2'}}</td>
 												<td class="text-left">{{item.valorDolarAprovado | number : '1.2-2'}}</td>
+												<td class="text-left">{{item.quantidadeComprovado}}</td>
+												<td class="text-left">{{item.valorDolarComprovado}}</td>
 											</tr>
 										</tbody>
 										<tbody *ngIf="totalpais == 0">
@@ -166,6 +192,31 @@
 						</form>
 					</div>
 				</div>
+			</section>
+		</div>
+
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<h2 class="panel-title h5">Documentos Comprobatorios</h2>
+				</header>
+				<div class="row">
+					<div class="col-lg-12" >
+						<app-documentos-comprobatorios-grid
+							[(lista)]="grid.lista"
+							[(total)]="grid.total" 
+							[(size)]="grid.size" 
+							[(page)]="grid.page"
+							[(isUsuarioInterno)]="grid.isUsuarioInterno" 
+							[(parametros)]="parametros"
+							[(formPai)]="formPai" 
+							(onChangeSort)="onChangeSort($event)"
+							(onChangeSize)="onChangeSize($event)" 
+							(onChangePage)="onChangePage($event)">				
+						</app-documentos-comprobatorios-grid>	
+					</div>
+				</div>	
+				
 			</section>
 		</div>
 	</div>

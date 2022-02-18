@@ -149,6 +149,8 @@
     <Compile Include="DistribuicaoAutomatica\DistribuicaoAutomaticaBll.cs" />
     <Compile Include="DI\DiBll.cs" />
     <Compile Include="DI\IDiBll.cs" />
+    <Compile Include="DocumentoComprobatorio\DocumentosCombatoriosBll.cs" />
+    <Compile Include="DocumentoComprobatorio\IDocumentosComprobatorios.cs" />
     <Compile Include="ErroProcessamentoAli\ErroProcessamentoAliBll.cs" />
     <Compile Include="ErroProcessamentoAli\IErroProcessamentoAliBll.cs" />
     <Compile Include="ErroProcessamentoProtocoloEnvio\ErroProcessamentoProtocoloEnvioBll.cs" />
