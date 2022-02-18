@@ -81,25 +81,31 @@
 										</a>
 
 										<div class="collapse-btn-excluir">
-											<div class="pull-right" *ngIf="!visualizar">
+
+											<!-- Botões se não for tipo Comprovação -->
+											<!-- Botões de Analise -->
+											<div class="pull-right" *ngIf="!visualizar && !isPlanoComprovacao">
 												<a routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-propriedade-produto" 
 												class="btn btn-sm btn-default" data-toggle="tooltip" title="Dados do Produto" ><span class="fa fa-pencil-square-o"></span></a>
 												
-												<a 												  
+												<a 	*ngIf="!isPlanoComprovacao"											  
 													routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-quadro-nacional" 
 													style="background-color: #008B8B;" class="btn btn-sm btn-primary" data-toggle="tooltip" 
 													title="Dados do Insumo Nacional ou Regional" >
 													<span class="fa  fa-plus-square"></span> Quadro II
 											  	</a>
 												
-												<a 	routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-quadro-importado"  
+												<a 	
+												routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-quadro-importado"  
 												style="background-color: #2F4F4F;" class="btn btn-sm btn-primary" 
 												data-toggle="tooltip" title="Dados do Insumo Importado" >
 												<span class="fa  fa-plus-square"></span> Quadro III
 											   	</a>
 											</div>
-
-											<div class="pull-right" *ngIf="visualizar">
+											<!-- Botões de Analise -->
+											
+											<!-- Botões de Visualizacao -->
+											<div class="pull-right" *ngIf="visualizar && !isPlanoComprovacao">
 												<a routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/visualizar-propriedade-produto" 
 												class="btn btn-sm btn-default" data-toggle="tooltip" title="Dados do Produto" ><span class="fa fa-pencil-square-o"></span></a>
 												
@@ -116,6 +122,21 @@
 												<span class="fa  fa-plus-square"></span> Quadro III
 											   	</a>
 											</div>
+											<!-- Botões de Visualizacao -->
+											<!-- Botões se não for tipo Comprovação -->
+
+											<!-- Botões se for analise de tipo Comprovação -->
+											<div class="pull-right" *ngIf="!visualizar && isPlanoComprovacao">
+												<a routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/analisar-propriedade-produto-comp" 
+												class="btn btn-sm btn-default" data-toggle="tooltip" title="Dados do Produto" ><span class="fa fa-pencil-square-o"></span></a>
+												
+											</div>
+											<div class="pull-right" *ngIf="visualizar && isPlanoComprovacao">
+												<a routerLink="/analisar-plano-exportacao/{{item.idPEProduto}}/visualizar-propriedade-produto-comp" 
+												class="btn btn-sm btn-default" data-toggle="tooltip" title="Dados do Produto" ><span class="fa fa-pencil-square-o"></span></a>
+												
+											</div>
+											<!-- Botões se for analise de tipo Comprovação -->
 										</div>
 
 									</header>

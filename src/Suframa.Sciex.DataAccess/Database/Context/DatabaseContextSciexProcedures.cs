@@ -271,6 +271,18 @@ namespace Suframa.Sciex.DataAccess.Database
 			).ToList();
 
 		}
+		public void SP_ParecerTecnicoComprovacao(int IdProcesso)
+		{
+			var result = Database.SqlQuery<List<object>>($@" 
+														DECLARE @PCO_NU bigint;
+														DECLARE @PCO_ANO int;
+														EXEC ST_SCIEX_PARECER_TECNICO_SUSCO {IdProcesso}, @PCO_NU = @PCO_NU OUTPUT, @PCO_ANO = @PCO_ANO OUTPUT 
+														",
+						new SqlParameter("@PCO_NU", System.Data.SqlDbType.BigInt).Direction = System.Data.ParameterDirection.Output,
+						new SqlParameter("@PCO_ANO", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output
+			).ToList();
+
+		}
 		public void SP_GerarParecerSuspensaoAlterado(int IdProcesso, int IdSolicitacaoAlteracao)
 		{
 			var result = Database.SqlQuery<List<object>>($@" 

@@ -32,6 +32,7 @@ export class AnalisePlanoFormularioPlanoComponent implements OnInit {
 	filesize: number;
 	types = ['application/x-zip-compressed', 'application/zip', 'application/pdf'];
 	visualizar: boolean;
+	isPlanoComprovacao: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -61,8 +62,19 @@ export class AnalisePlanoFormularioPlanoComponent implements OnInit {
 
 		if (this.path == 'analisar-info-plano') {
 			this.visualizar = false;
-		}else if (this.path == 'visualizar-info-plano') {
+			this.isPlanoComprovacao = false;
+		}
+		else if (this.path == 'visualizar-info-plano') {
 			this.visualizar = true;
+			this.isPlanoComprovacao = false;
+		}
+		else if (this.path == 'analisar-info-plano-comp') {
+			this.visualizar = false;
+			this.isPlanoComprovacao = true;
+		}
+		else if (this.path == 'visualizar-info-plano-comp') {
+			this.visualizar = true;
+			this.isPlanoComprovacao = true;
 		}
 
 		this.selecionar(this.route.snapshot.params['id']);

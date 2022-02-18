@@ -8,7 +8,6 @@ namespace Suframa.Sciex.BusinessLogic
 	{
 		PagedItems<PlanoExportacaoVM> ListarPaginado(ConsultarPlanoExportacaoVM pagedFilter);
 		PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUEPaginado(PEProdutoVM pagedFilter);
-		PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUECorrecaoPaginado(PEProdutoVM pagedFilter);
 		PlanoExportacaoVM Selecionar(int idPlanoExportacao);
 		bool DeletarPlano(int idPlanoExportacao);
 		bool DeletarDUE(int idDue);
@@ -23,8 +22,6 @@ namespace Suframa.Sciex.BusinessLogic
 		ResultadoMensagemProcessamentoVM DeletarCorrecaoPlanoExportacao(int id);
 		DuePorProdutoVM SalvarDocumentosComprobatorios(DuePorProdutoVM vm);
 		DuePorProdutoVM EditarDocumentosCombprobatorios(DuePorProdutoVM vm);
-
-		DuePorProdutoVM CorrigirDocumentosComprobatorios(DuePorProdutoVM vm);
-		int InativarDocumentosComprobatorios(DuePorProdutoVM vm);
+		PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUEPaginadoParaAnalise(PEProdutoVM pagedFilter);
 	}
 }

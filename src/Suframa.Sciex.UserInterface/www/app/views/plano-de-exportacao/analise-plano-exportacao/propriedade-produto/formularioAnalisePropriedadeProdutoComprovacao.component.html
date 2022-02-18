@@ -3,7 +3,7 @@
 	<div class="row m-b-md">
 		<div class="col-lg-12">
 			<app-titulo>Propriedade do Produto</app-titulo>
-			<app-sub-titulo>Cadastro das informações de exportação do produto do Plano de Comprovação</app-sub-titulo>
+			<app-sub-titulo>Análise das informações de exportação do produto do Plano de Comprovação</app-sub-titulo>
 		</div>
 	</div>
 
@@ -164,72 +164,16 @@
 					<div class="col-lg-12" style="width: 97%;">
 						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
 							<legend style="width: auto; border: 0;">Documentos Comprobatórios</legend>
-							<div class="row col-lg-12 form-group" *ngIf="!isQuadroNacional && !isCorrecao">
-								<div class="row">
-									<div class="col-lg-4">
-										<label>País:</label>
-										<app-drop-list-select2 #pais id="pais"
-											(valorModificado)="parametros.codigoPais = $event" name="pais" servico="Pais"
-											[(ngModel)]="parametros.codigoPais" [isDisabled]="somenteLeitura"
-											[placeholder]="somenteLeitura ? '' : 'Infome o código ou a descrição'">
-										</app-drop-list-select2>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-4">
-										<label>DU-E:</label>
-										<div class="ds-flex">
-											<input type="text" class="form-control" [readonly]="somenteLeitura"
-												maxlength="15" placeholder=""
-												[(ngModel)]="parametros.numero" />
-										</div>
-									</div>
-									<div class="col-lg-4">
-										<label>Data de Averbação:</label>
-										<div class="ds-flex">
-											<input #dataInicio
-										   type="date"
-										   id="dataInicio"
-										   name="dataInicio"
-										   min="0001-01-01" max="9999-12-31"
-										   [(ngModel)]="parametros.dataAverbacao"
-										   class="form-control date"
-										   style="width: 50%;"
-										   maxlength="10"
-										   autocomplete="off"
-										   [readonly]="somenteLeitura"
-										   >
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-4">
-										<label>Quantidade Total:</label>
-										<div class="ds-flex">
-											<input type="text" class="form-control" [readonly]="somenteLeitura"
-												maxlength="16" formatar-numero-decimal5 [prefix]="' '" placeholder="0.00000"
-												[(ngModel)]="parametros.quantidade" />
-										</div>
-									</div>
-									<div class="col-lg-4">
-										<label>Valor Total(US$):</label>
-										<div class="ds-flex">
-											<input type="text" class="form-control" [readonly]="somenteLeitura"
-												maxlength="18" formatar-numero-decimal7 [prefix]="' '"
-												placeholder="0.0000000" [(ngModel)]="parametros.valorDolar" />
-										</div>
-									</div>
-								</div>
-							</div>
 
-							<div class="row col-lg-12" *ngIf="!somenteLeitura && !isCorrecao">
-								<button (click)="incluirEditarItemLista()" type="button" class="btn btn-sm btn-primary pull-right"><span
-										class="fa fa-plus m-r-xs"></span>Incluir Item na Lista</button>
-										<br><br>
+							<div class="row col-lg-12" *ngIf="!somenteLeitura">
+								<button type="button" class="btn btn-sm btn-primary" style="margin-left: 5px; margin-bottom: 5px;" (click)="confirmarAprovarTodos()">
+									<span class="fa fa-paper-plane-o m-r-xs"></span>
+									Aprovar Todos
+								</button>
 							</div>
 
 							<div class="row col-lg-12">
-								<app-dados-comprobatorios-grid
+								<app-analise-dados-comprobatorios-grid
 											[(somenteLeitura)]="somenteLeitura"
 											[(lista)]="gridDadosComprovacao.lista"
 											 [(total)]="gridDadosComprovacao.total"
@@ -242,7 +186,7 @@
 											 (onChangeSort)="onChangeSort($event)"
 											 (onChangeSize)="onChangeSize($event)"
 											 (onChangePage)="onChangePage($event)">
-								</app-dados-comprobatorios-grid>
+								</app-analise-dados-comprobatorios-grid>
 							</div>
 
 						</fieldset>
@@ -262,4 +206,4 @@
 	</div>
 </div>
 
-<app-modal-alterar-pais #appModalAlterarPais></app-modal-alterar-pais>
+<!-- <app-modal-alterar-pais #appModalAlterarPais></app-modal-alterar-pais> -->

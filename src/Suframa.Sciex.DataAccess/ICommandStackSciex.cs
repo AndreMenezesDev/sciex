@@ -8,6 +8,7 @@ namespace Suframa.Sciex.DataAccess
 {
 	public interface ICommandStackSciex
 	{
+		ICommandRepositorySciex<PRCDueEntity> PRCDue { get; }
 		ICommandRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		ICommandRepositorySciex<AladiEntity> Aladi { get; }
 		ICommandRepositorySciex<NaladiEntity> Naladi { get; }

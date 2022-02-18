@@ -49,14 +49,14 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[Column("PRO_VL_DOLAR")]
 		public decimal ValorDolar{ get; set; }
 
-		[Column("PRO_VL_NACIONAL")]
-		public decimal? ValorNacional { get; set; }
-
 		[Column("PRO_VL_FLUXO_CAIXA")]
 		public decimal ValorFluxoCaixa { get; set; }
 
 		[Column("PRO_CO_UNIDADE")]
 		public int CodigoUnidade { get; set; }
+
+		[Column("PRO_VL_NACIONAL")]
+		public int? ValorNacional { get; set; }
 
 	}
 }

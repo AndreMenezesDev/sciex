@@ -203,14 +203,7 @@ namespace Suframa.Sciex.BusinessLogic
 				Numero = q.Numero,
 				DataAverbacao = q.DataAverbacao,
 				Quantidade = q.Quantidade,
-				ValorDolar = q.ValorDolar,
-				SituacaoAnalise = q.SituacaoAnalise,
-				DescricaoJustificativa = q.DescricaoJustificativa,
-				PEProdutoPais = new PEProdutoPaisVM()
-				{
-					IdPEProduto = q.PEProdutoPais.IdPEProduto,
-					IdPEProdutoPais = q.PEProdutoPais.IdPEProdutoPais,
-				}
+				ValorDolar = q.ValorDolar
 			},
 			q=> listaIdProdutoPais.Contains(q.IdPEProdutoPais)
 			, pagedFilter);
@@ -241,99 +234,6 @@ namespace Suframa.Sciex.BusinessLogic
 				}
 			}
 
-			return listaDUE;
-		}
-
-		public PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUECorrecaoPaginado(PEProdutoVM pagedFilter)
-		{
-			if (pagedFilter == null || pagedFilter.IdPEProduto == 0) { return new PagedItems<PlanoExportacaoDUEComplementoVM>(); }
-
-			var listaProdutoPaisEntity = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.ListarGrafo(o => new PEProdutoPaisVM()
-			{
-				IdPEProduto = o.IdPEProduto,
-				IdPEProdutoPais = o.IdPEProdutoPais,
-				CodigoPais = o.CodigoPais
-			},
-			o =>
-			(
-				o.IdPEProduto == pagedFilter.IdPEProduto
-			)
-			)
-			.ToList();
-			var idPEProduto = listaProdutoPaisEntity.Select(q => q.IdPEProduto).FirstOrDefault();
-			var listaIdProdutoPais = listaProdutoPaisEntity.Select(q => (int?)q.IdPEProdutoPais).ToList();
-
-			string sort = null;
-			if (!string.IsNullOrEmpty(pagedFilter.Sort) && pagedFilter.Sort.Equals("DescricaoPais"))
-			{
-				sort = "DescricaoPais";
-				pagedFilter.Sort = null;
-			}
-
-			var listaDUE = _uowSciex.QueryStackSciex.PlanoExportacaoDue.ListarPaginadoGrafo(q => new PlanoExportacaoDUEComplementoVM()
-			{
-				IdPEProduto = idPEProduto,
-				IdPEProdutoPais = q.IdPEProdutoPais,
-				IdDue = q.IdDue,
-				CodigoPais = q.CodigoPais,
-				Numero = q.Numero,
-				DataAverbacao = q.DataAverbacao,
-				Quantidade = q.Quantidade,
-				ValorDolar = q.ValorDolar,
-				SituacaoAnalise = q.SituacaoAnalise,
-				DescricaoJustificativa = q.DescricaoJustificativa,
-				PEProdutoPais = new PEProdutoPaisVM()
-				{
-					IdPEProduto = q.PEProdutoPais.IdPEProduto,
-					IdPEProdutoPais = q.PEProdutoPais.IdPEProdutoPais,
-				}
-			},
-			q => (listaIdProdutoPais.Contains(q.IdPEProdutoPais) && 
-				(q.SituacaoAnalise !=(int)EnumSituacaoAnalisePEDue.INATIVO &&
-				q.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)), pagedFilter);
-
-
-			foreach (var item in listaDUE.Items)
-			{
-				string codigoPais = item.CodigoPais.ToString("D3");
-				var pais = _uowSciex.QueryStackSciex.ViewPais.Selecionar(o => o.CodigoPais == codigoPais);
-
-				item.DescricaoPais = pais.Descricao;
-				item.DataAverbacaoFormatada = item.DataAverbacao != DateTime.MinValue ? item.DataAverbacao.ToShortDateString() : "-";
-				if (item.SituacaoAnalise == 1){
-					item.SituacaoAnaliseString = "Aprovado";
-				}else if (item.SituacaoAnalise == 2){
-					item.SituacaoAnaliseString = "Reprovado";
-				}else if (item.SituacaoAnalise == 3){
-					item.SituacaoAnaliseString = "Alterado";
-				}else if (item.SituacaoAnalise == 4){
-					item.SituacaoAnaliseString = "Corrigido";
-				}else if (item.SituacaoAnalise == 5){
-					item.SituacaoAnaliseString = "Inativo";
-				}else if (item.SituacaoAnalise == 6){
-					item.SituacaoAnaliseString = "Novo";
-				}
-				else{
-					item.SituacaoAnaliseString = "Não Analisado	";
-				}				
-			}
-			
-			if (!string.IsNullOrWhiteSpace(sort))
-			{
-				switch (sort)
-				{
-					case "DescricaoPais":
-						if (pagedFilter.Reverse)
-						{
-							listaDUE.Items = listaDUE.Items.OrderBy(q => q.DescricaoPais).ThenBy(q => q.DescricaoPais).ToList();
-						}
-						else
-						{
-							listaDUE.Items = listaDUE.Items.OrderByDescending(q => q.DescricaoPais).ThenByDescending(q => q.DescricaoPais).ToList();
-						}
-						break;
-				}
-			}
 			return listaDUE;
 		}
 		public PlanoExportacaoVM Selecionar(int idPlanoExportacao)
@@ -1261,9 +1161,10 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 
 			var validacao = ValidarPlanoExportacaoComprovacao(idPlanoExportacao, retorno);
-			var PesquisaEntrega = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.IdPlanoExportacao == idPlanoExportacao);
-			if (validacao.Resultado==true && PesquisaEntrega.Situacao == 1)
-			{			
+			if (validacao.Resultado==true)
+			{
+				var PesquisaEntrega = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.IdPlanoExportacao==idPlanoExportacao);
+
 				PesquisaEntrega.Situacao = 2;
 				PesquisaEntrega.DataEnvio = DateTime.Now;
 				retorno.Resultado = true;
@@ -1273,11 +1174,7 @@ namespace Suframa.Sciex.BusinessLogic
 			}
 			else
 			{
-				PesquisaEntrega.Situacao = 3;
-				PesquisaEntrega.DataEnvio = DateTime.Now;
-				_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(PesquisaEntrega);
-				_uowSciex.CommandStackSciex.Save();
-				retorno.Resultado = true;
+				retorno.Resultado = false;
 			}
 			
 
@@ -1681,7 +1578,7 @@ namespace Suframa.Sciex.BusinessLogic
 				}
 				return retorno;
 			}
-			else if (regPlano.TipoExportacao == "CO")
+			else
 			{
 				var listaPEProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.ListarGrafo(x => new PEProdutoComplementoVM()
 				{
@@ -1695,38 +1592,35 @@ namespace Suframa.Sciex.BusinessLogic
 						ListaPEDue = y.ListaPEDue.Select(z => new PlanoExportacaoDUEComplementoVM()
 						{
 							IdDue = z.IdDue,
-							IdPEProdutoPais = z.IdPEProdutoPais,
-							CodigoPais = z.CodigoPais,
-							DataAverbacao = z.DataAverbacao,
-							SituacaoAnalise = z.SituacaoAnalise
-							
+							IdPEProdutoPais = z.IdPEProdutoPais
 						}).ToList()
 					}).ToList()
 				},
 				q => q.IdPlanoExportacao == id);
+
 
 				foreach (var PEProduto in listaPEProduto)
 
 				{
 					foreach (var PEProdutoPais in PEProduto.ListaPEProdutoPais)
 					{
-						foreach (var PEDue in PEProdutoPais.ListaPEDue)
+						if (PEProdutoPais.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.CORRIGIDO || PEProdutoPais.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO_EMPRESA)
 						{
-							if (PEDue.SituacaoAnalise == (int)EnumSituacaoAnalisePEDue.CORRIGIDO || PEDue.SituacaoAnalise == (int)EnumSituacaoAnalisePEDue.NOVO)
+							foreach (var PEDue in PEProdutoPais.ListaPEDue)
 							{
-								_uowSciex.CommandStackSciex.PlanoExportacaoDue.Apagar(PEDue.IdDue);
-
+								_uowSciex.CommandStackSciex.PlanoExportacaoDue.Apagar(PEProdutoPais.IdPEProdutoPais);
+								_uowSciex.CommandStackSciex.Save();
 							}
-							if (PEDue.SituacaoAnalise == (int)EnumSituacaoAnalisePEDue.ALTERADO)
-							{
-								var regPEDueEntity = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Selecionar(x => x.IdDue == PEDue.IdDue);
-
-								regPEDueEntity.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO;
-								_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(regPEDueEntity);
-							}
-
 						}
-						_uowSciex.CommandStackSciex.Save();
+						if (PEProdutoPais.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO)
+						{
+							var regPEProdutoPaisEntity = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Selecionar(x => x.IdPEProduto == PEProdutoPais.IdPEProdutoPais);
+
+							regPEProdutoPaisEntity.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO;
+							_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(regPEProdutoPaisEntity);
+							_uowSciex.CommandStackSciex.Save();
+							_uowSciex.CommandStackSciex.DetachEntries();
+						}
 					}	
 				}
 			}
@@ -1866,8 +1760,8 @@ namespace Suframa.Sciex.BusinessLogic
 						Quantidade = vm.Quantidade,
 						ValorDolar = vm.ValorDolar,
 						CodigoPais = vm.CodigoPais,
-						IdPEProduto = vm.IdPEProduto,
-						
+						IdPEProduto = vm.IdPEProduto
+
 					};
 					_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(PEProdutoPaisEntity);
 					_uowSciex.CommandStackSciex.Save();
@@ -1879,8 +1773,8 @@ namespace Suframa.Sciex.BusinessLogic
 						Quantidade = vm.Quantidade,
 						ValorDolar = vm.ValorDolar,
 						CodigoPais = vm.CodigoPais,
-						IdPEProdutoPais = PEProdutoPaisEntity.IdPEProdutoPais,
-						SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.NOVO
+						IdPEProdutoPais = PEProdutoPaisEntity.IdPEProdutoPais
+
 					};
 					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(PEDueEntity);
 					_uowSciex.CommandStackSciex.Save();
@@ -1914,8 +1808,7 @@ namespace Suframa.Sciex.BusinessLogic
 						Quantidade = vm.Quantidade,
 						ValorDolar = vm.ValorDolar,
 						CodigoPais = vm.CodigoPais,
-						IdPEProdutoPais = regPEProdutoPais.IdPEProdutoPais,
-						SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.NOVO
+						IdPEProdutoPais = regPEProdutoPais.IdPEProdutoPais
 					};
 					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(PEDueEntity);
 					_uowSciex.CommandStackSciex.Save();
@@ -1942,6 +1835,7 @@ namespace Suframa.Sciex.BusinessLogic
 				
 
 			}
+			return vm;
 		}			
 
 		public DuePorProdutoVM EditarDocumentosCombprobatorios(DuePorProdutoVM vm)
@@ -1966,13 +1860,8 @@ namespace Suframa.Sciex.BusinessLogic
 				_uowSciex.CommandStackSciex.Save();
 
 				var regPEProdutoPais = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Selecionar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais);
-
-				var somatorioPEDUEqtd = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais &&
-																								(o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.INATIVO &&
-																								o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)).Sum(o => o.Quantidade);
-				var somatorioPEDUOValorDolar = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais &&
-																								(o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.INATIVO &&
-																								o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)).Sum(o => o.ValorDolar);
+				var somatorioPEDUEqtd= _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdDue == vm.IdDue).Sum(o => o.Quantidade);
+				var somatorioPEDUOValorDolar =	_uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdDue == vm.IdDue).Sum(o => o.ValorDolar);
 
 				regPEProdutoPais.Quantidade = somatorioPEDUEqtd;
 				regPEProdutoPais.ValorDolar = somatorioPEDUOValorDolar;
@@ -2002,130 +1891,92 @@ namespace Suframa.Sciex.BusinessLogic
 				return vm;
 			}
 		}
-		public DuePorProdutoVM CorrigirDocumentosComprobatorios(DuePorProdutoVM vm)
+
+		public PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUEPaginadoParaAnalise(PEProdutoVM pagedFilter)
 		{
-			vm.Sucesso = true;
-			vm = ValidacaoAlterar(vm);
-			if (!vm.Sucesso)
-			{
-				return vm;
-			}
-			try
-			{
-				var regPEDUE = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Selecionar(o => o.IdDue == vm.IdDue);
+			if (pagedFilter == null || pagedFilter.IdPEProduto == 0) { return new PagedItems<PlanoExportacaoDUEComplementoVM>(); }
 
-				if (regPEDUE.SituacaoAnalise == (int)EnumSituacaoAnalisePEDue.REPROVADO)
+			var listaProdutoPaisEntity = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.ListarGrafo(o => new PEProdutoPaisVM()
+			{
+				IdPEProduto = o.IdPEProduto,
+				IdPEProdutoPais = o.IdPEProdutoPais,
+				CodigoPais = o.CodigoPais
+			},
+			o =>
+			(
+				o.IdPEProduto == pagedFilter.IdPEProduto
+			)
+			)
+			.ToList();
+			var idPEProduto = listaProdutoPaisEntity.Select(q => q.IdPEProduto).FirstOrDefault();
+			var listaIdProdutoPais = listaProdutoPaisEntity.Select(q => (int?)q.IdPEProdutoPais).ToList();
+
+			string sort = null;
+			if (!string.IsNullOrEmpty(pagedFilter.Sort) && pagedFilter.Sort.Equals("DescricaoPais"))
+			{
+				sort = "DescricaoPais";
+				pagedFilter.Sort = null;
+			}
+
+			var listaDUE = _uowSciex.QueryStackSciex.PlanoExportacaoDue.ListarPaginadoGrafo(q => new PlanoExportacaoDUEComplementoVM()
+			{
+				IdPEProduto = idPEProduto,
+				IdPEProdutoPais = q.IdPEProdutoPais,
+				IdDue = q.IdDue,
+				CodigoPais = q.CodigoPais,
+				Numero = q.Numero,
+				DataAverbacao = q.DataAverbacao,
+				Quantidade = q.Quantidade,
+				ValorDolar = q.ValorDolar,
+				SituacaoAnalise = q.SituacaoAnalise,
+				DescricaoJustificativa = q.DescricaoJustificativa
+			},
+			q => listaIdProdutoPais.Contains(q.IdPEProdutoPais)
+			, pagedFilter);
+
+			foreach (var item in listaDUE.Items)
+			{
+				string codigoPais = item.CodigoPais.ToString("D3");
+				var pais = _uowSciex.QueryStackSciex.ViewPais.Selecionar(o => o.CodigoPais == codigoPais);
+
+				item.DescricaoPais = pais.Descricao;
+				item.DataAverbacaoFormatada = item.DataAverbacao != DateTime.MinValue ? item.DataAverbacao.ToShortDateString() : "-";
+				item.DescricaoSituacaoAnalise = ObterDescricaoSituacaoAnalise(item.SituacaoAnalise);
+			}
+
+			if (!string.IsNullOrWhiteSpace(sort))
+			{
+				switch (sort)
 				{
-					regPEDUE.SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.ALTERADO;
-					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(regPEDUE);
-					_uowSciex.CommandStackSciex.Save();
-
-					var PEDueEntity = new PlanoExportacaoDUEEntity()
-					{
-						SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.CORRIGIDO,
-						Numero = vm.Numero,
-						DataAverbacao = vm.DataAverbacao,
-						Quantidade = vm.Quantidade,
-						ValorDolar = vm.ValorDolar,
-						CodigoPais = vm.CodigoPais,
-						IdPEProdutoPais = vm.IdPEProdutoPais
-					};
-					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(PEDueEntity);
-					_uowSciex.CommandStackSciex.Save();
-					_uowSciex.CommandStackSciex.DetachEntries();
-
-					var regPEProdutoPais = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Selecionar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais);
-					var somatorioPEDUEqtd = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais &&
-																								(o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.INATIVO &&
-																								o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)).Sum(o => o.Quantidade);
-					var somatorioPEDUOValorDolar = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais &&
-																								(o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.INATIVO &&
-																								o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)).Sum(o => o.ValorDolar);
-
-					regPEProdutoPais.Quantidade = somatorioPEDUEqtd;
-					regPEProdutoPais.ValorDolar = somatorioPEDUOValorDolar;
-
-					_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(regPEProdutoPais);
-					_uowSciex.CommandStackSciex.Save();
-					_uowSciex.CommandStackSciex.DetachEntries();
-
-					var regPEProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Selecionar(o => o.IdPEProduto == regPEProdutoPais.IdPEProduto);
-					var regPEProdutoPaisQtd = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.Quantidade);
-					var regPEProdutoPaisValorDolar = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.ValorDolar);
-
-					regPEProduto.Qtd = regPEProdutoPaisQtd;
-					regPEProduto.ValorDolar = regPEProdutoPaisValorDolar;
-
-					_uowSciex.CommandStackSciex.PlanoExportacaoProduto.Salvar(regPEProduto);
-					_uowSciex.CommandStackSciex.Save();
-
-
-					vm.Sucesso = true;
+					case "DescricaoPais":
+						if (pagedFilter.Reverse)
+						{
+							listaDUE.Items = listaDUE.Items.OrderBy(q => q.DescricaoPais).ThenBy(q => q.DescricaoPais).ToList();
+						}
+						else
+						{
+							listaDUE.Items = listaDUE.Items.OrderByDescending(q => q.DescricaoPais).ThenByDescending(q => q.DescricaoPais).ToList();
+						}
+						break;
 				}
-				else if (regPEDUE.SituacaoAnalise == (int)EnumSituacaoAnalisePEDue.CORRIGIDO)
-				{
-					regPEDUE.Numero = vm.Numero;
-					regPEDUE.DataAverbacao = vm.DataAverbacao;
-					regPEDUE.Quantidade = vm.Quantidade;
-					regPEDUE.ValorDolar = vm.ValorDolar;
-
-					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(regPEDUE);
-					_uowSciex.CommandStackSciex.Save();
-					_uowSciex.CommandStackSciex.DetachEntries();
-
-					var regPEProdutoPais = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Selecionar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais);
-					var somatorioPEDUEqtd = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais &&
-																								(o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.INATIVO &&
-																								o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)).Sum(o => o.Quantidade);
-					var somatorioPEDUOValorDolar = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(o => o.IdPEProdutoPais == vm.IdPEProdutoPais &&
-																								(o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.INATIVO &&
-																								o.SituacaoAnalise != (int)EnumSituacaoAnalisePEDue.ALTERADO)).Sum(o => o.ValorDolar);
-
-					regPEProdutoPais.Quantidade = somatorioPEDUEqtd;
-					regPEProdutoPais.ValorDolar = somatorioPEDUOValorDolar;
-
-					_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(regPEProdutoPais);
-					_uowSciex.CommandStackSciex.Save();
-					_uowSciex.CommandStackSciex.DetachEntries();
-
-					var regPEProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Selecionar(o => o.IdPEProduto == regPEProdutoPais.IdPEProduto);
-					var regPEProdutoPaisQtd = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.Quantidade);
-					var regPEProdutoPaisValorDolar = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.ValorDolar);
-
-					regPEProduto.Qtd = regPEProdutoPaisQtd;
-					regPEProduto.ValorDolar = regPEProdutoPaisValorDolar;
-
-					_uowSciex.CommandStackSciex.PlanoExportacaoProduto.Salvar(regPEProduto);
-					_uowSciex.CommandStackSciex.Save();
-
-					vm.Sucesso = true;
-				}
-				return vm;
 			}
-			catch (Exception e)
-			{
-				vm.Sucesso = false;
-				vm.RetornoString = "Erro ao Editar DUE.";
-				return vm;
-			}
+
+			return listaDUE;
 		}
 
-
-
-		public int InativarDocumentosComprobatorios(DuePorProdutoVM vm)
+		private string ObterDescricaoSituacaoAnalise(int? situacaoAnalise)
 		{
-			try
+			switch (situacaoAnalise)
 			{
-				var regPEDUE = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Selecionar(o => o.IdDue == vm.IdDue);
+				case null: return "-";
+				case 1: return "Aprovado";
+				case 2: return "Reprovado";
+				case 3: return "Alterado";
+				case 4: return "Corrigido";
+				case 5: return "Inativo";
+				case 6: return "Novo";
+				default: return "-";
 
-				regPEDUE.SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.INATIVO;
-				_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(regPEDUE);
-				_uowSciex.CommandStackSciex.Save();
-				return 0;
-			}
-			catch (Exception e)
-			{
-				return 1;
 			}
 		}
 	}

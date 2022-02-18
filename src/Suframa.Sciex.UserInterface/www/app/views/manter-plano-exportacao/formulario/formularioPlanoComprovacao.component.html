@@ -75,7 +75,7 @@
 														data-original-title="Download"></i>
 												</a>
 											</div>
-
+											
 											<div class="col-lg-6">
 												<label style="font-weight: normal">{{model.nomeAnexo}}</label>
 											</div>
@@ -133,34 +133,20 @@
 
 										<div class="collapse-btn-excluir">
 											<div class="pull-right">
-												<a *ngIf="!somenteLeitura && model.tipoExportacao =='AP'"
+												<a *ngIf="!somenteLeitura"
 													routerLink="/manter-plano-exportacao/{{item.idPEProduto}}/propriedadeprodutocomprovacao"
 													class="btn btn-sm btn-default" data-toggle="tooltip"
 													title="Dados do Produto">
 													<span class="fa fa-pencil-square-o"></span>
 												</a>
 
-												<a *ngIf="somenteLeitura && model.tipoExportacao =='AP'"
+												<a *ngIf="somenteLeitura"
 													routerLink="/manter-plano-exportacao/{{item.idPEProduto}}/visualizarpropriedadeprodutocomprovacao"
 													class="btn btn-sm btn-default" data-toggle="tooltip"
 													title="Dados do Produto">
 													<span class="fa fa-pencil-square-o"></span>
 												</a>
-
-												<a *ngIf="somenteLeitura && model.tipoExportacao =='CO'"
-												routerLink="/manter-plano-exportacao/{{item.idPEProduto}}/visualizarpropriedadeprodutocomprovacaocorrecao"
-												class="btn btn-sm btn-default" data-toggle="tooltip"
-												title="Dados do Produto Correção">
-												<span class="fa fa-pencil-square-o"></span>
-												</a>
-												<a *ngIf="!somenteLeitura && model.tipoExportacao =='CO'"
-													routerLink="/manter-plano-exportacao/{{item.idPEProduto}}/propriedadeprodutocomprovacaocorrecao"
-													class="btn btn-sm btn-default" data-toggle="tooltip"
-													title="Dados do Produto Correção">
-													<span class="fa fa-pencil-square-o"></span>
-												</a>
-
-
+												
 											</div>
 										</div>
 

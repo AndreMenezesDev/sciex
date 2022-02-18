@@ -45,6 +45,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string TipoExportacaoString { get; set; }
 		public string SituacaoString { get; set; }
 		public List<PEProdutoVM> ListaPEProdutos { get; set; }
+		public List<PEProdutoComplementoVM> ListaPEProdutosComplemento { get; set; }
 		public List<PEArquivoVM> ListaAnexos { get; set; }
 
 		//complemento de classe

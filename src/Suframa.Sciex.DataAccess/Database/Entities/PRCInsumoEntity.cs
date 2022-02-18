@@ -97,14 +97,23 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[Column("ins_qt_saldo")]
 		public decimal? QuantidadeSaldo { get; set; }
 
+		[Column("ins_vl_dolar_unitario")]
+		public decimal? ValorDolarUnitario { get; set; }
+
+		[Column("ins_vl_dolar_unitario_cfr")]
+		public decimal? ValorDolarUnitarioCrf { get; set; }
+
+		[Column("ins_qt_adicional")]
+		public decimal? QuantidadeAdicional { get; set; }
+
 		[Column("ins_st")]
 		public int? StatusInsumo { get; set; }
 		
 		[Column("ins_st_novo")]
 		public int? StatusInsumoNovo { get; set; }
 
-		[Column("ins_qt_adicional")]
-		public decimal? QuantidadeAdicional { get; set; }
+		[Column("ins_dt_inclusao")]
+		public DateTime? DataInclusao { get; set; }
 
 		[Column("ins_vl_dolar_adicional")]
 		public decimal? ValorAdicional { get; set; }
@@ -112,15 +121,11 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[Column("ins_vl_dolar_adicional_frete")]
 		public decimal? ValorAdicionalFrete { get; set; }
 
-		[Column("ins_vl_dolar_unitario")]
-		public decimal? ValorDolarUnitario { get; set; }
+		[Column("ins_vl_dolar_saldo_cancelado")]
+		public decimal? ValorDolarSaldoCancelado { get; set; }
 
-		[Column("ins_vl_dolar_unitario_cfr")]
-		public decimal? ValorDolarUnitarioCrf { get; set; }
-
-		
-
-
+		[Column("ins_qt_saldo_cancelado")]
+		public decimal? QuantidadeSaldoCancelado { get; set; }
 
 	}
 }

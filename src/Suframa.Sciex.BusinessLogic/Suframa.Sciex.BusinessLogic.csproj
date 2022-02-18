@@ -211,6 +211,8 @@
     <Compile Include="PEInsumos\PEInsumoBll.cs" />
     <Compile Include="AnalisePlanoDeExportacao\IAnalisePlanoDeExportacaoBll.cs" />
     <Compile Include="AnalisePlanoDeExportacao\AnalisePlanoDeExportacaoBll.cs" />
+    <Compile Include="PlanoExportacao\DeclaracaoUnicaExportacao\IDueBll.cs" />
+    <Compile Include="PlanoExportacao\DeclaracaoUnicaExportacao\DueBll.cs" />
     <Compile Include="PlanoExportacao\IPEPaisBll.cs" />
     <Compile Include="PlanoExportacao\IPEProdutoBll.cs" />
     <Compile Include="PlanoExportacao\IPlanoExportacaoBll.cs" />

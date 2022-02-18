@@ -11,6 +11,7 @@ namespace Suframa.Sciex.DataAccess
 {
 	public interface IQueryStackSciex
 	{
+		IQueryRepositorySciex<PRCDueEntity> PRCDue { get; }
 		IQueryRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		IQueryRepositorySciex<AladiEntity> Aladi { get; }
 		IQueryRepositorySciex<NaladiEntity> Naladi { get; }
@@ -194,6 +195,7 @@ namespace Suframa.Sciex.DataAccess
 
 		IQueryRepositorySciex<ParecerTecnicoProdutoEntity> ParecerTecnicoProduto { get; }
 		void IniciarStoreProcedureParecerTecnico(int IdProcesso);
+		void IniciarStoreProcedureParecerTecnico(int IdProcesso, bool IsTipoComprovacao);
 		void IniciarStoreProcedureParecerSuspensaoAlterado(int IdProcesso, int IdSolicitacaoAlteracao);
 		void IniciarStoreProcedureGerarHistoricoInsumo(int IdProcesso, int IdSolicitacaoAlteracao, string NomeResponsavel);
 		void IniciarStoreProcedureParecerSuspensaoCancelado(int IdProcesso);

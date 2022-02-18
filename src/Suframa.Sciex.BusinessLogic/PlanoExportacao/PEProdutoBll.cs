@@ -100,7 +100,6 @@ namespace Suframa.Sciex.BusinessLogic
 
 		public PEProdutoVM Selecionar(int idPEProduto)
 		{
-
 			var pe = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.SelecionarGrafo(o => new PEProdutoVM()
 			{
 				IdPEProduto = o.IdPEProduto,
@@ -112,7 +111,6 @@ namespace Suframa.Sciex.BusinessLogic
 				DescricaoModelo = o.DescricaoModelo,
 				Qtd = o.Qtd,
 				ValorDolar = o.ValorDolar,
-				ValorNacional = o.ValorNacional,
 				ValorFluxoCaixa = o.ValorFluxoCaixa,
 				CodigoUnidade = o.CodigoUnidade
 			}
@@ -128,7 +126,6 @@ namespace Suframa.Sciex.BusinessLogic
 
 			pe.QtdFormatado = pe.Qtd != 0 ? pe.Qtd.ToString("N5") : "0";
 			pe.ValorDolarFormatado = pe.ValorDolar != 0 ? pe.ValorDolar.ToString("N") : "0";
-			pe.ValorNacionalFormatado = pe.ValorNacional != null ? pe.ValorNacional.ToString() : "0";
 
 			return pe;
 		}

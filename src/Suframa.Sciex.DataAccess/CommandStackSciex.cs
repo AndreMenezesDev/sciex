@@ -14,6 +14,7 @@ namespace Suframa.Sciex.DataAccess
 	{
 		private readonly IDatabaseContextSciex contextSciex;
 
+		public ICommandRepositorySciex<PRCDueEntity> PRCDue { get; }
 		public ICommandRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		public ICommandRepositorySciex<AladiEntity> Aladi { get; }
 		public ICommandRepositorySciex<NaladiEntity> Naladi { get; }
@@ -158,6 +159,7 @@ namespace Suframa.Sciex.DataAccess
 		{
 			contextSciex = databaseContextSciex;
 
+			PRCDue = new CommandRepositorySciex<PRCDueEntity>(contextSciex);
 			Processo = new CommandRepositorySciex<ProcessoEntity>(contextSciex);
 			PlanoExportacaoDue = new CommandRepositorySciex<PlanoExportacaoDUEEntity>(contextSciex);
 			StoreProcedureParecerTecnico = new CommandRepositorySciex<ST_ParecerTecnicoEntity>(contextSciex);

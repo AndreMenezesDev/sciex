@@ -1,4 +1,5 @@
 import { Component, Output, Input, OnInit, EventEmitter, ViewChild, ViewContainerRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApplicationService } from '../../../shared/services/application.service';
 import { MessagesService } from '../../../shared/services/messages.service';
 import { ModalService } from '../../../shared/services/modal.service';
@@ -26,6 +27,7 @@ export class PlanoDeExportacaoGridComponent {
 		private applicationService: ApplicationService,
 		private modal: ModalService,
 		private msg: MessagesService,
+		private router: Router
 	) { }
 
 	@Input() lista: any;
@@ -67,19 +69,24 @@ export class PlanoDeExportacaoGridComponent {
 		})
 	}
 
-	confirmarDeferir(id) {
+	confirmarDeferir(item) {
 		this.modal.confirmacao("Deseja DEFERIR o Plano de Exportação selecionado?", '', '')
 			.subscribe(isDeferir => {
 				if (isDeferir) {
-					this.deferirPlanoExportacao(id);
+					this.deferirPlanoExportacao(item);
 				}
 			});
 	}
 
-	deferirPlanoExportacao(id) {
+	deferirPlanoExportacao(item) {
 
-		this.applicationService.post(this.servicoDeferir, id).subscribe((result:any) => {			
+		let dados = {
+			idPlanoExportacao: item.idPlanoExportacao,
+			tipoExportacao: item.tipoExportacao
+		};
 
+		this.applicationService.post(this.servicoDeferir, dados).subscribe((result:any) => {			
+	
 			if (!result.resultado) {
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO + ": "+result.mensagem, "Atenção", "");
 			}else if(result.camposNaoValidos == null && result.possuiTodosRegistros){
@@ -100,5 +107,27 @@ export class PlanoDeExportacaoGridComponent {
 
 		});
 
+	}
+
+	abrirVisualizacao(item){
+		let idPlanoExportacao = item.idPlanoExportacao;
+
+		if (item.tipoExportacao != 'CO'){
+			this.router.navigate([`/analisar-plano-exportacao/${idPlanoExportacao}/visualizar-info-plano`])
+		}
+		else if (item.tipoExportacao == 'CO'){
+			this.router.navigate([`/analisar-plano-exportacao/${idPlanoExportacao}/visualizar-info-plano-comp`])
+		}
+	}
+
+	abrirAnalise(item){
+		let idPlanoExportacao = item.idPlanoExportacao;
+
+		if (item.tipoExportacao != 'CO'){
+			this.router.navigate([`/analisar-plano-exportacao/${idPlanoExportacao}/analisar-info-plano`])
+		}
+		else if (item.tipoExportacao == 'CO'){
+			this.router.navigate([`/analisar-plano-exportacao/${idPlanoExportacao}/analisar-info-plano-comp`])
+		}
 	}
 }

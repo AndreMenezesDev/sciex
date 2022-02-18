@@ -119,10 +119,6 @@
 													<th class="th-sortable unset-nowrap">
 														<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor (US$)</app-ordenacao>
 													</th>
-													<!-- <th class="th-sortable unset-nowrap" *ngIf="!visualizar">
-														<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
-													</th>
-													<th class="text-center th-100" *ngIf="!visualizar">Ações</th> -->
 												</tr>
 											</thead>
 								
@@ -131,43 +127,6 @@
 													<td class="text-left">{{item.descricaoPais}}</td>
 													<td class="text-left" formatar-numero="true">{{item.quantidadeFormatado}}</td>
 													<td class="text-left" formatar-numero="true">{{item.valorDolarFormatado}}</td>
-													<!-- <td class="text-left" *ngIf="!visualizar">{{item.situacaoAnalise == 1 ? 'Aprovado' 
-																				: item.situacaoAnalise == 2 ? 'Reprovado'
-																											: '-'}}</td>
-													<td class="text-center" *ngIf="!visualizar">                           	
-														<a 
-															(click)="aprovarItem(item)"
-															data-toggle="tooltip" 
-															title="Aprovar" 
-															data-original-title="Aprovar" 
-															class="btn btn-primary btn-sm">
-																<i class="fa fa-check"></i> 
-														</a>
-														<a 
-															(click)="abrirGlosa(item)"
-															class="btn btn-danger btn-sm" 
-															data-toggle="tooltip" 
-															title="Reprovar" 
-															data-original-title="Reprovar">
-																<i class="fa fa-times"></i>
-														</a>                                 
-													</td>
-													<td class="text-center" *ngIf="visualizar && item.situacaoAnalise == 2">                           	
-														<a 
-															(click)="abrirVisualizarGlosa(item)"
-															class="btn btn-danger btn-sm" 
-															data-toggle="tooltip" 
-															title="Reprovado" 
-															data-original-title="Reprovar">
-																<i class="fa fa-times"></i>
-														</a>    
-														
-														----inicio codigo comentado anteriormente
-														<a *ngIf="item.situacaoAnalise != 2">
-															<i></i>
-														</a>   
-														-----fim codigo comentado anteriormente                       
-													</td> -->
 												</tr>
 											</tbody>
 											<tbody *ngIf="totalpais == 0">

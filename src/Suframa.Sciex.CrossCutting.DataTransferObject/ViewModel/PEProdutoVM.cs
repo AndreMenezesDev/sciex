@@ -17,10 +17,10 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string DescricaoModelo { get; set; }
 		public decimal Qtd { get; set; }
 		public decimal ValorDolar { get; set; }
-		public decimal? ValorNacional { get; set; }
 		public decimal ValorFluxoCaixa { get; set; }
 		public int IdPlanoExportacao { get; set; }
 		public int CodigoUnidade { get; set; }
+		public int? ValorNacional { get; set; }
 		public IList<PEInsumoVM> ListaPEInsumo { get; set; }
 		public IList<PEProdutoPaisVM> ListaPEProdutoPais { get; set; }
 
@@ -32,7 +32,6 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string DescCodigoUnidade { get; set; }
 		public string QtdFormatado { get; set; }
 		public string ValorDolarFormatado { get; set; }
-		public string ValorNacionalFormatado { get; set; }
 	}
 	public class PEProdutoComplementoVM : PEProdutoVM
 	{

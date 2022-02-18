@@ -9,6 +9,12 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 	public partial class PRCProdutoPaisEntity : BaseEntity
 	{
 		public virtual PRCProdutoEntity PrcProduto { get; set; }
+		public virtual ICollection<PRCDueEntity> PrcDue { get; set; }
+
+		public PRCProdutoPaisEntity()
+		{
+			PrcDue = new HashSet<PRCDueEntity>();
+		}
 
 		[Key]
 		[Column("prp_id")]
@@ -16,7 +22,7 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		
 		[ForeignKey(nameof(PrcProduto))]
 		[Column("pro_id")]
-		public int IdPrcProduto { get; set; }		
+		public int IdPrcProduto { get; set; }	
 
 		[Column("prp_qt_aprov")]
 		public decimal? QuantidadeAprovado { get; set; }
@@ -26,6 +32,12 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 
 		[Column("pai_co")]
 		public int? CodigoPais { get; set; }
+
+		[Column("prp_qt_comp")]
+		public decimal? QuantidadeComprovado { get; set; }
+		
+		[Column("prp_vl_dolar_comp")]
+		public decimal? ValorDolarComprovado { get; set; }
 
 	}
 }

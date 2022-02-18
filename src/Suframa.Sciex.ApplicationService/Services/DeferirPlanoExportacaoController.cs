@@ -19,9 +19,9 @@ namespace Suframa.Sciex.ApplicationService.Services
 		}
 
 		// POST: api/DeferirPlanoExportacao
-		public ResultadoProcessamentoVM Post([FromBody] int id)
+		public ResultadoProcessamentoVM Post([FromBody] PlanoExportacaoVM vm)
         {
-			return _deferir.DeferirPlano(id);
+			return _deferir.DeferirPlano(vm);
         }
     }
 }

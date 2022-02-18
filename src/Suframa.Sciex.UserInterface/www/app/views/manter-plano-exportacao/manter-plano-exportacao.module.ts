@@ -9,7 +9,6 @@ import { ManterPlanoFormularioPlanoComponent } from './formulario/formularioPlan
 import { ModalNovoPlanoComponent } from './modal/modal-novo-plano.component';
 import { ManterPlanoFormularioPropriedadeProdutoComponent } from './formulario/formularioPropriedadeProduto.component';
 import { ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent } from './formulario/formularioPropriedadeProdutoComprovacao.component';
-import { ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent } from './formulario/formularioPropriedadeProdutoComprovacaoCorrecao.component';
 import { ModalAlterarPaisComponent } from './modal/modal-alterar-pais.component';
 import { ModalEditarDocumentoDueComponent } from './modal/modal-editar-documento-due.component';
 import { ManterPEInsumosNacionalGridComponent } from './grid/grid-insumos-nacional.component';
@@ -20,11 +19,8 @@ import { InsumosModalGridComponent } from './modal/grid-modal-incluir-insumos/gr
 import { ManterPlanoFormularioDetalhesInsumosComponent } from './formulario/formularioDetalhesInsumos.component';
 import { ModalEditarDetalheInsumoComponent } from './modal/modal-editar-detalhe-insumo.component';
 import { ModalJustificativaErroComponent } from './modal/justificativa-de-erro/modal-justificativa-erro.component';
-import { ModalJustificativaErroDueComponent } from './modal/justificativa-de-erro/modal-justificativa-erro-due.component';
 import { ManterPlanoFormularioPlanoComprovacaoComponent } from './formulario/formularioPlanoComprovacao.component';
 import { DocumentosComprobatorioslGridComponent } from './grid/grid-dados-comprobatorios/grid-dados-comprobatorios.component';
-import { DocumentosComprobatoriosCorrecaoGridComponent } from './grid/grid-dados-comprobatorios/grid-dados-comprobatorios-correcao.component';
-import { ModalEditarDocumentoDueCorrecaoComponent } from './modal/modal-editar-documento-due-correcao.component';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -37,7 +33,6 @@ import { ModalEditarDocumentoDueCorrecaoComponent } from './modal/modal-editar-d
 		ManterPlanoExportacaoGridComponent,
 		ModalNovoPlanoComponent,
 		ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent,
-		ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent,
 		ManterPlanoFormularioPlanoComponent,
 		ManterPlanoFormularioPropriedadeProdutoComponent,
 		ModalAlterarPaisComponent,
@@ -46,15 +41,12 @@ import { ModalEditarDocumentoDueCorrecaoComponent } from './modal/modal-editar-d
 		ManterPEInsumosImportadosGridComponent,
 		ModalIncluirInsumoComponent,
 		ModalEditarDocumentoDueComponent,
-		ModalEditarDocumentoDueCorrecaoComponent,
 		InsumosModalGridComponent,
 		ManterPlanoFormularioDetalhesInsumosComponent,
 		ModalEditarDetalheInsumoComponent,
 		ModalJustificativaErroComponent,
-		ModalJustificativaErroDueComponent,
 		ManterPlanoFormularioPlanoComprovacaoComponent,
-		DocumentosComprobatorioslGridComponent,
-		DocumentosComprobatoriosCorrecaoGridComponent
+		DocumentosComprobatorioslGridComponent
 	],
 })
 export class ManterPlanoExportacaoModule { }

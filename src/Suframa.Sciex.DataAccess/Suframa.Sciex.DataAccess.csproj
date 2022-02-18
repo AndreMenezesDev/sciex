@@ -112,6 +112,7 @@
     <Compile Include="Database\ConfigureEntities\ConfiguerRecintoAlfandega.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePlanoExportacaoDue.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePRCHistoricoInsumo.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigurePRCDue.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicProrrogacao.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicDetalhe.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicitacaoAlteracao.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Database\Entities\ParecerComplementarEntity.cs" />
     <Compile Include="Database\Entities\PlanoExportacaoDUEEntity.cs" />
     <Compile Include="Database\Entities\PRCDetalheHistoricoInsumoEntity.cs" />
+    <Compile Include="Database\Entities\PRCDueEntity.cs" />
     <Compile Include="Database\Entities\PRCHistoricoInsumoEntity.cs" />
     <Compile Include="Database\Entities\ParecerTecnicoProdutoEntity.cs" />
     <Compile Include="Database\Entities\ParecerTecnicoEntity.cs" />

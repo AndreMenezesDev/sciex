@@ -99,30 +99,33 @@
                     <tr *ngFor="let item of lista">  
                         <td class="text-center">
                             <a *ngIf="item.situacao != 3"
-                                routerLink="/analisar-plano-exportacao/{{item.idPlanoExportacao}}/visualizar-info-plano"  
+                                (click)="abrirVisualizacao(item)"
                                 class="btn btn-default btn-sm" 
                                 data-toggle="tooltip" 
                                 title="" 
                                 data-original-title="Visualizar">
                                     <i class="fa fa-file-text-o"></i>
                             </a>
-                            <a *ngIf="item.situacao == 3"
-                                routerLink="/analisar-plano-exportacao/{{item.idPlanoExportacao}}/analisar-info-plano"  
+                            <!-- <a *ngIf="item.situacao == 3" -->
+                            <a 
+                                (click)="abrirAnalise(item)"
                                 class="btn btn-default btn-sm" 
                                 data-toggle="tooltip" 
                                 title="" 
                                 data-original-title="Analisar">
                                     <i class="fa fa-gear"></i>
                             </a>
-                            <a *ngIf="item.situacao == 3"
+                            <!-- <a *ngIf="item.situacao == 3" -->
+                            <a
                                 class="btn btn-primary btn-sm" 
                                 data-toggle="tooltip" 
                                 title="" 
                                 data-original-title="Deferir"
-                                (click)="confirmarDeferir(item.idPlanoExportacao)">
+                                (click)="confirmarDeferir(item)">
                                     <i class="fa fa-check-square-o"></i>
                             </a>
-                            <a *ngIf="item.situacao == 3"
+                            <!-- <a *ngIf="item.situacao == 3" -->
+                            <a
                                 (click)="confirmarIndeferimento(item)"
                                 class="btn btn-danger btn-sm" 
                                 data-toggle="tooltip" 

@@ -9,43 +9,22 @@ using System.Web.Http;
 
 namespace Suframa.Sciex.ApplicationService.Services
 {
-    public class AprovarTodosInsumosEDetalhesAnaliseController : ApiController
+    public class AprovarTodosDUEEmAnaliseController : ApiController
     {
-		private readonly IPEInsumoBll _bll;
+		private readonly IDueBll _bll;
 
-		public AprovarTodosInsumosEDetalhesAnaliseController(IPEInsumoBll bll)
+		public AprovarTodosDUEEmAnaliseController(IDueBll bll)
 		{
 			_bll = bll;
 		}
 
 
-		// GET: api/AprovarTodosInsumosEDetalhesAnalise
-		public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/AprovarTodosInsumosEDetalhesAnalise/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/AprovarTodosInsumosEDetalhesAnalise
 		[HttpPost]
-        public ResultadoMensagemProcessamentoVM AprovarTodosInsumosEDetalhes([FromBody] ListarInsumosNacionalImportadosVM vm)
+        public ResultadoMensagemProcessamentoVM AprovarTodosInsumosEDetalhes([FromBody]PlanoExportacaoDUEComplementoVM vm)
         {
-			return _bll.AprovarTodosInsumosEDetalhes(vm);
+			return _bll.AprovarTodasDeclaracoesUnicasExportacao(vm);
         }
 
-        // PUT: api/AprovarTodosInsumosEDetalhesAnalise/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/AprovarTodosInsumosEDetalhesAnalise/5
-        public void Delete(int id)
-        {
-        }
     }
 }

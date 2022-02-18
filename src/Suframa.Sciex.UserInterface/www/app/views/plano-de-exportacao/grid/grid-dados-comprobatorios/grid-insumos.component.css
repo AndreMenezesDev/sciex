@@ -1,0 +1,12 @@
+.textGreen {
+	color: green;
+	font-weight: bold;
+}
+.textRed {
+	color: red;
+	font-weight: bold;
+}
+.textBlack {
+	color: rgb(0, 0, 0);
+	font-weight: bold;
+}

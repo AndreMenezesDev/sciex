@@ -19,6 +19,7 @@ namespace Suframa.Sciex.DataAccess
 	{
 		private readonly IDatabaseContextSciex contextSciex;
 
+		public IQueryRepositorySciex<PRCDueEntity> PRCDue { get; }
 		public IQueryRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		public IQueryRepositorySciex<AladiEntity> Aladi { get; }
 		public IQueryRepositorySciex<NaladiEntity> Naladi { get; }
@@ -172,6 +173,7 @@ namespace Suframa.Sciex.DataAccess
 		{
 			contextSciex = databaseContextSciex;
 
+			PRCDue = new QueryRepositorySciex<PRCDueEntity>(contextSciex);
 			Processo = new QueryRepositorySciex<ProcessoEntity>(contextSciex);
 			PlanoExportacaoDue = new QueryRepositorySciex<PlanoExportacaoDUEEntity>(contextSciex);
 			TipoSolicAlteracao = new QueryRepositorySciex<TipoSolicAlteracaoEntity>(contextSciex);
@@ -422,6 +424,10 @@ namespace Suframa.Sciex.DataAccess
 		public void IniciarStoreProcedureParecerTecnico(int IdProcesso)
 		{
 			contextSciex.SP_ParecerTecnico(IdProcesso);
+		}
+		public void IniciarStoreProcedureParecerTecnico(int IdProcesso, bool IsTipoComprovacao)
+		{
+			contextSciex.SP_ParecerTecnicoComprovacao(IdProcesso);
 		}
 		public void IniciarStoreProcedureParecerSuspensaoAlterado(int IdProcesso, int IdSolicitacaoAlteracao)
 		{

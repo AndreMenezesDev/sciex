@@ -19,6 +19,7 @@ namespace Suframa.Sciex.DataAccess.Database
 {
 	public partial class DatabaseContextSciex : DbContext, IDatabaseContextSciex
 	{
+		public virtual DbSet<PRCDueEntity> PRCDue { get; set; }
 		public virtual DbSet<RegimeTributarioEntity> RegimeTributario { get; set; }
 		public virtual DbSet<AladiEntity> Aladi { get; set; }
 		public virtual DbSet<NaladiEntity> Naladi { get; set; }
@@ -190,6 +191,7 @@ namespace Suframa.Sciex.DataAccess.Database
 			//modelBuilder.HasDefaultSchema(PrivateSettings.DEFAULT_DB_SCHEMA);
 
 			modelBuilder.HasDefaultSchema("dbo");
+			ConfigurePRCDue(modelBuilder);
 			ConfigurePRCSolicDetalhe(modelBuilder);
 			ConfigureTipoSolicAlteracao(modelBuilder);
 			ConfigureProcesso(modelBuilder);

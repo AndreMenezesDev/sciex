@@ -16,6 +16,9 @@ import { ModalAnaliseDetalhesInsumoComponent } from './analise-plano-exportacao/
 import { AnaliseDetalheInsumosModalGridComponent } from './analise-plano-exportacao/modal/detalhe-do-insumo/grid-modal-detalhe-processo-insumos/grid-analise-detalhe-insumos.component';
 import { ModalJustificativaIndeferirComponent } from './justificativa/modal-justificativa.component';
 import { AnaliseDetalheInsumosAnterioresModalGridComponent } from './analise-plano-exportacao/modal/detalhe-do-insumo/grid-modal-detalhe-processo-insumos/grid-analise-detalhe-insumos-anteriores.component';
+import { AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent } from './analise-plano-exportacao/propriedade-produto/formularioAnalisePropriedadeProdutoComprovacao.component';
+import { AnalisarDocumentosComprobatorioslGridComponent } from './grid/grid-dados-comprobatorios/grid-analise-dados-comprobatorios.component';
+import { ModalJustificativaGenericoComponent } from './justificativa/modal-justificativa-generico.component';
 
 
 @NgModule({
@@ -37,7 +40,10 @@ import { AnaliseDetalheInsumosAnterioresModalGridComponent } from './analise-pla
 		ModalAnaliseDetalhesInsumoComponent,
 		AnaliseDetalheInsumosModalGridComponent,
 		ModalJustificativaIndeferirComponent,
-		AnaliseDetalheInsumosAnterioresModalGridComponent
+		AnaliseDetalheInsumosAnterioresModalGridComponent,
+		AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent,
+		AnalisarDocumentosComprobatorioslGridComponent,
+		ModalJustificativaGenericoComponent
 	],
 })
 export class PlanoDeExportacaoModule { }

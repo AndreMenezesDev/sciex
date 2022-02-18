@@ -11,7 +11,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 {
 	public class PlanoExportacaoDUEVM : PagedOptions
 	{
-		public virtual PEProdutoPaisVM PEProdutoPais { get; set; }
+		public virtual PEProdutoPaisComplementoVM PEProdutoPais { get; set; }
 		public int IdDue { get; set; }
 		public int? IdPEProduto { get; set; }
 		public int? IdPEProdutoPais { get; set; }
@@ -21,6 +21,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public decimal ValorDolar { get; set; }
 		public decimal Quantidade { get; set; }
 		public int? SituacaoAnalise { get; set; }
+		public string DescricaoSituacaoAnalise { get; set; }
 		public string DescricaoJustificativa { get; set; }
 	}
 
@@ -28,7 +29,6 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 	{
 		public string DescricaoPais { get; set; }
 		public string DataAverbacaoFormatada { get; set; } 
-		public string SituacaoAnaliseString { get; set; }
 
 	}
 

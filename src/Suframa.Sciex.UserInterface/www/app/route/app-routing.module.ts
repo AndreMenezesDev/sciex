@@ -146,7 +146,7 @@ import { ConsultarFormularioQuadrosInsumosSuframaComponent } from '../views/cons
 import { RelatorioParecerTecnicoSuframaComponent } from '../views/consultar-processo-exportacao-suframa/modal/grid-modal-parecer/relatorio/relatorio-parecer-tecnico-suframa.component';
 import { FormularioDetalhesInsumoSuframaComponent } from '../views/consultar-processo-exportacao-suframa/formulario/formulario-detalhe-processo-insumo-suframa/formulario-detalhes-insumo-suframa.component';
 import { ManterPlanoFormularioPlanoComprovacaoComponent } from '../views/manter-plano-exportacao/formulario/formularioPlanoComprovacao.component';
-import { ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent } from '../views/manter-plano-exportacao/formulario/formularioPropriedadeProdutoComprovacaoCorrecao.component';
+import { AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent } from '../views/plano-de-exportacao/analise-plano-exportacao/propriedade-produto/formularioAnalisePropriedadeProdutoComprovacao.component';
 
 const routes: Routes = [
 	{ path: 'manter-plano-exportacao', component: ManterPlanoExportacaoComponent },
@@ -157,7 +157,6 @@ const routes: Routes = [
 	{ path: 'manter-plano-exportacao/:id/correcao', component: ManterPlanoFormularioPlanoComponent },
 	{ path: 'manter-plano-exportacao/:id/propriedadeproduto', component: ManterPlanoFormularioPropriedadeProdutoComponent },
 	{ path: 'manter-plano-exportacao/:id/propriedadeprodutocomprovacao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent },
-	{ path: 'manter-plano-exportacao/:id/propriedadeprodutocomprovacaocorrecao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizarpropriedadeprodutocomprovacao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizarpropriedadeproduto', component: ManterPlanoFormularioPropriedadeProdutoComponent },
 	{ path: 'manter-plano-exportacao/:id/validar-produto', component: ManterPlanoFormularioPlanoComponent },
@@ -627,8 +626,12 @@ const routes: Routes = [
 		children:[
 			{path: 'analisar-info-plano', component: AnalisePlanoFormularioPlanoComponent},
 			{path: 'visualizar-info-plano', component: AnalisePlanoFormularioPlanoComponent},
+			{path: 'analisar-info-plano-comp', component: AnalisePlanoFormularioPlanoComponent},
+			{path: 'visualizar-info-plano-comp', component: AnalisePlanoFormularioPlanoComponent},
 			{path: 'analisar-propriedade-produto', component: AnalisarFormularioPropriedadeProdutoComponent},
 			{path: 'visualizar-propriedade-produto', component: AnalisarFormularioPropriedadeProdutoComponent},
+			{path: 'analisar-propriedade-produto-comp', component: AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent},
+			{path: 'visualizar-propriedade-produto-comp', component: AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent},
 			{path: 'analisar-quadro-nacional', component: AnalisarFormularioQuadrosInsumosComponent},
 			{path: 'visualizar-quadro-nacional', component: AnalisarFormularioQuadrosInsumosComponent},
 			{path: 'analisar-quadro-importado', component: AnalisarFormularioQuadrosInsumosComponent},

@@ -109,7 +109,7 @@
     <Compile Include="Dto\SacDto.cs" />
     <Compile Include="Dto\TipoRequerimentoGrupoDto.cs" />
     <Compile Include="Dto\UsuarioSaaDto.cs" />
-    <Compile Include="Enum\EnumSituacaoAnalisePEDue.cs" />
+    <Compile Include="Enum\EnumSituacaoAnaliseDUE.cs" />
     <Compile Include="Enum\EnumSolicitacaoProrrogacao.cs" />
     <Compile Include="Enum\EnumErroProcessamentoLENivelErro.cs" />
     <Compile Include="Enum\EnumMensagemErro.cs" />
@@ -208,11 +208,13 @@
       <LastGenOutput>SortOptions.d.ts</LastGenOutput>
     </Compile>
     <Compile Include="TokenDto.cs" />
+    <Compile Include="ViewModel\AnalisePlanoExportacaoDUEVM.cs" />
     <Compile Include="ViewModel\DuePorProdutoVM.cs" />
     <Compile Include="ViewModel\ListaSolicitacaoVM.cs" />
     <Compile Include="ViewModel\PlanoExportacaoDUEVM.cs" />
     <Compile Include="ViewModel\PRCHistoricoDetalheInsumoVM.cs" />
     <Compile Include="ViewModel\PRCHistoricoInsumoVM.cs" />
+    <Compile Include="ViewModel\PRCDueVM.cs" />
     <Compile Include="ViewModel\ProcessoDetalheInsumoVM.cs" />
     <Compile Include="ViewModel\DesignarSolicitacaoVM.cs" />
     <Compile Include="ViewModel\VM.cs" />

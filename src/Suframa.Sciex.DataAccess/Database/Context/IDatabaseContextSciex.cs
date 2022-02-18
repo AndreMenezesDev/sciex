@@ -52,6 +52,7 @@ namespace Suframa.Sciex.DataAccess.Database
 		long BuscarUltimoCodigoSeqPlanoExportacao(string cnpjEmpresaLogada, int anoCorrente);
 
 		void SP_ParecerTecnico(int IdProcesso);
+		void SP_ParecerTecnicoComprovacao(int IdProcesso);
 		void SP_GerarParecerSuspensaoAlterado(int IdProcesso, int IdSolicitacaoAlteracao);
 		void SP_GerarParecerHistoricoInsumo(int IdProcesso, int IdSolicitacaoAlteracao, string NomeResponsavel);
 		void SP_GerarParecerSuspensaoCancelado(int IdProcesso);
