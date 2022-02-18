@@ -28,4 +28,7 @@ export class CertificadoRegistroVM{
 		dataCancelamento:any;
 		dataProrrogacao:any;
 		dataProrrogacaoEspecial:any;
+
+		exportacoesRealizadasDolar: string;
+		exportacoesRealizadasReal: string;
 }

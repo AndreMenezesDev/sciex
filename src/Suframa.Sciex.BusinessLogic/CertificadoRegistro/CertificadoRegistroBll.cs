@@ -305,6 +305,7 @@ namespace Suframa.Sciex.BusinessLogic
 								? Convert.ToDateTime(dadosProcesso.ListaStatus.Where(o => o.Tipo == "PE").FirstOrDefault().Data).ToShortDateString()
 								: "-";
 						}
+
 						var dadosImportador5 = _uowSciex.QueryStackSciex.ViewImportador.Selecionar(i => i.Cnpj == dadosProcesso.Cnpj);
 						if (dadosImportador5 != null)
 						{
@@ -322,6 +323,58 @@ namespace Suframa.Sciex.BusinessLogic
 
 						var vCodigo5 = vStringCodigo5.Replace("0", "").Replace("2", "").Replace("3", "");
 						retDados.CodigoIdentificadorCRPE = new string(vCodigo5.Reverse().ToArray());
+						break;
+
+					case "CO": //Comprovado
+
+						retDados.RazaoSocial = dadosProcesso.RazaoSocial;
+						retDados.InscricaoCadastral = dadosProcesso.InscricaoSuframa;
+						retDados.Cnpj = dadosProcesso.Cnpj.CnpjCpfFormat();
+						retDados.NumeroProcesso = dadosProcesso.NumeroProcesso.ToString().PadLeft(4, '0') + "/" +
+												  dadosProcesso.AnoProcesso.ToString();
+
+						retDados.Modalidade = dadosProcesso.TipoModalidade == "S" ? "SUSPENSÃO" : "";
+
+						var regStatusCO = _uowSciex.QueryStackSciex.PRCStatus.Selecionar(o => o.IdStatus == IdStatus && o.Tipo == "CO");
+						retDados.DataValidade = regStatusCO.DataValidade != null ? Convert.ToDateTime(regStatusCO.DataValidade).ToShortDateString() : "-";
+
+						if (dadosProcesso.ListaStatus.Count > 0)
+						{
+							retDados.NumeroPlano = dadosProcesso.ListaStatus.Where(o => o.Tipo == "AP").FirstOrDefault() != null ?
+													dadosProcesso.ListaStatus.Where(o => o.Tipo == "AP").FirstOrDefault().NumeroPlano.ToString().PadLeft(5, '0') + "/" +
+													dadosProcesso.ListaStatus.Where(o => o.Tipo == "AP").FirstOrDefault().AnoPlano.ToString()
+													: "-";
+
+							retDados.DataDeferimento = dadosProcesso.ListaStatus.Where(o => o.Tipo == "AP").FirstOrDefault() != null
+								? Convert.ToDateTime(dadosProcesso.ListaStatus.Where(o => o.Tipo == "AP").FirstOrDefault().Data).ToShortDateString()
+								: "-";
+
+						}
+
+						var somaExportacaodoDolar = _uowSciex.QueryStackSciex.PRCProduto.Listar(x => x.IdProcesso == regStatusCO.IdProcesso).Sum(x => x.ValorDolarComprovado);
+
+						var somaExportacaodoReal = _uowSciex.QueryStackSciex.PRCProduto.Listar(x => x.IdProcesso == regStatusCO.IdProcesso).Sum(x => x.ValorNacionalComprovado);
+
+						retDados.ExportacoesRealizadasDolar = this.FormatarMaskValor(somaExportacaodoDolar.ToString());
+						retDados.ExportacoesRealizadasReal = this.FormatarMaskValor(somaExportacaodoReal.ToString());
+
+						var dadosImportador6 = _uowSciex.QueryStackSciex.ViewImportador.Selecionar(i => i.Cnpj == dadosProcesso.Cnpj);
+						if (dadosImportador6 != null)
+						{
+							retDados.Endereco = dadosImportador6.Endereco.ToString() + " " +
+												dadosImportador6.Numero.ToString() + " " +
+												dadosImportador6.Bairro.ToString() + " " +
+												dadosImportador6.Municipio.ToString() + " -  " +
+												dadosImportador6.UF.ToString();
+
+							retDados.CEP = dadosImportador6.CEP.ToString().CepFormat();
+						}
+						var vStringCodigo6 = retDados.InscricaoCadastral.ToString() +
+											retDados.NumeroPlano.ToString().Replace("/", "") +
+											retDados.NumeroProcesso.ToString().Replace("/", "");
+
+						var vCodigo6 = vStringCodigo6.Replace("0", "").Replace("2", "").Replace("3", "");
+						retDados.CodigoIdentificadorCRPE = new string(vCodigo6.Reverse().ToArray());
 						break;
 
 				}
@@ -364,6 +417,7 @@ namespace Suframa.Sciex.BusinessLogic
 								     item.Tipo == "CA" ? "Cancelamento" :
 									 item.Tipo == "PR" ? "Prorrogado" :
 									 item.Tipo == "PE" ? "Prorrogado em Carater Especial":
+									 item.Tipo == "CO" ? "Comprovado" :
 									 "-";
 			}
 
