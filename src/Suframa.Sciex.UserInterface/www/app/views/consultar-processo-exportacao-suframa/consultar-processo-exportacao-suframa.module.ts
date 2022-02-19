@@ -22,6 +22,7 @@ import { ModalCertificadoSuframaComponent } from './modal/modal-certificado/moda
 import { ModalGridCertificadoSuframaComponent } from './modal/modal-certificado/grid-modal-certificado/grid-modal-certificado-suframa.component';
 import { ModalAnaliseSolicitacaoComponent } from './modal/modal-analise-solicitacao-alteracao/analise-solicitacao-alteracao.component';
 import { AnaliseDetalheInsumoGridComponent } from './modal/modal-analise-solicitacao-alteracao/grid/grid-analise-detalhe-insumo.component';
+import { DocumentosComprobatoriosSuframaGridComponent } from './grid/grid-documentos-comprobatorios.component';
 
 import { ConsultarHistoricoSuframaGridComponent } from './grid/grid-historico-suframa.component';
 import { ModalHistoricoInsumosImportadosComponent } from './modal/modal-visualizar-historico-insumos-importados/modal-historico-insumos-importados-suframa.component';
@@ -64,7 +65,8 @@ import { ModalJustificativaReprovacaoComponent } from './modal/modal-justificati
 		RelatorioHistoricoInsumosSuframaComponent,
 		DetalheInsumosFormularioSuframaGridComponent,
 		FormularioDetalhesInsumoSuframaComponent,
-		ModalJustificativaReprovacaoComponent
+		ModalJustificativaReprovacaoComponent,
+		DocumentosComprobatoriosSuframaGridComponent
 
 	],
 })

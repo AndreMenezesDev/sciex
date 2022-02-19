@@ -6,7 +6,6 @@ import { MessagesService } from '../../../shared/services/messages.service';
 import { ApplicationService } from '../../../shared/services/application.service';
 import { ValidationService } from '../../../shared/services/validation.service';
 import {Location} from '@angular/common';
-
 declare var $: any;
 
 @Component({
@@ -25,6 +24,8 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 	@Input() sorted: string;
 	@Input() page: number;
 	idProduto: any;
+	servicoDocumentosComprobatorios = "DocumentosComprobatoriosGrid"
+	grid: any = { sort: {} };
 
 	constructor(
 		private route: ActivatedRoute,
@@ -73,4 +74,22 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 		
 		this.router.navigate([url]);
 	}
+
+	documentosComprobatorios(){
+		var objeto : any = {};
+		objeto.idPEProdutoPais = Number(this.idProduto);
+		objeto.sort = this.grid.sort;
+		objeto.size = this.grid.size;
+		objeto.page = this.grid.page;
+
+		this.applicationService.get(this.servicoDocumentosComprobatorios,objeto).subscribe((result :any)=>{
+			console.log(result)
+	
+			this.grid.lista = result.items;
+			
+			this.grid.total = result.total;
+
+		})
+	}
+
 }

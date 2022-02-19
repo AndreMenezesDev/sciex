@@ -315,6 +315,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Grid\DocumentosComprobatoriosGridController.cs" />
     <Compile Include="Grid\ConsultarDesignarPlanoGridController.cs" />
     <Compile Include="Grid\ConsultarDesignarLeGridController.cs" />
     <Compile Include="Grid\ConsultarDesignarSolicitacaoGridController.cs" />

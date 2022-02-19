@@ -1,0 +1,114 @@
+<app-grid [(page)]="page"
+					[(size)]="size"
+					[(total)]="total"
+					[(parametros)]="parametros"
+					(onChangeSize)="changeSize($event)"
+					(onChangePage)="changePage($event)"
+					>
+
+	<div class="table-responsive no-margin-bottom no-border">
+		<table class="table">
+			<thead class="table-header-color">
+				<tr>
+					<th class="text-center th-100">Ações</th>
+					<th class="th-sortable" *ngIf="possuiSolicitacaoAlteracao">
+						<app-ordenacao field="StatusAnalise" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status da análise</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Cód. Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="TipoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Tipo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoNcm" [sorted]="sorted" (onChangeSort)="changeSort($event)">NCM</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoInsumo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Descrição do Insumo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorCoeficienteTecnico" [sorted]="sorted" (onChangeSort)="changeSort($event)">Coef. Técnico</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="CodigoUnidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Unidade</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoEspecificacaoTecnica" [sorted]="sorted" (onChangeSort)="changeSort($event)">Especificação Técnica</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="DescricaoPartNumber" [sorted]="sorted" (onChangeSort)="changeSort($event)">Part Number</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Perc Perda(%)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Aprovada</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorAprovado" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Aprovado (US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="QuantidadeComprovada" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Comprovada</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorComprovado" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Comprovado (US$)</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="QuantidadeSaldo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Saldo</app-ordenacao>
+					</th>
+					<th class="th-sortable unset-nowrap">
+						<app-ordenacao field="ValorSaldo" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Saldo (US$)</app-ordenacao>
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				<tr *ngFor="let item of lista" [ngClass]="{'greenClass': item.statusInsumoNovo == 1, 'blueClass': item.tipoTransferencia}">
+					<td class="text-center">
+
+						<a	(click)="abrirModalDetalheInsumo(item, possuiSolicitacaoAlteracao)"
+							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Detalhe do Insumo"><i class="fa fa-list"></i>
+						</a>
+						<a  (click)="abrirModalHistorico(item)" class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Histórico">
+							<i class="i i-history">
+							</i>
+						</a>
+						<a (click)="aprovarReprovarAlteracaoInsumo(item, true)" class="btn btn-primary btn-sm" *ngIf="(possuiSolicitacaoAlteracao && verificarSeAprovado(item) && item.exibirBotaoAprovarReprovar)">
+							<i class="fa fa-check" data-toggle="tooltip" title data-original-title="Aprovar">
+							</i>
+						</a>
+						<span data-toggle="modal" data-target="#ajudaModal1" data-backdrop="static" data-keyboard="false" *ngIf="(possuiSolicitacaoAlteracao && verificarSeAprovado(item) && item.exibirBotaoAprovarReprovar)">
+							<a (click)="aprovarReprovarAlteracaoInsumo(item, false)" class="btn btn-danger btn-sm" data-toggle="tooltip" title data-original-title="Reprovar">
+								<i class="fa fa-times"></i>
+							</a>
+						</span>
+					</td>
+					<td class="text-left" *ngIf="possuiSolicitacaoAlteracao">{{item.statusAnalise}}</td>
+					<td class="text-left">{{item.codigoInsumo}}</td>
+					<td class="text-left">{{item.tipoInsumo}}</td>
+					<td class="text-left">{{item.codigoNcm}}</td>
+					<td class="text-left">{{item.descricaoInsumo}}</td>
+					<td class="text-left">{{item.valorCoeficienteTecnico}}</td>
+					<td class="text-left">{{item.descCodigoUnidade}}</td>
+					<td class="text-left">{{item.descricaoEspecificacaoTecnica}}</td>
+					<td class="text-left">{{item.descricaoPartNumber}}</td>
+					<td class="text-left">{{item.valorPercentualPerda | number : '1.1-1'}}</td>
+					<td class="text-left">{{item.quantidadeAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.quantidadeComp | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.valorDolarAprovado | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.valorDolarComp | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.quantidadeSaldo | number : '1.7-7'}}</td>
+					<td class="text-left">{{item.valorDolarSaldo | number : '1.7-7'}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-grid>
+<app-modal-detalhes-insumo-suframa #appModalDetalheInsumo></app-modal-detalhes-insumo-suframa>
+<app-modal-analise-solicitacao
+    #ModalAnaliseSolicitacaoComponent>
+</app-modal-analise-solicitacao>
+<app-modal-historico-insumos-importados-suframa
+    #ModalHistoricoInsumosImportadosComponent>
+</app-modal-historico-insumos-importados-suframa>

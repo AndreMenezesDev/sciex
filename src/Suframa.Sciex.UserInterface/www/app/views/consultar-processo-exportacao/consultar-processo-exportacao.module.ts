@@ -24,6 +24,8 @@ import { DetalheInsumosGridComponent } from './grid/grid-detalhe-insumos/grid-de
 import { ConsultarHistoricoGridComponent } from './grid/grid-historico.component';
 import { ModalSolicitarAlteracaoQuantidadeCoeficienteTecnicoComponent } from './modal/modais-solicitacao-alteracao/quantidade/modal-quantidade-coeficiente-tecnico.component';
 import { ModalTransferenciaInsumoComponent } from './modal/modal-transferencia-insumo.component';
+import { DocumentosComprobatoriosGridComponent } from './grid/grid-documentos-comprobatorios.component';
+
 
 import { ModalPaisComponent } from './modal/modais-solicitacao-alteracao/pais/modal-pais.component';
 import { ModalMoedaComponent } from './modal/modais-solicitacao-alteracao/moeda/modal-moeda.component';
@@ -73,7 +75,8 @@ import { ModalGridCertificadoComponent } from './modal/grid-modal-certificado/gr
 		ModalAdiamentoComponent,
 		ModalCertificadoComponent,
 		ModalGridCertificadoComponent,
-		ModalDescricaoObservacaoComponent
+		ModalDescricaoObservacaoComponent,
+		DocumentosComprobatoriosGridComponent
 	],
 })
 export class ConsultarProcessoExportacaoModule { }
