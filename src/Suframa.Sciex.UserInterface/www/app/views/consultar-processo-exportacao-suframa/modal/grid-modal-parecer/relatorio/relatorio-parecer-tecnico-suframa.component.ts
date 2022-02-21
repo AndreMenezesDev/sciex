@@ -8,7 +8,8 @@ import { ActivatedRoute } from "@angular/router";
 enum TipoParecer {
 	APROVADO = 1,
 	ALTERADO = 2,
-	CANCELADO = 3
+	CANCELADO = 3,
+	COMPROVADO = 4
 }
 @Component({
 	selector: 'app-relatorio-parecer-tecnico-suframa',
@@ -141,6 +142,9 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 
 				case 'CA':
 					this.ocultarPdf = Number(TipoParecer.CANCELADO)
+					break;
+				case 'CO':
+					this.ocultarPdf = Number(TipoParecer.COMPROVADO)
 					break;
 			}
 		});

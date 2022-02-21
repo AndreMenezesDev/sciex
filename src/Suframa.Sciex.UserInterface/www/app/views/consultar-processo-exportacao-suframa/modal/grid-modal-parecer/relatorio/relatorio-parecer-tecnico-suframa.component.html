@@ -1090,3 +1090,514 @@
 		</section>
 	</article>
 <!-- FIM CONTEUDO RELATORIO PDF -->
+<!-- INICIO CONTEUDO RELATORIO PDF -->
+	<article id="relatorioPDF1" class="panel-body" [hidden]="!(ocultarPdf === 4)">
+		<div class="form-group m-n pull-right">
+			<span style="margin-top:15px; margin-left: 40px;">Processo Nº: {{model.numeroProcessoString}} Plano Nº: {{model.numeroPlanoString}}</span>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5 style="font-weight: bold">SUPERINTÊNDENCIA DA ZONA FRANCA DE MANAUS</h5>
+			<h5 style="font-weight: bold">SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+				<label class="control-label">RELATÓRIO DE PLANO DE EXPORTAÇÃO Nº {{numeroControleString}} SAO/CGIEX/COIME </label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="background-color:rgb(218, 214, 219); border-style: solid; margin-left: 40px; margin-right: 40px; margin-top: 25px;">
+				<div class="row">
+					<div class="col-lg-8">
+						<span style="font-weight: bold; margin-left: 5px;">{{model.razaoSocial}}</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-5">
+						<label class="control-label">
+							Inscrição Suframa: <span style="font-weight: bold; margin-left: 5px;"> {{model.inscricaoSuframa}}</span>
+						</label>
+					</div>
+					<div class="col-lg-4">
+						<label class="control-label">
+							CNPJ: <span style="font-weight: bold;">{{model.cnpj}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">DADOS DO PROCESSO</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+
+			<div class="row">
+				<div class="col-lg-3">
+					<span style="margin-left: 50px;"> Processo Nº:</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> {{model.numeroProcessoString}}</span>
+				</div>
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;">Nº Plano Exportação:</span>
+					<span>{{model.numeroPlanoString}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3">
+					<span style="margin-left: 50px;"> Objeto:</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> {{model.descricaoObjeto}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3">
+					<span style="margin-left: 50px;">Status:</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> {{model.tipoStatusDescricao == 'Aprovação' ? 'APROVADO'
+																		: model.tipoStatusDescricao }}</span>
+				</div>
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Data da Comprovação:</span>
+					<span style="margin-left: 5px;"> {{model.dataStatusFormatada}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 25px; margin-left: 40px;" class="control-label">Fundamentação Legal</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-8">
+					<span style="display: inline-block; padding: 1px 50px;"> {{model.parecerTecnicoComplementar.descricaoResolucao}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 25px; margin-left: 40px;" class="control-label">Documentação comprobatória:</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-8">
+					<span style="display: inline-block; padding: 1px 50px;">Relação de DUE-s disponíveis no portal SISCOMEX</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">Dados do Programa</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-5">
+					<span style="margin-left: 50px;">Número de produto(s) exportado(s):</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> {{model.quantidadeProdutosFormatado}}</span>
+				</div>
+			</div>
+		</div>
+
+
+		<section id="grid">
+			<div *ngFor="let item of model.parecerTecnicoProdutos">
+				<div class="form-group m-n text-left">
+					<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">Prod. {{item.numeroSequenciaFormatado}} - Especificação</label>
+				</div>
+				<div class="form-group m-n text-left">
+					<div class="row">
+						<div class="col-lg-3">
+							<span style="margin-left: 50px;"> Prod. Suframa:</span>
+						</div>
+						<div class="col-lg-3">
+							<span style="margin-left: 5px;"> {{item.codigoProdutoSuframaFormatado}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<span style="margin-left: 50px;"> Código SCIEX:</span>
+						</div>
+						<div class="col-lg-3">
+							<span style="margin-left: 5px;"> {{item.codigoProdutoExportacao}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<span style="margin-left: 50px;"> Modelo:</span>
+						</div>
+						<div class="col-lg-6">
+							<span style="margin-left: 5px;"> {{item.descricaoModelo}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<span style="margin-left: 50px;"> Nº da NCM:</span>
+						</div>
+						<div class="col-lg-6">
+							<span style="margin-left: 5px;"> {{item.codigoNCM}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-3">
+							<span style="margin-left: 50px;">Unidade de Medida:</span>
+						</div>
+						<div class="col-lg-4">
+							<span style="margin-left: 5px;"> {{item.descricaoUnidadeFormatado}}</span>
+						</div>
+						<div class="col-lg-5">
+							<span> Vlr. Unitário(US$):</span>
+							<span style="margin-left: 5px;"> {{item.valorUnitarioProdutoAprovadoFormatado}}</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group m-n text-left">
+					<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">Valores comprovados para o produto</label>
+				</div>
+
+				<div class="form-group m-n text-left">
+					<div class="row">
+						<div class="col-lg-6">
+							<span style="margin-left: 50px;"> Insumos nacionais adquiridos</span>
+						</div>
+						<div class="col-lg-2">
+							<span style="margin-left: 5px;"> (R$)</span>
+						</div>
+						<div class="col-lg-4">
+							<span> {{item.valorInsumoNacionalProdutoFormatado}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<span style="margin-left: 50px;"> Insumos importados</span>
+						</div>
+						<div class="col-lg-2">
+							<span style="margin-left: 5px;"> (US$-FOB)</span>
+						</div>
+						<div class="col-lg-4">
+							<span> {{item.valorInsumoImportacaoProdutoFormatado}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<span style="margin-left: 50px;"> Exportação Realizada</span>
+						</div>
+						<div class="col-lg-2">
+							<span style="margin-left: 5px;"> (US$-FOB)</span>
+						</div>
+						<div class="col-lg-4">
+							<span> {{model.valorExportacaoAprovadoFormatado}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<span style="margin-left: 50px;"> Exportação Realizada</span>
+						</div>
+						<div class="col-lg-2">
+							<span style="margin-left: 5px;"> (R$)</span>
+						</div>
+						<div class="col-lg-4">
+							<span> {{model.valorExportacaoAprovadoFormatado}}</span>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-lg-3">
+						<span style="margin-left: 55px;"> País de destino:</span>
+
+					</div>
+					<div class="col-lg-3">
+						<span> {{item.descricaoPais}}</span>
+					</div>
+					<div class="col-lg-2">
+						<span style="margin-left: 5px;"> Quantidade:</span>
+
+					</div>
+					<div class="col-lg-4">
+						<span> {{item.quantidadePaisFormatado}}</span>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">Resumo do Plano de Exportação</label>
+		</div>
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 5px; text-decoration: underline; margin-left: 40px;" class="control-label">a)Totais aprovados</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Insumos Importados(aprovados)</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$-FOB)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoNacionalFormatado}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Insumos Importados(autorizados)</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoImportadoRealFormatado}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Acréscimo/Decréscimo</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorTotalInsumosRealFormatado}}</span>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Frete</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoImportadoFobFormatado}}</span>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Total de Insumos Importados</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoImportacoCfrFormatado}}</span>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Total de Insumos Importados(internados)</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$-FOB)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.quantidadeExportacaoAprovadoFormatado}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 5px; text-decoration: underline; margin-left: 40px;" class="control-label">b)Totais de Comprovados</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Insumos Importados(aprovados)</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (R$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoNacionalFormatado}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Insumos Importados(autorizados)</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$-FOB)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoImportadoRealFormatado}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Acréscimo/Decréscimo</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"></span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorTotalInsumosRealFormatado}} UNIDADES</span>
+				</div>
+			</div>
+		</div>
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 5px; text-decoration: underline; margin-left: 40px;" class="control-label">c)Cancelamento</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Autorizado - Internado</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoNacionalFormatado}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;">Aprovado - Autorizado</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorInsumoImportadoRealFormatado}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<span style="margin-left: 50px;"> Geral</span>
+				</div>
+				<div class="col-lg-2">
+					<span style="margin-left: 5px;"> (US$)</span>
+				</div>
+				<div class="col-lg-2">
+					<span> {{model.valorTotalInsumosRealFormatado}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">CONCLUSÃO</label>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-12">
+					<span style="display: inline-block; padding: 1px 40px;"> {{model.parecerTecnicoComplementar.descricaoConclusao}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div class="row">
+				<div class="col-lg-8" style="margin-left: 50px; margin-top: 60px; border-top: 1px solid black; margin-right: 40px"></div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div class="row">
+				<div class="col-lg-8"  style="margin-left: 40px; margin-top: 5px; margin-right: 40px">
+					<span> {{model.nomeResponsavel}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8"  style="margin-left: 40px; margin-top: 5px; margin-right: 40px">
+					<span> Relator(a) e Analista de Nível Superior</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8"  style="margin-left: 40px; margin-top: 5px; margin-right: 40px">
+					<span> CPF: {{model.cpfResponsavel}}</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px; margin-top: 50px; margin-right: 40px; border-top: solid; border-left: solid; border-right: solid;">
+				<label class="control-label">DESPACHO DA COIME </label>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 40px; margin-right: 40px;  border-top: solid; border-left: solid; border-right: solid;">
+				<div class="row m-l-sm">
+					<span> Visto o atendimento aos termos da legislação em vigor, concordamos com a aprovação do Plano de Exportação. </span>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-4" style="border-top: 1px solid black; margin-left: 40px; margin-top: 50px; margin-bottom: 40px; margin-right: 40px"></div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px; margin-right: 40px; border-top: solid; border-left: solid; border-right: solid;">
+				<label class="control-label">DESPACHO DA CGIEX </label>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 40px; margin-right: 40px; border-style: solid;">
+				<div class="row">
+					<span style="margin-left: 40px;"> De acordo com o Plano de Exportação na forma proposta. </span>
+				</div>
+				<div class="row">
+					<span style="margin-left: 40px;"> A SAO para apreciação e autorização. </span>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-6" style="border-top: 1px solid black; margin-left: 40px; margin-top: 50px; margin-bottom: 10px; margin-right: 40px"></div>
+				</div>
+
+				<div class="row">
+					<div class="col-lg-6"  style="margin-left: 40px; margin-top: 5px; margin-right: 40px">
+						<span> MARIA DO SOCORRO BRAGA NORMANDO </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6"  style="margin-left: 40px; margin-top: 5px; margin-right: 40px">
+						<span> Coordenador(a) Geral da CGCIEX</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px; margin-right: 40px; border-left: solid; border-right: solid;">
+				<label class="control-label">DESPACHO DA SAO </label>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<div style="margin-left: 40px; margin-right: 40px; border-style: solid;">
+				<div class="row">
+					<span style="margin-left: 40px;"> De acordo com o Plano de Exportação na forma proposta. </span>
+				</div>
+				<div class="row">
+					<div class="col-lg-4" style="border-top: 1px solid black; margin-left: 40px; margin-top: 50px; margin-bottom: 40px; margin-right: 40px"></div>
+				</div>
+			</div>
+		</div>
+	</article>
+<!-- FIM CONTEUDO RELATORIO PDF -->
