@@ -67,7 +67,9 @@ export class RelatorioCertificadoRegistroComponent {
 						this.ocultarPdf == 2 ? 'certificadoPDF2':
 						this.ocultarPdf == 3 ? 'certificadoPDF3' :
 						this.ocultarPdf == 4 ? 'certificadoPDF4' :
-						this.ocultarPdf == 5 ? 'certificadoPDF5' : '-';
+						this.ocultarPdf == 5 ? 'certificadoPDF5' :
+						this.ocultarPdf == 6 ? 'certificadoPDF6' :
+						'-';
 
 			const elements = document.getElementById(rel);
 				const options = {
