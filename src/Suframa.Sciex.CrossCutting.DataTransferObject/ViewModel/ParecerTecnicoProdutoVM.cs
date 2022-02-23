@@ -33,9 +33,19 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public decimal? QuantidadePais { get; set; }
 		public decimal? ValorPais { get; set; }
 		public long? IdParecerTecnico { get; set; }
+		public decimal? ValorUnitarioProdutoComprovado { get; set; }
+		public decimal? ValorInsumoNacionalAdquirido { get; set; }
+		public decimal? ValorInsumoImportado { get; set; }
+		public decimal? ValorExportacaoComprovado { get; set; }
+		public decimal? ValorExportacaoNacionalComprovado { get; set; }
 		#endregion
 
 		#region Complemento
+		public string ValorUnitarioProdutoComprovadoFormatado { get; set; }
+		public string ValorInsumoNacionalAdquiridoFormatado { get; set; }
+		public string ValorInsumoImportadoFormatado { get; set; }
+		public string ValorExportacaoComprovadoFormatado { get; set; }
+		public string ValorExportacaoNacionalComprovadoFormatado { get; set; }
 		public string NumeroSequenciaFormatado { get; set; }
 		public string ValorUnitarioProdutoAprovadoFormatado { get; set; }
 		public string QuantidadeProdutoAprovadoFormatado { get; set; }
@@ -45,6 +55,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string ValorInsumoImportacoCfrFormatado { get; set; }
 		public string QuantidadePaisFormatado { get; set; }
 		public string ValorPaisFormatado { get; set; }
+		public IEnumerable<object> ListaPaisesParaProduto { get; set; }
 		#endregion
 	}
 }

@@ -44,7 +44,18 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public decimal? InsumosNacionaisAdquiridos { get; set; }
 		public decimal? InsumosImportadosAutorizados { get; set; }
 		public decimal? TotalInsumosImportadosInternados { get; set; }
-
+		public decimal? ValorImportadoAutorizado { get; set; }
+		public decimal? ValorImportadoAcrescimo { get; set; }
+		public decimal? ValorImportadoInternado { get; set; }
+		public decimal? ValorImportadoAprovado { get; set; }
+		public decimal? ValorImportadoFrete { get; set; }
+		public decimal? ValorImportado { get; set; }
+		public decimal? ValorNacionalAdquirido { get; set; }
+		public decimal? ValorExportacaoRealizada { get; set; }
+		public decimal? QuantidadeExportadaUnidade { get; set; }
+		public decimal? ValorAutorizadoInternado { get; set; }
+		public decimal? ValorAprovadoAutorizado { get; set; }
+		public decimal? ValorCancelamentoGeral { get; set; }
 		public string CpfResponsavel { get; set; }
 		public string NomeResponsavel { get; set; }
 		public DateTime? DataGeracao { get; set; }
@@ -84,6 +95,18 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 
 		public string Conclusão { get; set; }
 		public string AssinaturaResponsavel { get; set; }
+		public string ValorImportadoAutorizadoFormatado { get; set; }
+		public string ValorImportadoAcrescimoFormatado { get; set; }
+		public string ValorImportadoFreteFormatado { get; set; }
+		public string ValorImportadoFormatado { get; set; }
+		public string ValorImportadoInternadoFormatado { get; set; }
+		public string ValorNacionalAdquiridoFormatado { get; set; }
+		public string ValorExportacaoRealizadaFormatado { get; set; }
+		public string QuantidadeExportadaUnidadeFormatado { get; set; }
+		public string ValorAutorizadoInternadoFormatado { get; set; }
+		public string ValorAprovadoAutorizadoFormatado { get; set; }
+		public string ValorCancelamentoGeralFormatado { get; set; }
+
 		#endregion
 	}
 }

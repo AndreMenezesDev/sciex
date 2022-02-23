@@ -8,9 +8,16 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
     [Table("SCIEX_PARECER_TECNICO_PRODUTO")]
     public partial class ParecerTecnicoProdutoEntity : BaseEntity
     {
+		public virtual ParecerTecnicoEntity ParecerTecnico { get; set; }
+
+
 		[Key]
 		[Column("ptp_id")]
 		public long IdParecerTecnicoProduto { get; set; }
+
+		[ForeignKey(nameof(ParecerTecnico))]
+		[Column("pat_id")]
+		public long? IdParecerTecnico { get; set; }
 
 		[Column("ptp_nu_seq")]
 		public int? NumeroSequencia { get; set; }
@@ -31,6 +38,10 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[StringLength(255)]
 		[Column("ptp_ds_tipo")]
 		public string DescricaoTipo { get; set; }
+		
+		[StringLength(255)]
+		[Column("ptp_ds_produto")]
+		public string DescricaoProduto { get; set; }
 
 		[StringLength(255)]
 		[Column("ptp_ds_modelo")]
@@ -68,11 +79,19 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[Column("ptp_vl_pais")]
 		public decimal? ValorPais { get; set; }
 
-		public virtual ParecerTecnicoEntity ParecerTecnico { get; set; }
-
-		[ForeignKey(nameof(ParecerTecnico))]
-		[Column("pat_id")]
-		public long? IdParecerTecnico { get; set; }
-
+		[Column("ptp_vl_unitario_produto_comp")]
+		public decimal? ValorUnitarioProdutoComprovado { get; set; }
+		
+		[Column("ptp_vl_insumo_nac_adquirido")]
+		public decimal? ValorInsumoNacionalAdquirido { get; set; }
+		
+		[Column("ptp_vl_insumo_importado")]
+		public decimal? ValorInsumoImportado { get; set; }
+		
+		[Column("ptp_vl_exportacao_comp")]
+		public decimal? ValorExportacaoComprovado { get; set; }
+		
+		[Column("ptp_vl_exportacao_nacional_comp")]
+		public decimal? ValorExportacaoNacionalComprovado { get; set; }
 	}
 }

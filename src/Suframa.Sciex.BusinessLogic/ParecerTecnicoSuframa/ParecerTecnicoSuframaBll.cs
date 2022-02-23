@@ -179,11 +179,11 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "CO" ? "COMPROVADO" : "-";
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
 
-					tipoParecer = Convert.ToInt32(EnumTipoParecer.APROVADO);
+					tipoParecer = Convert.ToInt32(EnumTipoParecer.COMPROVADO);
 					parecer.ParecerTecnicoComplementar = _uowSciex.QueryStackSciex.ParecerComplementar.Selecionar<ParecerComplementarVM>(x => x.IdParecerComplementar == tipoParecer);
 
 
-					parecer.QuantidadeProdutosFormatado = (parecer.parecerTecnicoProdutos.Count()).ToString("D3");
+					parecer.QuantidadeProdutosFormatado = (parecer.parecerTecnicoProdutos.Count).ToString("D3");
 					foreach (var item in parecer.parecerTecnicoProdutos)
 					{
 						item.NumeroSequenciaFormatado = item.NumeroSequencia.Value.ToString("D3");
@@ -196,25 +196,92 @@ namespace Suframa.Sciex.BusinessLogic
 						item.CodigoProdutoSuframaFormatado = item.CodigoProdutoSuframa.Value.ToString("D4");
 						item.DescricaoUnidadeFormatado = item.DescricaoUnidade == "U" ? "UNIDADE"
 																			: item.DescricaoUnidade;
+
+						item.ValorUnitarioProdutoComprovadoFormatado = item.ValorUnitarioProdutoComprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorUnitarioProdutoComprovado.Value);
+						item.ValorInsumoNacionalAdquiridoFormatado = item.ValorInsumoNacionalAdquirido == null 
+																	? string.Format("{0:0,000.0000000}", 0) 
+																	: string.Format("{0:0,000.0000000}", item.ValorInsumoNacionalAdquirido.Value);
+
+						item.ValorInsumoImportadoFormatado = item.ValorInsumoImportado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", item.ValorInsumoImportado.Value);
+
+						item.ValorExportacaoComprovadoFormatado = item.ValorExportacaoComprovado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", item.ValorExportacaoComprovado.Value);
+
+						item.ValorExportacaoNacionalComprovadoFormatado = item.ValorExportacaoNacionalComprovado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", item.ValorExportacaoNacionalComprovado.Value);
+
+						item.ListaPaisesParaProduto = parecer.parecerTecnicoProdutos.Where(q => q.IdParecerTecnicoProduto == item.IdParecerTecnicoProduto)
+																			.Select(w => new { DescricaoPais = w.DescricaoPais, QuantidadePais = w.QuantidadePais })
+																			.Distinct().OrderBy(w => w.DescricaoPais).ToList();
+
 					}
 
-					parecer.QuantidadeTotalProdutoFormatado = parecer.QuantidadeTotalProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.QuantidadeTotalProduto.Value);
-					parecer.ValorExportacaoAprovadoFormatado = parecer.ValorExportacaoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorExportacaoAprovado.Value);
-					parecer.ValorInsumoNacionalFormatado = parecer.ValorInsumoNacional == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoNacional.Value);
-					parecer.ValorInsumoImportadoRealFormatado = parecer.ValorInsumoImportadoReal == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportadoReal.Value);
-					parecer.ValorTotalInsumosRealFormatado = parecer.ValorTotalInsumosReal == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTotalInsumosReal.Value);
-					parecer.ValorInsumoImportadoFobFormatado = parecer.ValorInsumoImportadoFob == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportadoFob.Value);
-					parecer.ValorInsumoImportacoCfrFormatado = parecer.ValorInsumoImportacoCfr == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportacoCfr.Value);
-					parecer.QuantidadeExportacaoAprovadoFormatado = parecer.QuantidadeExportacaoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.QuantidadeExportacaoAprovado.Value);
-					parecer.ValorIndiceNacionalizacaoFormatado = parecer.ValorIndiceNacionalizacao == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorIndiceNacionalizacao.Value);
-					parecer.ValorIndiceImportacaoFormatado = parecer.ValorIndiceImportacao == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorIndiceImportacao.Value);
-					parecer.ValorTaxaCambialFormatado = parecer.ValorTaxaCambial == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTaxaCambial.Value);
-
-
-					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
-					parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
+					parecer.ValorImportadoAutorizadoFormatado = parecer.ValorImportadoAutorizado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoAutorizado.Value);
 					
-					parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
+					parecer.ValorImportadoAcrescimoFormatado = parecer.ValorImportadoAcrescimo == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoAcrescimo.Value);
+
+					parecer.ValorImportadoFreteFormatado = parecer.ValorImportadoFrete == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoFrete.Value);
+
+					parecer.ValorImportadoFormatado = parecer.ValorImportado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorImportado.Value);
+					 
+					parecer.ValorImportadoInternadoFormatado = parecer.ValorImportadoInternado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoInternado.Value);
+					 
+					parecer.ValorNacionalAdquiridoFormatado = parecer.ValorNacionalAdquirido == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorNacionalAdquirido.Value);
+					 
+					parecer.ValorExportacaoRealizadaFormatado = parecer.ValorExportacaoRealizada == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorExportacaoRealizada.Value);
+					 
+					parecer.QuantidadeExportadaUnidadeFormatado = parecer.QuantidadeExportadaUnidade == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.QuantidadeExportadaUnidade.Value);
+					 
+					parecer.ValorAutorizadoInternadoFormatado = parecer.ValorAutorizadoInternado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorAutorizadoInternado.Value);
+					 
+					parecer.ValorAprovadoAutorizadoFormatado = parecer.ValorAprovadoAutorizado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorAprovadoAutorizado.Value);
+					 
+					parecer.ValorCancelamentoGeralFormatado = parecer.ValorCancelamentoGeral == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorCancelamentoGeral.Value);
+
+
+					//parecer.QuantidadeTotalProdutoFormatado = parecer.QuantidadeTotalProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.QuantidadeTotalProduto.Value);
+					//parecer.ValorExportacaoAprovadoFormatado = parecer.ValorExportacaoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorExportacaoAprovado.Value);
+					//parecer.ValorInsumoNacionalFormatado = parecer.ValorInsumoNacional == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoNacional.Value);
+					//parecer.ValorInsumoImportadoRealFormatado = parecer.ValorInsumoImportadoReal == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportadoReal.Value);
+					//parecer.ValorTotalInsumosRealFormatado = parecer.ValorTotalInsumosReal == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTotalInsumosReal.Value);
+					//parecer.ValorInsumoImportadoFobFormatado = parecer.ValorInsumoImportadoFob == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportadoFob.Value);
+					//parecer.ValorInsumoImportacoCfrFormatado = parecer.ValorInsumoImportacoCfr == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportacoCfr.Value);
+					//parecer.QuantidadeExportacaoAprovadoFormatado = parecer.QuantidadeExportacaoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.QuantidadeExportacaoAprovado.Value);
+					//parecer.ValorIndiceNacionalizacaoFormatado = parecer.ValorIndiceNacionalizacao == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorIndiceNacionalizacao.Value);
+					//parecer.ValorIndiceImportacaoFormatado = parecer.ValorIndiceImportacao == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorIndiceImportacao.Value);
+					//parecer.ValorTaxaCambialFormatado = parecer.ValorTaxaCambial == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTaxaCambial.Value);
+
+
+					//parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
+					//parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
+					
+					//parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
 
 					
 					break;
