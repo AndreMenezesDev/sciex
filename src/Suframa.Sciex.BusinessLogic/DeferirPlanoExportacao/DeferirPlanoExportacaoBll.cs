@@ -37,7 +37,6 @@ namespace Suframa.Sciex.BusinessLogic
 			// 1 - Somente Planos que não possuem vinculos reprovados podem ser Deferidos
 			// Validar o campo ST_ANALISE na Entidade : PEProdutoPaisVM
 			// Relacionamento - PlanoExportacao => Produto => ProdutoPais
-
 			// Carregar Plano de Exportação
 			
 
@@ -372,7 +371,7 @@ namespace Suframa.Sciex.BusinessLogic
 							foreach (var Due in ProdutoPais.ListaPEDue)
 							{
 								if (Due.SituacaoAnalise != (int)EnumSituacaoAnaliseDUE.APROVADO
-									||
+									&&
 									Due.SituacaoAnalise != (int)EnumSituacaoAnaliseDUE.INATIVO)
 								{
 									existePendenciaAnalise = true;

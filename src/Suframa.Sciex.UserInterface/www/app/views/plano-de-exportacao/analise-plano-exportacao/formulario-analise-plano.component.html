@@ -31,6 +31,10 @@
 								<label for="descricaoTipo" class="control-label text-nowrap">Tipo:</label>
 								{{model.tipoExportacaoString}}
 							</div>
+							<div class="col-lg-4">
+								<label for="descricaoTipo" class="control-label text-nowrap">N° Processo:</label>
+								{{model.numeroAnoProcessoFormatado}}
+							</div>
 						</div>
 						<div class="line"></div>
 						<div class="row">
@@ -207,6 +211,11 @@
 												<div class="row col-lg-12">
 													<div class="col-lg-6">
 														<label class="m-r-xs">Vlr. Total Exportação(US$):</label><span>{{ item.valorDolarFormatado }}</span>
+													</div>
+												</div>
+												<div class="row col-lg-12">
+													<div class="col-lg-6">
+														<label class="m-r-xs">Vlr. Total Exportação(R$):</label><span>{{ item.valorNacional }}</span>
 													</div>
 												</div>
 											</div>

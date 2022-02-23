@@ -331,16 +331,15 @@
     <Compile Include="Grid\RecintoAlfandegaGridController.cs" />
     <Compile Include="Grid\SetorArmazenamentoGridController.cs" />
     <Compile Include="Grid\ConsultarProtocoloEnvioLEGridController.cs" />
+    <Compile Include="Services\AprovarSolicitacaoController.cs" />
     <Compile Include="Services\AprovarTodosDUEEmAnaliseController.cs" />
     <Compile Include="Services\CancelarController.cs" />
-    <Compile Include="Services\AprovarSolicitacaoController .cs" />
     <Compile Include="Services\AnalisarDeclaracaoUnicaExportacaoController.cs" />
     <Compile Include="Services\DeclaracaoUnicaExportacaoController.cs" />
     <Compile Include="Services\DesignarAnalistaSolicitacaoController.cs" />
     <Compile Include="Services\EntregarPlanoExportacaoComprovacaoController.cs" />
     <Compile Include="Services\NotificarEmailController.cs" />
     <Compile Include="Services\ListarRegistroAlteracaoController.cs" />
-    <Compile Include="Services\AprovarSolicitacaoController .cs" />
     <Compile Include="Services\CalculoParidadeValorParaInsumoController.cs" />
     <Compile Include="Services\AprovarProrrogacaoController .cs" />
     <Compile Include="Services\AprovarAnaliseLEProdutoInsumoController.cs" />

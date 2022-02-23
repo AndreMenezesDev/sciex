@@ -254,6 +254,9 @@ namespace Suframa.Sciex.BusinessLogic
 				DataStatus = o.DataStatus,
 				CpfResponsavel = o.CpfResponsavel,
 				NomeResponsavel = o.NomeResponsavel,
+				NumeroProcesso = o.NumeroProcesso,
+				NumeroAnoProcesso= o.NumeroAnoProcesso,
+				
 				ListaPEProdutos = o.ListaPEProdutos.Select(q => new PEProdutoVM()
 				{
 					IdPEProduto = q.IdPEProduto,
@@ -266,7 +269,8 @@ namespace Suframa.Sciex.BusinessLogic
 					Qtd = q.Qtd,
 					ValorDolar = q.ValorDolar,
 					ValorFluxoCaixa = q.ValorFluxoCaixa,
-					CodigoUnidade = q.CodigoUnidade
+					CodigoUnidade = q.CodigoUnidade,
+					ValorNacional =q.ValorNacional
 				}
 				).ToList(),
 				ListaAnexos = o.ListaAnexos.Select(q => new PEArquivoVM()
@@ -283,6 +287,9 @@ namespace Suframa.Sciex.BusinessLogic
 
 			pe.DataCadastroFormatada = pe.DataCadastro == DateTime.MinValue || pe.DataCadastro == null ? DateTime.MinValue.ToShortDateString() : ((DateTime)pe.DataCadastro).ToShortDateString();
 			pe.NumeroAnoPlanoFormatado = pe.NumeroPlano.ToString("D5") + "/" + pe.AnoPlano;
+			pe.NumeroAnoProcessoFormatado = pe.NumeroProcesso != null
+															? ((int)(pe.NumeroProcesso)).ToString("D4") + "/" + pe.NumeroAnoProcesso
+															: "-";
 			pe.SituacaoString = pe.Situacao != null ? Enum.GetName(typeof(EnumSituacaoPlanoExportacao), pe.Situacao).Replace("_", " ") : "-";
 			//pe.SituacaoString = pe.Situacao == 1 ? "EM ELABORAÇÃO"
 			//								: pe.Situacao == 2 ? "ENTREGUE"
