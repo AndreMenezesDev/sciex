@@ -20,7 +20,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public decimal ValorFluxoCaixa { get; set; }
 		public int IdPlanoExportacao { get; set; }
 		public int CodigoUnidade { get; set; }
-		public int? ValorNacional { get; set; }
+		public decimal? ValorNacional { get; set; }
 		public IList<PEInsumoVM> ListaPEInsumo { get; set; }
 		public IList<PEProdutoPaisVM> ListaPEProdutoPais { get; set; }
 

@@ -70,12 +70,11 @@
     <Compile Include="EntityToModel\DIArquivoEntradaEntityProfile.cs" />
     <Compile Include="EntityToModel\DIEntradaEntityProfile.cs" />
     <Compile Include="EntityToModel\PlanoExportacaoDUEEntityProfile.cs" />
+    <Compile Include="EntityToModel\PRCStatusEntityProfile.cs" />
     <Compile Include="EntityToModel\PRCHistoricoDetalheInsumoEntityProfile.cs" />
     <Compile Include="EntityToModel\PRCHistoricoInsumoEntityProfile.cs" />
     <Compile Include="EntityToModel\PRCDueEntityProfile.cs" />
-    <Compile Include="EntityToModel\PRCStatusEntityProfile.cs" />
     <Compile Include="EntityToModel\ParecerComplementarEntityProfile.cs" />
-    <Compile Include="EntityToModel\PRCStatusEntityProfile.cs" />
     <Compile Include="EntityToModel\ParecerTecnicoProdutoEntityProfile.cs" />
     <Compile Include="EntityToModel\ParecerTecnicoEntityProfile.cs" />
     <Compile Include="EntityToModel\PEArquivoEntityProfile.cs" />

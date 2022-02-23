@@ -56,7 +56,7 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		public int CodigoUnidade { get; set; }
 
 		[Column("PRO_VL_NACIONAL")]
-		public int? ValorNacional { get; set; }
+		public decimal? ValorNacional { get; set; }
 
 	}
 }
