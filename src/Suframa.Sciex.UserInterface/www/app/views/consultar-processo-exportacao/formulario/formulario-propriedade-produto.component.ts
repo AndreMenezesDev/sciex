@@ -26,6 +26,7 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 	idProduto: any;
 	servicoDocumentosComprobatorios = "DocumentosComprobatoriosGrid"
 	grid: any = { sort: {} };
+	formPai = this;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -90,6 +91,20 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 			this.grid.total = result.total;
 
 		})
+	}
+
+	onChangeSort($event) {
+		this.grid.sort = $event;
+
+	}
+
+	onChangeSize($event) {
+		this.grid.size = $event;
+	}
+
+	onChangePage($event) {
+		this.grid.page = $event;
+		this.documentosComprobatorios();
 	}
 
 }

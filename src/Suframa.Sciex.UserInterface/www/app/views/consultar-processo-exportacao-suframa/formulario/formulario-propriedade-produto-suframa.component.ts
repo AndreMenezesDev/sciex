@@ -27,6 +27,7 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 	idProduto: any;
 	servicoDocumentosComprobatorios = "DocumentosComprobatoriosGrid"
 	grid: any = { sort: {} };
+	formPai = this;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -93,4 +94,17 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 		})
 	}
 
+	onChangeSort($event) {
+		this.grid.sort = $event;
+
+	}
+
+	onChangeSize($event) {
+		this.grid.size = $event;
+	}
+
+	onChangePage($event) {
+		this.grid.page = $event;
+		this.documentosComprobatorios();
+	}
 }
