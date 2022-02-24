@@ -95,6 +95,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 
 		public string Conclusão { get; set; }
 		public string AssinaturaResponsavel { get; set; }
+		public string ValorImportadoAprovadoFormatado { get; set; }
 		public string ValorImportadoAutorizadoFormatado { get; set; }
 		public string ValorImportadoAcrescimoFormatado { get; set; }
 		public string ValorImportadoFreteFormatado { get; set; }

@@ -178,6 +178,7 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "CO" ? "COMPROVADO" : "-";
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
+					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
 
 					tipoParecer = Convert.ToInt32(EnumTipoParecer.COMPROVADO);
 					parecer.ParecerTecnicoComplementar = _uowSciex.QueryStackSciex.ParecerComplementar.Selecionar<ParecerComplementarVM>(x => x.IdParecerComplementar == tipoParecer);
@@ -197,7 +198,10 @@ namespace Suframa.Sciex.BusinessLogic
 						item.DescricaoUnidadeFormatado = item.DescricaoUnidade == "U" ? "UNIDADE"
 																			: item.DescricaoUnidade;
 
-						item.ValorUnitarioProdutoComprovadoFormatado = item.ValorUnitarioProdutoComprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorUnitarioProdutoComprovado.Value);
+						item.ValorUnitarioProdutoComprovadoFormatado = item.ValorUnitarioProdutoComprovado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", item.ValorUnitarioProdutoComprovado.Value);
+
 						item.ValorInsumoNacionalAdquiridoFormatado = item.ValorInsumoNacionalAdquirido == null 
 																	? string.Format("{0:0,000.0000000}", 0) 
 																	: string.Format("{0:0,000.0000000}", item.ValorInsumoNacionalAdquirido.Value);
@@ -215,10 +219,19 @@ namespace Suframa.Sciex.BusinessLogic
 																	: string.Format("{0:0,000.0000000}", item.ValorExportacaoNacionalComprovado.Value);
 
 						item.ListaPaisesParaProduto = parecer.parecerTecnicoProdutos.Where(q => q.IdParecerTecnicoProduto == item.IdParecerTecnicoProduto)
-																			.Select(w => new { DescricaoPais = w.DescricaoPais, QuantidadePais = w.QuantidadePais })
+																			.Select(w => new { 
+																				DescricaoPais = w.DescricaoPais, 
+																				QuantidadePaisFormatado = w.QuantidadePais == null
+																									? string.Format("{0:0,000.0000000}", 0)
+																									: string.Format("{0:0,000.0000000}", w.QuantidadePais.Value)
+																			})
 																			.Distinct().OrderBy(w => w.DescricaoPais).ToList();
 
 					}
+
+					parecer.ValorImportadoAprovadoFormatado = parecer.ValorImportadoAprovado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoAprovado.Value);
 
 					parecer.ValorImportadoAutorizadoFormatado = parecer.ValorImportadoAutorizado == null
 																	? string.Format("{0:0,000.0000000}", 0)
@@ -278,7 +291,7 @@ namespace Suframa.Sciex.BusinessLogic
 					//parecer.ValorTaxaCambialFormatado = parecer.ValorTaxaCambial == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTaxaCambial.Value);
 
 
-					//parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
+					
 					//parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
 					
 					//parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";

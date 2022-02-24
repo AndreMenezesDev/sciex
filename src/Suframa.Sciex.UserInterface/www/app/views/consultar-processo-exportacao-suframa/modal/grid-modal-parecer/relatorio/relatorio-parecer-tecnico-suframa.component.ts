@@ -47,20 +47,21 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 		let carregaDados = new Promise(resolve => {
 			setTimeout(() => {
 				this.buscarDados(this.id);
-			}, 2000);
+			}, 1000);
 			resolve(null);
 		}).then(() => {
 			setTimeout(() => {
 				this.gerarPDF();
-			}, 4000);
+			}, 2000);
 		});
 	}
 
 	gerarPDF() {
 		let renderizarHtml = new Promise(resolve => {
 			let rel = this.ocultarPdf == 1 ? 'relatorioPDF1' :
-						this.ocultarPdf == 2 ? 'relatorioPDF2' : 'relatorioPDF3';
-						this.ocultarPdf == 3 ? 'relatorioPDF3' : '--';
+						this.ocultarPdf == 2 ? 'relatorioPDF2' : 
+						this.ocultarPdf == 3 ? 'relatorioPDF3' : 
+						this.ocultarPdf == 4 ? 'relatorioPDF4' : '--';
 
 			const elements = document.getElementById(rel);
 			const options = {
@@ -109,7 +110,7 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 		let liberarTela = new Promise(resolve => {
 			setTimeout(() => {
 				this.ocultarPdf = 0;
-			}, 3000);
+			}, 5000);
 			resolve(null);
 		});
 
