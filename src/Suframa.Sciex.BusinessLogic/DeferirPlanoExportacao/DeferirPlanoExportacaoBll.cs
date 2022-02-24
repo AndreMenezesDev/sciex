@@ -7,6 +7,7 @@ using Suframa.Sciex.BusinessLogic.DeferirPlanoExportacao;
 using Suframa.Sciex.DataAccess.Database.Entities;
 using Suframa.Sciex.BusinessLogic.Pss;
 using Suframa.Sciex.CrossCutting.DataTransferObject.Enum;
+using System.Data.Entity.Validation;
 
 namespace Suframa.Sciex.BusinessLogic
 {
@@ -450,34 +451,87 @@ namespace Suframa.Sciex.BusinessLogic
 						}
 						else
 						{
+							bool existeREGPEParaCadastro = false;
 							foreach (var regPRCProdutoPais in listaPRCProdutoPais)
 							{
 								var regPEPais = regPEProduto.ListaPEProdutoPais.Where(q => q.CodigoPais == regPRCProdutoPais.CodigoPais).FirstOrDefault();
 
-								regPRCProdutoPais.QuantidadeComprovado = regPEPais.Quantidade;
-								regPRCProdutoPais.ValorDolarComprovado = regPEPais.ValorDolar;
+								if (regPEPais != null)
+								{
+									regPRCProdutoPais.QuantidadeComprovado = regPEPais.Quantidade;
+									regPRCProdutoPais.ValorDolarComprovado = regPEPais.ValorDolar;
 
-								_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(regPRCProdutoPais);
+									_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(regPRCProdutoPais);
 
 
-								var PEDue = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar<PlanoExportacaoDUEVM>(q =>
+									var PEDue = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar<PlanoExportacaoDUEVM>(q =>
+																													q.IdPEProdutoPais == regPEPais.IdPEProdutoPais
+																													&&
+																													q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
+
+									var regPRCDue = regPRCProdutoPais.PrcDue.Where(q => q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
+
+
+									regPRCDue.Numero = PEDue.Numero;
+									regPRCDue.DataAverbacao = PEDue.DataAverbacao;
+									regPRCDue.ValorDolar = PEDue.ValorDolar;
+									regPRCDue.Quantidade = PEDue.Quantidade;
+
+
+									_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue);
+									_uowSciex.CommandStackSciex.Save();
+
+									RegistrarNovoStatus(objPlanoExportacao, regProcesso);
+								}
+								else
+								{
+									if(regPEProduto.ListaPEProdutoPais.Count > 0)
+									{
+										existeREGPEParaCadastro = true;
+									}
+								}
+
+							}
+							if (existeREGPEParaCadastro)
+							{
+								var listaCodigoPaisPRC = listaPRCProdutoPais.Select(o => o.CodigoPais).ToList();
+
+								var listaPEFaltantesCadastro = regPEProduto.ListaPEProdutoPais.Where(o => !listaCodigoPaisPRC.Contains(o.CodigoPais)).ToList();
+
+								foreach (var regPEPais in listaPEFaltantesCadastro)
+								{
+
+									var novoPRCProdutoPais = new PRCProdutoPaisEntity()
+									{
+										IdPrcProduto = registroPRCProduto.IdProduto,
+										QuantidadeComprovado = regPEPais.Quantidade,
+										ValorDolarComprovado = regPEPais.ValorDolar,
+										CodigoPais = regPEPais.CodigoPais
+									};
+
+									_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(novoPRCProdutoPais);
+
+									var PEDue = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar<PlanoExportacaoDUEVM>(q =>
 																												q.IdPEProdutoPais == regPEPais.IdPEProdutoPais
 																												&&
 																												q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
 
-								var regPRCDue = regPRCProdutoPais.PrcDue.Where(q => q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
+									var novoPRCDue = new PRCDueEntity()
+									{
+										IdPRCProdutoPais = novoPRCProdutoPais.IdProdutoPais,
+										Numero = PEDue.Numero,
+										DataAverbacao = PEDue.DataAverbacao,
+										ValorDolar = PEDue.ValorDolar,
+										Quantidade = PEDue.Quantidade,
+										CodigoPais = PEDue.CodigoPais,
+									};
 
+									_uowSciex.CommandStackSciex.PRCDue.Salvar(novoPRCDue);
+									_uowSciex.CommandStackSciex.Save();
 
-								regPRCDue.Numero = PEDue.Numero;
-								regPRCDue.DataAverbacao = PEDue.DataAverbacao;
-								regPRCDue.ValorDolar = PEDue.ValorDolar;
-								regPRCDue.Quantidade = PEDue.Quantidade;
+									RegistrarNovoStatus(objPlanoExportacao, regProcesso);
+								}
 
-
-								_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue);
-								_uowSciex.CommandStackSciex.Save();
-
-								RegistrarNovoStatus(objPlanoExportacao, regProcesso);
 							}
 						}
 						#endregion
@@ -511,15 +565,20 @@ namespace Suframa.Sciex.BusinessLogic
 
 					};
 
-
-
-
 					regProcesso.TipoStatus = "CO";
 
 					_uowSciex.CommandStackSciex.Processo.Salvar(regProcesso);
 
 					_uowSciex.CommandStackSciex.Save();
 
+					var entityPlanoExportacao = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.IdPlanoExportacao == objPlanoExportacao.IdPlanoExportacao);
+
+					entityPlanoExportacao.Situacao = (int)EnumSituacaoPlanoExportacao.DEFERIDO;
+					entityPlanoExportacao.DataStatus = DateTime.Now;
+
+					_uowSciex.CommandStackSciex.DetachEntries();
+					_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(entityPlanoExportacao);
+					_uowSciex.CommandStackSciex.Save();
 
 					_uowSciex.QueryStackSciex.IniciarStoreProcedureParecerTecnico(regProcesso.IdProcesso, true);
 
@@ -658,7 +717,7 @@ namespace Suframa.Sciex.BusinessLogic
 				AnoPlano = obj.AnoPlano
 			};
 
-			_uowSciex.CommandStackSciex.DetachEntries();
+			//_uowSciex.CommandStackSciex.DetachEntries();
 			_uowSciex.CommandStackSciex.PRCStatus.Salvar(prcStatusEntity);
 			_uowSciex.CommandStackSciex.Save();
 		}
