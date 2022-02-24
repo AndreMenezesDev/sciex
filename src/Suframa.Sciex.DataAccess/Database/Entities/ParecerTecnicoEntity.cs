@@ -33,14 +33,14 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[ForeignKey(nameof(SolicitacaoAlteracao))]
 		[Column("soa_id")]
 		public int? IdSolicAlteracao { get; set; }
+		
+		[Required]
+		[Column("pat_nu_ano_controle")]
+		public int AnoControle { get; set; }
 
 		[Required]
 		[Column("pat_nu_controle")]
 		public long NumeroControle { get; set; }
-
-		[Required]
-		[Column("pat_nu_ano_controle")]
-		public int AnoControle { get; set; }
 
 		[Column("pat_nu_inscricao_cadastral")]
 		public int? InscricaoSuframa { get; set; }
@@ -126,6 +126,42 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 
 		[Column("pat_dt_geracao")]
 		public DateTime? DataGeracao { get; set; }
+
+		[Column("pat_vl_importado_autorizado")]
+		public decimal? ValorImportadoAutorizado { get; set; }
 		
+		[Column("pat_vl_importado_acrescimo")]
+		public decimal? ValorImportadoAcrescimo { get; set; }
+		
+		[Column("pat_vl_importado_internado")]
+		public decimal? ValorImportadoInternado { get; set; }
+		
+		[Column("pat_vl_importado_aprovado")]
+		public decimal? ValorImportadoAprovado { get; set; }
+		
+		[Column("pat_vl_importado_frete")]
+		public decimal? ValorImportadoFrete { get; set; }
+		
+		[Column("pat_vl_importado")]
+		public decimal? ValorImportado { get; set; }
+		
+		[Column("pat_vl_nacional_adquirido")]
+		public decimal? ValorNacionalAdquirido { get; set; }
+		
+		[Column("pat_vl_exportacao_realizada")]
+		public decimal? ValorExportacaoRealizada { get; set; }
+		
+		[Column("pat_qt_exportada_unidade")]
+		public decimal? QuantidadeExportadaUnidade { get; set; }
+		
+		[Column("pat_vl_autorizado_internado")]
+		public decimal? ValorAutorizadoInternado { get; set; }
+		
+		[Column("pat_vl_aprovado_autorizado")]
+		public decimal? ValorAprovadoAutorizado { get; set; }
+		
+		[Column("pat_vl_cancelamento_geral")]
+		public decimal? ValorCancelamentoGeral { get; set; }
+
 	}
 }

@@ -5,10 +5,10 @@ using Suframa.Sciex.DataAccess.Database.Entities;
 
 namespace Suframa.Sciex.CrossCutting.Mapping
 {
-    public class PRCStatusEntityProfile : Profile
-    {
-        public PRCStatusEntityProfile()
-        {
+	public class PRCStatusEntityProfile : Profile
+	{
+		public PRCStatusEntityProfile()
+		{
 			CreateMap<PRCStatusEntity, PRCStatusVM>();
 		}
 	}

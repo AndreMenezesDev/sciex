@@ -1091,7 +1091,7 @@
 	</article>
 <!-- FIM CONTEUDO RELATORIO PDF -->
 <!-- INICIO CONTEUDO RELATORIO PDF -->
-	<article id="relatorioPDF1" class="panel-body" [hidden]="!(ocultarPdf === 4)">
+	<article id="relatorioPDF4" class="panel-body" [hidden]="!(ocultarPdf === 4)">
 		<div class="form-group m-n pull-right">
 			<span style="margin-top:15px; margin-left: 40px;">Processo Nº: {{model.numeroProcessoString}} Plano Nº: {{model.numeroPlanoString}}</span>
 		</div>
@@ -1256,14 +1256,15 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-3">
-							<span style="margin-left: 50px;">Unidade de Medida:</span>
+							<span style="margin-left: 50px;">Unidade de</span>
+							<span style="margin-left: 50px;">Medida:</span>
 						</div>
 						<div class="col-lg-4">
 							<span style="margin-left: 5px;"> {{item.descricaoUnidadeFormatado}}</span>
 						</div>
 						<div class="col-lg-5">
 							<span> Vlr. Unitário(US$):</span>
-							<span style="margin-left: 5px;"> {{item.valorUnitarioProdutoAprovadoFormatado}}</span>
+							<span style="margin-left: 5px;"> {{item.valorUnitarioProdutoComprovadoFormatado}}</span>
 						</div>
 					</div>
 				</div>
@@ -1281,7 +1282,7 @@
 							<span style="margin-left: 5px;"> (R$)</span>
 						</div>
 						<div class="col-lg-4">
-							<span> {{item.valorInsumoNacionalProdutoFormatado}}</span>
+							<span> {{item.valorInsumoNacionalAdquiridoFormatado}}</span>
 						</div>
 					</div>
 					<div class="row">
@@ -1292,7 +1293,7 @@
 							<span style="margin-left: 5px;"> (US$-FOB)</span>
 						</div>
 						<div class="col-lg-4">
-							<span> {{item.valorInsumoImportacaoProdutoFormatado}}</span>
+							<span> {{item.valorInsumoImportadoFormatado}}</span>
 						</div>
 					</div>
 					<div class="row">
@@ -1303,7 +1304,7 @@
 							<span style="margin-left: 5px;"> (US$-FOB)</span>
 						</div>
 						<div class="col-lg-4">
-							<span> {{model.valorExportacaoAprovadoFormatado}}</span>
+							<span> {{item.valorExportacaoComprovadoFormatado}}</span>
 						</div>
 					</div>
 					<div class="row">
@@ -1314,25 +1315,25 @@
 							<span style="margin-left: 5px;"> (R$)</span>
 						</div>
 						<div class="col-lg-4">
-							<span> {{model.valorExportacaoAprovadoFormatado}}</span>
+							<span> {{item.valorExportacaoNacionalComprovadoFormatado}}</span>
 						</div>
 					</div>
 				</div>
 				<br>
-				<div class="row">
+				<div class="row" *ngFor="let itemPais of item.listaPaisesParaProduto">
 					<div class="col-lg-3">
 						<span style="margin-left: 55px;"> País de destino:</span>
 
 					</div>
 					<div class="col-lg-3">
-						<span> {{item.descricaoPais}}</span>
+						<span> {{itemPais.descricaoPais}}</span>
 					</div>
 					<div class="col-lg-2">
 						<span style="margin-left: 5px;"> Quantidade:</span>
 
 					</div>
 					<div class="col-lg-4">
-						<span> {{item.quantidadePaisFormatado}}</span>
+						<span> {{itemPais.quantidadePaisFormatado}}</span>
 					</div>
 				</div>
 
@@ -1355,7 +1356,7 @@
 					<span style="margin-left: 5px;"> (US$-FOB)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoNacionalFormatado}}</span>
+					<span> {{model.valorImportadoAprovadoFormatado}}</span>
 				</div>
 			</div>
 			<div class="row">
@@ -1366,7 +1367,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoImportadoRealFormatado}}</span>
+					<span> {{model.valorImportadoAutorizadoFormatado}}</span>
 				</div>
 			</div>
 			<div class="row">
@@ -1377,7 +1378,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorTotalInsumosRealFormatado}}</span>
+					<span> {{model.valorImportadoAcrescimoFormatado}}</span>
 				</div>
 			</div>
 
@@ -1389,7 +1390,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoImportadoFobFormatado}}</span>
+					<span> {{model.valorImportadoFreteFormatado}}</span>
 				</div>
 			</div>
 			<br>
@@ -1401,7 +1402,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoImportacoCfrFormatado}}</span>
+					<span> {{model.valorImportadoFormatado}}</span>
 				</div>
 			</div>
 
@@ -1413,7 +1414,7 @@
 					<span style="margin-left: 5px;"> (US$-FOB)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.quantidadeExportacaoAprovadoFormatado}}</span>
+					<span> {{model.valorImportadoInternadoFormatado}}</span>
 				</div>
 			</div>
 		</div>
@@ -1424,35 +1425,35 @@
 		<div class="form-group m-n text-left">
 			<div class="row">
 				<div class="col-lg-6">
-					<span style="margin-left: 50px;"> Insumos Importados(aprovados)</span>
+					<span style="margin-left: 50px;"> Total de Insumos nacionais adquiridos</span>
 				</div>
 				<div class="col-lg-2">
 					<span style="margin-left: 5px;"> (R$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoNacionalFormatado}}</span>
+					<span> {{model.valorNacionalAdquiridoFormatado}}</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-6">
-					<span style="margin-left: 50px;"> Insumos Importados(autorizados)</span>
+					<span style="margin-left: 50px;">  Total de exportação realizada</span>
 				</div>
 				<div class="col-lg-2">
 					<span style="margin-left: 5px;"> (US$-FOB)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoImportadoRealFormatado}}</span>
+					<span> {{model.valorExportacaoRealizadaFormatado}}</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-6">
-					<span style="margin-left: 50px;"> Acréscimo/Decréscimo</span>
+					<span style="margin-left: 50px;"> Total de quantidade exportada/unidade</span>
 				</div>
 				<div class="col-lg-2">
 					<span style="margin-left: 5px;"></span>
 				</div>
-				<div class="col-lg-2">
-					<span> {{model.valorTotalInsumosRealFormatado}} UNIDADES</span>
+				<div class="col-lg-4">
+					<span> {{model.quantidadeExportadaUnidadeFormatado}} UNIDADES</span>
 				</div>
 			</div>
 		</div>
@@ -1469,7 +1470,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoNacionalFormatado}}</span>
+					<span> {{model.valorAutorizadoInternadoFormatado}}</span>
 				</div>
 			</div>
 			<div class="row">
@@ -1480,7 +1481,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorInsumoImportadoRealFormatado}}</span>
+					<span> {{model.valorAprovadoAutorizadoFormatado}}</span>
 				</div>
 			</div>
 			<div class="row">
@@ -1491,7 +1492,7 @@
 					<span style="margin-left: 5px;"> (US$)</span>
 				</div>
 				<div class="col-lg-2">
-					<span> {{model.valorTotalInsumosRealFormatado}}</span>
+					<span> {{model.valorCancelamentoGeralFormatado}}</span>
 				</div>
 			</div>
 		</div>
