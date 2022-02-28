@@ -147,16 +147,16 @@ namespace Suframa.Sciex.BusinessLogic
 				&&
 				(string.IsNullOrEmpty(pagedFilter.RazaoSocial) || o.RazaoSocial.Contains(pagedFilter.RazaoSocial))
 				&&
-				(digitoProcesso == 0 || digitoProcesso == o.NumeroProcesso && anoProcesso == o.AnoProcesso)
+				(digitoProcesso == 0 || (digitoProcesso == o.NumeroProcesso && anoProcesso == o.AnoProcesso))
 				&&
-				(digitoPlano == 0 || o.ListaStatus.Where(w=> w.NumeroPlano == digitoPlano && w.AnoPlano == anoPlano).Any())
+				(digitoPlano == 0 || o.ListaStatus.Any(w=> w.NumeroPlano == digitoPlano && w.AnoPlano == anoPlano))
 				&&
 				(string.IsNullOrEmpty(pagedFilter.TipoModalidade) || pagedFilter.TipoModalidade.Equals(o.TipoModalidade))
 				&&
 				(string.IsNullOrEmpty(pagedFilter.StatusPlano) || pagedFilter.StatusPlano.Equals(o.TipoStatus))
 				&&
 				(
-				(pagedFilter.DataInicio == null) || o.ListaStatus.Where(w => o.TipoStatus.Equals(w.Tipo) && (dataInicio <= w.Data && w.Data <= dataFim)).Any()
+				(pagedFilter.DataInicio == null) || o.ListaStatus.Any(w => o.TipoStatus.Equals(w.Tipo) && (dataInicio <= w.Data && w.Data <= dataFim))
 				)
 				&&
 				(cnpj == null || o.Cnpj == cnpj)
