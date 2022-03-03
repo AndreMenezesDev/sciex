@@ -29,6 +29,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 	{
 		public string DescricaoPais { get; set; }
 		public string DataAverbacaoFormatada { get; set; } 
+		public string SituacaoAnaliseString { get; set; } 
 
 	}
 

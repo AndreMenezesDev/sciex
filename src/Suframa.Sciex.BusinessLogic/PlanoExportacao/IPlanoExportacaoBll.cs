@@ -23,5 +23,8 @@ namespace Suframa.Sciex.BusinessLogic
 		DuePorProdutoVM SalvarDocumentosComprobatorios(DuePorProdutoVM vm);
 		DuePorProdutoVM EditarDocumentosCombprobatorios(DuePorProdutoVM vm);
 		PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUEPaginadoParaAnalise(PEProdutoVM pagedFilter);
+		PagedItems<PlanoExportacaoDUEComplementoVM> ListarDUECorrecaoPaginado(PEProdutoVM pagedFilter);
+		DuePorProdutoVM CorrigirDocumentosComprobatorios(DuePorProdutoVM vm);
+		int InativarDocumentosComprobatorios(DuePorProdutoVM vm);
 	}
 }

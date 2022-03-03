@@ -134,7 +134,7 @@
 										<div class="collapse-btn-excluir">
 											<div class="pull-right">
 												<a *ngIf="!somenteLeitura"
-													routerLink="/manter-plano-exportacao/{{item.idPEProduto}}/propriedadeprodutocomprovacao"
+													(click)="abrirPropriedadeProduto(item)"
 													class="btn btn-sm btn-default" data-toggle="tooltip"
 													title="Dados do Produto">
 													<span class="fa fa-pencil-square-o"></span>

@@ -147,6 +147,7 @@ import { RelatorioParecerTecnicoSuframaComponent } from '../views/consultar-proc
 import { FormularioDetalhesInsumoSuframaComponent } from '../views/consultar-processo-exportacao-suframa/formulario/formulario-detalhe-processo-insumo-suframa/formulario-detalhes-insumo-suframa.component';
 import { ManterPlanoFormularioPlanoComprovacaoComponent } from '../views/manter-plano-exportacao/formulario/formularioPlanoComprovacao.component';
 import { AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent } from '../views/plano-de-exportacao/analise-plano-exportacao/propriedade-produto/formularioAnalisePropriedadeProdutoComprovacao.component';
+import { ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent } from '../views/manter-plano-exportacao/formulario/formularioPropriedadeProdutoComprovacaoCorrecao.component';
 
 const routes: Routes = [
 	{ path: 'manter-plano-exportacao', component: ManterPlanoExportacaoComponent },
@@ -159,6 +160,7 @@ const routes: Routes = [
 	{ path: 'manter-plano-exportacao/:id/propriedadeproduto', component: ManterPlanoFormularioPropriedadeProdutoComponent },
 	{ path: 'manter-plano-exportacao/:id/propriedadeprodutocomprovacao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizarpropriedadeprodutocomprovacao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent },
+	{ path: 'manter-plano-exportacao/:id/propriedadeprodutocomprovacaocorrecao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizarpropriedadeproduto', component: ManterPlanoFormularioPropriedadeProdutoComponent },
 	{ path: 'manter-plano-exportacao/:id/validar-produto', component: ManterPlanoFormularioPlanoComponent },
 	{ path: 'manter-plano-exportacao/:id/validar-insumo', component: ManterPlanoFormularioPlanoComponent },

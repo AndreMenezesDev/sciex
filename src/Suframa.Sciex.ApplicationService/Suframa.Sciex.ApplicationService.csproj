@@ -335,9 +335,12 @@
     <Compile Include="Services\AprovarTodosDUEEmAnaliseController.cs" />
     <Compile Include="Services\CancelarController.cs" />
     <Compile Include="Services\AnalisarDeclaracaoUnicaExportacaoController.cs" />
+    <Compile Include="Services\CorrigirDUEController.cs" />
     <Compile Include="Services\DeclaracaoUnicaExportacaoController.cs" />
     <Compile Include="Services\DesignarAnalistaSolicitacaoController.cs" />
+    <Compile Include="Services\DueCorrecaoController.cs" />
     <Compile Include="Services\EntregarPlanoExportacaoComprovacaoController.cs" />
+    <Compile Include="Services\InativarDUEController.cs" />
     <Compile Include="Services\NotificarEmailController.cs" />
     <Compile Include="Services\ListarRegistroAlteracaoController.cs" />
     <Compile Include="Services\CalculoParidadeValorParaInsumoController.cs" />
