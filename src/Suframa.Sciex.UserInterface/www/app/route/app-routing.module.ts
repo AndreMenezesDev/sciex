@@ -155,6 +155,7 @@ const routes: Routes = [
 	{ path: 'manter-plano-exportacao/:id/visualizarcomprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizar', component: ManterPlanoFormularioPlanoComponent },
 	{ path: 'manter-plano-exportacao/:id/correcao', component: ManterPlanoFormularioPlanoComponent },
+	{ path: 'manter-plano-exportacao/:id/correcaoComprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/propriedadeproduto', component: ManterPlanoFormularioPropriedadeProdutoComponent },
 	{ path: 'manter-plano-exportacao/:id/propriedadeprodutocomprovacao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizarpropriedadeprodutocomprovacao', component: ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent },

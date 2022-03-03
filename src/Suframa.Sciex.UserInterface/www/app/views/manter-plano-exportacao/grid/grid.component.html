@@ -66,7 +66,8 @@
 							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Incluir Informações">
 							<i class="i  i-add-to-list"></i>
 						</a>
-						<a routerLink="/manter-plano-exportacao/{{item.idPlanoExportacao}}/correcao" *ngIf="item.situacao == 6"
+						<a (click)="abrirCorrecao(item)"
+							 *ngIf="item.situacao == 6"
 							class="btn btn-default btn-sm" data-toggle="tooltip" title="" data-original-title="Corrigir">
 							<i class="fa fa-pencil"></i>
 						</a>

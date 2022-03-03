@@ -49,6 +49,7 @@ export class ManterPlanoFormularioPlanoComprovacaoComponent implements OnInit {
 	@ViewChild('cpf') cpf;
 	validar: boolean;
 	titulo: string;
+	isCorrecaoComprovacao: boolean;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -88,28 +89,40 @@ export class ManterPlanoFormularioPlanoComprovacaoComponent implements OnInit {
 			this.titulo = "Cadastrar";
 			this.selecionar(this.route.snapshot.params['id']);
 			this.somenteLeitura = this.parametros.somenteLeitura = false;
+			this.isCorrecaoComprovacao = false;
 		}
 		if (this.path == 'cadastrarcomprovacao') {
 			this.titulo = "Cadastrar";
 			this.selecionar(this.route.snapshot.params['id']);
 			this.somenteLeitura = this.parametros.somenteLeitura = false;
+			this.isCorrecaoComprovacao = false;
 		}
 		else if (this.path == 'correcao') {
 			this.titulo = "Corrigir";
 			this.selecionar(this.route.snapshot.params['id']);
 			this.somenteLeitura = this.parametros.somenteLeitura = false;
+			this.isCorrecaoComprovacao = false;
+		}
+		else if (this.path == 'correcaoComprovacao') {
+			this.titulo = "Corrigir";
+			this.selecionar(this.route.snapshot.params['id']);
+			this.somenteLeitura = this.parametros.somenteLeitura = false;
+			this.isCorrecaoComprovacao = true;
 		}
 		else if (this.path == 'validar-produto') {
 			this.selecionar(this.route.snapshot.params['id']);
 			this.somenteLeitura = this.parametros.somenteLeitura = false;
+			this.isCorrecaoComprovacao = false;
 		}
 		else if (this.path == 'validar-insumo') {
 			this.selecionar(this.route.snapshot.params['id']);
 			this.somenteLeitura = this.parametros.somenteLeitura = false;
+			this.isCorrecaoComprovacao = false;
 		}
 		else if (this.path == 'visualizarcomprovacao') {
 			this.selecionar(this.route.snapshot.params['id']);
 			this.somenteLeitura = this.parametros.somenteLeitura = true;
+			this.isCorrecaoComprovacao = true;
 		}
 		
 	}	

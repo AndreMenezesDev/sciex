@@ -287,4 +287,12 @@ export class ManterPlanoExportacaoGridComponent {
 		});
 	}
 
+	abrirCorrecao(item){
+
+		if (item.tipoExportacao != 'CO'){
+			this.router.navigate([`/manter-plano-exportacao/${item.idPlanoExportacao}/correcao`]);
+		}else{
+			this.router.navigate([`/manter-plano-exportacao/${item.idPlanoExportacao}/correcaoComprovacao`]);
+		}
+	}
 }
