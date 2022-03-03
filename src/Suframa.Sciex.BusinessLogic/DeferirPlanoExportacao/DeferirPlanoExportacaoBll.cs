@@ -352,6 +352,8 @@ namespace Suframa.Sciex.BusinessLogic
 								IdPEProdutoPais = w.IdPEProdutoPais,
 								IdPEProduto = w.IdPEProduto,
 								CodigoPais = w.CodigoPais,
+								Quantidade = w.Quantidade,
+								ValorDolar = w.ValorDolar,
 								ListaPEDue = w.ListaPEDue.Select(e => new PlanoExportacaoDUEComplementoVM()
 								{
 									IdDue = e.IdDue,
@@ -402,6 +404,9 @@ namespace Suframa.Sciex.BusinessLogic
 						registroPRCProduto.QuantidadeComprovado = regPEProduto.Qtd;
 						registroPRCProduto.ValorDolarComprovado = regPEProduto.ValorDolar;
 						registroPRCProduto.ValorNacionalComprovado = regPEProduto.ValorNacional;
+
+						_uowSciex.CommandStackSciex.PRCProduto.Salvar(registroPRCProduto);
+
 						#endregion
 
 
