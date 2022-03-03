@@ -1216,8 +1216,9 @@
 		</div>
 
 
-		<section id="grid">
-			<div *ngFor="let item of model.parecerTecnicoProdutos">
+		<section>
+			<div *ngFor="let item of model.parecerTecnicoProdutos; let indice = index">
+				<div id="quebraLinha" *ngIf="(indice % 3 == 0)"></div>
 				<div class="form-group m-n text-left">
 					<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">Prod. {{item.numeroSequenciaFormatado}} - Especificação</label>
 				</div>
@@ -1340,7 +1341,7 @@
 			</div>
 		</section>
 
-		<div class="form-group m-n text-left">
+		<div id="resumo" class="form-group m-n text-left">
 			<label style="margin-top: 25px; text-decoration: underline; margin-left: 40px;" class="control-label">Resumo do Plano de Exportação</label>
 		</div>
 		<div class="form-group m-n text-left">

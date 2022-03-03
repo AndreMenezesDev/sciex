@@ -183,8 +183,7 @@ namespace Suframa.Sciex.BusinessLogic
 					tipoParecer = Convert.ToInt32(EnumTipoParecer.COMPROVADO);
 					parecer.ParecerTecnicoComplementar = _uowSciex.QueryStackSciex.ParecerComplementar.Selecionar<ParecerComplementarVM>(x => x.IdParecerComplementar == tipoParecer);
 
-
-					parecer.QuantidadeProdutosFormatado = (parecer.parecerTecnicoProdutos.Count).ToString("D3");
+					parecer.QuantidadeProdutosFormatado = (parecer.parecerTecnicoProdutos.Select(q=> q.CodigoProdutoSuframa).Distinct().Count()).ToString("D3");
 					foreach (var item in parecer.parecerTecnicoProdutos)
 					{
 						item.NumeroSequenciaFormatado = item.NumeroSequencia.Value.ToString("D3");

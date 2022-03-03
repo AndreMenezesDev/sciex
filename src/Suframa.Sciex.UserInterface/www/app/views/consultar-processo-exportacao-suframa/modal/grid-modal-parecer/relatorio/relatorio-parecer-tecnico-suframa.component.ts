@@ -76,7 +76,8 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 					useCORS: true
 				},
 				jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-				pagebreak: { after: ['#grid'] }
+				pagebreak: { after: ['#grid', '#quebraLinha'],
+							before: ['#resumo'] }
 			};
 			html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
 				var totalPages = pdf.internal.getNumberOfPages();
