@@ -18,23 +18,24 @@
 					<h2 class="panel-title h5">Dados do Processo de Exportação</h2>
 				</header>
 				<article class="panel-body">
+
 					<fieldset>
 						<div class="row">
 							<div class="col-lg-4">
 								<label for="numeroProcesso" class="control-label text-nowrap">
-									N° Processo:
+									N° Processo: 
 								</label>
 								{{model.numeroAnoProcessoFormatado}}
 							</div>
 							<div class="col-lg-4">
 								<label for="numeroPlano" class="control-label text-nowrap">
-									N° Plano:
+									N° Plano: 
 								</label>
 								{{model.numeroAnoPlanoFormatado}}
 							</div>
 							<div class="col-lg-4">
 								<label for="dataValidade" class="control-label text-nowrap">
-									Data Validade:
+									Data Validade: 
 								</label>
 								{{model.dataValidadeFormatada}}
 							</div>
@@ -42,86 +43,158 @@
 						<div class="row">
 							<div class="col-lg-4">
 								<label for="modalidade" class="control-label text-nowrap">
-									Modalidade:
+									Modalidade: 
 								</label>
 								{{model.tipoModalidadeString}}
 							</div>
 							<div class="col-lg-4">
 								<label for="status" class="control-label text-nowrap">
-									Status:
+									Status: 
 								</label>
 								{{model.tipoStatusString}}
 							</div>
 							<div class="col-lg-4">
 								<label for="valorPremio" class="control-label text-nowrap">
-									Valor do Prêmio US%:
+									Valor do Prêmio US%: 
 								</label>
 								{{model.valorPremio | number : '1.1-7'}}
 							</div>
-						</div>
-						<div class="row col-lg-5">
+						</div>										
+					</fieldset>
+
+					<br>
+
+					<fieldset>
+						<div  class="row">
+							<!--###  INSUMOS APROVADOS  ###-->						
+							<div class="col-lg-4">
+								<fieldset style="border: 1px solid #000; padding: 10px;">
+									<legend style="width: auto; border: 0; margin-bottom: 0px;">Insumos Aprovados</legend>
+									<div class="form-group m-l-sm">
+										<div class="row col-lg-12" style="padding-left: 0px;" >
+											<div class="col-lg-6">
+												<label>Nacionais R$:</label>
+											</div>
+											<div class="col-lg-6" >
+												{{insumosAprovados.nacionais | number : '1.1-7'}}
+											</div>
+										</div>
+										<div class="row col-lg-12" style="padding-left: 0px;">
+											<div class="col-lg-6">
+												<label>Importados U$$(FOB):</label>
+											</div>
+											<div class="col-lg-6">
+												{{insumosAprovados.importadosFOB | number : '1.1-7'}}
+											</div>
+										</div>
+										<div class="row col-lg-12" style="padding-left: 0px;">
+											<div class="col-lg-6">
+												<label>Frete U$$:</label>
+											</div>
+											<div class="col-lg-6">
+												{{insumosAprovados.frete | number : '1.1-7'}}
+											</div>
+										</div>
+										<div class="row col-lg-12" style="padding-left: 0px;">
+											<div class="col-lg-6">
+												<label>Total U$$(FOB):</label>
+											</div>
+											<div class="col-lg-6">
+												{{insumosAprovados.totalFOB | number : '1.1-7'}}
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+
+							<!--###  INSUMOS COMPROVADOS ###-->
+							<div class="col-lg-4">
+								<fieldset style="border: 1px solid #000; padding: 10px; height: 150px;">
+									<legend style="width: auto; border: 0; margin-bottom: 0px;">Insumos Comprovados</legend>
+									<div class="form-group m-l-sm">
+										<div class="row col-lg-12" style="padding-left: 0px;" >
+											<div class="col-lg-6">
+												<label>Nacionais R$:</label>
+											</div>
+											<div class="col-lg-6">										
+												{{saldos.nacionais | number : '1.1-7'}}
+											</div>
+										</div>
+										<div class="row col-lg-12" style="padding-left: 0px;">
+											<div class="col-lg-6 m-b-xl">
+												<label>Importados U$$(FOB):</label>
+											</div>
+											<div class="col-lg-6">	
+												{{saldos.importados | number : '1.1-7'}}
+											</div>
+										</div>									
+									</div>
+								</fieldset>
+							</div>	
+
+							<!--###  SALDOS  ###-->
+							<div class="col-lg-4">
+								<fieldset style="border: 1px solid #000; padding: 10px; height: 150px;">
+									<legend style="width: auto; border: 0; margin-bottom: 0px;">Saldos</legend>									
+									<div class="form-group m-l-sm">										
+										<div class="row col-lg-12" style="padding-left: 0px;" >
+											<div class="col-lg-6">
+												<label>Nacionais R$:</label>
+											</div>
+											<div class="col-lg-6" >
+												{{saldos.nacionais | number : '1.1-7'}}
+											</div>
+										</div>
+										<div class="row col-lg-12" style="padding-left: 0px;">
+											<div class="col-lg-6">
+												<label>Importados U$$(FOB):</label>
+											</div>
+											<div class="col-lg-6">
+												{{saldos.importados | number : '1.1-7'}}
+											</div>
+										</div>
+										<div class="row col-lg-12" style="padding-left: 0px;">
+											<div class="col-lg-6">
+												<label>Cancelados U$$(FOB):</label>
+											</div>
+											<div class="col-lg-6">
+												0,0
+											</div>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>		
+					</fieldset>
+
+					<br>
+
+					<!--###  INSUMOS APROVADOS  ###-->
+					<fieldset>						
+						<div class="row col-lg-12">
 							<fieldset style="border: 1px solid #000; padding: 10px;">
 								<legend style="width: auto;border: 0;margin-bottom: 0px;">Insumos Aprovados</legend>
 								<div class="form-group m-l-sm">
 									<div class="row col-lg-12" style="padding-left: 0px;" >
-										<div class="col-lg-4">
-											<label>Nacionais R$:</label>
+										<div class="col-lg-3 m-b-xl">
+											<label>Adicional Frete US$:</label>
 										</div>
-										<div class="col-lg-4" >
-											{{insumosAprovados.nacionais | number : '1.1-7'}}
+										<div class="col-lg-3">									
+											{{saldos.valorAdicionalFrete | number : '1.1-7'}}
 										</div>
-									</div>
-									<div class="row col-lg-12" style="padding-left: 0px;">
-										<div class="col-lg-4">
-											<label>Importados U$$(FOB):</label>
+								
+										<div class="col-lg-3 m-b-xl">
+											<label>Adicional FOB US$:</label>
 										</div>
-										<div class="col-lg-4">
-											{{insumosAprovados.importadosFOB | number : '1.1-7'}}
+										<div class="col-lg-3">
+											{{saldos.valorAdicional | number : '1.1-7'}}
 										</div>
-									</div>
-									<div class="row col-lg-12" style="padding-left: 0px;">
-										<div class="col-lg-4">
-											<label>Frete U$$:</label>
-										</div>
-										<div class="col-lg-4">
-											{{insumosAprovados.frete | number : '1.1-7'}}
-										</div>
-									</div>
-									<div class="row col-lg-12" style="padding-left: 0px;">
-										<div class="col-lg-4">
-											<label>Total U$$(FOB):</label>
-										</div>
-										<div class="col-lg-4">
-											{{insumosAprovados.totalFOB | number : '1.1-7'}}
-										</div>
-									</div>
-								</div>
-							</fieldset>
-						</div>
-						<div class="row m-l-lg col-lg-5">
-							<fieldset style="border: 1px solid #000; padding: 10px;">
-								<legend style="width: auto;border: 0;margin-bottom: 0px;">Saldos</legend>
-								<div class="form-group m-l-sm">
-									<div class="row col-lg-12" style="padding-left: 0px;" >
-										<div class="col-lg-4">
-											<label>Nacionais R$:</label>
-										</div>
-										<div class="col-lg-4">
-											{{saldos.nacionais | number : '1.1-7'}}
-										</div>
-									</div>
-									<div class="row col-lg-12" style="padding-left: 0px;">
-										<div class="col-lg-4 m-b-xl">
-											<label>Importados U$$(FOB):</label>
-										</div>
-										<div class="col-lg-4">
-											{{saldos.importados | number : '1.1-7'}}
-										</div>
-									</div>
+									</div>									
 								</div>
 							</fieldset>
 						</div>
 					</fieldset>
+
 				</article>
 				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
 					<div class="pull-right">
