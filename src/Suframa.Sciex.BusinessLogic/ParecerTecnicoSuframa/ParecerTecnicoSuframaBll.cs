@@ -183,50 +183,73 @@ namespace Suframa.Sciex.BusinessLogic
 					tipoParecer = Convert.ToInt32(EnumTipoParecer.COMPROVADO);
 					parecer.ParecerTecnicoComplementar = _uowSciex.QueryStackSciex.ParecerComplementar.Selecionar<ParecerComplementarVM>(x => x.IdParecerComplementar == tipoParecer);
 
-					parecer.QuantidadeProdutosFormatado = (parecer.parecerTecnicoProdutos.Select(q=> q.CodigoProdutoSuframa).Distinct().Count()).ToString("D3");
-					foreach (var item in parecer.parecerTecnicoProdutos)
+					parecer.QuantidadeProdutosFormatado = parecer.parecerTecnicoProdutos.Select(q=> q.CodigoProdutoExportacao).Distinct().Count().ToString("D3");
+
+					var listaProdutosDiferentes = parecer.parecerTecnicoProdutos.Select(q => new
 					{
-						item.NumeroSequenciaFormatado = item.NumeroSequencia.Value.ToString("D3");
-						item.ValorUnitarioProdutoAprovadoFormatado = item.ValorUnitarioProdutoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorUnitarioProdutoAprovado.Value);
-						item.ValorInsumoImportacaoProdutoFobFormatado = item.ValorInsumoImportacaoProdutoFob == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorInsumoImportacaoProdutoFob.Value);
-						item.ValorInsumoNacionalProdutoFormatado = item.ValorInsumoNacionalProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorInsumoNacionalProduto.Value);
-						item.ValorInsumoImportacaoProdutoFormatado = item.ValorInsumoImportacaoProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorInsumoImportacaoProduto.Value);
-						item.QuantidadePaisFormatado = item.QuantidadePais == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.QuantidadePais.Value);
-						item.ValorPaisFormatado = item.ValorPais == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item.ValorPais.Value);
-						item.CodigoProdutoSuframaFormatado = item.CodigoProdutoSuframa.Value.ToString("D4");
-						item.DescricaoUnidadeFormatado = item.DescricaoUnidade == "U" ? "UNIDADE"
-																			: item.DescricaoUnidade;
+						CodigoProdutoExportacao = q.CodigoProdutoExportacao,
+					}).Distinct().ToList();
 
-						item.ValorUnitarioProdutoComprovadoFormatado = item.ValorUnitarioProdutoComprovado == null
+					var listaParecerTecnicoProdutosOrganizada = new List<ParecerTecnicoProdutoVM>();
+
+					foreach (var Produto in listaProdutosDiferentes)
+					{
+						//var listaPaisesDiferentes = parecer.parecerTecnicoProdutos.Where(q=> q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao)
+						//.Select(q => new
+						//{
+						//	IdProduto = q.IdParecerTecnicoProduto,
+						//	CodigoProdutoExportacao = q.CodigoProdutoExportacao,
+						//	DescricaoPais = q.DescricaoPais
+						//}).Distinct().ToList();
+
+						var regParecerProduto = parecer.parecerTecnicoProdutos.Where(q => q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao).FirstOrDefault();
+
+						regParecerProduto.NumeroSequenciaFormatado = regParecerProduto.NumeroSequencia.Value.ToString("D3");
+						regParecerProduto.ValorUnitarioProdutoAprovadoFormatado = regParecerProduto.ValorUnitarioProdutoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorUnitarioProdutoAprovado.Value);
+						regParecerProduto.ValorInsumoImportacaoProdutoFobFormatado = regParecerProduto.ValorInsumoImportacaoProdutoFob == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoImportacaoProdutoFob.Value);
+						regParecerProduto.ValorInsumoNacionalProdutoFormatado = regParecerProduto.ValorInsumoNacionalProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoNacionalProduto.Value);
+						regParecerProduto.ValorInsumoImportacaoProdutoFormatado = regParecerProduto.ValorInsumoImportacaoProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoImportacaoProduto.Value);
+						regParecerProduto.QuantidadePaisFormatado = regParecerProduto.QuantidadePais == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.QuantidadePais.Value);
+						regParecerProduto.ValorPaisFormatado = regParecerProduto.ValorPais == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorPais.Value);
+						regParecerProduto.CodigoProdutoSuframaFormatado = regParecerProduto.CodigoProdutoSuframa.Value.ToString("D4");
+						regParecerProduto.DescricaoUnidadeFormatado = regParecerProduto.DescricaoUnidade == "U" ? "UNIDADE"
+																			: regParecerProduto.DescricaoUnidade;
+
+						regParecerProduto.ValorUnitarioProdutoComprovadoFormatado = regParecerProduto.ValorUnitarioProdutoComprovado == null
 																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", item.ValorUnitarioProdutoComprovado.Value);
+																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorUnitarioProdutoComprovado.Value);
 
-						item.ValorInsumoNacionalAdquiridoFormatado = item.ValorInsumoNacionalAdquirido == null 
-																	? string.Format("{0:0,000.0000000}", 0) 
-																	: string.Format("{0:0,000.0000000}", item.ValorInsumoNacionalAdquirido.Value);
-
-						item.ValorInsumoImportadoFormatado = item.ValorInsumoImportado == null
+						regParecerProduto.ValorInsumoNacionalAdquiridoFormatado = regParecerProduto.ValorInsumoNacionalAdquirido == null
 																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", item.ValorInsumoImportado.Value);
+																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoNacionalAdquirido.Value);
 
-						item.ValorExportacaoComprovadoFormatado = item.ValorExportacaoComprovado == null
+						regParecerProduto.ValorInsumoImportadoFormatado = regParecerProduto.ValorInsumoImportado == null
 																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", item.ValorExportacaoComprovado.Value);
+																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoImportado.Value);
 
-						item.ValorExportacaoNacionalComprovadoFormatado = item.ValorExportacaoNacionalComprovado == null
+						regParecerProduto.ValorExportacaoComprovadoFormatado = regParecerProduto.ValorExportacaoComprovado == null
 																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", item.ValorExportacaoNacionalComprovado.Value);
+																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorExportacaoComprovado.Value);
 
-						item.ListaPaisesParaProduto = parecer.parecerTecnicoProdutos.Where(q => q.IdParecerTecnicoProduto == item.IdParecerTecnicoProduto)
-																			.Select(w => new { 
-																				DescricaoPais = w.DescricaoPais, 
+						regParecerProduto.ValorExportacaoNacionalComprovadoFormatado = regParecerProduto.ValorExportacaoNacionalComprovado == null
+																	? string.Format("{0:0,000.0000000}", 0)
+																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorExportacaoNacionalComprovado.Value);
+
+						regParecerProduto.ListaPaisesParaProduto = parecer.parecerTecnicoProdutos.Where(q => q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao)
+																			.Select(w => new
+																			{
+																				DescricaoPais = w.DescricaoPais,
 																				QuantidadePaisFormatado = w.QuantidadePais == null
 																									? string.Format("{0:0,000.0000000}", 0)
 																									: string.Format("{0:0,000.0000000}", w.QuantidadePais.Value)
 																			})
 																			.Distinct().OrderBy(w => w.DescricaoPais).ToList();
 
+						listaParecerTecnicoProdutosOrganizada.Add(regParecerProduto);
+
 					}
+
+					parecer.parecerTecnicoProdutos = listaParecerTecnicoProdutosOrganizada;
 
 					parecer.ValorImportadoAprovadoFormatado = parecer.ValorImportadoAprovado == null
 																	? string.Format("{0:0,000.0000000}", 0)
@@ -302,6 +325,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 			return parecer;
 		}
+		
 		public string getNumeroAnoSolicitacaoFormatadoSolicitacao(int NumeroProcesso, int AnoProcesso) =>
 				NumeroProcesso.ToString("D5") + "/" + AnoProcesso.ToString("D4");
 
