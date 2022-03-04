@@ -36,6 +36,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string TipoStatusString { get; set; }
 		public string DataValidadeFormatada { get; set; }
 		public InsumosAprovadosVM InsumosAprovados { get; set; } = new InsumosAprovadosVM();
+		public InsumosComprovadosVM InsumosComprovados { get; set; } = new InsumosComprovadosVM();
 		public SaldosVM Saldos { get; set; } = new SaldosVM();
 		public bool ProrrogarExibir { get; set; }
 		public bool ExibirProrrogacao { get; set; }
@@ -55,6 +56,12 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public decimal? Cancelados { get; set; } = 0;
 		public decimal? ValorAdicionalFrete { get; set; } = 0;
 		public decimal? ValorAdicional { get; set; } = 0;
+	}
+
+	public class InsumosComprovadosVM
+	{
+		public decimal? ImportadosFOB { get; set; } = 0;
+		public decimal? Nacionais { get; set; } = 0;
 	}
 
 	public class InsumosAprovadosVM

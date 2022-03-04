@@ -372,6 +372,9 @@ namespace Suframa.Sciex.BusinessLogic
 				pe.InsumosAprovados.Frete += produto.ListaInsumos.Sum(q => q.ValorFreteAprovado);
 				pe.InsumosAprovados.TotalFOB += produto.ListaInsumos.Sum(q => q.ValorNacionalAprovado + q.ValorDolarAprovado);
 
+				pe.InsumosComprovados.ImportadosFOB += produto.ListaInsumos.Sum(q => q.ValorDolarComp);
+				pe.InsumosComprovados.Nacionais += produto.ListaInsumos.Sum(q => q.ValorNacionalAprovado);
+
 				pe.Saldos.Nacionais += produto.ListaInsumos.Sum(q => q.ValorNacionalAprovado);
 				pe.Saldos.Importados += produto.ListaInsumos.Sum(q => q.ValorDolarSaldo);
 

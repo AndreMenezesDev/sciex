@@ -20,6 +20,7 @@ export class FormularioAcompanharProcessoSuframaComponent implements OnInit {
 
 	grid: any = { sort: {} };
 	insumosAprovados: any = {};
+	insumosComprovados: any = {};
 	listaProdutosBackup = [];
 	saldos: any = {};
 	path: string;
@@ -60,7 +61,7 @@ export class FormularioAcompanharProcessoSuframaComponent implements OnInit {
 			this.model = result;
 			this.insumosAprovados = result.insumosAprovados;
 			this.saldos = result.saldos;
-
+			this.insumosComprovados = result.insumosComprovados;
 			this.listaProdutos = this.listaProdutosBackup = result.listaProduto;
 			this.buscarHistorico();
 		});
