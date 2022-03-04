@@ -47,6 +47,10 @@ namespace Suframa.Sciex.BusinessLogic
 			var retornoConsulta = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.ListarPaginado<PEProdutoPaisVM>(o =>
 			(
 				o.IdPEProduto == pagedFilter.IdPEProduto
+				&&
+				(o.ValorDolar != 0
+				&&
+				o.Quantidade != 0)
 			),
 			pagedFilter);
 
