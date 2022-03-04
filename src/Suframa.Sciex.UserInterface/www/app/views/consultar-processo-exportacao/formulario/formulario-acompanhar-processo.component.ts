@@ -20,6 +20,7 @@ export class FormularioAcompanharProcessoComponent implements OnInit {
 
 	grid: any = { sort: {} };
 	insumosAprovados: any = {};
+	insumosComprovados: any = {};
 	listaProdutosBackup = [];
 	saldos: any = {};
 	path: string;
@@ -62,6 +63,7 @@ export class FormularioAcompanharProcessoComponent implements OnInit {
 			this.model = result;
 			this.insumosAprovados = result.insumosAprovados;
 			this.saldos = result.saldos;
+			this.insumosComprovados = result.insumosComprovados;
 			this.listaProdutos = this.listaProdutosBackup = result.listaProduto;
 			this.buscarHistorico();
 		});
@@ -145,7 +147,7 @@ export class FormularioAcompanharProcessoComponent implements OnInit {
 			}
 			console.log(result)
 			this.grid.lista = result.items;
-			
+
 			this.grid.total = result.total;
 		});
 	}
