@@ -394,16 +394,30 @@ namespace Suframa.Sciex.BusinessLogic
 					}
 
 					#region RN30-PROCESSO
-					var regProcesso = _uowSciex.QueryStackSciex.Processo.Selecionar(q => q.NumeroProcesso == objPlanoExportacao.NumeroProcesso
+					var ProcessoVM = _uowSciex.QueryStackSciex.Processo.SelecionarGrafo(q=> new ProcessoExportacaoVM()
+					{
+						IdProcesso = q.IdProcesso,
+						NumeroProcesso = q.NumeroProcesso,
+						ListaProduto = q.ListaProduto.Select(w=> new PRCProdutoVM()
+						{
+							IdProcesso = w.IdProcesso,
+							IdProduto = w.IdProduto,
+						}).ToList()
+					}
+						
+						,q => q.NumeroProcesso == objPlanoExportacao.NumeroProcesso
 																								&&
 																								q.AnoProcesso == objPlanoExportacao.NumeroAnoProcesso);
 					#endregion
 
+
 					var SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.APROVADO;
 
-					foreach (var registroPRCProduto in regProcesso.ListaProduto)
+					foreach (var registroPRCProdutoVM in ProcessoVM.ListaProduto)
 					{
 						#region RN30 - PRODUTO
+						var registroPRCProduto = _uowSciex.QueryStackSciex.PRCProduto.Selecionar(q => q.IdProduto == registroPRCProdutoVM.IdProduto);
+
 						var regPEProduto = objPlanoExportacao.ListaPEProdutosComplemento.Where(q => q.CodigoProdutoExportacao == registroPRCProduto.CodigoProdutoExportacao).FirstOrDefault();
 
 						registroPRCProduto.QuantidadeComprovado = regPEProduto.Qtd;
@@ -561,7 +575,7 @@ namespace Suframa.Sciex.BusinessLogic
 									var codigoProdutoExportacao = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.
 																							Selecionar(q => q.IdPEProduto == PEProdutoPaisVM.IdPEProduto).CodigoProdutoExportacao;
 
-									var idPRCProduto = _uowSciex.QueryStackSciex.PRCProduto.Selecionar(q => q.IdProcesso == regProcesso.IdProcesso
+									var idPRCProduto = _uowSciex.QueryStackSciex.PRCProduto.Selecionar(q => q.IdProcesso == ProcessoVM.IdProcesso
 																										&&
 																										q.CodigoProdutoExportacao == codigoProdutoExportacao).IdProduto;
 
@@ -601,7 +615,8 @@ namespace Suframa.Sciex.BusinessLogic
 						}
 						#endregion
 
-						RegistrarNovoStatus(objPlanoExportacao, regProcesso);
+						
+						RegistrarNovoStatus(objPlanoExportacao, ProcessoVM.IdProcesso);
 
 						var listaInsumosParaCancelamento = registroPRCProduto.ListaInsumos.Where(q =>
 																								(
@@ -632,6 +647,8 @@ namespace Suframa.Sciex.BusinessLogic
 
 					};
 
+					var regProcesso = _uowSciex.QueryStackSciex.Processo.Selecionar(q => q.IdProcesso == ProcessoVM.IdProcesso);
+
 					regProcesso.TipoStatus = "CO";
 
 					_uowSciex.CommandStackSciex.Processo.Salvar(regProcesso);
@@ -647,14 +664,14 @@ namespace Suframa.Sciex.BusinessLogic
 					_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(entityPlanoExportacao);
 					_uowSciex.CommandStackSciex.Save();
 
-					_uowSciex.QueryStackSciex.IniciarStoreProcedureParecerTecnico(regProcesso.IdProcesso, true);
+					_uowSciex.QueryStackSciex.IniciarStoreProcedureParecerTecnico(ProcessoVM.IdProcesso, true);
 
-					var regNovoParecer = _uowSciex.QueryStackSciex.ParecerTecnico.Listar(q => q.IdProcesso == regProcesso.IdProcesso).LastOrDefault();
+					var regNovoParecer = _uowSciex.QueryStackSciex.ParecerTecnico.Listar(q => q.IdProcesso == ProcessoVM.IdProcesso).LastOrDefault();
 
 					if (regNovoParecer == null)
 					{
 						resultadoExec.Resultado = false;
-						resultadoExec.Mensagem = $"Erro ao gerar parecer (ID Processo: {regProcesso.IdProcesso})";
+						resultadoExec.Mensagem = $"Erro ao gerar parecer (ID Processo: {ProcessoVM.IdProcesso})";
 					}
 					else
 					{
@@ -674,7 +691,7 @@ namespace Suframa.Sciex.BusinessLogic
 			return resultadoExec;
 		}
 
-		private void RegistrarNovoStatus(PlanoExportacaoVM objPlanoExportacao, ProcessoEntity regProcesso)
+		private void RegistrarNovoStatus(PlanoExportacaoVM objPlanoExportacao, int idProcesso)
 		{
 			// 2 - PRCSTATUS
 			#region PRCSTATUS
@@ -689,7 +706,7 @@ namespace Suframa.Sciex.BusinessLogic
 				DataValidade = DateTime.Now.AddYears(1),
 				CpfResponsavel = CPFUsuario,
 				NomeResponsavel = NomeUsuario,
-				IdProcesso = regProcesso.IdProcesso,
+				IdProcesso = idProcesso,
 				NumeroPlano = int.Parse(objPlanoExportacao.NumeroPlano.ToString()),
 				AnoPlano = objPlanoExportacao.AnoPlano
 			};

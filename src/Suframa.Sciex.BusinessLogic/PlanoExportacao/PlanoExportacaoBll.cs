@@ -194,6 +194,15 @@ namespace Suframa.Sciex.BusinessLogic
 				pagedFilter.Sort = null;
 			}
 
+			List<int?> StatusDue = new List<int?>()
+			{
+				null,
+				(int)EnumSituacaoAnaliseDUE.APROVADO,
+				(int)EnumSituacaoAnaliseDUE.REPROVADO,
+				(int)EnumSituacaoAnaliseDUE.CORRIGIDO,
+				(int)EnumSituacaoAnaliseDUE.NOVO
+			};
+
 			var listaDUE = _uowSciex.QueryStackSciex.PlanoExportacaoDue.ListarPaginadoGrafo(q => new PlanoExportacaoDUEComplementoVM()
 			{
 				IdPEProduto = idPEProduto,
@@ -206,6 +215,8 @@ namespace Suframa.Sciex.BusinessLogic
 				ValorDolar = q.ValorDolar
 			},
 			q=> listaIdProdutoPais.Contains(q.IdPEProdutoPais)
+			&&
+			StatusDue.Contains(q.SituacaoAnalise)
 			, pagedFilter);
 
 			foreach (var item in listaDUE.Items)

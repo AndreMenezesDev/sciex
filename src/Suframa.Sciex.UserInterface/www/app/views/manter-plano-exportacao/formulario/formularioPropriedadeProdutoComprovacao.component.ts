@@ -22,7 +22,7 @@ export class ManterPlanoFormularioPropriedadeProdutoComprovacaoComponent impleme
 	desabilitado: boolean;
 	servico = "PEProduto";
 	servicoPlanoExportacao = "PlanoExportacao";
-	servicoPais = "PEPais";
+	servicoPais = "PEPaisCorrecao";
 	servicoIncluirEditarDue = "IncluirEditarDue";
 	somenteLeitura: boolean;
 	modelPE: any = {};
