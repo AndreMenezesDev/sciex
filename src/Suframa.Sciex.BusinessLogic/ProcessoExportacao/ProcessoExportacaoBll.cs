@@ -173,10 +173,12 @@ namespace Suframa.Sciex.BusinessLogic
 																		;
 
 				
-				registro.TipoStatusString = registro.TipoStatus.Equals("AP") ? "APROVADO":
-											registro.TipoStatus.Equals("AL") ? "ALTERADO":
-											registro.TipoStatus.Equals("CA") ? "CANCELADO":
-																				"-";
+				registro.TipoStatusString = registro.TipoStatus.Equals("AP") ? "APROVADO" :
+											registro.TipoStatus.Equals("CO") ? "COMPROVADO" :
+											registro.TipoStatus.Equals("CA") ? "CANCELADO" :
+											registro.TipoStatus.Equals("AL") ? "ALTERADO" :
+											registro.TipoStatus.Equals("PR") ? "PRORROGADO" :
+											registro.TipoStatus.Equals("PE") ? "PRORROGADO EM CARATER ESPECIAL" : "-";
 
 				var ultimoStatus = registro.ListaStatus.Where(o => o.Tipo == registro.TipoStatus).FirstOrDefault();
 
@@ -335,8 +337,12 @@ namespace Suframa.Sciex.BusinessLogic
 																		: "-"
 																		;
 
-			pe.TipoStatusString = pe.TipoStatus.Equals("AP") ? "APROVADO"
-																			: "-";
+			pe.TipoStatusString =	pe.TipoStatus.Equals("AP") ? "APROVADO":
+									pe.TipoStatus.Equals("CO") ? "COMPROVADO":
+									pe.TipoStatus.Equals("CA") ? "CANCELADO":
+									pe.TipoStatus.Equals("AL") ? "ALTERADO" :
+									pe.TipoStatus.Equals("PR") ? "PRORROGADO":
+									pe.TipoStatus.Equals("PE") ? "PRORROGADO EM CARATER ESPECIAL":"-";
 
 			foreach (var produto in pe.ListaProduto)
 			{
