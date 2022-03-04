@@ -118,8 +118,9 @@ public static class FormatExtension
 		}
 		else
 		{
-			return string.Format("{0:0,000.0000000}", value)
-								.TrimStart(new Char[] { '0' }).Substring(1);
+			var a = string.Format("{0:0,0.00000000}", value)
+								.TrimStart(new Char[] { '0' }).TrimStart(new Char[] { '.' });
+			return a;
 		}
 	}
 

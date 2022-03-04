@@ -194,13 +194,6 @@ namespace Suframa.Sciex.BusinessLogic
 
 					foreach (var Produto in listaProdutosDiferentes)
 					{
-						//var listaPaisesDiferentes = parecer.parecerTecnicoProdutos.Where(q=> q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao)
-						//.Select(q => new
-						//{
-						//	IdProduto = q.IdParecerTecnicoProduto,
-						//	CodigoProdutoExportacao = q.CodigoProdutoExportacao,
-						//	DescricaoPais = q.DescricaoPais
-						//}).Distinct().ToList();
 
 						var regParecerProduto = parecer.parecerTecnicoProdutos.Where(q => q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao).FirstOrDefault();
 
