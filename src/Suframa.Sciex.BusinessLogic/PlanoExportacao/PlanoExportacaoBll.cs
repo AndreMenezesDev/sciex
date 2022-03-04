@@ -2207,6 +2207,16 @@ namespace Suframa.Sciex.BusinessLogic
 				var regPEDUE = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Selecionar(o => o.IdDue == vm.IdDue);
 
 				regPEDUE.SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.INATIVO;
+
+
+				regPEDUE.PEProdutoPais.ValorDolar -= regPEDUE.ValorDolar;
+				regPEDUE.PEProdutoPais.Quantidade -= regPEDUE.Quantidade;
+
+				_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(regPEDUE.PEProdutoPais);
+
+				regPEDUE.ValorDolar = 0;
+				regPEDUE.Quantidade = 0;
+
 				_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(regPEDUE);
 				_uowSciex.CommandStackSciex.Save();
 				return 0;

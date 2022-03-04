@@ -60,6 +60,33 @@ namespace Suframa.Sciex.BusinessLogic
 
 			return retornoConsulta;
 		}
+		
+		public PagedItems<PEProdutoPaisVM> ListarPaginadoCorrecao(PEProdutoVM pagedFilter)
+		{
+			if (pagedFilter == null) { return new PagedItems<PEProdutoPaisVM>(); }
+
+			var retornoConsulta = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.ListarPaginado<PEProdutoPaisVM>(o =>
+			(
+				o.IdPEProduto == pagedFilter.IdPEProduto
+				&&
+				(
+				o.ValorDolar > 0 
+					&&
+				o.Quantidade > 0
+				)
+			),
+			pagedFilter);
+
+			foreach (var item in retornoConsulta.Items)
+			{				
+				string codigoPais = item.CodigoPais.ToString("D3");
+				var pais = _uowSciex.QueryStackSciex.ViewPais.Selecionar(o => o.CodigoPais == codigoPais);
+
+				item.DescricaoPais = pais.Descricao;
+			}
+
+			return retornoConsulta;
+		}
 
 		public PEProdutoPaisVM Selecionar(int id)
 		{

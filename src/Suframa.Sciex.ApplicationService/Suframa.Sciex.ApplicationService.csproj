@@ -358,6 +358,7 @@
     <Compile Include="Services\HistoricoProcessoSuframaController.cs" />
     <Compile Include="Services\ListarProcessoInsumoImportadoParaAnaliseController.cs" />
     <Compile Include="Services\IncluirEditarDueController.cs" />
+    <Compile Include="Services\PEPaisCorrecaoController.cs" />
     <Compile Include="Services\ReprovarSolicitacaoController.cs" />
     <Compile Include="Services\PRCHistoricoInsumoSuframaController.cs" />
     <Compile Include="Services\SelecionarProdutoEmAnalisePorIdProcessoController.cs" />
