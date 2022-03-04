@@ -83,6 +83,10 @@ namespace Suframa.Sciex.BusinessLogic
 				DescricaoJustificativa = q.DescricaoJustificativa
 			},
 			q => listaIdProdutoPais.Contains(q.IdPEProdutoPais)
+			&&
+			(q.SituacaoAnalise != 5
+			&&
+			q.SituacaoAnalise != 3)
 			, pagedFilter);
 
 			foreach (var item in listaDUE.Items)
