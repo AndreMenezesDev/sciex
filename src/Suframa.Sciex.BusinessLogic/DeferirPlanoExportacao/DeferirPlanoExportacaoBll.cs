@@ -359,6 +359,10 @@ namespace Suframa.Sciex.BusinessLogic
 									IdDue = e.IdDue,
 									IdPEProdutoPais = e.IdPEProdutoPais,
 									SituacaoAnalise = e.SituacaoAnalise,
+									Numero = e.Numero,
+									DataAverbacao = e.DataAverbacao,
+									ValorDolar = e.ValorDolar,
+									Quantidade = e.Quantidade,
 									CodigoPais = e.CodigoPais
 								}).ToList()
 							}).ToList()
@@ -455,7 +459,6 @@ namespace Suframa.Sciex.BusinessLogic
 						}
 						else
 						{
-							bool existeREGPEParaCadastro = false;
 							foreach (var regPRCProdutoPais in listaPRCProdutoPais)
 							{
 								var regPEPais = regPEProduto.ListaPEProdutoPais.Where(q => q.CodigoPais == regPRCProdutoPais.CodigoPais).FirstOrDefault();
@@ -501,55 +504,55 @@ namespace Suframa.Sciex.BusinessLogic
 									_uowSciex.CommandStackSciex.Save();
 
 								}
-								else
-								{
-									if(regPEProduto.ListaPEProdutoPais.Count > 0)
-									{
-										existeREGPEParaCadastro = true;
-									}
-								}
 
 							}
-							if (existeREGPEParaCadastro)
+
+							var listaPRCProdutoPaisAdicionadas = listaPRCProdutoPais.Select(q => q.CodigoPais).ToList();
+
+							var listaPEProdutoPaisFaltantes = regPEProduto.ListaPEProdutoPais.Where(q => !listaPRCProdutoPaisAdicionadas.Contains(q.CodigoPais)).ToList();
+
+							if (listaPEProdutoPaisFaltantes.Count > 0)
 							{
-								var listaCodigoPaisPRC = listaPRCProdutoPais.Select(o => o.CodigoPais).ToList();
-
-								var listaPEFaltantesCadastro = regPEProduto.ListaPEProdutoPais.Where(o => !listaCodigoPaisPRC.Contains(o.CodigoPais)).ToList();
-
-								foreach (var regPEPais in listaPEFaltantesCadastro)
+								foreach (var PEProdutoPaisVM in listaPEProdutoPaisFaltantes)
 								{
+									var codigoProdutoExportacao = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.
+																							Selecionar(q => q.IdPEProduto == PEProdutoPaisVM.IdPEProduto).CodigoProdutoExportacao;
 
-									var novoPRCProdutoPais = new PRCProdutoPaisEntity()
+									var idPRCProduto = _uowSciex.QueryStackSciex.PRCProduto.Selecionar(q => q.IdProcesso == regProcesso.IdProcesso
+																										&&
+																										q.CodigoProdutoExportacao == codigoProdutoExportacao).IdProduto;
+
+									var regPRCPais = new PRCProdutoPaisEntity()
 									{
-										IdPrcProduto = registroPRCProduto.IdProduto,
-										QuantidadeComprovado = regPEPais.Quantidade,
-										ValorDolarComprovado = regPEPais.ValorDolar,
-										CodigoPais = regPEPais.CodigoPais
+										IdPrcProduto = idPRCProduto,
+										QuantidadeComprovado = PEProdutoPaisVM.Quantidade,
+										ValorDolarComprovado = PEProdutoPaisVM.ValorDolar,
+										CodigoPais = PEProdutoPaisVM.CodigoPais
 									};
 
-									_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(novoPRCProdutoPais);
+									_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(regPRCPais);
+									_uowSciex.CommandStackSciex.Save();
 
-									var PEDue = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar<PlanoExportacaoDUEVM>(q =>
-																												q.IdPEProdutoPais == regPEPais.IdPEProdutoPais
-																												&&
-																												q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
-
-									var novoPRCDue = new PRCDueEntity()
+									foreach (var PEDue in PEProdutoPaisVM.ListaPEDue)
 									{
-										IdPRCProdutoPais = novoPRCProdutoPais.IdProdutoPais,
-										Numero = PEDue.Numero,
-										DataAverbacao = PEDue.DataAverbacao,
-										ValorDolar = PEDue.ValorDolar,
-										Quantidade = PEDue.Quantidade,
-										CodigoPais = PEDue.CodigoPais,
-									};
+										var regPRCDue = new PRCDueEntity()
+										{
+											IdPRCProdutoPais = regPRCPais.IdProdutoPais,
+											Numero = PEDue.Numero,
+											DataAverbacao = PEDue.DataAverbacao,
+											ValorDolar = PEDue.ValorDolar,
+											Quantidade = PEDue.Quantidade,
+											CodigoPais = PEDue.CodigoPais,
+										};
 
-									_uowSciex.CommandStackSciex.PRCDue.Salvar(novoPRCDue);
+										_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue);
+									}
+
 									_uowSciex.CommandStackSciex.Save();
 
 								}
-
 							}
+							
 						}
 						#endregion
 
