@@ -477,10 +477,25 @@ namespace Suframa.Sciex.BusinessLogic
 									var regPRCDue = regPRCProdutoPais.PrcDue.Where(q => q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
 
 
-									regPRCDue.Numero = PEDue.Numero;
-									regPRCDue.DataAverbacao = PEDue.DataAverbacao;
-									regPRCDue.ValorDolar = PEDue.ValorDolar;
-									regPRCDue.Quantidade = PEDue.Quantidade;
+									if (regPRCDue != null)
+									{
+										regPRCDue.Numero = PEDue.Numero;
+										regPRCDue.DataAverbacao = PEDue.DataAverbacao;
+										regPRCDue.ValorDolar = PEDue.ValorDolar;
+										regPRCDue.Quantidade = PEDue.Quantidade;
+									}
+									else
+									{
+										regPRCDue = new PRCDueEntity()
+										{
+											IdPRCProdutoPais = regPRCProdutoPais.IdProdutoPais,
+											Numero = PEDue.Numero,
+											DataAverbacao = PEDue.DataAverbacao,
+											ValorDolar = PEDue.ValorDolar,
+											Quantidade = PEDue.Quantidade,
+											CodigoPais = PEDue.CodigoPais,
+										};
+									}
 
 
 									_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue);
