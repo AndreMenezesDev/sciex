@@ -205,43 +205,37 @@ namespace Suframa.Sciex.BusinessLogic
 						var regParecerProduto = parecer.parecerTecnicoProdutos.Where(q => q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao).FirstOrDefault();
 
 						regParecerProduto.NumeroSequenciaFormatado = regParecerProduto.NumeroSequencia.Value.ToString("D3");
-						regParecerProduto.ValorUnitarioProdutoAprovadoFormatado = regParecerProduto.ValorUnitarioProdutoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorUnitarioProdutoAprovado.Value);
-						regParecerProduto.ValorInsumoImportacaoProdutoFobFormatado = regParecerProduto.ValorInsumoImportacaoProdutoFob == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoImportacaoProdutoFob.Value);
-						regParecerProduto.ValorInsumoNacionalProdutoFormatado = regParecerProduto.ValorInsumoNacionalProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoNacionalProduto.Value);
-						regParecerProduto.ValorInsumoImportacaoProdutoFormatado = regParecerProduto.ValorInsumoImportacaoProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoImportacaoProduto.Value);
-						regParecerProduto.QuantidadePaisFormatado = regParecerProduto.QuantidadePais == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.QuantidadePais.Value);
-						regParecerProduto.ValorPaisFormatado = regParecerProduto.ValorPais == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", regParecerProduto.ValorPais.Value);
+						regParecerProduto.ValorUnitarioProdutoAprovadoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorUnitarioProdutoAprovado);
+						regParecerProduto.ValorInsumoImportacaoProdutoFobFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorInsumoImportacaoProdutoFob);
+
+						regParecerProduto.ValorInsumoNacionalProdutoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorInsumoNacionalProduto);
+
+						regParecerProduto.ValorInsumoImportacaoProdutoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorInsumoImportacaoProduto);
+
+						regParecerProduto.QuantidadePaisFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.QuantidadePais);
+
+						regParecerProduto.ValorPaisFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorPais);
+
 						regParecerProduto.CodigoProdutoSuframaFormatado = regParecerProduto.CodigoProdutoSuframa.Value.ToString("D4");
+
 						regParecerProduto.DescricaoUnidadeFormatado = regParecerProduto.DescricaoUnidade == "U" ? "UNIDADE"
 																			: regParecerProduto.DescricaoUnidade;
 
-						regParecerProduto.ValorUnitarioProdutoComprovadoFormatado = regParecerProduto.ValorUnitarioProdutoComprovado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorUnitarioProdutoComprovado.Value);
+						regParecerProduto.ValorUnitarioProdutoComprovadoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorUnitarioProdutoComprovado);
 
-						regParecerProduto.ValorInsumoNacionalAdquiridoFormatado = regParecerProduto.ValorInsumoNacionalAdquirido == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoNacionalAdquirido.Value);
+						regParecerProduto.ValorInsumoNacionalAdquiridoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorInsumoNacionalAdquirido);
 
-						regParecerProduto.ValorInsumoImportadoFormatado = regParecerProduto.ValorInsumoImportado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorInsumoImportado.Value);
+						regParecerProduto.ValorInsumoImportadoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorInsumoImportado);
 
-						regParecerProduto.ValorExportacaoComprovadoFormatado = regParecerProduto.ValorExportacaoComprovado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorExportacaoComprovado.Value);
+						regParecerProduto.ValorExportacaoComprovadoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorExportacaoComprovado);
 
-						regParecerProduto.ValorExportacaoNacionalComprovadoFormatado = regParecerProduto.ValorExportacaoNacionalComprovado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", regParecerProduto.ValorExportacaoNacionalComprovado.Value);
+						regParecerProduto.ValorExportacaoNacionalComprovadoFormatado = FormatExtension.FormatDecimalOrZero(regParecerProduto.ValorExportacaoNacionalComprovado);
 
 						regParecerProduto.ListaPaisesParaProduto = parecer.parecerTecnicoProdutos.Where(q => q.CodigoProdutoExportacao == Produto.CodigoProdutoExportacao)
 																			.Select(w => new
 																			{
 																				DescricaoPais = w.DescricaoPais,
-																				QuantidadePaisFormatado = w.QuantidadePais == null
-																									? string.Format("{0:0,000.0000000}", 0)
-																									: string.Format("{0:0,000.0000000}", w.QuantidadePais.Value)
+																				QuantidadePaisFormatado = FormatExtension.FormatDecimalOrZero(w.QuantidadePais)
 																			})
 																			.Distinct().OrderBy(w => w.DescricaoPais).ToList();
 
@@ -251,74 +245,30 @@ namespace Suframa.Sciex.BusinessLogic
 
 					parecer.parecerTecnicoProdutos = listaParecerTecnicoProdutosOrganizada;
 
-					parecer.ValorImportadoAprovadoFormatado = parecer.ValorImportadoAprovado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoAprovado.Value);
+					parecer.ValorImportadoAprovadoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorImportadoAprovado);
 
-					parecer.ValorImportadoAutorizadoFormatado = parecer.ValorImportadoAutorizado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoAutorizado.Value);
-					
-					parecer.ValorImportadoAcrescimoFormatado = parecer.ValorImportadoAcrescimo == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoAcrescimo.Value);
+					parecer.ValorImportadoAutorizadoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorImportadoAutorizado);
 
-					parecer.ValorImportadoFreteFormatado = parecer.ValorImportadoFrete == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoFrete.Value);
+					parecer.ValorImportadoAcrescimoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorImportadoAcrescimo);
 
-					parecer.ValorImportadoFormatado = parecer.ValorImportado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorImportado.Value);
-					 
-					parecer.ValorImportadoInternadoFormatado = parecer.ValorImportadoInternado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorImportadoInternado.Value);
-					 
-					parecer.ValorNacionalAdquiridoFormatado = parecer.ValorNacionalAdquirido == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorNacionalAdquirido.Value);
-					 
-					parecer.ValorExportacaoRealizadaFormatado = parecer.ValorExportacaoRealizada == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorExportacaoRealizada.Value);
-					 
-					parecer.QuantidadeExportadaUnidadeFormatado = parecer.QuantidadeExportadaUnidade == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.QuantidadeExportadaUnidade.Value);
-					 
-					parecer.ValorAutorizadoInternadoFormatado = parecer.ValorAutorizadoInternado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorAutorizadoInternado.Value);
-					 
-					parecer.ValorAprovadoAutorizadoFormatado = parecer.ValorAprovadoAutorizado == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorAprovadoAutorizado.Value);
-					 
-					parecer.ValorCancelamentoGeralFormatado = parecer.ValorCancelamentoGeral == null
-																	? string.Format("{0:0,000.0000000}", 0)
-																	: string.Format("{0:0,000.0000000}", parecer.ValorCancelamentoGeral.Value);
+					parecer.ValorImportadoFreteFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorImportadoFrete);
 
+					parecer.ValorImportadoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorImportado);
 
-					//parecer.QuantidadeTotalProdutoFormatado = parecer.QuantidadeTotalProduto == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.QuantidadeTotalProduto.Value);
-					//parecer.ValorExportacaoAprovadoFormatado = parecer.ValorExportacaoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorExportacaoAprovado.Value);
-					//parecer.ValorInsumoNacionalFormatado = parecer.ValorInsumoNacional == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoNacional.Value);
-					//parecer.ValorInsumoImportadoRealFormatado = parecer.ValorInsumoImportadoReal == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportadoReal.Value);
-					//parecer.ValorTotalInsumosRealFormatado = parecer.ValorTotalInsumosReal == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTotalInsumosReal.Value);
-					//parecer.ValorInsumoImportadoFobFormatado = parecer.ValorInsumoImportadoFob == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportadoFob.Value);
-					//parecer.ValorInsumoImportacoCfrFormatado = parecer.ValorInsumoImportacoCfr == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorInsumoImportacoCfr.Value);
-					//parecer.QuantidadeExportacaoAprovadoFormatado = parecer.QuantidadeExportacaoAprovado == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.QuantidadeExportacaoAprovado.Value);
-					//parecer.ValorIndiceNacionalizacaoFormatado = parecer.ValorIndiceNacionalizacao == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorIndiceNacionalizacao.Value);
-					//parecer.ValorIndiceImportacaoFormatado = parecer.ValorIndiceImportacao == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorIndiceImportacao.Value);
-					//parecer.ValorTaxaCambialFormatado = parecer.ValorTaxaCambial == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ValorTaxaCambial.Value);
+					parecer.ValorImportadoInternadoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorImportadoInternado);
 
+					parecer.ValorNacionalAdquiridoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorNacionalAdquirido);
 
-					
-					//parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
-					
-					//parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
+					parecer.ValorExportacaoRealizadaFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorExportacaoRealizada);
 
-					
+					parecer.QuantidadeExportadaUnidadeFormatado = FormatExtension.FormatDecimalOrZero(parecer.QuantidadeExportadaUnidade);
+
+					parecer.ValorAutorizadoInternadoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorAutorizadoInternado);
+
+					parecer.ValorAprovadoAutorizadoFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorAprovadoAutorizado);
+
+					parecer.ValorCancelamentoGeralFormatado = FormatExtension.FormatDecimalOrZero(parecer.ValorCancelamentoGeral);
+
 					break;
 			}
 
@@ -490,4 +440,6 @@ namespace Suframa.Sciex.BusinessLogic
 		}
 
 	}
+
+
 }

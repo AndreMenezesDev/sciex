@@ -110,4 +110,17 @@ public static class FormatExtension
 		return Slice(s, beginIndex, s.Length);
 	}
 
+	public static string FormatDecimalOrZero(decimal? value)
+	{
+		if (value == null || value == 0)
+		{
+			return string.Format("{0:0,000.0000000}", 0);
+		}
+		else
+		{
+			return string.Format("{0:0,000.0000000}", value)
+								.TrimStart(new Char[] { '0' }).Substring(1);
+		}
+	}
+
 }
