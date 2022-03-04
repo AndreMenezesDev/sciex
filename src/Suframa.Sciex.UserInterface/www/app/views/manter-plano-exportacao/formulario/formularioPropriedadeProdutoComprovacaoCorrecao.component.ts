@@ -138,6 +138,11 @@ export class ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent
 
 	public selecionarPaises(id: number) {
 		if (!id) { return; }
+		
+		if (this.parametrosPais == null || this.parametrosPais == undefined){
+			this.parametrosPais = {};
+		}
+		
 		this.parametrosPais.idPEProduto = this.idPEProduto;
 		this.applicationService.get(this.servicoPais, this.parametrosPais).subscribe((result: any) => {
 			this.listaPais = result.items;

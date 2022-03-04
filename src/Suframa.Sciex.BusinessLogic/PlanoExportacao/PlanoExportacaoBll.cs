@@ -2208,11 +2208,25 @@ namespace Suframa.Sciex.BusinessLogic
 
 				regPEDUE.SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.INATIVO;
 
+				var somatorioPEProdutoPaisQtd = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == regPEDUE.PEProdutoPais.IdPEProduto)
+																									.Sum(o => o.Quantidade);
+				var somatorioPEProdutoPaisDolar = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == regPEDUE.PEProdutoPais.IdPEProduto)
+																									.Sum(o => o.ValorDolar);
+				_uowSciex.CommandStackSciex.DetachEntries();
 
-				regPEDUE.PEProdutoPais.ValorDolar -= regPEDUE.ValorDolar;
+				var regPEProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Selecionar(o => o.IdPEProduto == vm.IdPEProduto);
+
+				regPEProduto.Qtd = somatorioPEProdutoPaisQtd - regPEDUE.Quantidade;
+				regPEProduto.ValorDolar = somatorioPEProdutoPaisDolar - regPEDUE.ValorDolar;
+
+				_uowSciex.CommandStackSciex.PlanoExportacaoProduto.Salvar(regPEProduto);
+				_uowSciex.CommandStackSciex.Save();
+
 				regPEDUE.PEProdutoPais.Quantidade -= regPEDUE.Quantidade;
+				regPEDUE.PEProdutoPais.ValorDolar -= regPEDUE.ValorDolar;
 
 				_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(regPEDUE.PEProdutoPais);
+				_uowSciex.CommandStackSciex.Save();
 
 				regPEDUE.ValorDolar = 0;
 				regPEDUE.Quantidade = 0;
