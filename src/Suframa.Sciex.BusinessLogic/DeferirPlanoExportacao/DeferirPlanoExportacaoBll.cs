@@ -399,6 +399,7 @@ namespace Suframa.Sciex.BusinessLogic
 																								q.AnoProcesso == objPlanoExportacao.NumeroAnoProcesso);
 					#endregion
 
+					var SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.APROVADO;
 
 					foreach (var registroPRCProduto in regProcesso.ListaProduto)
 					{
@@ -420,9 +421,13 @@ namespace Suframa.Sciex.BusinessLogic
 						if (listaPRCProdutoPais.Count == 0)
 						{
 
-							if (regPEProduto.ListaPEProdutoPais.Count > 0)
+							var listaPEProdutoPaisComValoresValidos = regPEProduto.ListaPEProdutoPais.Where(q => q.Quantidade > 0
+																											&&
+																											q.ValorDolar > 0).ToList();
+
+							if (listaPEProdutoPaisComValoresValidos.Count > 0)
 							{
-								foreach (var regPEPais in regPEProduto.ListaPEProdutoPais)
+								foreach (var regPEPais in listaPEProdutoPaisComValoresValidos)
 								{
 
 									var novoPRCProdutoPais = new PRCProdutoPaisEntity()
@@ -438,19 +443,25 @@ namespace Suframa.Sciex.BusinessLogic
 									var PEDue = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar<PlanoExportacaoDUEVM>(q =>
 																												q.IdPEProdutoPais == regPEPais.IdPEProdutoPais
 																												&&
-																												q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
+																												q.CodigoPais == regPEPais.CodigoPais
+																												&&
+																												q.SituacaoAnalise == SituacaoAnalise).FirstOrDefault();
 
-									var novoPRCDue = new PRCDueEntity()
+									if (PEDue != null)
 									{
-										IdPRCProdutoPais = novoPRCProdutoPais.IdProdutoPais,
-										Numero = PEDue.Numero,
-										DataAverbacao = PEDue.DataAverbacao,
-										ValorDolar = PEDue.ValorDolar,
-										Quantidade = PEDue.Quantidade,
-										CodigoPais = PEDue.CodigoPais,
-									};
+										var novoPRCDue = new PRCDueEntity()
+										{
+											IdPRCProdutoPais = novoPRCProdutoPais.IdProdutoPais,
+											Numero = PEDue.Numero,
+											DataAverbacao = PEDue.DataAverbacao,
+											ValorDolar = PEDue.ValorDolar,
+											Quantidade = PEDue.Quantidade,
+											CodigoPais = PEDue.CodigoPais,
+										};
 
-									_uowSciex.CommandStackSciex.PRCDue.Salvar(novoPRCDue);
+										_uowSciex.CommandStackSciex.PRCDue.Salvar(novoPRCDue); 
+									}
+
 									_uowSciex.CommandStackSciex.Save();
 									
 								}
@@ -461,7 +472,11 @@ namespace Suframa.Sciex.BusinessLogic
 						{
 							foreach (var regPRCProdutoPais in listaPRCProdutoPais)
 							{
-								var regPEPais = regPEProduto.ListaPEProdutoPais.Where(q => q.CodigoPais == regPRCProdutoPais.CodigoPais).FirstOrDefault();
+								var regPEPais = regPEProduto.ListaPEProdutoPais.Where(q => q.CodigoPais == regPRCProdutoPais.CodigoPais
+																							&&
+																							q.Quantidade > 0
+																							&&
+																							q.ValorDolar > 0).FirstOrDefault();
 
 								if (regPEPais != null)
 								{
@@ -470,37 +485,42 @@ namespace Suframa.Sciex.BusinessLogic
 
 									_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(regPRCProdutoPais);
 
-
 									var PEDue = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar<PlanoExportacaoDUEVM>(q =>
 																													q.IdPEProdutoPais == regPEPais.IdPEProdutoPais
 																													&&
-																													q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
+																													q.CodigoPais == regPEPais.CodigoPais
+																													&&
+																													q.SituacaoAnalise == SituacaoAnalise
+																													).FirstOrDefault();
 
 									var regPRCDue = regPRCProdutoPais.PrcDue.Where(q => q.CodigoPais == regPEPais.CodigoPais).FirstOrDefault();
 
 
-									if (regPRCDue != null)
+									if (PEDue != null)
 									{
-										regPRCDue.Numero = PEDue.Numero;
-										regPRCDue.DataAverbacao = PEDue.DataAverbacao;
-										regPRCDue.ValorDolar = PEDue.ValorDolar;
-										regPRCDue.Quantidade = PEDue.Quantidade;
-									}
-									else
-									{
-										regPRCDue = new PRCDueEntity()
+										if (regPRCDue != null)
 										{
-											IdPRCProdutoPais = regPRCProdutoPais.IdProdutoPais,
-											Numero = PEDue.Numero,
-											DataAverbacao = PEDue.DataAverbacao,
-											ValorDolar = PEDue.ValorDolar,
-											Quantidade = PEDue.Quantidade,
-											CodigoPais = PEDue.CodigoPais,
-										};
+											regPRCDue.Numero = PEDue.Numero;
+											regPRCDue.DataAverbacao = PEDue.DataAverbacao;
+											regPRCDue.ValorDolar = PEDue.ValorDolar;
+											regPRCDue.Quantidade = PEDue.Quantidade;
+										}
+										else
+										{
+											regPRCDue = new PRCDueEntity()
+											{
+												IdPRCProdutoPais = regPRCProdutoPais.IdProdutoPais,
+												Numero = PEDue.Numero,
+												DataAverbacao = PEDue.DataAverbacao,
+												ValorDolar = PEDue.ValorDolar,
+												Quantidade = PEDue.Quantidade,
+												CodigoPais = PEDue.CodigoPais,
+											};
+										}
+
+										_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue); 
 									}
 
-
-									_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue);
 									_uowSciex.CommandStackSciex.Save();
 
 								}
@@ -511,7 +531,10 @@ namespace Suframa.Sciex.BusinessLogic
 
 							var listaPEProdutoPaisFaltantes = regPEProduto.ListaPEProdutoPais.Where(q => !listaPRCProdutoPaisAdicionadas.Contains(q.CodigoPais)).ToList();
 
-							if (listaPEProdutoPaisFaltantes.Count > 0)
+							var listaPEProdutoPaisPendentesComValoresValidos = listaPEProdutoPaisFaltantes.Where(q => q.Quantidade > 0
+																											&&
+																											q.ValorDolar > 0).ToList();
+							if (listaPEProdutoPaisPendentesComValoresValidos.Count > 0)
 							{
 								foreach (var PEProdutoPaisVM in listaPEProdutoPaisFaltantes)
 								{
@@ -533,7 +556,9 @@ namespace Suframa.Sciex.BusinessLogic
 									_uowSciex.CommandStackSciex.PRCProdutoPais.Salvar(regPRCPais);
 									_uowSciex.CommandStackSciex.Save();
 
-									foreach (var PEDue in PEProdutoPaisVM.ListaPEDue)
+									var listaPEDueValidas = PEProdutoPaisVM.ListaPEDue.Where(q => q.SituacaoAnalise == SituacaoAnalise).ToList();
+
+									foreach (var PEDue in listaPEDueValidas)
 									{
 										var regPRCDue = new PRCDueEntity()
 										{
