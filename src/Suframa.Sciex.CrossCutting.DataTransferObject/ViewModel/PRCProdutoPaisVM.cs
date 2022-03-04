@@ -12,6 +12,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 	public class PRCProdutoPaisVM : PagedOptions
 	{
 		public virtual PRCProdutoVM PrcProduto { get; set; }
+		public virtual List<PRCDueVM> ListaPrcDue { get; set; }
 
 		public int IdProdutoPais { get; set; }
 		public int IdPrcProduto { get; set; }

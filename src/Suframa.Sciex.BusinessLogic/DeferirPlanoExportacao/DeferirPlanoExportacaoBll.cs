@@ -415,7 +415,24 @@ namespace Suframa.Sciex.BusinessLogic
 						#endregion
 
 
-						var listaPRCProdutoPais = _uowSciex.QueryStackSciex.PRCProdutoPais.Listar(q => q.IdPrcProduto == registroPRCProduto.IdProduto);
+						var listaPRCProdutoPais = _uowSciex.QueryStackSciex.PRCProdutoPais.ListarGrafo(o => new PRCProdutoPaisVM()
+						{
+							IdProdutoPais = o.IdProdutoPais,
+							IdPrcProduto = o.IdPrcProduto,
+							QuantidadeAprovado = o.QuantidadeAprovado,
+							ValorDolarAprovado = o.ValorDolarAprovado,
+							CodigoPais = o.CodigoPais,
+							ListaPrcDue = o.PrcDue.Select(q=> new PRCDueVM()
+							{
+								IdDue = q.IdDue,
+								IdPRCProdutoPais = q.IdPRCProdutoPais,
+								Numero = q.Numero,
+								ValorDolar = q.ValorDolar,
+								Quantidade = q.Quantidade,
+								CodigoPais = q.CodigoPais
+							}).ToList(),
+						},
+						q => q.IdPrcProduto == registroPRCProduto.IdProduto);
 
 						#region RN30 - PRODUTOPAIS, DUE e Status
 						if (listaPRCProdutoPais.Count == 0)
@@ -470,8 +487,10 @@ namespace Suframa.Sciex.BusinessLogic
 						}
 						else
 						{
-							foreach (var regPRCProdutoPais in listaPRCProdutoPais)
+							foreach (var PRCProdutoPaisVM in listaPRCProdutoPais)
 							{
+								var regPRCProdutoPais = _uowSciex.QueryStackSciex.PRCProdutoPais.Selecionar(q => q.IdProdutoPais == PRCProdutoPaisVM.IdProdutoPais);
+
 								var regPEPais = regPEProduto.ListaPEProdutoPais.Where(q => q.CodigoPais == regPRCProdutoPais.CodigoPais
 																							&&
 																							q.Quantidade > 0
@@ -525,6 +544,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 								}
 
+								_uowSciex.CommandStackSciex.DetachEntries();
 							}
 
 							var listaPRCProdutoPaisAdicionadas = listaPRCProdutoPais.Select(q => q.CodigoPais).ToList();
@@ -536,7 +556,7 @@ namespace Suframa.Sciex.BusinessLogic
 																											q.ValorDolar > 0).ToList();
 							if (listaPEProdutoPaisPendentesComValoresValidos.Count > 0)
 							{
-								foreach (var PEProdutoPaisVM in listaPEProdutoPaisFaltantes)
+								foreach (var PEProdutoPaisVM in listaPEProdutoPaisPendentesComValoresValidos)
 								{
 									var codigoProdutoExportacao = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.
 																							Selecionar(q => q.IdPEProduto == PEProdutoPaisVM.IdPEProduto).CodigoProdutoExportacao;
