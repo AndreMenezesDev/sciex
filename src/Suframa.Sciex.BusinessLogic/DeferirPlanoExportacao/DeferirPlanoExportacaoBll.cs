@@ -448,8 +448,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 									_uowSciex.CommandStackSciex.PRCDue.Salvar(novoPRCDue);
 									_uowSciex.CommandStackSciex.Save();
-
-									RegistrarNovoStatus(objPlanoExportacao, regProcesso);
+									
 								}
 							}
 
@@ -501,7 +500,6 @@ namespace Suframa.Sciex.BusinessLogic
 									_uowSciex.CommandStackSciex.PRCDue.Salvar(regPRCDue);
 									_uowSciex.CommandStackSciex.Save();
 
-									RegistrarNovoStatus(objPlanoExportacao, regProcesso);
 								}
 								else
 								{
@@ -549,12 +547,13 @@ namespace Suframa.Sciex.BusinessLogic
 									_uowSciex.CommandStackSciex.PRCDue.Salvar(novoPRCDue);
 									_uowSciex.CommandStackSciex.Save();
 
-									RegistrarNovoStatus(objPlanoExportacao, regProcesso);
 								}
 
 							}
 						}
 						#endregion
+
+						RegistrarNovoStatus(objPlanoExportacao, regProcesso);
 
 						var listaInsumosParaCancelamento = registroPRCProduto.ListaInsumos.Where(q =>
 																								(
