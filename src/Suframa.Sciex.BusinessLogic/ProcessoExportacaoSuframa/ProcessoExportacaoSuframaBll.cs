@@ -201,6 +201,9 @@ namespace Suframa.Sciex.BusinessLogic
 				{ "AP", "APROVADO" },
 				{ "AL", "ALTERADO" },
 				{ "CA", "CANCELADO" },
+				{ "PR", "PRORROGADO" },
+				{ "PE", "PRORROGADO EM CARATER ESPECIAL" },
+				{ "CO", "COMPROVADO" },
 			};
 
 			foreach (var registro in retornoConsulta.Items)
@@ -387,8 +390,12 @@ namespace Suframa.Sciex.BusinessLogic
 																		: "-"
 																		;
 
-			pe.TipoStatusString = pe.TipoStatus.Equals("AP") ? "APROVADO"
-																			: "-";
+			pe.TipoStatusString =	pe.TipoStatus.Equals("AP") ? "APROVADO" :
+									pe.TipoStatus.Equals("CO") ? "COMPROVADO" :
+									pe.TipoStatus.Equals("CA") ? "CANCELADO" :
+									pe.TipoStatus.Equals("AL") ? "ALTERADO" :
+									pe.TipoStatus.Equals("PR") ? "PRORROGADO" :
+									pe.TipoStatus.Equals("PE") ? "PRORROGADO EM CARATER ESPECIAL" : "-";
 
 			foreach (var produto in pe.ListaProduto)
 			{
