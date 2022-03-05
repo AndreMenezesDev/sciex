@@ -398,16 +398,16 @@ namespace Suframa.Sciex.BusinessLogic
 					{
 						IdProcesso = q.IdProcesso,
 						NumeroProcesso = q.NumeroProcesso,
+						AnoProcesso = q.AnoProcesso,
 						ListaProduto = q.ListaProduto.Select(w=> new PRCProdutoVM()
 						{
 							IdProcesso = w.IdProcesso,
 							IdProduto = w.IdProduto,
 						}).ToList()
 					}
-						
-						,q => q.NumeroProcesso == objPlanoExportacao.NumeroProcesso
-																								&&
-																								q.AnoProcesso == objPlanoExportacao.NumeroAnoProcesso);
+					,q => q.NumeroProcesso == objPlanoExportacao.NumeroProcesso
+							&&
+							q.AnoProcesso == objPlanoExportacao.NumeroAnoProcesso);
 					#endregion
 
 
