@@ -212,7 +212,8 @@ namespace Suframa.Sciex.BusinessLogic
 				Numero = q.Numero,
 				DataAverbacao = q.DataAverbacao,
 				Quantidade = q.Quantidade,
-				ValorDolar = q.ValorDolar
+				ValorDolar = q.ValorDolar,
+				SituacaoAnalise = q.SituacaoAnalise
 			},
 			q=> listaIdProdutoPais.Contains(q.IdPEProdutoPais)
 			&&
