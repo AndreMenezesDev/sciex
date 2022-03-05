@@ -332,6 +332,9 @@ namespace Suframa.Sciex.BusinessLogic
 				CodigoUnidade = q.CodigoUnidade,
 				ValorDolarAprovado = q.ValorDolarAprovado,
 				ValorFluxoCaixa = q.ValorFluxoCaixa,
+				QuantidadeComprovado = q.QuantidadeComprovado,
+				ValorDolarComprovado = q.ValorDolarComprovado,
+				ValorNacionalComprovado = q.ValorNacionalComprovado,
 				Processo = new ProcessoExportacaoVM()
 				{
 					IdProcesso = q.Processo.IdProcesso,

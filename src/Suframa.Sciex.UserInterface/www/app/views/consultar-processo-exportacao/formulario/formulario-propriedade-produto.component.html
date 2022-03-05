@@ -2,8 +2,8 @@
 	data-railopacity="0.2">
 	<div class="row m-b-md">
 		<div class="col-lg-12">
-			<app-titulo>Propriedade do Produto</app-titulo>
-			<app-sub-titulo>Informações do Produto por País</app-sub-titulo>
+			<app-titulo>Propriedade do Produto de Exportação</app-titulo>
+			<app-sub-titulo>Informações do Produto por País e Documentação Comprobatória</app-sub-titulo>
 		</div>
 	</div>
 
@@ -28,13 +28,13 @@
 					</div>
 					<div class="col-lg-4">
 						<label for="modalidade" class="control-label text-nowrap">
-							Modalidade: 
+							Modalidade:
 						</label>
 						{{modelProcesso.tipoModalidadeString}}
 					</div>
 					<div class="col-lg-4">
 						<label for="status" class="control-label text-nowrap">
-							Status: 
+							Status:
 						</label>
 						{{modelProcesso.tipoStatusString}}
 					</div>
@@ -48,15 +48,15 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="codigoProdutoExportacao" class="control-label text-nowrap">
-									Produto: 
+									Produto:
 								</label>
 								{{modelProduto.codigoProdutoExportacao}}
-							</div>							
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="codigoProdutoSuframa" class="control-label text-nowrap">
-									Descrição: 
+									Descrição:
 								</label>
 								{{modelProduto.descCodigoProdutoSuframa}}
 							</div>
@@ -64,13 +64,13 @@
 						<div class="row">
 							<div class="col-lg-8">
 								<label for="codigoTipoProduto" class="control-label text-nowrap">
-									Tipo: 
+									Tipo:
 								</label>
 								{{modelProduto.descCodigoTipoProduto}}
 							</div>
 							<div class="col-lg-4">
 								<label for="codigoNCM" class="control-label text-nowrap">
-									NCM: 
+									NCM:
 								</label>
 								{{modelProduto.codigoNCM}}
 							</div>
@@ -78,18 +78,18 @@
 						<div class="row">
 							<div class="col-lg-8">
 								<label for="descricaoModelo" class="control-label text-nowrap">
-									Modelo: 
+									Modelo:
 								</label>
 								{{modelProduto.descricaoModelo}}
 							</div>
 							<div class="col-lg-4">
 								<label for="codigoUnidade" class="control-label text-nowrap">
-									Unidade: 
+									Unidade:
 								</label>
 								{{modelProduto.descCodigoUnidade}}
 							</div>
 						</div>
-						
+
 					</fieldset>
 				</article>
 				<footer class="panel-footer clearfix" style="padding: 4px 15px!important;">
@@ -109,35 +109,37 @@
 				<div class="row form-group">
 					<div class="col-lg-12" style="width: 97%;">
 						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
-							<legend style="width: auto; border: 0;">Valores de Exportação Aprovados</legend>
+							<legend style="width: auto; border: 0;">Valores de Exportação</legend>
 							<div class="row form-group">
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Quantidade Total: 
+										Quantidade Total Aprovada:
 									</label>
 									{{modelProduto.quantidadeAprovado | number : '1.2-2'}}
 								</div>
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Valor Total(US$): 
+										Valor Total(US$) Aprovada:
 									</label>
 									{{modelProduto.valorDolarAprovado | number : '1.2-2'}}
 								</div>
+							</div>
+							<div class="row form-group">
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Quantidade Total(US$): 
+										Quantidade Total Comprovada:
 									</label>
 									{{modelProduto.quantidadeComprovado | number : '1.2-2'}}
 								</div>
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Valor Total(R$): 
+										Valor Total(US$) Comprovada:
 									</label>
 									{{modelProduto.valorDolarComprovado | number : '1.2-2'}}
 								</div>
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Valor Total(R$): 
+										Valor Total(R$)Comprovada:
 									</label>
 									{{modelProduto.valorNacionalComprovado | number : '1.2-2'}}
 								</div>
@@ -146,9 +148,9 @@
 					</div>
 				</div>
 
-				
+
 				<div class="row form-group" >
-					
+
 					<div class="col-lg-12 m-l-sm" style="width: 97%;">
 						<form>
 							<article class="panel-body">
@@ -158,7 +160,7 @@
 											<tr>
 												<th class="th-sortable unset-nowrap">
 													<app-ordenacao field="NumeroPlano" [sorted]="sorted" (onChangeSort)="changeSort($event)">País Destino</app-ordenacao>
-												</th>					
+												</th>
 												<th class="th-sortable unset-nowrap">
 													<app-ordenacao field="TipoModalidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
 												</th>
@@ -173,7 +175,7 @@
 												</th>
 											</tr>
 										</thead>
-							
+
 										<tbody *ngIf="totalpais != 0">
 											<tr *ngFor="let item of listaPais">
 												<td class="text-left">{{item.descricaoPais}}</td>
@@ -203,19 +205,19 @@
 					<div class="col-lg-12" >
 						<app-documentos-comprobatorios-grid
 							[(lista)]="grid.lista"
-							[(total)]="grid.total" 
-							[(size)]="grid.size" 
+							[(total)]="grid.total"
+							[(size)]="grid.size"
 							[(page)]="grid.page"
-							[(isUsuarioInterno)]="grid.isUsuarioInterno" 
+							[(isUsuarioInterno)]="grid.isUsuarioInterno"
 							[(parametros)]="parametros"
-							[(formPai)]="formPai" 
+							[(formPai)]="formPai"
 							(onChangeSort)="onChangeSort($event)"
-							(onChangeSize)="onChangeSize($event)" 
-							(onChangePage)="onChangePage($event)">				
-						</app-documentos-comprobatorios-grid>	
+							(onChangeSize)="onChangeSize($event)"
+							(onChangePage)="onChangePage($event)">
+						</app-documentos-comprobatorios-grid>
 					</div>
-				</div>	
-				
+				</div>
+
 			</section>
 		</div>
 	</div>
