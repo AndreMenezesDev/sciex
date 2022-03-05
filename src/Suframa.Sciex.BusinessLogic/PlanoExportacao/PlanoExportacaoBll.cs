@@ -1769,6 +1769,8 @@ namespace Suframa.Sciex.BusinessLogic
 
 			}
 			var regPEProdutoPais = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Selecionar(o => o.IdPEProduto == vm.IdPEProduto && o.CodigoPais == vm.CodigoPais);
+
+			var statusPlanoExportacao = regPEProdutoPais.PlanoExportacaoProduto.PlanoExportacao.Situacao;
 			try
 			{
 				if (regPEProdutoPais == null)
@@ -1795,6 +1797,12 @@ namespace Suframa.Sciex.BusinessLogic
 						IdPEProdutoPais = PEProdutoPaisEntity.IdPEProdutoPais
 
 					};
+
+					if (statusPlanoExportacao == (int)EnumSituacaoPlanoExportacao.EM_CORREÇÃO)
+					{
+						PEDueEntity.SituacaoAnalise = (int)EnumSituacaoAnaliseDUE.NOVO;
+					}
+
 					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(PEDueEntity);
 					_uowSciex.CommandStackSciex.Save();
 
@@ -1829,6 +1837,12 @@ namespace Suframa.Sciex.BusinessLogic
 						CodigoPais = vm.CodigoPais,
 						IdPEProdutoPais = regPEProdutoPais.IdPEProdutoPais
 					};
+
+					if (statusPlanoExportacao == (int)EnumSituacaoPlanoExportacao.EM_CORREÇÃO)
+					{
+						PEDueEntity.SituacaoAnalise = (int)EnumSituacaoAnaliseDUE.NOVO;
+					}
+
 					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(PEDueEntity);
 					_uowSciex.CommandStackSciex.Save();
 
