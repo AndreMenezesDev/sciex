@@ -85,6 +85,7 @@ export class ModalEditarDocumentoDueCorrecaoComponent implements OnInit {
 		}
 		this.parametros.quantidade = Number(this.parametros.quantidade);
 		this.parametros.valorDolar = Number(this.parametros.valorDolar);
+		this.parametros.descricaoJustificativa = this.model.descricaoJustificativa;
 
 		if(this.parametros.idDue != null){
 			this.applicationService.put(this.servicoCorrigirDue, this.parametros).subscribe((result:any) =>{

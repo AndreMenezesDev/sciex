@@ -2146,7 +2146,8 @@ namespace Suframa.Sciex.BusinessLogic
 						Quantidade = vm.Quantidade,
 						ValorDolar = vm.ValorDolar,
 						CodigoPais = vm.CodigoPais,
-						IdPEProdutoPais = vm.IdPEProdutoPais
+						IdPEProdutoPais = vm.IdPEProdutoPais,
+						DescricaoJustificativa = vm.DescricaoJustificativa
 					};
 					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(PEDueEntity);
 					_uowSciex.CommandStackSciex.Save();
@@ -2186,6 +2187,7 @@ namespace Suframa.Sciex.BusinessLogic
 					regPEDUE.DataAverbacao = vm.DataAverbacao;
 					regPEDUE.Quantidade = vm.Quantidade;
 					regPEDUE.ValorDolar = vm.ValorDolar;
+					regPEDUE.DescricaoJustificativa = vm.DescricaoJustificativa;
 
 					_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(regPEDUE);
 					_uowSciex.CommandStackSciex.Save();
