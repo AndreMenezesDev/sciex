@@ -119,10 +119,17 @@ export class FormularioAcompanharProcessoSuframaComponent implements OnInit {
 		this.buscarHistorico();
 	}
 
-	abrirInformacoesProdutoPai(idProduto){
-		let url = `/consultar-processo-exportacao-suframa/${idProduto}/visualizar-propriedade-produto`;
-		this.setHistoryUrl(url)
-		this.router.navigate([url])
+	abrirInformacoesProdutoPai(idProduto, tipoStatus){
+		if(tipoStatus != "CO"){
+			let url = `/consultar-processo-exportacao-suframa/${idProduto}/visualizar-propriedade-produto`;
+			this.setHistoryUrl(url)
+			this.router.navigate([url])
+		}else if(tipoStatus == "CO"){
+			let url = `/consultar-processo-exportacao-suframa/${idProduto}/visualizar-propriedade-produto-comprovacao`;
+			this.setHistoryUrl(url)
+			this.router.navigate([url])
+		}
+
 	}
 
 	abrirInsumoNacionalOuRegional(idProduto){

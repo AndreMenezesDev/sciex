@@ -62,7 +62,6 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 			this.modelProcesso = result.processo;
 			this.listaPais = result.listaProdutoPaisPaginada.items;
 			this.totalpais = result.listaProdutoPaisPaginada.total;
-			this.documentosComprobatorios();
 		});
 
 	}
@@ -78,23 +77,6 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 		this.router.navigate([url]);
 	}
 
-	documentosComprobatorios(){
-		var objeto : any = {};
-		objeto.idPRCProduto = Number(this.idProduto);
-		objeto.sort = this.grid.sort;
-		objeto.size = this.grid.size;
-		objeto.page = this.grid.page;
-
-		this.applicationService.get(this.servicoDocumentosComprobatorios,objeto).subscribe((result :any)=>{
-			console.log(result)
-
-			this.grid.lista = result.items;
-
-			this.grid.total = result.total;
-
-		})
-	}
-
 	onChangeSort($event) {
 		this.grid.sort = $event;
 
@@ -106,7 +88,6 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 
 	onChangePage($event) {
 		this.grid.page = $event;
-		this.documentosComprobatorios();
 	}
 
 }

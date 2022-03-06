@@ -6,15 +6,14 @@ import { MessagesService } from '../../../shared/services/messages.service';
 import { ApplicationService } from '../../../shared/services/application.service';
 import { ValidationService } from '../../../shared/services/validation.service';
 import {Location} from '@angular/common';
-
 declare var $: any;
 
 @Component({
-	selector: 'app-consultar-formulario-propriedade-produto-suframa',
-	templateUrl: './formulario-propriedade-produto-suframa.component.html'
+	selector: 'app-consultar-formulario-propriedade-produto-comprovacao',
+	templateUrl: './formulario-propriedade-produto-comprovacao.component.html'
 })
 
-export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements OnInit {
+export class ConsultarFormularioPropriedadeProdutoComprovacaoComponent implements OnInit {
 	path: string;
 	servico = "ProcessoProduto";
 	modelProduto: any = {};
@@ -39,7 +38,7 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 		private Location: Location,
 	) {
 		this.path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
-		this.idProduto = this.route.snapshot.params['idProduto'];
+		this.idProduto = this.route.snapshot.params['idProcesso'];
 	}
 
 	ngOnInit() {
@@ -63,7 +62,9 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 			this.modelProcesso = result.processo;
 			this.listaPais = result.listaProdutoPaisPaginada.items;
 			this.totalpais = result.listaProdutoPaisPaginada.total;
+			this.documentosComprobatorios();
 		});
+
 	}
 
 	voltar(){
@@ -105,5 +106,7 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 
 	onChangePage($event) {
 		this.grid.page = $event;
+		this.documentosComprobatorios();
 	}
+
 }

@@ -2,8 +2,8 @@
 	data-railopacity="0.2">
 	<div class="row m-b-md">
 		<div class="col-lg-12">
-			<app-titulo>Propriedade do Produto</app-titulo>
-			<app-sub-titulo>Informações do Produto por País</app-sub-titulo>
+			<app-titulo>Propriedade do Produto de Exportação</app-titulo>
+			<app-sub-titulo>Informações do Produto por País e Documentação Comprobatória</app-sub-titulo>
 		</div>
 	</div>
 
@@ -109,24 +109,46 @@
 				<div class="row form-group">
 					<div class="col-lg-12" style="width: 97%;">
 						<fieldset class="m-l-lg" style="border: 1px solid #000; padding: 10px;">
-							<legend style="width: auto; border: 0;">Valores de Exportação Aprovados</legend>
+							<legend style="width: auto; border: 0;">Valores de Exportação</legend>
 							<div class="row form-group">
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Quantidade Total:
+										Quantidade Total Aprovada:
 									</label>
 									{{modelProduto.quantidadeAprovado | number : '1.2-2'}}
 								</div>
 								<div class="col-lg-4">
 									<label for="codigoUnidade" class="control-label text-nowrap">
-										Valor Total(US$):
+										Valor Total(US$) Aprovada:
 									</label>
 									{{modelProduto.valorDolarAprovado | number : '1.2-2'}}
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-lg-4">
+									<label for="codigoUnidade" class="control-label text-nowrap">
+										Quantidade Total Comprovada:
+									</label>
+									{{modelProduto.quantidadeComprovado | number : '1.2-2'}}
+								</div>
+								<div class="col-lg-4">
+									<label for="codigoUnidade" class="control-label text-nowrap">
+										Valor Total(US$) Comprovada:
+									</label>
+									{{modelProduto.valorDolarComprovado | number : '1.2-2'}}
+								</div>
+								<div class="col-lg-4">
+									<label for="codigoUnidade" class="control-label text-nowrap">
+										Valor Total(R$)Comprovada:
+									</label>
+									{{modelProduto.valorNacionalComprovado | number : '1.2-2'}}
 								</div>
 							</div>
 						</fieldset>
 					</div>
 				</div>
+
+
 				<div class="row form-group" >
 
 					<div class="col-lg-12 m-l-sm" style="width: 97%;">
@@ -172,6 +194,31 @@
 						</form>
 					</div>
 				</div>
+			</section>
+		</div>
+
+		<div class="col-lg-12">
+			<section class="panel panel-default">
+				<header class="panel-heading">
+					<h2 class="panel-title h5">Documentos Comprobatorios</h2>
+				</header>
+				<div class="row">
+					<div class="col-lg-12" >
+						<app-documentos-comprobatorios-grid
+							[(lista)]="grid.lista"
+							[(total)]="grid.total"
+							[(size)]="grid.size"
+							[(page)]="grid.page"
+							[(isUsuarioInterno)]="grid.isUsuarioInterno"
+							[(parametros)]="parametros"
+							[(formPai)]="formPai"
+							(onChangeSort)="onChangeSort($event)"
+							(onChangeSize)="onChangeSize($event)"
+							(onChangePage)="onChangePage($event)">
+						</app-documentos-comprobatorios-grid>
+					</div>
+				</div>
+
 			</section>
 		</div>
 	</div>

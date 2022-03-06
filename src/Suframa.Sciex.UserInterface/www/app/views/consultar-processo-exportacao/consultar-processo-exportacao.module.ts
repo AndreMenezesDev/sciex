@@ -10,6 +10,8 @@ import { ConsultarProcessoExportacaoComponent } from './consultar-processo-expor
 import { ConsultarProcessoExportacaoGridComponent } from './grid/grid.component';
 import { FormularioAcompanharProcessoComponent } from './formulario/formulario-acompanhar-processo.component';
 import { ConsultarFormularioPropriedadeProdutoComponent } from './formulario/formulario-propriedade-produto.component';
+import { ConsultarFormularioPropriedadeProdutoComprovacaoComponent } from './formulario/formulario-propriedade-produto-comprovacao.component';
+
 import { ConsultarFormularioQuadrosInsumosComponent } from './formulario/formulario-quadros-insumos.component';
 import { DetalheInsumosModalGridComponent } from './modal/grid-modal-detalhe-processo-insumos/grid-modal-detalhe-processo-insumos.component';
 import { ModalDetalhesInsumoComponent } from './modal/modal-detalhes-insumo.component';
@@ -49,6 +51,7 @@ import { ModalGridCertificadoComponent } from './modal/grid-modal-certificado/gr
 		ConsultarProcessoExportacaoGridComponent,
 		FormularioAcompanharProcessoComponent,
 		ConsultarFormularioPropriedadeProdutoComponent,
+		ConsultarFormularioPropriedadeProdutoComprovacaoComponent,
 		ConsultarFormularioQuadrosInsumosComponent,
 		ConsultarInsumosNacionalGridComponent,
 		ConsultarInsumosImportadosGridComponent,
