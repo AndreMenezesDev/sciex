@@ -390,9 +390,7 @@ namespace Suframa.Sciex.BusinessLogic
 			}
 			,
 			o => o.IdProduto == idProduto);
-
-			//var codProdSuf = _uowSciex.QueryStackSciex.ViewProdutoEmpresaExportacao.Listar(o => o.CodigoProduto == prod.CodigoProdutoSuframa).FirstOrDefault();
-			//prod.DescCodigoProdutoSuframa = codProdSuf.CodigoProduto.ToString("D4") + " | " + codProdSuf.DescricaoProduto;	
+	
 			var codTipoProdSuf = _uowSciex.QueryStackSciex.ViewProdutoEmpresaExportacao.Listar(o => o.CodigoProduto == prod.CodigoProdutoSuframa 
 																		&& o.CodigoTipoProduto == prod.TipoProduto 
 																		&& o.CodigoNCM == prod.CodigoNCM).FirstOrDefault();

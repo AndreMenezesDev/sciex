@@ -34,8 +34,8 @@
 					<td class="text-left">{{item.descricaoPais}}</td>
 					<td class="text-left">{{item.numero}}</td>
 					<td class="text-left">{{item.dataAverbacaoFormatada}}</td>
-					<td class="text-left">{{item.quantidade}}</td>
-					<td class="text-left">{{item.valorDolar}}</td>
+					<td class="text-left">{{item.quantidade | number : '1.2-2'}}</td>
+					<td class="text-left">{{item.valorDolar | number : '1.2-2'}}</td>
 				</tr>
 			</tbody>
 		</table>

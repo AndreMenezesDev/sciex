@@ -145,12 +145,6 @@
 												<th class="th-sortable unset-nowrap">
 													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor (US$)</app-ordenacao>
 												</th>
-												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Comprovado (US$)</app-ordenacao>
-												</th>
-												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Comprovado(US$)</app-ordenacao>
-												</th>
 											</tr>
 										</thead>
 
@@ -159,8 +153,6 @@
 												<td class="text-left">{{item.descricaoPais}}</td>
 												<td class="text-left">{{item.quantidadeAprovado | number : '1.2-2'}}</td>
 												<td class="text-left">{{item.valorDolarAprovado | number : '1.2-2'}}</td>
-												<td class="text-left">{{item.quantidadeComprovado}}</td>
-												<td class="text-left">{{item.valorDolarComprovado}}</td>
 											</tr>
 										</tbody>
 										<tbody *ngIf="totalpais == 0">
