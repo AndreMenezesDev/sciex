@@ -328,13 +328,13 @@ namespace Suframa.Sciex.BusinessLogic
 				CodigoNCM = q.CodigoNCM,
 				TipoProduto = q.TipoProduto,
 				DescricaoModelo = q.DescricaoModelo,
-				QuantidadeAprovado = q.QuantidadeAprovado,
+				QuantidadeAprovado = q.QuantidadeAprovado == null ? 0 : q.QuantidadeAprovado,
+				QuantidadeComprovado = q.QuantidadeComprovado == null ? 0 : q.QuantidadeComprovado,
+				ValorDolarAprovado = q.ValorDolarAprovado == null ? 0 : q.ValorDolarAprovado,
+				ValorDolarComprovado = q.ValorDolarComprovado == null ? 0 : q.ValorDolarComprovado,
+				ValorNacionalComprovado = q.ValorNacionalComprovado == null ? 0 : q.ValorNacionalComprovado,
 				CodigoUnidade = q.CodigoUnidade,
-				ValorDolarAprovado = q.ValorDolarAprovado,
 				ValorFluxoCaixa = q.ValorFluxoCaixa,
-				QuantidadeComprovado = q.QuantidadeComprovado,
-				ValorDolarComprovado = q.ValorDolarComprovado,
-				ValorNacionalComprovado = q.ValorNacionalComprovado,
 				Processo = new ProcessoExportacaoVM()
 				{
 					IdProcesso = q.Processo.IdProcesso,
@@ -422,11 +422,11 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				IdProdutoPais = w.IdProdutoPais,
 				IdPrcProduto = w.IdPrcProduto,
-				QuantidadeAprovado = w.QuantidadeAprovado,
-				ValorDolarAprovado = w.ValorDolarAprovado,
+				QuantidadeAprovado = w.QuantidadeAprovado == null ? 0 : w.QuantidadeAprovado,
+				ValorDolarAprovado = w.ValorDolarAprovado == null ? 0 : w.ValorDolarAprovado,
 				CodigoPais = w.CodigoPais,
-				ValorDolarComprovado = w.ValorDolarComprovado,
-				QuantidadeComprovado = w.QuantidadeComprovado
+				ValorDolarComprovado = w.ValorDolarComprovado == null ? 0 : w.ValorDolarComprovado,
+				QuantidadeComprovado = w.QuantidadeComprovado == null ? 0 : w.QuantidadeComprovado
 			},
 			q=> q.IdPrcProduto == idProduto
 			,
@@ -448,6 +448,8 @@ namespace Suframa.Sciex.BusinessLogic
 																	);
 
 
+			prod.QuantidadeComprovado = prod.ListaProdutoPaisPaginada.Items.Sum(q => (decimal)q.QuantidadeComprovado);
+			prod.ValorDolarComprovado = prod.ListaProdutoPaisPaginada.Items.Sum(q => (decimal)q.ValorDolarComprovado);
 
 			return prod;
 		}
