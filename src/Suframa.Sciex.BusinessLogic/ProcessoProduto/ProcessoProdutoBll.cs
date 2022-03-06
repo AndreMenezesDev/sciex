@@ -426,7 +426,9 @@ namespace Suframa.Sciex.BusinessLogic
 				IdPrcProduto = w.IdPrcProduto,
 				QuantidadeAprovado = w.QuantidadeAprovado,
 				ValorDolarAprovado = w.ValorDolarAprovado,
-				CodigoPais = w.CodigoPais
+				CodigoPais = w.CodigoPais,
+				ValorDolarComprovado = w.ValorDolarComprovado,
+				QuantidadeComprovado = w.QuantidadeComprovado
 			},
 			q=> q.IdPrcProduto == idProduto
 			,
