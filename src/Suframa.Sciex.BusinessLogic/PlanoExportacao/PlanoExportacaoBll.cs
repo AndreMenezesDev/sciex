@@ -1770,7 +1770,7 @@ namespace Suframa.Sciex.BusinessLogic
 			}
 			var regPEProdutoPais = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Selecionar(o => o.IdPEProduto == vm.IdPEProduto && o.CodigoPais == vm.CodigoPais);
 
-			var statusPlanoExportacao = regPEProdutoPais.PlanoExportacaoProduto.PlanoExportacao.Situacao;
+			var statusPlanoExportacao = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Selecionar(q=> q.IdPEProduto == vm.IdPEProduto).PlanoExportacao.Situacao;
 			try
 			{
 				if (regPEProdutoPais == null)
@@ -1809,6 +1809,7 @@ namespace Suframa.Sciex.BusinessLogic
 					var somatorioPEProdutoPaisQtd = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.Quantidade);
 					var somatorioPEProdutoPaisDolar = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.ValorDolar);
 
+					_uowSciex.CommandStackSciex.DetachEntries();
 					var regPEProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Selecionar(o => o.IdPEProduto == vm.IdPEProduto);
 
 					regPEProduto.Qtd = somatorioPEProdutoPaisQtd;
@@ -1849,6 +1850,7 @@ namespace Suframa.Sciex.BusinessLogic
 					var somatorioPEProdutoPaisQtd = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.Quantidade);
 					var somatorioPEProdutoPaisDolar = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(o => o.IdPEProduto == vm.IdPEProduto).Sum(o => o.ValorDolar);
 
+					_uowSciex.CommandStackSciex.DetachEntries();
 					var regPEProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Selecionar(o => o.IdPEProduto == vm.IdPEProduto);
 
 					regPEProduto.Qtd = somatorioPEProdutoPaisQtd;
