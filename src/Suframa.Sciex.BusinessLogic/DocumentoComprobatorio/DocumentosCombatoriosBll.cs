@@ -21,22 +21,20 @@ namespace Suframa.Sciex.BusinessLogic
 		}
 
 
-		public PagedItems<PlanoExportacaoDUEComplementoVM> ListarPaginado(PlanoExportacaoDUEComplementoVM objeto)
+		public PagedItems<PRCDueComplementoVM> ListarPaginado(PlanoExportacaoDUEComplementoVM objeto)
 		{
+			var listaIDProdutoPais = _uowSciex.QueryStackSciex.PRCProdutoPais.Listar(x => x.IdPrcProduto == objeto.IdPRCProduto).Select(x => (int?)x.IdProdutoPais).ToList();
 
-
-			var pagedItems = _uowSciex.QueryStackSciex.PlanoExportacaoDue.ListarPaginadoGrafo(o => new PlanoExportacaoDUEComplementoVM()
+			var pagedItems = _uowSciex.QueryStackSciex.PRCDue.ListarPaginadoGrafo(o => new PRCDueComplementoVM()
 			{
 				Numero = o.Numero,
 				CodigoPais = o.CodigoPais,
 				DataAverbacao = o.DataAverbacao,
 				ValorDolar = o.ValorDolar,
 				Quantidade = o.Quantidade,
-				IdPEProdutoPais = o.IdPEProdutoPais,
-				IdDue = o.IdDue,
-
-
-			}, o => o.IdPEProdutoPais == objeto.IdPEProdutoPais, objeto);
+				IdPRCProdutoPais = o.IdPRCProdutoPais,
+				IdDue = o.IdDue
+			}, o => listaIDProdutoPais.Contains(o.IdPRCProdutoPais), objeto);
 			if (pagedItems.Total > 0)
 			{
 				foreach (var item in pagedItems.Items)

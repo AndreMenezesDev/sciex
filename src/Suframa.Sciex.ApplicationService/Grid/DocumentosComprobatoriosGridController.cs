@@ -14,7 +14,7 @@ namespace Suframa.Sciex.ApplicationService.Grid
 		{
 			_documentosComprobatoriosBllBll = documentosComprobatoriosBllBll;
 		}
-		public PagedItems<PlanoExportacaoDUEComplementoVM> Get([FromUri] PlanoExportacaoDUEComplementoVM pagedFilter)
+		public PagedItems<PRCDueComplementoVM> Get([FromUri] PlanoExportacaoDUEComplementoVM pagedFilter)
 		{
 			return _documentosComprobatoriosBllBll.ListarPaginado(pagedFilter);
 		}

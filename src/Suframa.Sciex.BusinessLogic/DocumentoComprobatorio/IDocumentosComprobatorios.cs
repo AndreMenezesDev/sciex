@@ -10,7 +10,7 @@ namespace Suframa.Sciex.BusinessLogic
 {
 	public interface IDocumentosComprobatoriosBll
 	{
-		PagedItems<PlanoExportacaoDUEComplementoVM> ListarPaginado(PlanoExportacaoDUEComplementoVM objeto);
+		PagedItems<PRCDueComplementoVM> ListarPaginado(PlanoExportacaoDUEComplementoVM objeto);
 
 	}
 }

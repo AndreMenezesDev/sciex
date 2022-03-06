@@ -27,6 +27,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 
 	public class PlanoExportacaoDUEComplementoVM : PlanoExportacaoDUEVM
 	{
+		public int IdPRCProduto { get; set; }
 		public string DescricaoPais { get; set; }
 		public string DataAverbacaoFormatada { get; set; } 
 		public string SituacaoAnaliseString { get; set; } 
