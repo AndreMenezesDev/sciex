@@ -276,7 +276,7 @@ export class ManterPlanoExportacaoGridComponent {
 			if (retorno.resultado) {
 				this.modal.resposta(this.msg.OPERACAO_REALIZADA_COM_SUCESSO, "Informação", "")
 				.subscribe(()=>{
-					this.router.navigate([`manter-plano-exportacao/${item.idPlanoExportacao}/correcao`])
+					this.abrirCorrecao(item);
 				});
 			}else{	
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
