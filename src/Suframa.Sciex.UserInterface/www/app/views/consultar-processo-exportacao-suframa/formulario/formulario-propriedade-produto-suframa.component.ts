@@ -63,6 +63,7 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 			this.modelProcesso = result.processo;
 			this.listaPais = result.listaProdutoPaisPaginada.items;
 			this.totalpais = result.listaProdutoPaisPaginada.total;
+			this.documentosComprobatorios();
 		});
 	}
 
@@ -73,22 +74,22 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 		obj.pop()
 		sessionStorage.removeItem("arrayUrl")
 		sessionStorage.setItem("arrayUrl", JSON.stringify(obj))
-		
+
 		this.router.navigate([url]);
 	}
 
 	documentosComprobatorios(){
 		var objeto : any = {};
-		objeto.idPEProdutoPais = Number(this.idProduto);
+		objeto.idPRCProduto = Number(this.idProduto);
 		objeto.sort = this.grid.sort;
 		objeto.size = this.grid.size;
 		objeto.page = this.grid.page;
 
 		this.applicationService.get(this.servicoDocumentosComprobatorios,objeto).subscribe((result :any)=>{
 			console.log(result)
-	
+
 			this.grid.lista = result.items;
-			
+
 			this.grid.total = result.total;
 
 		})
