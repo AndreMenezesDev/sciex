@@ -451,6 +451,159 @@ namespace Suframa.Sciex.BusinessLogic
 
 			return prod;
 		}
+		public PRCProdutoVM SelecionarPaisPaginado(PRCProdutoVM vm)
+		{
+
+			var prod = _uowSciex.QueryStackSciex.PRCProduto.SelecionarGrafo(q => new PRCProdutoVM()
+			{
+				IdProduto = q.IdProduto,
+				IdProcesso = q.IdProcesso,
+				CodigoProdutoExportacao = q.CodigoProdutoExportacao,
+				CodigoProdutoSuframa = q.CodigoProdutoSuframa,
+				CodigoNCM = q.CodigoNCM,
+				TipoProduto = q.TipoProduto,
+				DescricaoModelo = q.DescricaoModelo,
+				QuantidadeAprovado = q.QuantidadeAprovado,
+				CodigoUnidade = q.CodigoUnidade,
+				ValorDolarAprovado = q.ValorDolarAprovado,
+				ValorFluxoCaixa = q.ValorFluxoCaixa,
+				QuantidadeComprovado = q.QuantidadeComprovado,
+				ValorDolarComprovado = q.ValorDolarComprovado,
+				ValorNacionalComprovado = q.ValorNacionalComprovado,
+				Processo = new ProcessoExportacaoVM()
+				{
+					IdProcesso = q.Processo.IdProcesso,
+					NumeroProcesso = q.Processo.NumeroProcesso,
+					AnoProcesso = q.Processo.AnoProcesso,
+					InscricaoSuframa = q.Processo.InscricaoSuframa,
+					RazaoSocial = q.Processo.RazaoSocial,
+					TipoModalidade = q.Processo.TipoModalidade,
+					TipoStatus = q.Processo.TipoStatus,
+					DataValidade = q.Processo.DataValidade,
+					ValorPremio = q.Processo.ValorPremio,
+					ValorPercentualIndImportado = q.Processo.ValorPercentualIndImportado,
+					ValorPercentualIndNacional = q.Processo.ValorPercentualIndNacional,
+					Cnpj = q.Processo.Cnpj,
+					ListaStatus = q.Processo.ListaStatus.Select(w => new PRCStatusVM()
+					{
+						IdStatus = w.IdStatus,
+						IdProcesso = w.IdProcesso,
+						Tipo = w.Tipo,
+						Data = w.Data,
+						DataValidade = w.DataValidade,
+						CpfResponsavel = w.CpfResponsavel,
+						NomeResponsavel = w.NomeResponsavel,
+						NumeroPlano = w.NumeroPlano,
+						AnoPlano = w.AnoPlano
+					}
+					).ToList(),
+				},
+				ListaInsumos = q.ListaInsumos.Select(w => new PRCInsumoVM()
+				{
+					IdInsumo = w.IdInsumo,
+					IdPrcProduto = w.IdPrcProduto,
+					CodigoInsumo = w.CodigoInsumo,
+					CodigoUnidade = w.CodigoUnidade,
+					TipoInsumo = w.TipoInsumo,
+					CodigoNCM = w.CodigoNCM,
+					ValorPercentualPerda = w.ValorPercentualPerda,
+					CodigoDetalhe = w.CodigoDetalhe,
+					DescricaoPartNumber = w.DescricaoPartNumber,
+					DescricaoEspecificacaoTecnica = w.DescricaoEspecificacaoTecnica,
+					ValorCoeficienteTecnico = w.ValorCoeficienteTecnico,
+					ValorDolarAprovado = w.ValorDolarAprovado,
+					QuantidadeAprovado = w.QuantidadeAprovado,
+					ValorNacionalAprovado = w.ValorNacionalAprovado,
+					ValorDolarFOBAprovado = w.ValorDolarFOBAprovado,
+					ValorDolarCFRAprovado = w.ValorDolarCFRAprovado,
+					ValorFreteAprovado = w.ValorFreteAprovado,
+					ValorDolarComp = w.ValorDolarComp,
+					QuantidadeComp = w.QuantidadeComp,
+					ValorDolarSaldo = w.ValorDolarSaldo,
+					QuantidadeSaldo = w.QuantidadeSaldo,
+				}).ToList()
+			}
+			,
+			o => o.IdProduto == vm.IdProduto);
+
+			var codTipoProdSuf = _uowSciex.QueryStackSciex.ViewProdutoEmpresaExportacao.Listar(o => o.CodigoProduto == prod.CodigoProdutoSuframa
+																		&& o.CodigoTipoProduto == prod.TipoProduto
+																		&& o.CodigoNCM == prod.CodigoNCM).FirstOrDefault();
+			prod.DescCodigoTipoProduto = codTipoProdSuf != null ? codTipoProdSuf.CodigoTipoProduto.ToString("D3") + " | " + codTipoProdSuf.DescricaoTipoProduto : "-";
+			prod.DescCodigoProdutoSuframa = codTipoProdSuf.CodigoProduto.ToString("D4") + " | " + codTipoProdSuf.DescricaoProduto;
+			var undMed = _uowSciex.QueryStackSciex.ViewUnidadeMedida.Selecionar(o => o.CodigoUnidadeMedida == prod.CodigoUnidade);
+			prod.DescCodigoUnidade = undMed != null ? undMed.CodigoUnidadeMedida.ToString("D3") + " | " + undMed.Descricao : "-";
+			prod.DescricaoNCM = codTipoProdSuf.DescricaoNCM;
+
+
+			//TODO 
+			prod.Processo.NumeroAnoProcessoFormatado = Convert.ToInt32(prod.Processo.NumeroProcesso).ToString("D4") + "/" + prod.Processo.AnoProcesso;
+
+			var ultimoStatus = prod.Processo.ListaStatus.Where(q => q.Tipo == "AP").LastOrDefault();
+
+			prod.Processo.NumeroAnoPlanoFormatado = ultimoStatus != null ? Convert.ToInt32(ultimoStatus.NumeroPlano).ToString("D5") + "/" + ultimoStatus.AnoPlano : "-";
+
+			prod.Processo.DataValidadeFormatada = prod.Processo.DataValidade == DateTime.MinValue ? DateTime.MinValue.ToShortDateString() : ((DateTime)prod.Processo.DataValidade).ToShortDateString();
+
+			prod.Processo.TipoModalidadeString = prod.Processo.TipoModalidade == "S" ? "SUSPENSÃO"
+																		: prod.Processo.TipoModalidade == "I" ? "ISENÇÃO"
+																		: "-"
+																		;
+
+			prod.Processo.TipoStatusString = prod.Processo.TipoStatus.Equals("AP") ? "APROVADO" :
+												prod.Processo.TipoStatus.Equals("CO") ? "COMPROVADO" : "-";
+			string sort = null;
+			if ("DescricaoPais".Equals(vm.Sort))
+			{
+				sort = "DescricaoPais";
+				vm.Sort = null;
+			}
+			prod.ListaProdutoPaisPaginada = _uowSciex.QueryStackSciex.PRCProdutoPais.ListarPaginadoGrafo(w => new PRCProdutoPaisVM()
+			{
+				IdProdutoPais = w.IdProdutoPais,
+				IdPrcProduto = w.IdPrcProduto,
+				QuantidadeAprovado = w.QuantidadeAprovado,
+				ValorDolarAprovado = w.ValorDolarAprovado,
+				CodigoPais = w.CodigoPais,
+				ValorDolarComprovado = w.ValorDolarComprovado,
+				QuantidadeComprovado = w.QuantidadeComprovado
+			},
+			q => q.IdPrcProduto == vm.IdProduto
+			,
+			vm);
+
+			foreach (var item in prod.ListaProdutoPaisPaginada.Items)
+			{
+				string codigoPais = Convert.ToInt32(item.CodigoPais).ToString("D3");
+				var pais = _uowSciex.QueryStackSciex.ViewPais.Selecionar(o => o.CodigoPais == codigoPais);
+
+				item.DescricaoPais = pais.Descricao;
+			}
+			if(sort != null)
+			{
+				if ("DescricaoPais".Equals(vm.Sort)) 
+				{
+					if (!vm.Reverse)
+					{
+						prod.ListaProdutoPaisPaginada.Items = prod.ListaProdutoPaisPaginada.Items.OrderBy(x => x.DescricaoPais).ToList();
+					}
+					else
+					{
+						prod.ListaProdutoPaisPaginada.Items = prod.ListaProdutoPaisPaginada.Items.OrderByDescending(x => x.DescricaoPais).ToList();
+					}
+				}
+			}
+
+			prod.ExisteSolicAlteracaoEmAnalise = _uowSciex.QueryStackSciex.PRCSolicitacaoAlteracao.Existe(q =>
+																	q.IdProcesso == prod.Processo.IdProcesso
+																	&&
+																	q.Status == 3
+																	);
+
+
+
+			return prod;
+		}
 		public PRCProdutoVM SelecionarProdutoEmAnalisePorIdProcesso(int idProcesso)
 		{
 			int EmAnalise = 3;

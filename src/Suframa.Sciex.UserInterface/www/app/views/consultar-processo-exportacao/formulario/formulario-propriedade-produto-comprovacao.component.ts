@@ -19,8 +19,10 @@ export class ConsultarFormularioPropriedadeProdutoComprovacaoComponent implement
 	modelProduto: any = {};
 	modelProcesso: any = {};
 	parametros: any = {};
+	parametrosListaPais: any = {};
 	listaPais = [];
 	totalpais: number = 0;
+	objeto : any = {};
 	@Input() sorted: string;
 	@Input() page: number;
 	idProduto: any;
@@ -43,13 +45,17 @@ export class ConsultarFormularioPropriedadeProdutoComprovacaoComponent implement
 
 	ngOnInit() {
 		this.selecionarProduto(this.idProduto);
+		this.objeto.sort = null;
+		this.objeto.size = 10;
+		this.objeto.page = 1;
 		this.modelProduto = {};
 		this.listaPais = [];
 	}
 
-	changeSort($event) {
-		this.sorted = $event.field;
-		this.changePage(this.page);
+	changeSortPais($event) {
+		this.parametrosListaPais.sort = $event.field;
+		this.parametrosListaPais.reverse = $event.reverse;
+		this.selecionarProduto(this.idProduto);
 	}
 
 	changePage($event) {
@@ -57,7 +63,8 @@ export class ConsultarFormularioPropriedadeProdutoComprovacaoComponent implement
 	}
 	public selecionarProduto(id: number) {
 		if (!id) { return; }
-		this.applicationService.get(this.servico, id).subscribe((result: any) => {
+		this.parametrosListaPais.idProduto = id;
+		this.applicationService.get(this.servico, this.parametrosListaPais).subscribe((result: any) => {
 			this.modelProduto = result;
 			this.modelProcesso = result.processo;
 			this.listaPais = result.listaProdutoPaisPaginada.items;
@@ -79,13 +86,9 @@ export class ConsultarFormularioPropriedadeProdutoComprovacaoComponent implement
 	}
 
 	documentosComprobatorios(){
-		var objeto : any = {};
-		objeto.idPRCProduto = Number(this.idProduto);
-		objeto.sort = this.grid.sort;
-		objeto.size = this.grid.size;
-		objeto.page = this.grid.page;
+		this.objeto.idPRCProduto = Number(this.idProduto);
 
-		this.applicationService.get(this.servicoDocumentosComprobatorios,objeto).subscribe((result :any)=>{
+		this.applicationService.get(this.servicoDocumentosComprobatorios, this.objeto).subscribe((result :any)=>{
 			console.log(result)
 
 			this.grid.lista = result.items;
@@ -96,8 +99,8 @@ export class ConsultarFormularioPropriedadeProdutoComprovacaoComponent implement
 	}
 
 	onChangeSort($event) {
-		this.grid.sort = $event;
-
+		this.objeto.sort = $event.field;
+		this.objeto.reverse = $event.reverse;
 	}
 
 	onChangeSize($event) {

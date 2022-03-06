@@ -7,9 +7,9 @@ namespace Suframa.Sciex.BusinessLogic
 	public interface IProcessoProdutoBll
 	{
 		PRCProdutoVM Selecionar(int idProduto);
+		PRCProdutoVM SelecionarPaisPaginado(PRCProdutoVM vm);
 		PRCSolicitacaoAlteracaoVM Validar (PRCSolicitacaoAlteracaoVM vm);
 		PRCProdutoVM SelecionarProdutoEmAnalisePorIdProcesso(int idProcesso);
-		
 		PEProdutoVM Salvar(PEProdutoVM vm);
 
 		void Deletar(int idPEProduto);

@@ -19,6 +19,7 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 	modelProduto: any = {};
 	modelProcesso: any = {};
 	parametros: any = {};
+	parametrosListaPais: any = {};
 	listaPais = [];
 	totalpais: number = 0;
 	@Input() sorted: string;
@@ -47,9 +48,10 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 		this.listaPais = [];
 	}
 
-	changeSort($event) {
-		this.sorted = $event.field;
-		this.changePage(this.page);
+	changeSortPais($event) {
+		this.parametrosListaPais.sort = $event.field;
+		this.parametrosListaPais.reverse = $event.reverse;
+		this.selecionarProduto(this.idProduto);
 	}
 
 	changePage($event) {
@@ -57,7 +59,8 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 	}
 	public selecionarProduto(id: number) {
 		if (!id) { return; }
-		this.applicationService.get(this.servico, id).subscribe((result: any) => {
+		this.parametrosListaPais.idProduto = id;
+		this.applicationService.get(this.servico, this.parametrosListaPais).subscribe((result: any) => {
 			this.modelProduto = result;
 			this.modelProcesso = result.processo;
 			this.listaPais = result.listaProdutoPaisPaginada.items;
@@ -75,19 +78,6 @@ export class ConsultarFormularioPropriedadeProdutoComponent implements OnInit {
 		sessionStorage.setItem("arrayUrl", JSON.stringify(obj))
 
 		this.router.navigate([url]);
-	}
-
-	onChangeSort($event) {
-		this.grid.sort = $event;
-
-	}
-
-	onChangeSize($event) {
-		this.grid.size = $event;
-	}
-
-	onChangePage($event) {
-		this.grid.page = $event;
 	}
 
 }

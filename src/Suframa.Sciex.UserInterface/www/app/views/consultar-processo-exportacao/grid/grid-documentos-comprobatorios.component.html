@@ -13,19 +13,19 @@
 				<tr>
 					<!-- <th class="th-100 text-left">Ações</th> -->
 					<th class="th-sortable unset-nowrap text-left">
-						<app-ordenacao field="PaisDestino" [sorted]="sorted" (onChangeSort)="changeSort($event)">Pais Destino</app-ordenacao>
+						<app-ordenacao field="DescricaoPais" [sorted]="sorted" (onChangeSort)="changeSort($event)">Pais Destino</app-ordenacao>
 					</th>
 					<th class="th-sortable unset-nowrap text-left">
-						<app-ordenacao field="DU-E" [sorted]="sorted" (onChangeSort)="changeSort($event)">DU-E</app-ordenacao>
+						<app-ordenacao field="Numero" [sorted]="sorted" (onChangeSort)="changeSort($event)">DU-E</app-ordenacao>
 					</th>
 					<th class="th-sortable unset-nowrap text-left">
-						<app-ordenacao field="DataAverbacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Averbação</app-ordenacao>
+						<app-ordenacao field="DataAverbacaoFormatada" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Averbação</app-ordenacao>
 					</th>
 					<th class="th-sortable unset-nowrap text-left">
 						<app-ordenacao field="Quantidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
 					</th>
 					<th class="th-sortable unset-nowrap text-left">
-						<app-ordenacao field="Valor" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor(US$)</app-ordenacao>
+						<app-ordenacao field="ValorDolar" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor(US$)</app-ordenacao>
 					</th>
 				</tr>
 			</thead>

@@ -20,6 +20,11 @@ namespace Suframa.Sciex.ApplicationService.Services
 		{
 			return _bll.Selecionar(id);
 		}
+		public PRCProdutoVM Get([FromUri] PRCProdutoVM vm)
+		{
+			return _bll.SelecionarPaisPaginado(vm);
+		}
+
 		public PRCSolicitacaoAlteracaoVM Post([FromBody] PRCSolicitacaoAlteracaoVM vm)
 		{
 			return _bll.Validar(vm);

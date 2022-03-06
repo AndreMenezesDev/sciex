@@ -25,6 +25,12 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			var listaIDProdutoPais = _uowSciex.QueryStackSciex.PRCProdutoPais.Listar(x => x.IdPrcProduto == objeto.IdPRCProduto).Select(x => (int?)x.IdProdutoPais).ToList();
 
+			string sort = null;
+			if ("DescricaoPais".Equals(objeto.Sort))
+			{
+				sort = "DescricaoPais";
+				objeto.Sort = null;
+			}
 			var pagedItems = _uowSciex.QueryStackSciex.PRCDue.ListarPaginadoGrafo(o => new PRCDueComplementoVM()
 			{
 				Numero = o.Numero,
@@ -35,6 +41,7 @@ namespace Suframa.Sciex.BusinessLogic
 				IdPRCProdutoPais = o.IdPRCProdutoPais,
 				IdDue = o.IdDue
 			}, o => listaIDProdutoPais.Contains(o.IdPRCProdutoPais), objeto);
+
 			if (pagedItems.Total > 0)
 			{
 				foreach (var item in pagedItems.Items)
@@ -44,6 +51,20 @@ namespace Suframa.Sciex.BusinessLogic
 					item.DataAverbacaoFormatada = ((DateTime)item.DataAverbacao).ToShortDateString();
 					item.DescricaoPais = pais.Descricao;
 
+				}
+				if (sort != null)
+				{
+					if ("DescricaoPais".Equals(objeto.Sort))
+					{
+						if (!objeto.Reverse)
+						{
+							pagedItems.Items = pagedItems.Items.OrderBy(x => x.DescricaoPais).ToList();
+						}
+						else
+						{
+							pagedItems.Items = pagedItems.Items.OrderByDescending(x => x.DescricaoPais).ToList();
+						}
+					}
 				}
 
 

@@ -159,19 +159,19 @@
 										<thead class="table-header-color">
 											<tr>
 												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="NumeroPlano" [sorted]="sorted" (onChangeSort)="changeSort($event)">País Destino</app-ordenacao>
+													<app-ordenacao field="DescricaoPais" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">País Destino</app-ordenacao>
 												</th>
 												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="TipoModalidade" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade</app-ordenacao>
+													<app-ordenacao field="QuantidadeAprovado" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">Quantidade</app-ordenacao>
 												</th>
 												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor (US$)</app-ordenacao>
+													<app-ordenacao field="ValorDolarAprovado" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">Valor (US$)</app-ordenacao>
 												</th>
 												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Quantidade Comprovada (US$)</app-ordenacao>
+													<app-ordenacao field="QuantidadeComprovado" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">Quantidade Comprovada</app-ordenacao>
 												</th>
 												<th class="th-sortable unset-nowrap">
-													<app-ordenacao field="TipoExportacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Valor Comprovado(US$)</app-ordenacao>
+													<app-ordenacao field="ValorDolarComprovado" [sorted]="sorted" (onChangeSort)="changeSortPais($event)">Valor Comprovado (US$)</app-ordenacao>
 												</th>
 											</tr>
 										</thead>
