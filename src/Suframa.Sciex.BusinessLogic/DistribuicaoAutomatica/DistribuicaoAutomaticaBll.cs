@@ -42,6 +42,7 @@ namespace Suframa.Sciex.BusinessLogic
 			PliVM retornoPLI = new PliVM();
 			PliVM retornoLE = new PliVM();
 			PliVM retornoPlano = new PliVM();
+			PliVM retornoSolicitacoes = new PliVM();
 
 
 			var _controleExecucaoServico1 = new ControleExecucaoServicoEntity();
@@ -410,14 +411,17 @@ namespace Suframa.Sciex.BusinessLogic
 			_controleExecucaoServico4.NomeCPFCNPJInteressado = "Administrador do Sistema - SUFRAMA";
 			_controleExecucaoServico4.NumeroCPFCNPJInteressado = "04407029000143";
 
-			var listaSolics = _uowSciex.QueryStackSciex.PRCSolicitacaoAlteracao.Listar(o => (o.Status == 2) || (o.Status > 1 && o.NomeResponsavel == null && o.CpfResponsavel == null));
+			var listaSolics = _uowSciex.QueryStackSciex.PRCSolicitacaoAlteracao.Listar(o => (o.Status == 2) 
+																							|| 
+																							(o.Status > 1 && o.NomeResponsavel == null && o.CpfResponsavel == null)
+																							);
 
 			#region Solicitacoes
 			var analistaSolic = _uowSciex.QueryStackSciex.Analista.Listar(o => o.Solicitacao == 1).OrderBy(p => p.IdAnalista).ToList();
 
 			if (analistaSolic.Count == 0)
 			{
-				retornoPlano.Mensagem = "Não há analistas ativos para distribuir as Solicitações";
+				retornoSolicitacoes.Mensagem = "Não há analistas ativos para distribuir as Solicitações";
 			}
 			else
 			 {
@@ -486,13 +490,13 @@ namespace Suframa.Sciex.BusinessLogic
 				}
 				else
 				{
-					retornoPlano.Mensagem = "Não há Solicitações para serem distribuidas!";
+					retornoSolicitacoes.Mensagem = "Não há Solicitações para serem distribuidas!";
 				}
 			}
 			#endregion
 
-			_controleExecucaoServico4.StatusExecucao = String.IsNullOrEmpty(retornoPlano.Mensagem) ? 1 : 2;
-			_controleExecucaoServico4.MemoObjetoRetorno = String.IsNullOrEmpty(retornoPlano.Mensagem) ? "DISTRIBUIÇÃO OK" : retornoPlano.Mensagem;
+			_controleExecucaoServico4.StatusExecucao = String.IsNullOrEmpty(retornoSolicitacoes.Mensagem) ? 1 : 2;
+			_controleExecucaoServico4.MemoObjetoRetorno = String.IsNullOrEmpty(retornoSolicitacoes.Mensagem) ? "DISTRIBUIÇÃO OK" : retornoSolicitacoes.Mensagem;
 			_controleExecucaoServico4.DataHoraExecucaoFim = GetDateTimeNowUtc();
 			_uowSciex.CommandStackSciex.ControleExecucaoServico.Salvar(_controleExecucaoServico4);
 			_uowSciex.CommandStackSciex.Save();
@@ -501,8 +505,9 @@ namespace Suframa.Sciex.BusinessLogic
 			var msgRetPli = (String.IsNullOrEmpty(retornoPLI.Mensagem) ? "DISTRIBUIÇÃO PLI OK" : retornoPLI.Mensagem);
 			var msgRetLe = (String.IsNullOrEmpty(retornoLE.Mensagem) ? "DISTRIBUIÇÃO LE OK" : retornoLE.Mensagem);
 			var msgRetPlano = (String.IsNullOrEmpty(retornoPlano.Mensagem) ? "DISTRIBUIÇÃO PLANOS OK" : retornoPlano.Mensagem);
-			var msgSolicitacao = (String.IsNullOrEmpty(retornoPlano.Mensagem) ? "DISTRIBUIÇÃO SOLICITAÇÕES OK" : retornoPlano.Mensagem);
-			retorno.Mensagem = "Retorno Distribuição PLI: " + msgRetPli + " | Retorno Distribuição LE: " + msgRetLe + " | Retorno Distribuição PE: " + msgRetPlano;
+			var msgSolicitacao = (String.IsNullOrEmpty(retornoSolicitacoes.Mensagem) ? "DISTRIBUIÇÃO SOLICITAÇÕES OK" : retornoSolicitacoes.Mensagem);
+			retorno.Mensagem = $@"Retorno Distribuição PLI: {msgRetPli} | Retorno Distribuição LE: {msgRetLe} | Retorno Distribuição PE: {msgRetPlano} | "
+								+$"Retorno Distribuição Solicitações Alteração: {msgSolicitacao} ";
 			return retorno;
 		}
 	}
