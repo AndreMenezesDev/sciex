@@ -18,6 +18,8 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public int IdPrcProduto { get; set; }
 		public decimal? QuantidadeAprovado { get; set; }
 		public decimal? ValorDolarAprovado { get; set; }
+		public decimal? QuantidadeComprovado { get; set; }
+		public decimal? ValorDolarComprovado { get; set; }
 		public int? CodigoPais { get; set; }
 		public string DescricaoPais { get; set; }
 

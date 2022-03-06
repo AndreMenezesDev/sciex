@@ -8,6 +8,7 @@ import { ConsultarProcessoExportacaoSuframaGridComponent } from './grid/grid.com
 import { FormularioAcompanharProcessoSuframaComponent } from './formulario/formulario-acompanhar-processo-suframa.component';
 import { RelatorioCertificadoRegistroSuframaComponent } from './relatorio/relatorio-certificado-registro-suframa.component';
 import { ConsultarFormularioPropriedadeProdutoSuframaComponent } from './formulario/formulario-propriedade-produto-suframa.component';
+import { ConsultarFormularioPropriedadeProdutoComprovacaoSuframaComponent } from './formulario/formulario-propriedade-produto-comprovacao-suframa.component';
 import { ConsultarFormularioQuadrosInsumosSuframaComponent } from './formulario/formulario-quadros-insumos-suframa.component';
 import { ConsultarInsumosNacionalSuframaGridComponent } from './grid/grid-insumos-nacional-suframa.component';
 import { ConsultarInsumosImportadosSuframaGridComponent } from './grid/grid-insumos-importados-suframa.component';
@@ -45,6 +46,7 @@ import { ModalJustificativaReprovacaoComponent } from './modal/modal-justificati
 		ConsultarProcessoExportacaoSuframaGridComponent,
 		FormularioAcompanharProcessoSuframaComponent,
 		ConsultarFormularioPropriedadeProdutoSuframaComponent,
+		ConsultarFormularioPropriedadeProdutoComprovacaoSuframaComponent,
 		ConsultarFormularioQuadrosInsumosSuframaComponent,
 		ConsultarInsumosNacionalSuframaGridComponent,
 		ConsultarInsumosImportadosSuframaGridComponent,

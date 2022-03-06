@@ -126,6 +126,8 @@ import { PlanoDeExportacaoComponent } from '../views/plano-de-exportacao/plano-d
 import { ConsultarProcessoExportacaoComponent } from '../views/consultar-processo-exportacao/consultar-processo-exportacao.component';
 import { FormularioAcompanharProcessoComponent } from '../views/consultar-processo-exportacao/formulario/formulario-acompanhar-processo.component';
 import { ConsultarFormularioPropriedadeProdutoComponent } from '../views/consultar-processo-exportacao/formulario/formulario-propriedade-produto.component';
+import { ConsultarFormularioPropriedadeProdutoComprovacaoComponent } from '../views/consultar-processo-exportacao/formulario/formulario-propriedade-produto-comprovacao.component';
+import { ConsultarFormularioPropriedadeProdutoComprovacaoSuframaComponent } from '../views/consultar-processo-exportacao-suframa/formulario/formulario-propriedade-produto-comprovacao-suframa.component';
 import { ConsultarFormularioQuadrosInsumosComponent } from '../views/consultar-processo-exportacao/formulario/formulario-quadros-insumos.component';
 import { EstruturaPropriaPEComponent } from '../views/estrututra-propria-pe/estrutura-propria-pe.component';
 import { AnalisePlanoFormularioPlanoComponent } from '../views/plano-de-exportacao/analise-plano-exportacao/formulario-analise-plano.component';
@@ -646,6 +648,7 @@ const routes: Routes = [
 		children:[
 			{path: 'visualizar', component: FormularioAcompanharProcessoComponent},
 			{path: 'visualizar-propriedade-produto', component: ConsultarFormularioPropriedadeProdutoComponent},
+			{path: 'visualizar-propriedade-produto-comprovacao', component: ConsultarFormularioPropriedadeProdutoComprovacaoComponent},
 			{path: 'visualizar-quadro-nacional', component: ConsultarFormularioQuadrosInsumosComponent},
 			{path: 'visualizar-quadro-importado', component: ConsultarFormularioQuadrosInsumosComponent},
 		]
@@ -664,6 +667,7 @@ const routes: Routes = [
 	{ path: 'consultar-processo-exportacao-suframa/:idProduto',
 		children:[
 			{path: 'visualizar-propriedade-produto', component: ConsultarFormularioPropriedadeProdutoSuframaComponent},
+			{path: 'visualizar-propriedade-produto-comprovacao', component: ConsultarFormularioPropriedadeProdutoComprovacaoSuframaComponent},
 			{path: 'visualizar-quadro-nacional', component: ConsultarFormularioQuadrosInsumosSuframaComponent},
 			{path: 'visualizar-quadro-importado', component: ConsultarFormularioQuadrosInsumosSuframaComponent},
 		]

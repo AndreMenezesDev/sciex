@@ -10,11 +10,11 @@ import {Location} from '@angular/common';
 declare var $: any;
 
 @Component({
-	selector: 'app-consultar-formulario-propriedade-produto-suframa',
-	templateUrl: './formulario-propriedade-produto-suframa.component.html'
+	selector: 'app-consultar-formulario-propriedade-produto-comprovacao-suframa',
+	templateUrl: './formulario-propriedade-produto-comprovacao-suframa.component.html'
 })
 
-export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements OnInit {
+export class ConsultarFormularioPropriedadeProdutoComprovacaoSuframaComponent implements OnInit {
 	path: string;
 	servico = "ProcessoProduto";
 	modelProduto: any = {};
@@ -63,6 +63,7 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 			this.modelProcesso = result.processo;
 			this.listaPais = result.listaProdutoPaisPaginada.items;
 			this.totalpais = result.listaProdutoPaisPaginada.total;
+			this.documentosComprobatorios();
 		});
 	}
 
@@ -105,5 +106,6 @@ export class ConsultarFormularioPropriedadeProdutoSuframaComponent implements On
 
 	onChangePage($event) {
 		this.grid.page = $event;
+		this.documentosComprobatorios();
 	}
 }

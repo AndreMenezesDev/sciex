@@ -417,8 +417,8 @@ namespace Suframa.Sciex.BusinessLogic
 																		: "-"
 																		;
 
-			prod.Processo.TipoStatusString = prod.Processo.TipoStatus.Equals("AP") ? "APROVADO"
-																			: "-";
+			prod.Processo.TipoStatusString =	prod.Processo.TipoStatus.Equals("AP") ? "APROVADO": 
+												prod.Processo.TipoStatus.Equals("CO") ? "COMPROVADO" : "-";
 			var pagedFilter = new PagedOptions();
 			prod.ListaProdutoPaisPaginada = _uowSciex.QueryStackSciex.PRCProdutoPais.ListarPaginadoGrafo(w => new PRCProdutoPaisVM()
 			{
@@ -426,7 +426,9 @@ namespace Suframa.Sciex.BusinessLogic
 				IdPrcProduto = w.IdPrcProduto,
 				QuantidadeAprovado = w.QuantidadeAprovado,
 				ValorDolarAprovado = w.ValorDolarAprovado,
-				CodigoPais = w.CodigoPais
+				CodigoPais = w.CodigoPais,
+				ValorDolarComprovado = w.ValorDolarComprovado,
+				QuantidadeComprovado = w.QuantidadeComprovado
 			},
 			q=> q.IdPrcProduto == idProduto
 			,
