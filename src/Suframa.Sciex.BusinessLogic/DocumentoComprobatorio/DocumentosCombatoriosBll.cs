@@ -30,6 +30,10 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				sort = "DescricaoPais";
 				objeto.Sort = null;
+			}else if ("DataAverbacaoFormatada".Equals(objeto.Sort))
+			{
+				sort = "DataAverbacaoFormatada";
+				objeto.Sort = null;
 			}
 			var pagedItems = _uowSciex.QueryStackSciex.PRCDue.ListarPaginadoGrafo(o => new PRCDueComplementoVM()
 			{
@@ -63,6 +67,16 @@ namespace Suframa.Sciex.BusinessLogic
 						else
 						{
 							pagedItems.Items = pagedItems.Items.OrderByDescending(x => x.DescricaoPais).ToList();
+						}
+					}else if ("DataAverbacaoFormatada".Equals(objeto.Sort))
+					{
+						if (!objeto.Reverse)
+						{
+							pagedItems.Items = pagedItems.Items.OrderBy(x => x.DataAverbacaoFormatada).ToList();
+						}
+						else
+						{
+							pagedItems.Items = pagedItems.Items.OrderByDescending(x => x.DataAverbacaoFormatada).ToList();
 						}
 					}
 				}
