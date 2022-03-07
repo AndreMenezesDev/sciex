@@ -97,7 +97,10 @@ namespace Suframa.Sciex.BusinessLogic
 
 						int iQtPEInsumoAprovadosOuInativos = objPEInsumo.Count(f => f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.APROVADO
 																		||
-																		f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO);
+																		f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO
+																		||
+																		f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO_EMPRESA
+																		);
 
 						int qtdPEInsumosCorrigidos = objPEInsumo.Count(f => f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO);
 
@@ -105,7 +108,10 @@ namespace Suframa.Sciex.BusinessLogic
 						{
 							objPEInsumo = objPEInsumo.Where(f => f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.APROVADO
 																		||
-																		f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO).ToList();
+																		f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO
+																		||
+																		f.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.INATIVO_EMPRESA
+																		).ToList();
 
 							//int iQtPEDInsumos = 0;
 							//int iQtPEDInsumoAprovados = 0;
