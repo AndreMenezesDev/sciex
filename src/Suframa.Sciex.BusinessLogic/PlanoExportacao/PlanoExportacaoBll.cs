@@ -1180,22 +1180,39 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 
 			var validacao = ValidarPlanoExportacaoComprovacao(idPlanoExportacao, retorno);
-			if (validacao.Resultado==true)
-			{
-				var PesquisaEntrega = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.IdPlanoExportacao==idPlanoExportacao);
 
-				PesquisaEntrega.Situacao = 2;
-				PesquisaEntrega.DataEnvio = DateTime.Now;
-				retorno.Resultado = true;
-				_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(PesquisaEntrega);
-				_uowSciex.CommandStackSciex.Save();
+			var regPlanoExportacao = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.IdPlanoExportacao == idPlanoExportacao);
+
+			if (validacao.Resultado)
+			{
+				switch (regPlanoExportacao.Situacao)
+				{
+					case (int)EnumSituacaoPlanoExportacao.EM_ELABORAÇÃO:
+						regPlanoExportacao.Situacao = (int)EnumSituacaoPlanoExportacao.ENTREGUE;
+						regPlanoExportacao.DataEnvio = DateTime.Now;
+						retorno.Resultado = true;
+						_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(regPlanoExportacao);
+						_uowSciex.CommandStackSciex.Save();
+						break;
+
+					case (int)EnumSituacaoPlanoExportacao.EM_CORREÇÃO:
+						regPlanoExportacao.Situacao = (int)EnumSituacaoPlanoExportacao.AGUARDANDO_ANÁLISE;
+						regPlanoExportacao.DataEnvio = DateTime.Now;
+						_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(regPlanoExportacao);
+						_uowSciex.CommandStackSciex.Save();
+						retorno.Resultado = true;
+						break;
+
+					default:
+						retorno.Resultado = false;
+						break;
+				}
 
 			}
 			else
 			{
 				retorno.Resultado = false;
 			}
-			
 
 			return retorno;
 		}

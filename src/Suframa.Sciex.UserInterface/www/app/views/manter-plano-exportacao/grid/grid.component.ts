@@ -90,36 +90,40 @@ export class ManterPlanoExportacaoGridComponent {
 		.subscribe(result => {
 			if (result){
 				this.validar(item, true);
-				this.applicationService.post(this.servicoEntregarPlanoComprovacao,item).subscribe((result: any)=>{
-					if(result.resultado==true){
-						this.modal.resposta("Entrega feita com sucesso"," Sucesso","").subscribe(()=>{
-							this.formPai.listar();
-						})
-					}
-					else{
-						this.modal.alerta("A Entrega não pode ser efetuada","Alerta","")
-					}
-	
-				});
 			}
 		})
 	}
 	processarEntrega(item: any) {
-	
-		this.applicationService.post(this.servicoEntregarPlano, item).subscribe((result: any) => {
-			if (!result.resultado) {
-				if(result.mensagem != null && result.mensagem != ""){
-					this.modal.alerta(result.mensagem, "Informação", "");
+		
+		if(item.tipoExportacao == "AP") {
+			this.applicationService.post(this.servicoEntregarPlano, item).subscribe((result: any) => {
+				if (!result.resultado) {
+					if(result.mensagem != null && result.mensagem != ""){
+						this.modal.alerta(result.mensagem, "Informação", "");
+					}
+					else {
+						this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
+					}
+					return;
+				}else{
+					this.formPai.listar();
+					this.modal.resposta(this.msg.OPERACAO_REALIZADA_COM_SUCESSO, "Informação", "");
 				}
-				else {
-					this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
+			});
+		}
+		else if(item.tipoExportacao == "CO"){
+			this.applicationService.post(this.servicoEntregarPlanoComprovacao,item).subscribe((result: any)=>{
+				if(result.resultado==true){
+					this.modal.resposta("Entrega feita com sucesso"," Sucesso","").subscribe(()=>{
+						this.formPai.listar();
+					})
 				}
-				return;
-			}else{
-				this.formPai.listar();
-				this.modal.resposta(this.msg.OPERACAO_REALIZADA_COM_SUCESSO, "Informação", "");
-			}
-		});
+				else{
+					this.modal.alerta("A Entrega não pode ser efetuada","Alerta","")
+				}
+
+			});
+		}
 	
 	
 	}
@@ -127,19 +131,18 @@ export class ManterPlanoExportacaoGridComponent {
 
 	validar(item, realizarEntrega: boolean){
 		let idPlanoExportacao = item.idPlanoExportacao;
-		if(item.tipo=="AP"){
+		if(item.tipoExportacao == "AP"){
 
 		this.applicationService.post(this.servicoValidarPlano, item).subscribe((result: any) => {
 			
 			if (!result.resultado) {
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO + ": "+result.mensagem, "Atenção", "");
 			}else if(result.camposNaoValidos == null){
-				this.modal.resposta("Plano sem erros de validação", "Informação", "")
-				.subscribe(()=>{
-					if (realizarEntrega){
-						this.processarEntrega(item);
-					}
-				});
+				if (realizarEntrega){
+					this.processarEntrega(item);
+				}else{
+					this.modal.resposta("Plano sem erros de validação", "Informação", "");
+				}
 			}else if(result.camposNaoValidos != null){
 				
 				if (result.camposNaoValidos.naoExisteProduto){
@@ -192,22 +195,27 @@ export class ManterPlanoExportacaoGridComponent {
 			}
 			});
 	}
-		else if(item.tipo!="AP"){
+	else if(item.tipoExportacao == "CO"){
 		this.applicationService.post(this.servicoValidarPlanoComprovacao,item).subscribe((result: any)=>{
-				if(result.resultado==true){
+			if(result.resultado==true){
+				
+				if(realizarEntrega) {
+					this.processarEntrega(item);
+				}else{
 					this.modal.resposta("Validação feita com sucesso","Sucesso","")
+				}
 
-				}
-				else if(result.camposNaoValidos.naoExisteProduto ){
-					this.modal.alerta("Erro na validação. Plano não possui produto cadastrado","Erro","")
-				}
-				else if(result.camposNaoValidos.naoExisteExistePais ){
-					this.modal.alerta("Erro na validação. Plano não possui produto pais cadastrado","Erro","")
-				}
-					else if(result.camposNaoValidos.naoExisteDue ){
-					this.modal.alerta("Erro na validação. Plano não possui registro DU-E","Erro","")
-				}
-		
+			}
+			else if(result.camposNaoValidos.naoExisteProduto ){
+				this.modal.alerta("Erro na validação. Plano não possui produto cadastrado","Erro","")
+			}
+			else if(result.camposNaoValidos.naoExisteExistePais ){
+				this.modal.alerta("Erro na validação. Plano não possui produto pais cadastrado","Erro","")
+			}
+				else if(result.camposNaoValidos.naoExisteDue ){
+				this.modal.alerta("Erro na validação. Plano não possui registro DU-E","Erro","")
+			}
+	
 		});
 	}
 }
