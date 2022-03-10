@@ -51,6 +51,7 @@ export class ManterPlanoFormularioPlanoComprovacaoComponent implements OnInit {
 	titulo: string;
 	isCorrecaoComprovacao: boolean;
 	tipoExportacao: any;
+	situacaoPlanoExportacao: any;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -149,6 +150,7 @@ export class ManterPlanoFormularioPlanoComprovacaoComponent implements OnInit {
 
 			this.model = result;
 			this.tipoExportacao = result.tipoExportacao;
+			this.situacaoPlanoExportacao = result.situacao;
 			this.model.nomeAnexo= this.model.listaAnexos[0].nomeArquivo;
 			if(result.listaAnexos.length > 0 && result.listaAnexos[0].anexo != "") {
 				this.temArquivo = true;
@@ -336,9 +338,9 @@ export class ManterPlanoFormularioPlanoComprovacaoComponent implements OnInit {
 	}
 
 	abrirPropriedadeProduto(item){
-		if(this.tipoExportacao != 'CO'){
+		if(this.situacaoPlanoExportacao == 1){
 			this.router.navigate([`/manter-plano-exportacao/${item.idPEProduto}/propriedadeprodutocomprovacao`])
-		}else{
+		}else if(this.situacaoPlanoExportacao == 6){
 			this.router.navigate([`/manter-plano-exportacao/${item.idPEProduto}/propriedadeprodutocomprovacaocorrecao`])
 		}
 	}

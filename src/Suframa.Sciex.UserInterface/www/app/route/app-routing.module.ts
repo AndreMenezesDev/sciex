@@ -153,8 +153,12 @@ import { ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent } f
 
 const routes: Routes = [
 	{ path: 'manter-plano-exportacao', component: ManterPlanoExportacaoComponent },
-	{ path: 'manter-plano-exportacao/:id/cadastrar', component: ManterPlanoFormularioPlanoComponent },
-	{ path: 'manter-plano-exportacao/:id/cadastrarcomprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
+	{ path: 'manter-plano-exportacao/:id',
+		children:[
+			{path: 'cadastrar', component: ManterPlanoFormularioPlanoComponent },
+			{path: 'cadastrarcomprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
+		] 
+	},
 	{ path: 'manter-plano-exportacao/:id/visualizarcomprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizar', component: ManterPlanoFormularioPlanoComponent },
 	{ path: 'manter-plano-exportacao/:id/correcao', component: ManterPlanoFormularioPlanoComponent },
