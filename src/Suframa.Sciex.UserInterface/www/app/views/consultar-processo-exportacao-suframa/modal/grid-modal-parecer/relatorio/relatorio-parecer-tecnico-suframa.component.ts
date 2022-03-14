@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { MonthPipe } from "../../../../../shared/pipes/month.pipe";
 import { ApplicationService } from "../../../../../shared/services/application.service";
 import { ActivatedRoute } from "@angular/router";
+import { AssignHour } from "../../../../../shared/services/assignHour.service";
 
 enum TipoParecer {
 	APROVADO = 1,
@@ -30,6 +31,7 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 	constructor(
 		private location: Location,
 		private applicationService: ApplicationService,
+		private assignHour: AssignHour,
 		private route: ActivatedRoute
 	) {
 		this.path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
@@ -57,6 +59,7 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 	}
 
 	gerarPDF() {
+		const assign = this.assignHour;
 		let renderizarHtml = new Promise(resolve => {
 			let rel = this.ocultarPdf == 1 ? 'relatorioPDF1' :
 						this.ocultarPdf == 2 ? 'relatorioPDF2' : 
@@ -81,24 +84,13 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 			};
 			html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
 				var totalPages = pdf.internal.getNumberOfPages();
-
+				
 				for (var i = 1; i <= totalPages; i++) {
 					pdf.setPage(i);
 					pdf.setFontSize(10);
 					pdf.setTextColor(150);
 
-					var dateObj = new Date();
-					var month = dateObj.getUTCMonth().toString().length <= 1 ? '0' + (dateObj.getUTCMonth() + 1).toString() : dateObj.getUTCMonth() + 1;
-					var day = dateObj.getUTCDate();
-					var year = dateObj.getUTCFullYear();
-
-					var hh = dateObj.getHours();
-					var mm = dateObj.getMinutes();
-					var ss = dateObj.getSeconds();
-
-					var newhr = hh + ":" + mm + ":" + ss;
-
-					var newdate = day + "/" + month + "/" + year;
+					var {newhr, newdate} = assign.getHourCurrent(new Date())
 
 					pdf.text('Data/Hora de Emissão: ' + newdate + " " + newhr
 						+ '                                                                                                           Página ' + i + ' de ' + (totalPages), .2, 11.5);
@@ -119,17 +111,6 @@ export class RelatorioParecerTecnicoSuframaComponent implements OnInit {
 	}
 
 	public buscarDados(id: number) {
-
-		// data de emissão do relatorio
-		var dateObj = new Date();
-		var month = dateObj.getUTCMonth() + 1;
-		var day = dateObj.getUTCDate().toString().length <= 1 ? '0' + dateObj.getUTCDate().toString() : dateObj.getUTCDate().toString();
-		var year = dateObj.getUTCFullYear();
-
-		var monthExt = new MonthPipe().transform(Number(month));
-
-		this.dataEmissao = day + " de " + monthExt + " de " + year;
-		//
 
 		this.applicationService.get(this.servico, id).subscribe((result: any) => {
 			this.model = result;

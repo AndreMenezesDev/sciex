@@ -22,6 +22,7 @@ import { ExcelService } from './excel.service';
 import { PDFService } from './pdf.service';
 import { FormatCodeService } from './format-code.service';
 import { ApiService } from './api.service';
+import { AssignHour } from './assignHour.service';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ApiService } from './api.service';
 		ExcelService,
 		PDFService,
 		FormatCodeService,
-		ApiService
+		ApiService,
+		AssignHour
 
 	]
 })

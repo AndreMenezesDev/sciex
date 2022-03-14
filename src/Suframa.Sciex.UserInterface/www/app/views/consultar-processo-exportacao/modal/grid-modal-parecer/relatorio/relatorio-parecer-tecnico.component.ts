@@ -4,6 +4,7 @@ import {Location} from '@angular/common';
 import { MonthPipe } from "../../../../../shared/pipes/month.pipe";
 import { ApplicationService } from "../../../../../shared/services/application.service";
 import { ActivatedRoute } from "@angular/router";
+import { AssignHour } from "../../../../../shared/services/assignHour.service";
 
 enum TipoParecer {
 	APROVADO = 1,
@@ -28,6 +29,7 @@ export class RelatorioParecerTecnicoComponent implements OnInit{
 	constructor(
 		private location: Location,
 		private applicationService: ApplicationService,
+		private assignHour: AssignHour,
 		private route: ActivatedRoute
 	) {
 		this.path = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
@@ -54,6 +56,7 @@ export class RelatorioParecerTecnicoComponent implements OnInit{
 	}
 
 	gerarPDF(){
+		const assign = this.assignHour;
 		let renderizarHtml = new Promise(resolve => {
 			let rel = this.ocultarPdf == 1 ? 'relatorioPDF1' :
 						this.ocultarPdf == 2 ? 'relatorioPDF2' : 
@@ -81,18 +84,7 @@ export class RelatorioParecerTecnicoComponent implements OnInit{
 					  pdf.setFontSize(10);
 					  pdf.setTextColor(150);
 
-					  var dateObj = new Date();
-					  var month = dateObj.getUTCMonth().toString().length <= 1 ? '0' + (dateObj.getUTCMonth() + 1).toString() : dateObj.getUTCMonth() + 1;
-					  var day = dateObj.getUTCDate();
-					  var year = dateObj.getUTCFullYear();
-
-					  var hh = dateObj.getHours();
-					  var mm = dateObj.getMinutes();
-					  var ss = dateObj.getSeconds();
-
-					  var newhr = hh + ":" + mm + ":" + ss;
-
-					  var newdate = day + "/" + month + "/" + year;
+					  var {newhr, newdate} = assign.getHourCurrent(new Date())
 
 					  pdf.text('Data/Hora de Emissão: '+ newdate + " " + newhr
 					  + '                                                                                                           Página ' + i + ' de ' + (totalPages), .2, 11.5);
