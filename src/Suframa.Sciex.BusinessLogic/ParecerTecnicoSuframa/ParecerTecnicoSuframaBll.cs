@@ -86,7 +86,7 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
 					parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
 					parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "AP" ? "APROVADO" : "-";
@@ -127,7 +127,7 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
 					parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
 					parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "AL" ? "ALTERADO" : "-";
@@ -155,7 +155,7 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.NumeroControleString = parecer.AnoControle.ToString("D4") + "/" + parecer.NumeroControle.ToString("D4");
 					parecer.InscricaoCadastral = parecer.InscricaoSuframa.ToString();
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoProcesso.Value.ToString("D4");
 					parecer.ExportacaoComprovadaFormatado = parecer.ExportacaoComprovada == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.ExportacaoComprovada);
 					parecer.InsumosNacionaisAdquiridosFormatado = parecer.InsumosNacionaisAdquiridos == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", parecer.InsumosNacionaisAdquiridos);
 					var regProcesso = _uowSciex.QueryStackSciex.Processo.Selecionar(o => o.AnoProcesso == parecer.AnoProcesso && o.NumeroProcesso == parecer.NumeroProcesso);
@@ -175,7 +175,7 @@ namespace Suframa.Sciex.BusinessLogic
 				case "CO":
 
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "CO" ? "COMPROVADO" : "-";
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
 					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();

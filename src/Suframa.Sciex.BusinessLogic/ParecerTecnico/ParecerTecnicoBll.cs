@@ -83,7 +83,7 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
 					parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
 					parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "AP" ? "APROVADO" : "-";
@@ -124,7 +124,7 @@ namespace Suframa.Sciex.BusinessLogic
 					parecer.DataStatusFormatada = parecer.DataStatus.Value.ToShortDateString();
 					parecer.DataValidadeFormatada = parecer.DataValidade.Value.ToShortDateString();
 					parecer.NumeroControleString = parecer.NumeroControle.ToString("D4") + "/" + parecer.AnoControle.ToString("D4");
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
 					parecer.TipoModalidadeDescricao = parecer.TipoModalidade == "S" ? "Suspensão" : parecer.TipoModalidade == "I" ? "Isenção" : "-";
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "AP" ? "APROVADO" : "-";
@@ -140,7 +140,7 @@ namespace Suframa.Sciex.BusinessLogic
 				case "CA":
 					
 					parecer.TipoStatusDescricao = parecer.TipoStatus == "CA" ? "CANCELADO" : "-";
-					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D4") + "/" + parecer.AnoPlano.Value.ToString("D4");
+					parecer.NumeroPlanoString = parecer.NumeroPlano.Value.ToString("D5") + "/" + parecer.AnoPlano.Value.ToString("D4");
 					parecer.NumeroControleString = parecer.AnoControle.ToString("D4") + "/" + parecer.NumeroControle.ToString("D4");
 					parecer.InscricaoCadastral = parecer.InscricaoSuframa.ToString();
 					parecer.NumeroProcessoString = parecer.NumeroProcesso.Value.ToString("D4") + "/" + parecer.AnoProcesso.Value.ToString("D4");
