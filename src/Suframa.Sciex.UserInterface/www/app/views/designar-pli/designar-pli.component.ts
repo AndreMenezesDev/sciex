@@ -443,7 +443,7 @@ export class DesignarPliComponent implements OnInit {
 			this.parametros.numeroProcesso = this.parametros.numeroAnoProcesso.split("/")[0];
 			this.parametros.anoProcesso = this.parametros.numeroAnoProcesso.split("/")[1];
 		}else{
-			this.parametros.numeroAnoSolicitacao = null;
+			this.parametros.numeroAnoProcesso = null;
 		}
 
 		this.parametros.exportarListagem = true;
