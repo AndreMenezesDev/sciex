@@ -79,7 +79,7 @@
 						<app-ordenacao field="Situacao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Status</app-ordenacao>
 					</th>
 					<th class="th-sortable th-150 unset-nowrap text-center" *ngIf="isSolic">
-						<app-ordenacao field="NomeResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista Designado</app-ordenacao>
+						<app-ordenacao field="CpfResponsavel" [sorted]="sorted" (onChangeSort)="changeSort($event)">Analista Designado</app-ordenacao>
 					</th>
 					<th class="th-sortable th-110 unset-nowrap  text-center" *ngIf="isSolic">
 						<app-ordenacao field="DataAlteracao" [sorted]="sorted" (onChangeSort)="changeSort($event)">Data de Entrega</app-ordenacao>

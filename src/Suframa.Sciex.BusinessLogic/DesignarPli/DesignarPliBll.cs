@@ -149,6 +149,10 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				order = q => q.DataAlteracao;
 			}
+			if (!string.IsNullOrEmpty(pagedFilter.Sort) && pagedFilter.Sort.Equals("CpfResponsavel"))
+			{
+				order = q => q.CpfResponsavel;
+			}
 			#endregion
 
 			int EmAnalise= 3;
