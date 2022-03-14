@@ -123,7 +123,10 @@ export class SolicitacoesAlteracaoComponent implements OnInit {
 		// this.parametros.numeroProcesso = null;
 		// this.parametros.anoProcesso = null;
 		// this.parametros.descricaoStatus = null;
-		// this.parametros.numeroAnoProcessoFormatado = null;
+		this.parametros.numeroAnoProcessoFormatado = 
+						this.parametros.numeroProcesso = 
+						this.parametros.anoProcesso    = null;
+
 		this.parametros.numeroAnoSolicitacaoFormatado = null;
 		this.parametros.dataInicioString = "";
 		this.parametros.dataFimString = "";
@@ -147,6 +150,9 @@ export class SolicitacoesAlteracaoComponent implements OnInit {
 				this.parametros.numeroProcesso = Number(Processo[0]);
 				this.parametros.anoProcesso = Number(Processo[1]);
 			}
+		}else{
+			this.parametros.numeroProcesso = null;
+			this.parametros.anoProcesso = null;
 		}
 
 		if(this.parametros.numeroAnoSolicitacaoFormatado){
