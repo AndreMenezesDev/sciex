@@ -36,7 +36,14 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				var processoEntity = _uowSciex.QueryStackSciex.Processo.Selecionar(o => o.NumeroProcesso == objeto.NumeroProcesso &&
 																						o.AnoProcesso == objeto.AnoProcesso);
-				objeto.IdProcesso = processoEntity.IdProcesso; 									
+				if (processoEntity != null)
+				{
+					objeto.IdProcesso = processoEntity.IdProcesso;
+				}
+				else
+				{
+					return null;
+				}
 			}
 			#endregion
 

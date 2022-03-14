@@ -231,16 +231,21 @@ export class SolicitacoesAlteracaoComponent implements OnInit {
 		}
 
 		this.applicationService.get(this.servico, this.parametros).subscribe((result: PagedItems) => {
-			if(result.total > 0){
-				this.isModificouPesquisa = false;
-				this.isBuscaSalva = true;
-				this.grid.lista = result.items;
-				this.grid.total = result.total;
-				this.setarDadosExportacao();
-			} else{
-				this.grid = { sort: {} };
+			if(result != null) {
+				if(result.total > 0){
+					this.isModificouPesquisa = false;
+					this.isBuscaSalva = true;
+					this.grid.lista = result.items;
+					this.grid.total = result.total;
+					this.setarDadosExportacao();
+				} else{
+					this.grid = { sort: {} };
+				}
+				this.gravarBusca();
 			}
-			this.gravarBusca();
+			else{
+				this.modal.alerta("Número de processo inexistente.")
+			}
 		});
     }
 
