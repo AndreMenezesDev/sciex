@@ -58,7 +58,14 @@ export class SolicitacoesAlteracaoComponent implements OnInit {
 		{
 			this.idProcesso = this.route.snapshot.params['idProcesso'];
 			this.buscarCodigoProcessoPorId();
+		}else{
+			this.setHistoryUrl()
 		}
+	}
+
+	setHistoryUrl(){
+		let arrayUrl: Array<any> = [this.router.url];
+		sessionStorage.setItem("arrayUrl", JSON.stringify(arrayUrl))
 	}
 
 	ngOnInit(): void {

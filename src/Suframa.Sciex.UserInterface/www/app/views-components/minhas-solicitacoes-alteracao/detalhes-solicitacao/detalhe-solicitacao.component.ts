@@ -89,12 +89,18 @@ export class DetalheSolicitacaoComponent implements OnInit {
 	voltar(){
 		let arrayUrl = sessionStorage.getItem("arrayUrl");
 		let obj = JSON.parse(arrayUrl)
-		let url = obj[obj.length - 2]
-		obj.pop()
-		sessionStorage.removeItem("arrayUrl")
-		sessionStorage.setItem("arrayUrl", JSON.stringify(obj))
+		if(obj.length > 1) {
+			let url = obj[obj.length - 2]
+			obj.pop()
+			sessionStorage.removeItem("arrayUrl")
+			sessionStorage.setItem("arrayUrl", JSON.stringify(obj))
+			this.router.navigate([url]);
+		}else{
+			let url = obj[0];
+			this.router.navigate([url]);
+		}
 		
-		this.router.navigate([url]);
+		
 	}
 
 	setarDadosExportacao() {

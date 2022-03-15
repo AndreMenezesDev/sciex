@@ -74,9 +74,16 @@ export class GridSolicitacoesAlteracaoComponent {
 	
 	setHistoryUrl(url){
 		let arrayUrl = sessionStorage.getItem("arrayUrl");
-		let listArray = JSON.parse( arrayUrl)
-		listArray.push(url)
-		sessionStorage.removeItem("arrayUrl");
+		let listArray = [];
+		if (arrayUrl == undefined || arrayUrl == null){
+			arrayUrl = `["${url}"]`;
+			listArray = JSON.parse( arrayUrl);
+		}else{
+			listArray = JSON.parse( arrayUrl)
+			listArray.push(url)
+			sessionStorage.removeItem("arrayUrl");
+		}
+		
 		sessionStorage.setItem("arrayUrl",JSON.stringify(listArray));
 	}
 
