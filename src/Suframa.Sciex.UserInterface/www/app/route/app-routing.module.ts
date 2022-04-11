@@ -150,6 +150,10 @@ import { FormularioDetalhesInsumoSuframaComponent } from '../views/consultar-pro
 import { ManterPlanoFormularioPlanoComprovacaoComponent } from '../views/manter-plano-exportacao/formulario/formularioPlanoComprovacao.component';
 import { AnalisarPlanoFormularioPropriedadeProdutoComprovacaoComponent } from '../views/plano-de-exportacao/analise-plano-exportacao/propriedade-produto/formularioAnalisePropriedadeProdutoComprovacao.component';
 import { ManterPlanoFormularioPropriedadeProdutoComprovacaoCorrecaoComponent } from '../views/manter-plano-exportacao/formulario/formularioPropriedadeProdutoComprovacaoCorrecao.component';
+import { RelatoriErrosoDueComponent } from '../views/relatorios-due/relatorio-erro-due.component';
+import { RelatorioHistoricoComponent } from '../views/relatorios-historico/relatorio-historico.component';
+import { RelatorioErrosDueModule } from '../views/relatorios-due/relatorio-erros-due.module';
+import { RelatorioAnalisadorDue } from '../views/relatorios-analisador-due/relatorio-analisador-due.component';
 
 const routes: Routes = [
 	{ path: 'manter-plano-exportacao', component: ManterPlanoExportacaoComponent },
@@ -157,7 +161,7 @@ const routes: Routes = [
 		children:[
 			{path: 'cadastrar', component: ManterPlanoFormularioPlanoComponent },
 			{path: 'cadastrarcomprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
-		] 
+		]
 	},
 	{ path: 'manter-plano-exportacao/:id/visualizarcomprovacao', component: ManterPlanoFormularioPlanoComprovacaoComponent },
 	{ path: 'manter-plano-exportacao/:id/visualizar', component: ManterPlanoFormularioPlanoComponent },
@@ -190,6 +194,10 @@ const routes: Routes = [
 	{ path: 'manter-plano-exportacao-detalhes-insumos-acompanhar/:id/detalhe-importado-visualizar', component: ConsultarPlanoFormularioDetalhesInsumosComponent },
 	{ path: 'manter-plano-exportacao-detalhes/:id/analisar-detalhe-insumos', component: ConsultarPlanoFormularioDetalhesInsumosComponent },
 	{ path: 'manter-plano-exportacao-detalhes/:id/editar-detalhe-insumos-novo', component: ConsultarPlanoFormularioDetalhesInsumosComponent },
+	{ path: 'relatorio-historico', component: RelatorioHistoricoComponent },
+	{ path: 'relatorio-erro-due', component: RelatoriErrosoDueComponent },
+	{ path: 'relatorio-analisador-due', component: RelatorioAnalisadorDue },
+
 	{ path: 'consultar-protocolo-envio', component: ManterConsultarProtocoloEnvioComponent },
 	{
 		path: 'consultar-protocolo-envio/:id/:status',

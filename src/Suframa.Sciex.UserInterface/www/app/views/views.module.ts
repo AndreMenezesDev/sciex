@@ -54,7 +54,9 @@ import { PlanoDeExportacaoModule } from './plano-de-exportacao/plano-de-exportac
 import { ConsultarProcessoExportacaoModule } from './consultar-processo-exportacao/consultar-processo-exportacao.module';
 import { EstruturaPropriaPEModule } from './estrututra-propria-pe/estrutura-propria-pe.module';
 import { ConsultarProcessoExportacaoSuframaModule } from './consultar-processo-exportacao-suframa/consultar-processo-exportacao-suframa.module';
-
+import { RelatorioHistoricoModule } from './relatorios-historico/relatorio-historico.module';
+import { RelatorioAnalisadorDueModule } from './relatorios-analisador-due/relatorio-analisador-due.module';
+import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.module';
 @NgModule({
 	declarations: [
 		IndexComponent,
@@ -153,7 +155,10 @@ import { ConsultarProcessoExportacaoSuframaModule } from './consultar-processo-e
 		ManterPlanoExportacaoModule,
 		EstruturaPropriaPEModule,
 		ConsultarProcessoExportacaoSuframaModule,
-		ConsultarProcessoExportacaoModule
+		ConsultarProcessoExportacaoModule,
+		RelatorioErrosDueModule,
+		RelatorioAnalisadorDueModule,
+		RelatorioHistoricoModule
 	]
 })
 export class ViewsModule { }

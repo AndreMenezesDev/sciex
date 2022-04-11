@@ -186,7 +186,7 @@ export class MenuComponent implements OnInit {
 					descricao: 'Manter NCM'
 				}
 				,
-				{ 
+				{
 					nome: 'NCM Exceção',
 					url: '/manter-ncm-excecao',
 					descricao: 'NCM Exceção'
@@ -237,12 +237,12 @@ export class MenuComponent implements OnInit {
 				nome: 'Recinto da Alfândega',
 				url: '/manter-recinto-alfandega',
 				descricao: 'Manter Recinto da Alfândega'
-			},			
+			},
 			{
 				nome: 'Setor Armazenamento',
 				url: '/manter-setor-armazenamento',
 				descricao: 'Manter Setor Armazenamento'
-			},	
+			},
 			{
 				nome: 'Tipo Declaração',
 				url: '/manter-tipo-declaracao',
@@ -283,7 +283,7 @@ export class MenuComponent implements OnInit {
 				url: '/manter-plano-exportacao',
 				descricao: 'Cadastrar Plano de Exportação'
 			}
-			,		
+			,
 			{
 				nome: 'Minhas Solicitações de Alteração',
 				url: '/minhas-solicitacoes-alteracao',
@@ -328,10 +328,32 @@ export class MenuComponent implements OnInit {
 				nome: 'Relatorio Teste',
 				url: '/relatorio-parecer-tecnico',
 				descricao: 'Relatorio Teste'
-				}			
+				}
 			]
 		}
 		);
+		this.Pss.push({
+			nome: 'Relatorios',
+			id: 9,
+			funcoesSistema: [
+			{
+				nome: 'Relatório Listagem do Histórico de Processo de Exportação',
+				url: '/relatorio-historico',
+				descricao: 'Relatório Listagem do Histórico de Processo de Exportação'
+			}
+			,
+			{
+				nome: 'Analisador de DU-Es Contidas no Plano',
+				url: '/relatorio-analisador-due',
+				descricao: 'Analisador de DU-Es Contidas no PlanoCadastrar Plano de Exportação'
+			}
+			,
+			{
+				nome: 'Erros nas DU-Es - Comprovação',
+				url: '/relatorio-erro-due',
+				descricao: 'Erros nas DU-Es - Comprovação'
+			}]
+		});
 	}
 
 
