@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 
 import { RelatoriErrosoDueComponent } from './relatorio-erro-due.component';
+import { FormularioRelatorioComponent } from './formulario-relatorio/formulario-relatorio.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { RelatoriErrosoDueComponent } from './relatorio-erro-due.component';
 		SharedModule
 	],
 	declarations: [
-		RelatoriErrosoDueComponent
+		RelatoriErrosoDueComponent,
+		FormularioRelatorioComponent
 	],
 })
 export class RelatorioErrosDueModule { }
