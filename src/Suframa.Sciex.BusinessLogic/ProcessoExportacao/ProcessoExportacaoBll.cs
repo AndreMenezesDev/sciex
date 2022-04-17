@@ -1009,5 +1009,83 @@ namespace Suframa.Sciex.BusinessLogic
 
 			return true;
 		}
+
+		public ProcessoExportacaoVM GerarRelatorioHistorico( int? inscricaoSuframa, string processo, string empresa)
+		{
+			var processoSplit = processo.Split('/');
+
+			int numeroProcesso = 0;
+			int anoProcesso = 0;
+			if (processoSplit.Length > 1) {
+			bool result = Int32.TryParse(processoSplit[0], out numeroProcesso);
+			result = Int32.TryParse(processoSplit[1], out anoProcesso);
+			}
+			if (numeroProcesso == 0)
+			{
+				return null;
+			}
+			var pe = _uowSciex.QueryStackSciex.Processo.SelecionarGrafo(o => new ProcessoExportacaoVM()
+			{
+				IdProcesso = o.IdProcesso,
+				NumeroProcesso = o.NumeroProcesso,
+				AnoProcesso = o.AnoProcesso,
+				InscricaoSuframa = o.InscricaoSuframa,
+				RazaoSocial = o.RazaoSocial,
+				TipoModalidade = o.TipoModalidade,
+				TipoStatus = o.TipoStatus,
+				DataValidade = o.DataValidade,
+				ValorPremio = o.ValorPremio,
+				ValorPercentualIndImportado = o.ValorPercentualIndImportado,
+				ValorPercentualIndNacional = o.ValorPercentualIndNacional,
+				Cnpj = o.Cnpj,
+				ListaStatus = o.ListaStatus.Select(q => new PRCStatusVM()
+				{
+					IdStatus = q.IdStatus,
+					IdProcesso = q.IdProcesso,
+					Tipo = q.Tipo,
+					Data = q.Data,
+					DataValidade = q.DataValidade,
+					CpfResponsavel = q.CpfResponsavel,
+					NomeResponsavel = q.NomeResponsavel,
+					NumeroPlano = q.NumeroPlano,
+					AnoPlano = q.AnoPlano,
+					DescricaoObservacao = q.DescricaoObservacao,
+				}
+				).ToList(),
+
+			}
+			, o => o.Cnpj == empresa && (inscricaoSuframa == null || o.InscricaoSuframa == inscricaoSuframa) &&(o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso));
+
+			if(pe == null)
+				return null;
+
+			pe.NumeroAnoProcessoFormatado = Convert.ToInt32(pe.NumeroProcesso).ToString("D4") + "/" + pe.AnoProcesso;
+
+			var ultimoStatus = pe.ListaStatus.LastOrDefault();
+
+			pe.NumeroAnoPlanoFormatado = ultimoStatus != null && ultimoStatus.AnoPlano != null ? Convert.ToInt32(ultimoStatus.NumeroPlano).ToString("D5") + "/" + ultimoStatus.AnoPlano : "-";
+
+			pe.DataValidadeFormatada = pe.DataValidade == DateTime.MinValue ? DateTime.MinValue.ToShortDateString() : ((DateTime)pe.DataValidade).ToShortDateString();
+
+			pe.TipoModalidadeString = pe.TipoModalidade == "S" ? "SUSPENSÃO"
+																		: pe.TipoModalidade == "I" ? "ISENÇÃO"
+																		: "-"
+																		;
+
+			pe.TipoStatusString = StatusString(pe.TipoStatus);
+
+			pe.ListaStatus = pe.ListaStatus.Select(x=> { x.DescricaoTipo = StatusString(x.Tipo); x.DataSrting = ((DateTime)x.Data).ToString("dd/MM/yyyy a HH:mm:ss").Replace("a", "as"); return x;  }).ToList();
+			return pe;
+		}
+
+		private string StatusString(string status)
+		{
+			return status.Equals("AP") ? "APROVADO" :
+				   status.Equals("CO") ? "COMPROVADO" :
+				   status.Equals("CA") ? "CANCELADO" :
+				   status.Equals("AL") ? "ALTERADO" :
+				   status.Equals("PR") ? "PRORROGADO" :
+				   status.Equals("PE") ? "PRORROGADO EM CARATER ESPECIAL" : "-";
+		}
 	}
 }
