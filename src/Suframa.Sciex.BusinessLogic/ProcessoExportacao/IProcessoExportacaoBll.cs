@@ -16,6 +16,6 @@ namespace Suframa.Sciex.BusinessLogic
 		ResultadoProcessamentoVM ValidarPlano(int idPlanoExportacao, ResultadoProcessamentoVM retorno);
 		PlanoExportacaoVM SalvarAnexo(PlanoExportacaoVM vm);
 
-		ProcessoExportacaoVM GerarRelatorioHistorico(int? inscricaoSuframa, string processo, string empresa);
+		ProcessoExportacaoVM GerarRelatorioHistorico(string processo);
 	}
 }

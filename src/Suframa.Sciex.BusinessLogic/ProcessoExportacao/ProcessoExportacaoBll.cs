@@ -1010,8 +1010,12 @@ namespace Suframa.Sciex.BusinessLogic
 			return true;
 		}
 
-		public ProcessoExportacaoVM GerarRelatorioHistorico( int? inscricaoSuframa, string processo, string empresa)
+		public ProcessoExportacaoVM GerarRelatorioHistorico(string processo)
 		{
+			if (processo == String.Empty)
+			{
+				return null;
+			}
 			var processoSplit = processo.Split('/');
 
 			int numeroProcesso = 0;
@@ -1054,7 +1058,7 @@ namespace Suframa.Sciex.BusinessLogic
 				).ToList(),
 
 			}
-			, o => o.Cnpj == empresa && (inscricaoSuframa == null || o.InscricaoSuframa == inscricaoSuframa) &&(o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso));
+			,o=> o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso);
 
 			if(pe == null)
 				return null;
@@ -1067,10 +1071,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 			pe.DataValidadeFormatada = pe.DataValidade == DateTime.MinValue ? DateTime.MinValue.ToShortDateString() : ((DateTime)pe.DataValidade).ToShortDateString();
 
-			pe.TipoModalidadeString = pe.TipoModalidade == "S" ? "SUSPENSÃO"
-																		: pe.TipoModalidade == "I" ? "ISENÇÃO"
-																		: "-"
-																		;
+			pe.TipoModalidadeString = pe.TipoModalidade == "S" ? "SUSPENSÃO" : pe.TipoModalidade == "I" ? "ISENÇÃO" : "-";
 
 			pe.TipoStatusString = StatusString(pe.TipoStatus);
 
