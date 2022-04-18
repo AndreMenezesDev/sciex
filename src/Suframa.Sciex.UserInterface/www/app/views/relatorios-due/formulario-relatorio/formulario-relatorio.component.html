@@ -1,8 +1,8 @@
 
 <div class="row">
 	<div class="col-sm-12">
-		<div style="margin-top: 3pt; text-align: left; color: grey;">Processo Nº: 2021/0001 Nº Plano: 2021/00025</div>
-		<div style="margin-top: -20px; text-align: right; color: grey;">IMPRESSO EM :11/04/2022</div>
+		<div style="margin-top: 3pt; text-align: left; color: grey;">Processo Nº: {{objetoParametro.anoNumProcesso}} Nº Plano: {{objetoParametro.anoNumPlano}}</div>
+		<div style="margin-top: -20px; text-align: right; color: grey;">IMPRESSO EM : {{objetoParametro.dataImpressao}}</div>
 		<div class="form-group m-n text-center">
 			<h4>
 				<img width="67" height="55"
@@ -21,39 +21,39 @@
 		<div class="row wrapper">
 			<div class="col-lg-12">
 				<label for="empresa" style="font-size: 11px;" class="control-label">EMPRESA:</label>
-				<br><span style="font-size: 11px;">YAMAHA DA AMAZONIA</span>
+				<br><span style="font-size: 11px;"> {{objetoParametro.nomeEmpresa}} </span>
 			</div>
 		</div>
 		<div class="row wrapper" style="border-bottom: solid 1px;">
 			<div class="col-lg-2">
 				<label for="empresa" style="font-size: 11px;" class="control-label">N° do Plano: </label>
-				<br><span style="font-size: 11px;"> 00001 </span>
+				<br><span style="font-size: 11px;"> {{objetoParametro.numeroPlanoFormated}} </span>
 			</div>
 			<div class="col-lg-2">
 				<label for="empresa" style="font-size: 11px;" class="control-label">Modalidade: </label>
-				<br><span style="font-size: 11px;"> Modalidade </span>
+				<br><span style="font-size: 11px;"> {{objetoParametro.modalidade}} </span>
 			</div>
 			<div class="col-lg-2">
 				<label for="empresa" style="font-size: 11px;" class="control-label">Tipo:</label>
-				<br><span style="font-size: 11px;"> tipo legal </span>
+				<br><span style="font-size: 11px;"> {{objetoParametro.tipo}} </span>
 			</div>
 			<div class="col-lg-2">
 				<label for="empresa" style="font-size: 11px;" class="control-label">Data Status: </label>
-				<br><span style="font-size: 11px;"> 02/02/1996</span>
+				<br><span style="font-size: 11px;"> {{objetoParametro.dataStatus}} </span>
 			</div>
 			<div class="col-lg-2">
 				<label for="empresa" style="font-size: 11px;" class="control-label">Data Receb: </label>
-				<br><span style="font-size: 11px;"> 02/02/1996</span>
+				<br><span style="font-size: 11px;"> {{objetoParametro.dataRecebimento}} </span>
 			</div>
 			<div class="col-lg-2">
-				<label for="empresa" style="font-size: 11px;" class="control-label">Ano/Nº do Processo: </label>
-				<br><span style="font-size: 11px;"> 2022/0001</span>
+				<label for="empresa" style="font-size: 11px;" class="control-label"> Ano/Nº do Processo: </label>
+				<br><span style="font-size: 11px;"> {{objetoParametro.anoNumProcesso}} </span>
 			</div>
 		</div>
 
-		<!--#######################-->
-		<!--###TABELA DE ANÁLISE###-->
-		<!--#######################-->
+		<!--#################################-->
+		<!--###TABELA HISTORICO DE ANÁLISE###-->
+		<!--#################################-->
 
 		<div class="table-responsive no-margin-bottom no-border">
 			<table class="table">
@@ -67,47 +67,25 @@
 					</tr>
 				</thead>
 				<tbody id="content">
-					<!-- <tr *ngFor="let item of objanalises; let i = index"> -->
-					<tr>
-						<td style="font-size: 11px;">42</td>
-						<td style="font-size: 11px;">52214/001-5</td>
-						<td style="font-size: 11px;">Aprovado</td>
-						<td style="font-size: 11px;">Analista Teste</td>
-						<td></td>
+					<tr *ngFor=" let item of objetoParametro.relatorioHistoricoAnalise ; let i = index ">
+						<td style="font-size: 11px;">{{item.codigo}}</td>
+						<td style="font-size: 11px;">{{item.numeroDue | due}}</td>
+						<td style="font-size: 11px;">{{item.situacao}}</td>
+						<td style="font-size: 11px;">{{item.responsavel}}</td>
+						<td style="font-size: 11px;">{{item.justificativa}}</td>
+						<div *ngIf="i==7 || i == 14 || i == 21" id='quebraPaginaAnalises'></div>
 					</tr>
-					<tr>
-						<td style="font-size: 11px;">42</td>
-						<td style="font-size: 11px;">52214/001-5</td>
-						<td style="font-size: 11px;">Reprovado</td>
-						<td style="font-size: 11px;">Analista Teste</td>
-						<td style="font-size: 11px;">Data de Averbação for do prazo</td>
-					</tr>
-					<tr>
-						<td style="font-size: 11px;">42</td>
-						<td style="font-size: 11px;">74855/001-5</td>
-						<td style="font-size: 11px;">Reprovado</td>
-						<td style="font-size: 11px;">Analista Teste</td>
-						<td style="font-size: 11px;">Data de Averbação for do prazo</td>
-					</tr>
-					<tr>
-						<td style="font-size: 11px;">42</td>
-						<td style="font-size: 11px;">74855/001-5</td>
-						<td style="font-size: 11px;">Aprovado</td>
-						<td style="font-size: 11px;">Analista Teste</td>
-						<td></td>
-					</tr>
-					<!-- <div *ngfIf="i==7" id='quebraPaginaAnalises'></div> -->
 				</tbody>
 			</table>
 		</div>
 
-		<!--#######################-->
-		<!--#### TABELA DE PARA ###-->
-		<!--#######################-->
+		<!--#################################-->
+		<!--########## TABELA DE PARA #######-->
+		<!--#################################-->
 
 		<br>
 
-		<div class="table-responsive no-margin-bottom no-border">
+		<div class="table-responsive no-margin-bottom no-border" *ngIf="objetoParametro.relatorioDePara != null">
 			<table class="table">
 				<thead>
 					<tr style="">
@@ -123,32 +101,28 @@
 					</tr>
 				</thead>
 				<tbody id="content">
-					<tr>
-						<td style="font-size: 11px;"> 42 </td>
-						<td style="font-size: 11px;"> 52214/001-5 </td>
-						<td style="font-size: 11px;"> Anterior </td>
-						<td style="font-size: 11px;"> Chile </td>
-						<td style="font-size: 11px;"> 02/02/1996 </td>
-						<td style="font-size: 11px;"> 24,000000 </td>
-						<td style="font-size: 11px;"> 1250,0000000 </td>
-						<td style="font-size: 11px;"> Analista Teste </td>
-						<td style="font-size: 11px;"> Data de Averbação for do prazo </td>
-					</tr>
-					<tr>
-						<td style="font-size: 11px;"> 42 </td>
-						<td style="font-size: 11px;"> 52214/001-5 </td>
-						<td style="font-size: 11px;"> Corrigido </td>
-						<td style="font-size: 11px;"> Chile </td>
-						<td style="font-size: 11px;"> 03/02/1996 </td>
-						<td style="font-size: 11px;"> 24,000000 </td>
-						<td style="font-size: 11px;"> 1250,0000000 </td>
-						<td style="font-size: 11px;"> </td>
-						<td style="font-size: 11px;"> </td>
+					<tr *ngFor=" let item of objetoParametro.relatorioDePara ; let i = index ">
+						<td style="font-size: 11px;">{{item.codigo}}</td>
+						<td style="font-size: 11px;">{{item.numeroDue | due}}</td>
+						<td style="font-size: 11px;">{{item.situacao}}</td>
+						<td style="font-size: 11px;">{{item.paisDestino}}</td>
+						<td style="font-size: 11px;">{{item.dataAverbacao}}</td>
+						<td style="font-size: 11px;">{{item.quantidade}}</td>
+						<td style="font-size: 11px;">{{item.valor}}</td>
+						<td style="font-size: 11px;">{{item.responsavel}}</td>
+						<td style="font-size: 11px;">{{item.justificativa}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
+		<div *ngIf="objetoParametro.relatorioDePara == null" style="background-color: salmon;">
+			<b style="font-size: 11px;
+					  margin-top: 10px;
+					  margin-left: 20px;">
+				Plano de exportação não possui DUE alterada ou corrigida!
+			</b>
+		</div>
 
 	</div>
 </div>

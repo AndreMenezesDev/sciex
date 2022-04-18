@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import * as html2pdf from 'html2pdf.js';
 import { AssignHour } from '../../shared/services/assignHour.service';
 import { async } from '@angular/core/testing';
+import { RelatorioErroDuesVM } from '../../view-model/RelatorioErroDuesVM';
 
 @Component({
 	selector: 'app-plano-de-exportacao',
@@ -23,13 +24,15 @@ export class RelatoriErrosoDueComponent implements OnInit {
 	grid: any = { sort: {} };
 	parametros: any = {};
 	result: boolean = false;
-	servico = '';
+	servico = 'RelatorioErroDues';
+	objetoRelatorio : RelatorioErroDuesVM = new RelatorioErroDuesVM();
 	exibeRelatorio: boolean = false;
 	arquivoRelatorio: any;
 	hashPDF: any;
 	linkSource: any;
 	downloadLink: any;
 	fileName: any;
+	filterVm : any = {};
 
 	constructor(
 		private applicationService: ApplicationService,
@@ -44,8 +47,53 @@ export class RelatoriErrosoDueComponent implements OnInit {
 
 	}
 
-	ngOnInit(): void {
+	ngOnInit(): void {}
 
+	//1 - pdf / 2 - excel
+	validar(tpExportacao){
+
+		if(!this.filterVm.nomeEmpresa && !this.filterVm.anoNumProcesso && !this.filterVm.inscricaoCadastral){
+			this.modal.alerta("Informe um filtro para gerar o Relatório!");
+			return false;
+		}
+
+		let obj : RelatorioErroDuesVM = new RelatorioErroDuesVM();
+
+		if(this.filterVm.anoNumProcesso)
+		{
+		  let variableSplit = this.filterVm.anoNumProcesso.split("/");
+		  obj.numeroPlano = Number(variableSplit[0]);
+		  obj.anoPlano = Number(variableSplit[1]);
+		}
+		else
+		{
+			obj.numeroPlano = 0;
+			obj.anoPlano = 0;
+		}
+
+		obj.nomeEmpresa = this.filterVm.nomeEmpresa;
+		obj.inscricaoCadastral = this.filterVm.inscricaoCadastral;
+
+		this.applicationService.post("RelatorioErrorDues",obj).subscribe((result:RelatorioErroDuesVM)=>{
+			if(result.statusCode == 200)
+			{
+				this.objetoRelatorio = result;
+				tpExportacao == 1 ?
+					this.exportPDF() :
+						this.exportExcel();
+			}
+			else if(result.statusCode == 404)
+			{
+				this.modal.alerta("Nenhum Registro Encontrado", "Informação", "");
+				return false;
+			}
+			else
+			{
+				this.modal.alerta(result.textResponse, "Erro!", "");
+				console.log("Falha ao Gerar Relatório de erro nas Dues: " + result.textResponse);
+				return false;
+			}
+		})
 	}
 
 	exportPDF()
@@ -91,6 +139,10 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		});
 
 		Promise.all([renderizarHtml, liberarTela]);
+	}
+
+	exportExcel(){
+
 	}
 
 	salvarArquivoRelatorio() {
