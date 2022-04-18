@@ -448,12 +448,112 @@ namespace Suframa.Sciex.BusinessLogic
 
 			return true;
 		}
+		private bool ValidarHorizontalReDue(string[] linhas)
+		{
+			foreach (var item in linhas)
+			{
+				if (item.Substring(0, 9) == "")
+				{
+					return false;
+				}
+
+				if (item.Substring(9, 10) == "")
+				{
+					return false;
+				}
+
+				try
+				{
+					Convert.ToInt64(item.Substring(19, 4));
+				}
+				catch
+				{
+					return false;
+				}
+
+				try
+				{
+					Convert.ToInt64(item.Substring(23, 3));
+				}
+				catch
+				{
+					return false;
+				}
+
+				try
+				{
+					Convert.ToInt64(item.Substring(26, 15));
+				}
+				catch
+				{
+					return false;
+				}
+
+				try
+				{
+					Convert.ToInt64(item.Substring(41, 10));
+				}
+				catch
+				{
+					return false;
+				}
+
+				try
+				{
+					Convert.ToInt64(item.Substring(51, 20));
+				}
+				catch
+				{
+					return false;
+				}
+				try
+				{
+					Convert.ToInt64(item.Substring(71, 20));
+				}
+				catch
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
 
 		public bool ValidarDataProdutoPais(string[] linhas)
 		{
 			foreach (var item in linhas)
 			{
 				if (item.Substring(70, 10).Trim() != "")
+				{
+					try
+					{
+						string[] dados = item.Substring(70, 10).Split('_');
+
+						int dia = int.Parse(dados[2].Substring(0, 2));
+						int mes = DateTimeExtensions.RetornarNumeroMes(dados[2].Substring(2, 3));
+						int ano = int.Parse(dados[2].Substring(5, 4));
+
+						int hora = int.Parse(dados[3].Substring(0, 2));
+						int min = int.Parse(dados[3].Substring(2, 2));
+						int seg = int.Parse(dados[3].Substring(4, 2));
+
+
+						var d = new DateTime(ano, mes, dia, hora, min, seg);
+					}
+					catch
+					{
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+		public bool ValidarDataReDue(string[] linhas)
+		{
+			foreach (var item in linhas)
+			{
+				if (item.Substring(41, 10).Trim() != "")
 				{
 					try
 					{
@@ -1347,6 +1447,85 @@ namespace Suframa.Sciex.BusinessLogic
 							return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 						}
 
+						var reDueFile = arquivos.Where(o => o.Contains("PX_RE.TXT"));
+
+						if (reDueFile.FirstOrDefault() != null)
+						{
+							var filename = Path.GetFileName(reDueFile.FirstOrDefault());
+
+							string[] lines = File.ReadAllLines(reDueFile.FirstOrDefault());
+
+							if (lines.Length > 0 && lines[0].Length > 0)
+							{
+								if (lines[0].Substring(0, 2) == "0\0")
+								{
+									lines = File.ReadAllLines(filename, Encoding.Unicode);
+									File.Delete(filename);
+									File.WriteAllLines(filename, lines);
+								}
+								else
+								{
+									lines = File.ReadAllLines(reDueFile.FirstOrDefault(), Encoding.UTF8);
+								}
+
+								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))
+								{
+									foreach (string item in arquivos)
+									{
+										File.Delete(item);
+									}
+									Directory.Delete(local);
+									return "O código do Plano do arquivo de Plano Exportação DUE não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
+								}
+
+								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+								{
+									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de RE/DUE está diferente, não é possível realizar envio de Plano de Exportação.";
+								}
+
+								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))
+								{
+									foreach (string item in arquivos)
+									{
+										File.Delete(item);
+									}
+									Directory.Delete(local);
+									return "O ano do arquivo de RE/DUE não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+								}
+
+								if (!ValidarFormatoNumeroArquivos(lines))
+								{
+									foreach (string item in arquivos)
+									{
+										File.Delete(item);
+									}
+									Directory.Delete(local);
+									return "O formato do número do Plano dentro do arquvio de RE/DUE é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+								}
+								if (!ValidarHorizontalReDue(lines))
+								{
+									foreach (string item in arquivos)
+									{
+										File.Delete(item);
+									}
+									Directory.Delete(local);
+									return "Arquivo de RE/DUE com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+								}
+								if (!ValidarDataReDue(lines))
+								{
+									foreach (string item in arquivos)
+									{
+										File.Delete(item);
+									}
+									Directory.Delete(local);
+									return "A data de embarque do arquivo de RE/DUE é inválida, não é possível realizar envio de Plano de Exportação.";
+								}
+							}
+							else
+							{
+								return "Arquivo de RED/DUE não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
+							}
+						}
 						cnpjImportador = CNPJArquivo;
 						razaoSocial = objVI.RazaoSocial;
 
