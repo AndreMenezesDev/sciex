@@ -4,8 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 
-import { RelatorioHistoricoComponent } from './relatorio-historico.component';
-import { RelatorioComponent } from './relatorio/relatorio.component';
+import { RelatorioListagemExportacaoComponent } from './relatorio-listagem-exportacao.component';
 
 
 @NgModule({
@@ -16,8 +15,7 @@ import { RelatorioComponent } from './relatorio/relatorio.component';
 		SharedModule
 	],
 	declarations: [
-		RelatorioHistoricoComponent,
-		RelatorioComponent
+		RelatorioListagemExportacaoComponent
 	],
 })
-export class RelatorioHistoricoModule { }
+export class RelatorListagemExportacaoModule { }

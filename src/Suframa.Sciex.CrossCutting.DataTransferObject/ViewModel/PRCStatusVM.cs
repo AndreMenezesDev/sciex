@@ -17,6 +17,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public int? IdSolicitacaoAlteracao { get; set; }
 		public string Tipo { get; set; }
 		public DateTime? Data { get; set; }
+		public string DataSrting { get; set; }
 		public DateTime? DataValidade { get; set; }
 		public string CpfResponsavel { get; set; }
 		public string NomeResponsavel { get; set; }
