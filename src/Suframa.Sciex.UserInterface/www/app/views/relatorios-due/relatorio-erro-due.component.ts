@@ -153,7 +153,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 			this.downloadLink.download = this.fileName;
 			this.downloadLink.target = '_self';
 			this.downloadLink.click();
-			//this.exibeRelatorio = false;
+			this.exibeRelatorio = false;
 		});
 	}
 
