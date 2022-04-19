@@ -52,6 +52,10 @@ export class RelatorioHistoricoComponent implements OnInit {
 
 	}
 
+	limpar(){
+		this.processo = '';
+	}
+
 	exportPDF(isExcel) {
 		if (this.processo == '' || this.processo == null)
 			this.modal.alerta("N° do Processo não informado");
