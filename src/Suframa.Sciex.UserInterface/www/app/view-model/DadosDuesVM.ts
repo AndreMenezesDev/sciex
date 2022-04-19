@@ -1,4 +1,4 @@
-export class RelatorioDuesVM
+export class DadosDuesVM
 {
 	codigo : string;
 	numeroDue  : string;

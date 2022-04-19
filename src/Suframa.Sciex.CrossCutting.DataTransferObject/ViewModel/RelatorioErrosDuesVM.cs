@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 {
-	public class RelatorioErrosDuesVM : RequestResponseVM
+	public class RelatorioErrosDuesVM
 	{
 		public string NomeEmpresa { get; set; }
+		public string DescricaoPlano { get; set; }
 		public int? InscricaoCadastral { get; set; }
 		public long NumeroPlano { get; set; }
 		public string Modalidade { get; set; }
@@ -19,12 +20,17 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string AnoNumProcesso { get; set; }
 		public string AnoNumPlano { get; set; }
 		public string DataImpressao { get; set; }
-		public string NumeroPlanoFormated { get; set; }
-		public List<RelatorioDuesVM> RelatorioHistoricoAnalise { get; set; }
-		public List<RelatorioDuesVM> RelatorioDePara { get; set; }
+		public string NumeroPlanoFormated { get; set; }		
+		public RelatoriosDuesVM Relatorios { get; set; }
 	}
 
-	public class RelatorioDuesVM
+	public class RelatoriosDuesVM
+	{
+		public List<DadosDuesVM> RelatorioHistoricoAnalise { get; set; }
+		public List<DadosDuesVM> RelatorioDePara { get; set; }
+	}
+
+	public class DadosDuesVM
 	{
 		public int Codigo { get; set; }
 		public string NumeroDue { get; set; }

@@ -22,7 +22,7 @@ export class FormularioRelatorioComponent implements OnInit {
 	parametros: any = {};
 	result: boolean = false;
 	servico = '';
-	@Input() objetoParametro : RelatorioErroDuesVM = new RelatorioErroDuesVM();
+	@Input() objetoParametro : Array<RelatorioErroDuesVM> = new Array<RelatorioErroDuesVM>();
 
 	constructor(
 		private applicationService: ApplicationService,

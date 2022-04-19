@@ -9,6 +9,6 @@ namespace Suframa.Sciex.BusinessLogic
 {
 	public interface IRelatorioErrosDuesBll
 	{
-		RelatorioErrosDuesVM GerarRelatorio(RelatorioErrosDuesVM filterVm);
+		List<RelatorioErrosDuesVM> GerarRelatorio(RelatorioErrosDuesVM filterVm);
 	}
 }

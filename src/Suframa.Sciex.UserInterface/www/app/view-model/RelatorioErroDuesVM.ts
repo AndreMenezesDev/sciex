@@ -1,7 +1,6 @@
-import { RelatorioDuesVM } from './RelatorioDuesVM';
-import { RequestResponseVM } from './RequestResponseVM';
+import { RelatoriosDuesVM } from "./RelatoriosDuesVM";
 
-export class RelatorioErroDuesVM extends RequestResponseVM
+export class RelatorioErroDuesVM
 {
 	nomeEmpresa : string;
 	anoPlano : number;
@@ -15,6 +14,5 @@ export class RelatorioErroDuesVM extends RequestResponseVM
 	dataStatus : string;
 	dataRecebimento : string;
 	anoNumProcesso : number;
-	relatorioHistoricoAnalise : Array<RelatorioDuesVM>;
-	relatorioDePara : Array<RelatorioDuesVM>;
+	relatorios : RelatoriosDuesVM = new RelatoriosDuesVM();
 }

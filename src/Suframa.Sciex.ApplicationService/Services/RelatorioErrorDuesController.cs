@@ -15,7 +15,7 @@ namespace Suframa.Sciex.ApplicationService.Services
 			_bll = bll;
 		}
 		
-		public RelatorioErrosDuesVM Post([FromBody] RelatorioErrosDuesVM filterVm) => 
+		public List<RelatorioErrosDuesVM> Post([FromBody] RelatorioErrosDuesVM filterVm) => 
 			_bll.GerarRelatorio(filterVm);
 
 	}

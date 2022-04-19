@@ -75,22 +75,16 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		obj.inscricaoCadastral = this.filterVm.inscricaoCadastral;
 
 		this.applicationService.post("RelatorioErrorDues",obj).subscribe((result:RelatorioErroDuesVM)=>{
-			if(result.statusCode == 200)
+			if(result)
 			{
 				this.objetoRelatorio = result;
 				tpExportacao == 1 ?
 					this.exportPDF() :
 						this.exportExcel();
 			}
-			else if(result.statusCode == 404)
-			{
-				this.modal.alerta("Nenhum Registro Encontrado", "Informação", "");
-				return false;
-			}
 			else
 			{
-				this.modal.alerta(result.textResponse, "Erro!", "");
-				console.log("Falha ao Gerar Relatório de erro nas Dues: " + result.textResponse);
+				this.modal.alerta("Nenhum registro encontrado", "Erro!", "");
 				return false;
 			}
 		})
@@ -114,7 +108,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 						useCORS: true
 					},
 					jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
-					pagebreak: { before: ['#quebraPaginaAnalises'], after: ['#quebraPagina'] }
+					pagebreak: { before:  [/*'#quebraPaginaAnalises',*/'#novo-plano'], after: [/*'#quebraPagina'*/] }
 				};
 				this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
 					console.log("height page: " + pdf.internal.pageSize.height);
@@ -159,7 +153,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 			this.downloadLink.download = this.fileName;
 			this.downloadLink.target = '_self';
 			this.downloadLink.click();
-			this.exibeRelatorio = false;
+			//this.exibeRelatorio = false;
 		});
 	}
 

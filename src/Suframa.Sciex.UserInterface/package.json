@@ -62,14 +62,14 @@
 				"zone.js": "0.8.18"
 		},
 		"devDependencies": {
-				"@angular/cli": "1.4.4",
-				"@angular/compiler-cli": "4.4.6",
-				"@angular/language-service": "4.4.6",
-				"@types/html2canvas": "0.0.35",
-				"@types/jspdf": "^1.1.31",
-				"@types/node": "6.0.90",
-				"codelyzer": "3.2.2",
-				"tslint": "~5.7.0",
-				"typescript": "2.3.4"
+		"@angular/cli": "1.4.4",
+		"@angular/compiler-cli": "4.4.6",
+		"@angular/language-service": "4.4.6",
+		"@types/html2canvas": "0.0.35",
+		"@types/jspdf": "^1.1.31",
+		"@types/node": "6.0.90",
+		"codelyzer": "3.2.2",
+		"tslint": "~5.7.0",
+		"typescript": "2.3.4"
 		}
 }

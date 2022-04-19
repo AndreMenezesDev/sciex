@@ -27,82 +27,77 @@ namespace Suframa.Sciex.BusinessLogic
 			_usuarioPssBll = usuarioPssBll;
 		}
 
-		public RelatorioErrosDuesVM GerarRelatorio(RelatorioErrosDuesVM filterVm)
+		public List<RelatorioErrosDuesVM> GerarRelatorio(RelatorioErrosDuesVM filterVm)
 		{
-			var retornoMetodo = new RelatorioErrosDuesVM();
+			var retornoMetodo = new List<RelatorioErrosDuesVM>();
+			
+			var _listaEntityPlanoDeExportacao = GetListaPlanoExportacao(filterVm);
 
-			try
+			if (_listaEntityPlanoDeExportacao.Count == 0){ return null; }
+
+			foreach(var planoExportacaoEntity in _listaEntityPlanoDeExportacao)
 			{
-				var _listaEntityPlanoDeExportacao = GetListaPlanoExportacao(filterVm);
-
-				if (_listaEntityPlanoDeExportacao.Count == 0)
+				var objetoRelatorio = new RelatorioErrosDuesVM
 				{
-					retornoMetodo.StatusCode = (int)HttpStatusCode.NotFound;
-					retornoMetodo.TextResponse = "Plano de exportação não encontrado!";
-					return retornoMetodo;
-				}
+					NomeEmpresa = planoExportacaoEntity.RazaoSocial,
+					NumeroPlano = planoExportacaoEntity.NumeroPlano,
+					NumeroPlanoFormated = planoExportacaoEntity.NumeroPlano.ToString("D5"),
+					AnoPlano = planoExportacaoEntity.AnoPlano,
+					AnoNumPlano = planoExportacaoEntity.AnoPlano + "/" + planoExportacaoEntity.NumeroPlano.ToString("D5"),
+					Modalidade = planoExportacaoEntity.TipoModalidade,
+					Tipo = planoExportacaoEntity.TipoExportacao,
+					DataStatus = planoExportacaoEntity.DataStatus?.ToString("dd/MM/yyyy"),
+					DataRecebimento = "--",
+					DataImpressao = DateTime.Now.ToString("dd/MM/yy"),
+					AnoNumProcesso = planoExportacaoEntity.NumeroAnoProcesso + "/" + planoExportacaoEntity.NumeroProcesso?.ToString("D5")
+				};
+				
+				var _relatorioHistoricoAnalise = new List<DadosDuesVM>();
 
-				var planoExportacaoEntity = _listaEntityPlanoDeExportacao.FirstOrDefault();
+				var _relatorioDePara = new List<DadosDuesVM>();
 
-				#region Informações relatório
+				bool permiteAdicionarNoRelatorio = false;
 
-				retornoMetodo.NomeEmpresa = planoExportacaoEntity.RazaoSocial;
-				retornoMetodo.NumeroPlano = planoExportacaoEntity.NumeroPlano;
-				retornoMetodo.NumeroPlanoFormated = planoExportacaoEntity.NumeroPlano.ToString("D5");
-				retornoMetodo.AnoPlano = planoExportacaoEntity.AnoPlano;
-				retornoMetodo.AnoNumPlano = planoExportacaoEntity.AnoPlano + "/" + planoExportacaoEntity.NumeroPlano.ToString("D5");
-				retornoMetodo.Modalidade = planoExportacaoEntity.TipoModalidade;
-				retornoMetodo.Tipo = planoExportacaoEntity.TipoExportacao;
-				retornoMetodo.DataStatus = planoExportacaoEntity.DataStatus?.ToString("dd/MM/yyyy");
-				retornoMetodo.DataRecebimento = "--";
-				retornoMetodo.DataImpressao = DateTime.Now.ToString("dd/MM/yy");
-				retornoMetodo.AnoNumProcesso = planoExportacaoEntity.NumeroAnoProcesso + "/" + planoExportacaoEntity.NumeroProcesso?.ToString("D5");
+				var _listaEntityPlanoDeExportacaoProduto = GetListaPlanoExportacaoProduto(planoExportacaoEntity.IdPlanoExportacao);
 
-				#endregion
-
-				var _listaEntityPlanoDeExportacaoProduto = GetListaPlanoExportacaoProduto(_listaEntityPlanoDeExportacao.Select(x=>x.IdPlanoExportacao).ToList());
-
-				if (_listaEntityPlanoDeExportacaoProduto.Count == 0)
+				if (_listaEntityPlanoDeExportacaoProduto.Count > 0)
 				{
-					retornoMetodo.StatusCode = (int)HttpStatusCode.NotFound;
-					retornoMetodo.TextResponse = "Plano de exportação produto não encontrado!";
-					return retornoMetodo;
+					foreach (var planoExportacaoProduto in _listaEntityPlanoDeExportacaoProduto)
+					{
+						var _listaEntityPlanoDeExportacaoProdutoPais = GetListaPlanoExportacaoProdutoPais(planoExportacaoProduto.IdPEProduto);
+
+						if (_listaEntityPlanoDeExportacaoProdutoPais.Count > 0)
+						{
+							foreach (var planoExportacaoProdutoPais in _listaEntityPlanoDeExportacaoProdutoPais)
+							{
+								var _listaEntityPlanoDeExportacaoDUE = GetListaPlanoExportacaoDUE(planoExportacaoProdutoPais.IdPEProdutoPais);
+
+								if(_listaEntityPlanoDeExportacaoDUE.Count > 0)
+								{
+									var relatorioHistoricoAnalise = GetRelatorioHistoricoAnalise(_listaEntityPlanoDeExportacaoDUE, planoExportacaoEntity.NomeResponsavel);
+
+									relatorioHistoricoAnalise.ForEach(x => _relatorioHistoricoAnalise.Add(x));
+
+									var relatorioDePara = GetRelatorioDeParaDUE(_listaEntityPlanoDeExportacaoDUE, _listaEntityPlanoDeExportacaoProdutoPais,	planoExportacaoEntity.NomeResponsavel);
+
+									relatorioDePara?.ForEach(x => _relatorioDePara.Add(x));
+
+									permiteAdicionarNoRelatorio = true;
+								}
+							}
+						}
+					}
 				}
-
-				var _listaEntityPlanoDeExportacaoProdutoPais = GetListaPlanoExportacaoProdutoPais(_listaEntityPlanoDeExportacaoProduto.Select(x => (int?)x.IdPEProduto).ToList());
-
-				if (_listaEntityPlanoDeExportacaoProdutoPais.Count == 0)
+				if (permiteAdicionarNoRelatorio)
 				{
-					retornoMetodo.StatusCode = (int)HttpStatusCode.NotFound;
-					retornoMetodo.TextResponse = "Plano de exportação produto país não encontrado!";
-					return retornoMetodo;
+					objetoRelatorio.Relatorios = new RelatoriosDuesVM
+					{
+						RelatorioDePara = _relatorioDePara,
+						RelatorioHistoricoAnalise = _relatorioHistoricoAnalise
+					};
+					retornoMetodo.Add(objetoRelatorio);
 				}
-
-				var _listaEntityPlanoDeExportacaoDUE = GetListaPlanoExportacaoDUE(_listaEntityPlanoDeExportacaoProdutoPais.Select(x => (int?)x.IdPEProdutoPais).ToList());
-
-				if (_listaEntityPlanoDeExportacaoDUE.Count == 0)
-				{
-					retornoMetodo.StatusCode = (int)HttpStatusCode.NotFound;
-					retornoMetodo.TextResponse = "Plano de exportação - DUE não encontrado!";
-					return retornoMetodo;
-				}
-
-				retornoMetodo.RelatorioHistoricoAnalise = GetRelatorioHistoricoAnalise(_listaEntityPlanoDeExportacaoDUE, 
-																					   planoExportacaoEntity.NomeResponsavel);
-
-				retornoMetodo.RelatorioDePara = GetRelatorioDeParaDUE(_listaEntityPlanoDeExportacaoDUE,
-																	  _listaEntityPlanoDeExportacaoProdutoPais,
-																	  planoExportacaoEntity.NomeResponsavel);
-				retornoMetodo.StatusCode = (int)HttpStatusCode.OK;
 			}
-			catch(Exception ex)
-			{
-				retornoMetodo.StatusCode = (int)HttpStatusCode.InternalServerError;
-				retornoMetodo.TextResponse = " Falha ao Gerar Relatório! [Ex]: " + ex.InnerException +
-											 " [Message]: " + ex.Message;
-			}
-
-
 			return retornoMetodo;
 		}
 
@@ -110,58 +105,59 @@ namespace Suframa.Sciex.BusinessLogic
 				_uowSciex.QueryStackSciex.PlanoExportacao.Listar(x => (filterVm.InscricaoCadastral == null || x.NumeroInscricaoCadastral == filterVm.InscricaoCadastral) &&
 																	  (string.IsNullOrEmpty(filterVm.NomeEmpresa) || x.RazaoSocial.ToUpper().Contains(filterVm.NomeEmpresa.ToUpper())) &&
 																	  (filterVm.NumeroPlano == 0 || x.NumeroPlano == filterVm.NumeroPlano) && 
-																	  (filterVm.AnoPlano == 0 || x.AnoPlano == filterVm.AnoPlano));
+																	  (filterVm.AnoPlano == 0 || x.AnoPlano == filterVm.AnoPlano) && 
+																      x.TipoExportacao == "CO"); //COMPROVAÇÃO
 
-		private List<PEProdutoEntity> GetListaPlanoExportacaoProduto(List<int> idsPlanoExportacao) =>
-				_uowSciex.QueryStackSciex.PlanoExportacaoProduto.Listar(x=> idsPlanoExportacao.Contains(x.IdPlanoExportacao));
+		private List<PEProdutoEntity> GetListaPlanoExportacaoProduto(int idsPlanoExportacao) =>
+				_uowSciex.QueryStackSciex.PlanoExportacaoProduto.Listar(x => x.IdPlanoExportacao == idsPlanoExportacao);
 
-		private List<PEProdutoPaisEntity> GetListaPlanoExportacaoProdutoPais(List<int?> idsPlanoExportacaoProduto) =>
-				_uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(x => idsPlanoExportacaoProduto.Contains(x.IdPEProduto));
+		private List<PEProdutoPaisEntity> GetListaPlanoExportacaoProdutoPais(int? idsPlanoExportacaoProduto) =>
+				_uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(x => x.IdPEProduto == idsPlanoExportacaoProduto);
 
-		private List<PlanoExportacaoDUEEntity> GetListaPlanoExportacaoDUE(List<int?> idsPlanoExportacaoProdutoPais) =>
-				_uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(x => idsPlanoExportacaoProdutoPais.Contains(x.IdPEProdutoPais));
+		private List<PlanoExportacaoDUEEntity> GetListaPlanoExportacaoDUE(int? idsPlanoExportacaoProdutoPais) =>
+				_uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(x => x.IdPEProdutoPais == idsPlanoExportacaoProdutoPais);
 
-		private List<RelatorioDuesVM> GetRelatorioHistoricoAnalise(List<PlanoExportacaoDUEEntity> listaDuesEntity, string NomeAnalista) =>
-			listaDuesEntity.Select(_due => new RelatorioDuesVM
+		private List<DadosDuesVM> GetRelatorioHistoricoAnalise(List<PlanoExportacaoDUEEntity> listaDuesEntity, string NomeAnalista) =>
+			listaDuesEntity.Select(_due => new DadosDuesVM
 			{
 				Codigo = _due.CodigoPais,
-				NumeroDue = Convert.ToInt64(_due.Numero).ToString("D9"),
+				NumeroDue = _due.Numero,//Convert.ToInt64(_due.Numero).ToString("D9"),
 				Situacao = GetSituacaoDue(_due.SituacaoAnalise),
 				Responsavel = NomeAnalista,
 				Justificativa = (_due.DescricaoJustificativa == null) ? "--" : _due.DescricaoJustificativa
 			})
 			.ToList();
 
-		public List<RelatorioDuesVM> GetRelatorioDeParaDUE(List<PlanoExportacaoDUEEntity> listaDuesEntity, List<PEProdutoPaisEntity> listaPaises, string NomeAnalista)
+		public List<DadosDuesVM> GetRelatorioDeParaDUE(List<PlanoExportacaoDUEEntity> listaDuesEntity, List<PEProdutoPaisEntity> listaPaises, string NomeAnalista)
 		{
-			var retornoMetodo = new List<RelatorioDuesVM>();
+			var retornoMetodo = new List<DadosDuesVM>();
 
 			var duesAlteradas = listaDuesEntity.Where(x=> x.SituacaoAnalise == (int)EnumSituacaoAnaliseDUE.ALTERADO)
-														.OrderBy(x => x.Numero)
-													    .Select(x => x.Numero)
-														.Distinct()
-														.ToList();
+											   .OrderBy(x => x.Numero)
+											   .Select(x => x.Numero)
+											   .Distinct()
+											   .ToList();
 
 			if (duesAlteradas.Count == 0) { return null; }
 
 			foreach(var _numeroDue in duesAlteradas)
 			{
 				var duesFiltradas = listaDuesEntity.Where(x => x.Numero == _numeroDue)
-												   .OrderBy(x => x.DataAverbacao)
+												   .OrderBy(x => x.IdDue)
 												   .ToList();
 				foreach(var _due in duesFiltradas)
 				{
-					var item = new RelatorioDuesVM
+					var item = new DadosDuesVM
 					{
 						Codigo = _due.CodigoPais,
-						NumeroDue = Convert.ToInt64(_due.Numero).ToString("D9"),
+						NumeroDue = _due.Numero,//Convert.ToInt64(_due.Numero).ToString("D9"),
 						Situacao = GetSituacaoDue(_due.SituacaoAnalise),
 						Responsavel = NomeAnalista,
 						Justificativa = (_due.DescricaoJustificativa == null) ? "--" : _due.DescricaoJustificativa,
 						DataAverbacao = _due.DataAverbacao.ToString("dd/MM/yyyy"),
 						Quantidade = _due.Quantidade,
 						Valor = _due.ValorDolar,
-						PaisDestino = _uowSciex.QueryStackSciex.ViewPais.Selecionar(x=>x.CodigoPais == _due.CodigoPais.ToString()).Descricao
+						PaisDestino = _uowSciex.QueryStackSciex.ViewPais.Selecionar(x => x.CodigoPais == _due.CodigoPais.ToString()).Descricao
 					};
 					retornoMetodo.Add(item);
 				}
