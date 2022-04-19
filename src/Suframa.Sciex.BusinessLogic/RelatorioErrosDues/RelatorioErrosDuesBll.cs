@@ -17,6 +17,7 @@ namespace Suframa.Sciex.BusinessLogic
 		private readonly IUnitOfWorkSciex _uowSciex;
 		private readonly IUnitOfWork _uowCadsuf;
 		private readonly IUsuarioPssBll _usuarioPssBll;
+		int[] situacaoPlanoExportacaoFiltragem = new int[3] { (int)EnumSituacaoPlanoExportacao.AGUARDANDO_ANÁLISE, (int)EnumSituacaoPlanoExportacao.DEFERIDO, (int)EnumSituacaoPlanoExportacao.INDEFERIDO };
 
 		public RelatorioErrosDuesBll(IUnitOfWorkSciex uowSciex,
 									 IUnitOfWork uowCadsuf,
@@ -106,7 +107,9 @@ namespace Suframa.Sciex.BusinessLogic
 																	  (string.IsNullOrEmpty(filterVm.NomeEmpresa) || x.RazaoSocial.ToUpper().Contains(filterVm.NomeEmpresa.ToUpper())) &&
 																	  (filterVm.NumeroPlano == 0 || x.NumeroPlano == filterVm.NumeroPlano) && 
 																	  (filterVm.AnoPlano == 0 || x.AnoPlano == filterVm.AnoPlano) && 
-																      x.TipoExportacao == "CO"); //COMPROVAÇÃO
+																      x.TipoExportacao == "CO" && //COMPROVAÇÃO
+																	  situacaoPlanoExportacaoFiltragem.Contains(x.Situacao)
+																); 
 
 		private List<PEProdutoEntity> GetListaPlanoExportacaoProduto(int idsPlanoExportacao) =>
 				_uowSciex.QueryStackSciex.PlanoExportacaoProduto.Listar(x => x.IdPlanoExportacao == idsPlanoExportacao);
@@ -121,7 +124,7 @@ namespace Suframa.Sciex.BusinessLogic
 			listaDuesEntity.Select(_due => new DadosDuesVM
 			{
 				Codigo = _due.CodigoPais,
-				NumeroDue = _due.Numero,//Convert.ToInt64(_due.Numero).ToString("D9"),
+				NumeroDue = _due.Numero,
 				Situacao = GetSituacaoDue(_due.SituacaoAnalise),
 				Responsavel = NomeAnalista,
 				Justificativa = (_due.DescricaoJustificativa == null) ? "--" : _due.DescricaoJustificativa
@@ -150,7 +153,7 @@ namespace Suframa.Sciex.BusinessLogic
 					var item = new DadosDuesVM
 					{
 						Codigo = _due.CodigoPais,
-						NumeroDue = _due.Numero,//Convert.ToInt64(_due.Numero).ToString("D9"),
+						NumeroDue = _due.Numero,
 						Situacao = GetSituacaoDue(_due.SituacaoAnalise),
 						Responsavel = NomeAnalista,
 						Justificativa = (_due.DescricaoJustificativa == null) ? "--" : _due.DescricaoJustificativa,

@@ -3,6 +3,7 @@ import { PagedItems } from '../../view-model/PagedItems';
 import { ModalService } from '../../shared/services/modal.service';
 import { MessagesService } from '../../shared/services/messages.service';
 import { ApplicationService } from '../../shared/services/application.service';
+import { ExcelService } from '../../shared/services/excel.service';
 import { Router } from '@angular/router';
 import { AuthGuard } from '../../shared/guards/auth-guard.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -25,7 +26,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 	parametros: any = {};
 	result: boolean = false;
 	servico = 'RelatorioErroDues';
-	objetoRelatorio : RelatorioErroDuesVM = new RelatorioErroDuesVM();
+	objetoRelatorio : Array<RelatorioErroDuesVM> = new Array<RelatorioErroDuesVM>();
 	exibeRelatorio: boolean = false;
 	arquivoRelatorio: any;
 	hashPDF: any;
@@ -43,6 +44,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		private Location: Location,
 		private authguard: AuthGuard,
 		private assignHour: AssignHour,
+		private excelService : ExcelService
 	) {
 
 	}
@@ -74,7 +76,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		obj.nomeEmpresa = this.filterVm.nomeEmpresa;
 		obj.inscricaoCadastral = this.filterVm.inscricaoCadastral;
 
-		this.applicationService.post("RelatorioErrorDues",obj).subscribe((result:RelatorioErroDuesVM)=>{
+		this.applicationService.post("RelatorioErrorDues",obj).subscribe((result:Array<RelatorioErroDuesVM>)=>{
 			if(result)
 			{
 				this.objetoRelatorio = result;
@@ -135,8 +137,91 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		Promise.all([renderizarHtml, liberarTela]);
 	}
 
-	exportExcel(){
+	exportExcel()
+	{
+		let nomeRelatorio = "Relatório de Erros nas DU-E's - Comprovação Processo Exportação";
 
+		var excel : any = [];
+
+		var jsonExcel : any = {};
+
+		this.objetoRelatorio.forEach(element => {
+
+			jsonExcel.LinhaVazia = [""]
+
+			jsonExcel.Cabecalho = ["Ano/N° do Plano: " + element.anoNumPlano, "Empresa: " + element.nomeEmpresa, "", "", "", "", "", ""]
+			excel.push(jsonExcel.Cabecalho);
+
+			jsonExcel.InfoPlanoExportacao = [
+				"Modalidade: " + element.modalidade,
+				"Tipo: " + element.tipo,
+				"Data Status: " + element.dataStatus,
+				"Data Receb: " + element.dataRecebimento,
+				"Ano/Nº do Processo: " + element.anoNumProcesso
+			];
+			excel.push(jsonExcel.InfoPlanoExportacao);
+
+			excel.push(jsonExcel.LinhaVazia);
+
+			jsonExcel.CabecalhoRelatorioHistorioAnalise = [
+				"Cd. Prod",
+				"Nº DU-E",
+				"Situação",
+				"Responsável",
+				"Justificativa"
+			];
+			excel.push(jsonExcel.CabecalhoRelatorioHistorioAnalise);
+
+			element.relatorios.relatorioHistoricoAnalise.forEach(_historicoAnalise => {
+				jsonExcel.itemHistoricoAnalise = [
+					_historicoAnalise.codigo,
+					_historicoAnalise.numeroDue,
+					_historicoAnalise.situacao,
+					_historicoAnalise.responsavel,
+					_historicoAnalise.justificativa
+				];
+				excel.push(jsonExcel.itemHistoricoAnalise);
+			});
+
+			if(element.relatorios.relatorioDePara.length > 0)
+			{
+				excel.push(jsonExcel.LinhaVazia);
+
+				jsonExcel.CabecalhoRelatorioDePara = [
+					"Cd. Prod",
+					"Nº DU-E",
+					"Situação",
+					"País de Destino",
+					"Data Averbação",
+					"Quantidade",
+					"Valor",
+					"Responsável",
+					"Justificativa"
+				];
+				excel.push(jsonExcel.CabecalhoRelatorioDePara);
+
+				element.relatorios.relatorioDePara.forEach(_relatorioDeParaItem => {
+					jsonExcel.itemDePara = [
+						_relatorioDeParaItem.codigo,
+						_relatorioDeParaItem.numeroDue,
+						_relatorioDeParaItem.situacao,
+						_relatorioDeParaItem.paisDestino,
+						_relatorioDeParaItem.dataAverbacao,
+						_relatorioDeParaItem.quantidade,
+						_relatorioDeParaItem.valor,
+						_relatorioDeParaItem.responsavel,
+						_relatorioDeParaItem.justificativa
+					];
+					excel.push(jsonExcel.itemDePara);
+				});
+			}
+
+			excel.push(jsonExcel.LinhaVazia);
+			excel.push(jsonExcel.LinhaVazia);
+
+		});
+
+		this.excelService.exportAsExcelFile(excel, nomeRelatorio, nomeRelatorio);
 	}
 
 	salvarArquivoRelatorio() {
