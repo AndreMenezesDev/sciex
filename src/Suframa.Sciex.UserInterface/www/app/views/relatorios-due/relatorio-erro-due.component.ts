@@ -232,7 +232,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		}).then((data) => {
 			this.linkSource = 'data:' + 'application/pdf' + ';base64,' + data;
 			this.downloadLink = document.createElement('a');
-			this.fileName = "Relatório de Erros nas DU-E's - Comprovação Processo Exportação";
+			this.fileName = "Relatório de Erros nas DU-E's - Comprovação Processo Exportação_"+new Date().getTime();
 			document.body.appendChild(this.downloadLink);
 			this.downloadLink.href = this.linkSource;
 			this.downloadLink.download = this.fileName;

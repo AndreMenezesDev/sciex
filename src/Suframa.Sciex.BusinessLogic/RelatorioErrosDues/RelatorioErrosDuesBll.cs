@@ -48,7 +48,7 @@ namespace Suframa.Sciex.BusinessLogic
 					Modalidade = planoExportacaoEntity.TipoModalidade,
 					Tipo = planoExportacaoEntity.TipoExportacao,
 					DataStatus = planoExportacaoEntity.DataStatus?.ToString("dd/MM/yyyy"),
-					DataRecebimento = "--",
+					DataRecebimento = planoExportacaoEntity.DataEnvio?.ToString("dd/MM/yyyy"),
 					DataImpressao = DateTime.Now.ToString("dd/MM/yy"),
 					AnoNumProcesso = planoExportacaoEntity.NumeroAnoProcesso + "/" + planoExportacaoEntity.NumeroProcesso?.ToString("D5")
 				};
