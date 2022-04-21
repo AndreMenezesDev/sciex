@@ -1,0 +1,123 @@
+	<!-- INICIO CONTEUDO HISTORICO SELECIONADO PDF -->
+	<article id="relatoriohistoricoInsumoSelecionado" class="panel-body"*ngIf="exibirPdf" >
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group m-n text-center">
+					<img src="../../../../../assets/images/brasao.jpeg" alt="Logo Brasao"
+						 style="width: 9%;" />
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<h4 style="font-weight: bold">MINISTÉRIO DA ECONOMIA</h4>
+			<h5 style="font-weight: bold">SUPERINTENDÊNCIA DA ZONA FRANCA DE MANAUS</h5>
+			<h5 style="font-weight: bold">SUFRAMA</h5>
+		</div>
+
+		<div class="form-group m-n text-center">
+			<div style="margin-left: 40px;border-top: 1px solid black;margin-right: 40px"></div>
+				<label class="control-label">RELATÓRIO PARA CONFERÊNCIA DE HISTÓRICO DE MANUTENÇÃO DE INSUMOS</label>
+			<div style="margin-left: 40px;border-bottom: 1px solid black;margin-right: 40px"></div>
+		</div>
+
+		<div class="form-group m-n text-left" *ngIf="exibirHistorico">
+			<div style="margin-left: 60px">
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="control-label">
+							Empresa : <span style="font-weight: normal;">{{cabecalho.descricaoEmpresa}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="control-label">
+							Processo : <span style="font-weight: normal;">{{cabecalho.descricaoProcesso}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="control-label">
+							Produto : <span style="font-weight: normal;">{{cabecalho.descricaoProduto}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left" *ngFor="let historico of model">
+			<div style="margin-left: 40px;border-style:double;border-bottom: 1px double black;margin-right: 40px"></div>
+			<div style="margin-left: 60px">
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="control-label">
+							INSUMO: <span style="font-weight: normal;">{{historico.descricaoInsumo}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="control-label">
+							SOLICITAÇÃO: <span style="font-weight: normal;">{{historico.descricaoSolicitacao}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-10">
+						<label class="control-label">
+							EM: <span style="font-weight: normal;">{{historico.dataHistoricoFormatada}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="control-label">
+							RESPONSÁVEL: <span style="font-weight: normal;">{{historico.nomeResponsavel}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row" *ngFor="let itemAlteracao of historico.listaAlteracao">
+					<div class="col-lg-12" style="margin-left: 100px;" >
+						<label class="control-label">
+							ALTERAÇÃO: <span style="font-weight: normal;">{{itemAlteracao.descricaoEventoDetalhe}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row" *ngFor="let itemValorAfetado of historico.listaValorAfetado">
+					<div class="col-lg-12"  style="margin-left: 130px;">
+						<label class="control-label">
+							VALOR AFETADO: <span style="font-weight: normal;">{{itemValorAfetado.descricaoEventoDetalhe}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row" *ngFor="let itemAcrescimo of historico.listaAcrescimo">
+					<div class="col-lg-12"  style="margin-left: 160px;">
+						<label class="control-label">
+							ACRÉSCIMO: <span style="font-weight: normal;">{{itemAcrescimo.descricaoEventoDetalhe}}</span>
+						</label>
+					</div>
+				</div>
+				<div class="row" *ngFor="let itemDecrescimo of historico.listaDescrescimo">
+					<div class="col-lg-12" style="margin-left: 160px;">
+						<label class="control-label">
+							DECRÉSCIMO: <span style="font-weight: normal;">{{itemDecrescimo.descricaoEventoDetalhe}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group m-n text-left">
+			<label style="margin-top:30px;margin-left: 40px;color: blue;">Emitido em: {{dataEmissao}}</label>
+		</div>
+
+		<!-- <div class="form-group m-n text-right">
+			<label style="margin-top: 100px;margin-right: 40px;color: black;font-size: 16px; font-family: Calibri">Página 1 de 1</label>
+		</div> -->
+
+	</article>
+	<!-- FIM CONTEUDO HISTORICO SELECIONADO PDF -->
+
+

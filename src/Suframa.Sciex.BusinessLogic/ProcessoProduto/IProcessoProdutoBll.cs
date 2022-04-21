@@ -13,5 +13,7 @@ namespace Suframa.Sciex.BusinessLogic
 		PEProdutoVM Salvar(PEProdutoVM vm);
 
 		void Deletar(int idPEProduto);
+
+		IEnumerable<object> SelecionarProdutosPorProcesso(string processo);
 	}
 }

@@ -55,6 +55,7 @@ import { ConsultarProcessoExportacaoModule } from './consultar-processo-exportac
 import { EstruturaPropriaPEModule } from './estrututra-propria-pe/estrutura-propria-pe.module';
 import { ConsultarProcessoExportacaoSuframaModule } from './consultar-processo-exportacao-suframa/consultar-processo-exportacao-suframa.module';
 import { RelatorioHistoricoModule } from './relatorios-historico/relatorio-historico.module';
+import { RelatorioHistoricoInsumosModule } from './relatorios-historico-insumos/relatorio-historico-insumos.module';
 import { RelatorioAnalisadorDueModule } from './relatorios-analisador-due/relatorio-analisador-due.module';
 import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.module';
 @NgModule({
@@ -158,7 +159,8 @@ import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.mo
 		ConsultarProcessoExportacaoModule,
 		RelatorioErrosDueModule,
 		RelatorioAnalisadorDueModule,
-		RelatorioHistoricoModule
+		RelatorioHistoricoModule,
+		RelatorioHistoricoInsumosModule
 	]
 })
 export class ViewsModule { }

@@ -256,6 +256,7 @@
     <Compile Include="DropDown\CodigoUtilizacaoAnaliseDropDownController.cs" />
     <Compile Include="DropDown\AnalistaAtivoDropDownController.cs" />
     <Compile Include="DropDown\InsumoDropDownController.cs" />
+    <Compile Include="DropDown\PRCProdutoDropDownController.cs" />
     <Compile Include="DropDown\MunicipioDropDownController..cs" />
     <Compile Include="DropDown\PaisDropDownController.cs" />
     <Compile Include="DropDown\ParametrosDropDownController.cs" />

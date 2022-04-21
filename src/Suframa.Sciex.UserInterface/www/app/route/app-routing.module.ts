@@ -154,6 +154,7 @@ import { RelatoriErrosoDueComponent } from '../views/relatorios-due/relatorio-er
 import { RelatorioHistoricoComponent } from '../views/relatorios-historico/relatorio-historico.component';
 import { RelatorioErrosDueModule } from '../views/relatorios-due/relatorio-erros-due.module';
 import { RelatorioAnalisadorDue } from '../views/relatorios-analisador-due/relatorio-analisador-due.component';
+import { RelatorioHistoricoInsumosComponent } from '../views/relatorios-historico-insumos/relatorio-historico-insumos.component';
 
 const routes: Routes = [
 	{ path: 'manter-plano-exportacao', component: ManterPlanoExportacaoComponent },
@@ -197,6 +198,7 @@ const routes: Routes = [
 	{ path: 'relatorio-historico', component: RelatorioHistoricoComponent },
 	{ path: 'relatorio-erro-due', component: RelatoriErrosoDueComponent },
 	{ path: 'relatorio-analisador-due', component: RelatorioAnalisadorDue },
+	{ path: 'relatorio-historico-insumos', component: RelatorioHistoricoInsumosComponent },
 
 	{ path: 'consultar-protocolo-envio', component: ManterConsultarProtocoloEnvioComponent },
 	{
