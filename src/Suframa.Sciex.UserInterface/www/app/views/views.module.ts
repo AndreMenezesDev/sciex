@@ -161,7 +161,7 @@ import { RelatorListagemExportacaoModule } from './relatorios-listagem-exportada
 		RelatorioErrosDueModule,
 		RelatorioAnalisadorDueModule,
 		RelatorioHistoricoModule,
-		RelatorioHistoricoInsumosModule
+		RelatorioHistoricoInsumosModule,
 		RelatorioHistoricoModule,
 		RelatorListagemExportacaoModule
 	]
