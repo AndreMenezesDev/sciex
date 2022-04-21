@@ -355,6 +355,12 @@ export class MenuComponent implements OnInit {
 			}
 			,
 			{
+				nome: 'Relatório Histórico dos Insumos',
+				url: '/relatorio-historico-insumos',
+				descricao: 'Relatório Histórico dos Insumos'
+			}
+			,
+			{
 				nome: 'Relatório de listagem de exportação aprovadas',
 				url: '/relatorio-listagem-exportacao',
 				descricao: 'Relatório de listagem de exportação aprovadas por exportador'

@@ -3,6 +3,7 @@ import { PagedItems } from '../../view-model/PagedItems';
 import { ModalService } from '../../shared/services/modal.service';
 import { MessagesService } from '../../shared/services/messages.service';
 import { ApplicationService } from '../../shared/services/application.service';
+import { ExcelService } from '../../shared/services/excel.service';
 import { Router } from '@angular/router';
 import { AuthGuard } from '../../shared/guards/auth-guard.service';
 import { ValidationService } from '../../shared/services/validation.service';
@@ -10,6 +11,7 @@ import { Location } from '@angular/common';
 import * as html2pdf from 'html2pdf.js';
 import { AssignHour } from '../../shared/services/assignHour.service';
 import { async } from '@angular/core/testing';
+import { RelatorioErroDuesVM } from '../../view-model/RelatorioErroDuesVM';
 
 @Component({
 	selector: 'app-plano-de-exportacao',
@@ -23,13 +25,15 @@ export class RelatoriErrosoDueComponent implements OnInit {
 	grid: any = { sort: {} };
 	parametros: any = {};
 	result: boolean = false;
-	servico = '';
+	servico = 'RelatorioErroDues';
+	objetoRelatorio : Array<RelatorioErroDuesVM> = new Array<RelatorioErroDuesVM>();
 	exibeRelatorio: boolean = false;
 	arquivoRelatorio: any;
 	hashPDF: any;
 	linkSource: any;
 	downloadLink: any;
 	fileName: any;
+	filterVm : any = {};
 
 	constructor(
 		private applicationService: ApplicationService,
@@ -40,12 +44,52 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		private Location: Location,
 		private authguard: AuthGuard,
 		private assignHour: AssignHour,
+		private excelService : ExcelService
 	) {
 
 	}
 
-	ngOnInit(): void {
+	ngOnInit(): void {}
 
+	//1 - pdf / 2 - excel
+	validar(tpExportacao){
+
+		if(!this.filterVm.nomeEmpresa && !this.filterVm.anoNumProcesso && !this.filterVm.inscricaoCadastral){
+			this.modal.alerta("Informe um filtro para gerar o Relatório!");
+			return false;
+		}
+
+		let obj : RelatorioErroDuesVM = new RelatorioErroDuesVM();
+
+		if(this.filterVm.anoNumProcesso)
+		{
+		  let variableSplit = this.filterVm.anoNumProcesso.split("/");
+		  obj.numeroPlano = Number(variableSplit[0]);
+		  obj.anoPlano = Number(variableSplit[1]);
+		}
+		else
+		{
+			obj.numeroPlano = 0;
+			obj.anoPlano = 0;
+		}
+
+		obj.nomeEmpresa = this.filterVm.nomeEmpresa;
+		obj.inscricaoCadastral = this.filterVm.inscricaoCadastral;
+
+		this.applicationService.post("RelatorioErrorDues",obj).subscribe((result:Array<RelatorioErroDuesVM>)=>{
+			if(result)
+			{
+				this.objetoRelatorio = result;
+				tpExportacao == 1 ?
+					this.exportPDF() :
+						this.exportExcel();
+			}
+			else
+			{
+				this.modal.alerta("Nenhum registro encontrado", "Erro!", "");
+				return false;
+			}
+		})
 	}
 
 	exportPDF()
@@ -66,7 +110,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 						useCORS: true
 					},
 					jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' },
-					pagebreak: { before: ['#quebraPaginaAnalises'], after: ['#quebraPagina'] }
+					pagebreak: { before:  [/*'#quebraPaginaAnalises',*/'#novo-plano'], after: [/*'#quebraPagina'*/] }
 				};
 				this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
 					console.log("height page: " + pdf.internal.pageSize.height);
@@ -93,6 +137,93 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		Promise.all([renderizarHtml, liberarTela]);
 	}
 
+	exportExcel()
+	{
+		let nomeRelatorio = "Relatório de Erros nas DU-E's - Comprovação Processo Exportação";
+
+		var excel : any = [];
+
+		var jsonExcel : any = {};
+
+		this.objetoRelatorio.forEach(element => {
+
+			jsonExcel.LinhaVazia = [""]
+
+			jsonExcel.Cabecalho = ["Ano/N° do Plano: " + element.anoNumPlano, "Empresa: " + element.nomeEmpresa, "", "", "", "", "", ""]
+			excel.push(jsonExcel.Cabecalho);
+
+			jsonExcel.InfoPlanoExportacao = [
+				"Modalidade: " + element.modalidade,
+				"Tipo: " + element.tipo,
+				"Data Status: " + element.dataStatus,
+				"Data Receb: " + element.dataRecebimento,
+				"Ano/Nº do Processo: " + element.anoNumProcesso
+			];
+			excel.push(jsonExcel.InfoPlanoExportacao);
+
+			excel.push(jsonExcel.LinhaVazia);
+
+			jsonExcel.CabecalhoRelatorioHistorioAnalise = [
+				"Cd. Prod",
+				"Nº DU-E",
+				"Situação",
+				"Responsável",
+				"Justificativa"
+			];
+			excel.push(jsonExcel.CabecalhoRelatorioHistorioAnalise);
+
+			element.relatorios.relatorioHistoricoAnalise.forEach(_historicoAnalise => {
+				jsonExcel.itemHistoricoAnalise = [
+					_historicoAnalise.codigo,
+					_historicoAnalise.numeroDue,
+					_historicoAnalise.situacao,
+					_historicoAnalise.responsavel,
+					_historicoAnalise.justificativa
+				];
+				excel.push(jsonExcel.itemHistoricoAnalise);
+			});
+
+			if(element.relatorios.relatorioDePara.length > 0)
+			{
+				excel.push(jsonExcel.LinhaVazia);
+
+				jsonExcel.CabecalhoRelatorioDePara = [
+					"Cd. Prod",
+					"Nº DU-E",
+					"Situação",
+					"País de Destino",
+					"Data Averbação",
+					"Quantidade",
+					"Valor",
+					"Responsável",
+					"Justificativa"
+				];
+				excel.push(jsonExcel.CabecalhoRelatorioDePara);
+
+				element.relatorios.relatorioDePara.forEach(_relatorioDeParaItem => {
+					jsonExcel.itemDePara = [
+						_relatorioDeParaItem.codigo,
+						_relatorioDeParaItem.numeroDue,
+						_relatorioDeParaItem.situacao,
+						_relatorioDeParaItem.paisDestino,
+						_relatorioDeParaItem.dataAverbacao,
+						_relatorioDeParaItem.quantidade,
+						_relatorioDeParaItem.valor,
+						_relatorioDeParaItem.responsavel,
+						_relatorioDeParaItem.justificativa
+					];
+					excel.push(jsonExcel.itemDePara);
+				});
+			}
+
+			excel.push(jsonExcel.LinhaVazia);
+			excel.push(jsonExcel.LinhaVazia);
+
+		});
+
+		this.excelService.exportAsExcelFile(excel, nomeRelatorio, nomeRelatorio);
+	}
+
 	salvarArquivoRelatorio() {
 		new Promise(resolve => {
 			btoa(JSON.stringify(this.arquivoRelatorio.then(pdf => {
@@ -101,7 +232,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 		}).then((data) => {
 			this.linkSource = 'data:' + 'application/pdf' + ';base64,' + data;
 			this.downloadLink = document.createElement('a');
-			this.fileName = "Relatório de Erros nas DU-E's - Comprovação Processo Exportação";
+			this.fileName = "Relatório de Erros nas DU-E's - Comprovação Processo Exportação_"+new Date().getTime();
 			document.body.appendChild(this.downloadLink);
 			this.downloadLink.href = this.linkSource;
 			this.downloadLink.download = this.fileName;

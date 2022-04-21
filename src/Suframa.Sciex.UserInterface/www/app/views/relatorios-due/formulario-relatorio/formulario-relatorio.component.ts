@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
+import { Component, OnInit, Injectable, ViewChild, Input } from '@angular/core';
 import { PagedItems } from '../../../view-model/PagedItems';
 import { ModalService } from '../../../shared/services/modal.service';
 import { MessagesService } from '../../../shared/services/messages.service';
@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { AuthGuard } from '../../../shared/guards/auth-guard.service';
 import { ValidationService } from '../../../shared/services/validation.service';
 import { Location } from '@angular/common';
+import { RelatorioErroDuesVM } from '../../../view-model/RelatorioErroDuesVM';
+
 @Component({
 	selector: 'app-formulatorio-relatorio-erros-due',
 	templateUrl: './formulario-relatorio.component.html'
@@ -20,6 +22,7 @@ export class FormularioRelatorioComponent implements OnInit {
 	parametros: any = {};
 	result: boolean = false;
 	servico = '';
+	@Input() objetoParametro : Array<RelatorioErroDuesVM> = new Array<RelatorioErroDuesVM>();
 
 	constructor(
 		private applicationService: ApplicationService,

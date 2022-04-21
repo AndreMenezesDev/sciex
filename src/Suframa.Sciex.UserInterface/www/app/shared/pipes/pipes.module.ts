@@ -17,6 +17,7 @@ import { SearchFilterPipe } from './filter-pipe';
 import { LetterBoldPipe } from './letter-bold.pipe';
 import { FormatDatePipe } from './format-date.pipe';
 import { NcmPipe } from './ncm.pipe';
+import { DuePipe } from './due.pipe';
 
 @NgModule({
 	imports: [
@@ -39,7 +40,8 @@ import { NcmPipe } from './ncm.pipe';
 		SearchFilterPipe,
 		LetterBoldPipe,
 		FormatDatePipe,
-		NcmPipe
+		NcmPipe,
+		DuePipe
 	],
 	declarations: [
 		BooleanoTextoPipe,
@@ -58,7 +60,8 @@ import { NcmPipe } from './ncm.pipe';
 		SearchFilterPipe,
 		LetterBoldPipe,
 		FormatDatePipe,
-		NcmPipe
+		NcmPipe,
+		DuePipe
 	],
 })
 export class PipesModule { }

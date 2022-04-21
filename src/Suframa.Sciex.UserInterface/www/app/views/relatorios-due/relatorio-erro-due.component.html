@@ -21,7 +21,13 @@
 						<div class="row">
 							<div class="col-lg-3">
 								<label>Inscrição Cadastral:</label>
-								<input type="text" class="form-control"/>
+								<input
+									type="text"
+									onlyNumber="true"
+									id="inscricao-cadastral"
+									name="inscricao-cadastral"
+									class="form-control"
+									[(ngModel)]="filterVm.inscricaoCadastral"/>
 							</div>
 						</div>
 					</div>
@@ -29,7 +35,12 @@
 						<div class="row">
 							<div class="col-lg-8">
 								<label>Empresa:</label>
-								<input type="text" class="form-control"/>
+								<input
+									type="text"
+									name="empresa"
+									id="empresa"
+									class="form-control"
+									[(ngModel)]="filterVm.nomeEmpresa"/>
 							</div>
 						</div>
 					</div>
@@ -37,7 +48,16 @@
 						<div class="row">
 							<div class="col-lg-8">
 								<label>N° do Plano:</label>
-								<input type="text" class="form-control"/>
+								<input
+									type="text"
+									id="numero-plano"
+									name="numero-plano"
+									maxlength="10"
+									mask-number
+									[mask]="'99999/9999'"
+									placeholder="00000/AAAA"
+									class="form-control"
+									[(ngModel)]="filterVm.anoNumProcesso"/>
 							</div>
 						</div>
 					</div>
@@ -50,13 +70,13 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li>
-									<a (click)="exportPDF()" style="cursor:pointer;"><i class="fa fa-file-pdf-o"></i>Salvar em PDF</a>
+									<a (click)="validar(1)" style="cursor:pointer;"><i class="fa fa-file-pdf-o"></i>Salvar em PDF</a>
 								</li>
 								<li>
-									<a (click)="exportPDF()" style="cursor:pointer;"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+									<a (click)="validar(2)" style="cursor:pointer;"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
 								</li>
 							</ul>
-							<a class="btn btn-sm btn-default"><i class="fa fa-eraser"></i> Limpar</a>
+							<a class="btn btn-sm btn-default" (click)="filterVm = {}"><i class="fa fa-eraser"></i> Limpar</a>
 						</div>
 					</div>
 				</form>
@@ -65,6 +85,7 @@
 </div>
 
 <app-formulatorio-relatorio-erros-due
+	[objetoParametro]="objetoRelatorio"
 	*ngIf="exibeRelatorio"
 	id="relatorio-erros-dues">
 </app-formulatorio-relatorio-erros-due>

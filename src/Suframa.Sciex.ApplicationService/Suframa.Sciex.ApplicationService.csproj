@@ -256,6 +256,7 @@
     <Compile Include="DropDown\CodigoUtilizacaoAnaliseDropDownController.cs" />
     <Compile Include="DropDown\AnalistaAtivoDropDownController.cs" />
     <Compile Include="DropDown\InsumoDropDownController.cs" />
+    <Compile Include="DropDown\PRCProdutoDropDownController.cs" />
     <Compile Include="DropDown\MunicipioDropDownController..cs" />
     <Compile Include="DropDown\PaisDropDownController.cs" />
     <Compile Include="DropDown\ParametrosDropDownController.cs" />
@@ -332,6 +333,7 @@
     <Compile Include="Grid\RecintoAlfandegaGridController.cs" />
     <Compile Include="Grid\SetorArmazenamentoGridController.cs" />
     <Compile Include="Grid\ConsultarProtocoloEnvioLEGridController.cs" />
+    <Compile Include="Services\RelatorioErrorDuesController.cs" />
     <Compile Include="Services\AprovarSolicitacaoController.cs" />
     <Compile Include="Services\AprovarTodosDUEEmAnaliseController.cs" />
     <Compile Include="Services\CancelarController.cs" />
@@ -360,6 +362,7 @@
     <Compile Include="Services\ListarProcessoInsumoImportadoParaAnaliseController.cs" />
     <Compile Include="Services\IncluirEditarDueController.cs" />
     <Compile Include="Services\PEPaisCorrecaoController.cs" />
+    <Compile Include="Services\RelatorioGerencial2Controller.cs" />
     <Compile Include="Services\RelatorioHistoricoController.cs" />
     <Compile Include="Services\RelatorioListagemExportacaoAprovadaController.cs" />
     <Compile Include="Services\ReprovarSolicitacaoController.cs" />

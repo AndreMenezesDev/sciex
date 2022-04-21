@@ -16,19 +16,10 @@ namespace Suframa.Sciex.ApplicationService.Services
 			_processoExportacaoBll = processoExportacaoBll;
 		}
 
-		public ProcessoExportacaoVM Get([FromUri] Teste teste)
+		public ProcessoExportacaoVM Get([FromUri] string processo)
 		{		
-			return _processoExportacaoBll.GerarRelatorioHistorico(teste.inscricaoSuframa, teste.processo, teste.empresa);
+			return _processoExportacaoBll.GerarRelatorioHistorico(processo);
 		}
 
-	}
-
-	public class Teste
-	{
-		public int? inscricaoSuframa { get; set; }
-		public string processo { get; set; }
-		public string empresa { get; set; }
-		
-
-	}
+	}	
 }

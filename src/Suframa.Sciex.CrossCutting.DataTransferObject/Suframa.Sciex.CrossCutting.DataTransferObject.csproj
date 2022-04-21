@@ -219,6 +219,8 @@
     <Compile Include="ViewModel\PRCDueVM.cs" />
     <Compile Include="ViewModel\ProcessoDetalheInsumoVM.cs" />
     <Compile Include="ViewModel\DesignarSolicitacaoVM.cs" />
+    <Compile Include="ViewModel\RelatorioErrosDuesVM.cs" />
+    <Compile Include="ViewModel\RequestResponseVM.cs" />
     <Compile Include="ViewModel\VM.cs" />
     <Compile Include="ViewModel\AliHistoricoVM.cs" />
     <Compile Include="ViewModel\GerarParecerSuspensaoVM.cs" />

@@ -762,6 +762,41 @@ namespace Suframa.Sciex.BusinessLogic
 			return prod;
 		}
 
+		public IEnumerable<object> SelecionarProdutosPorProcesso(string processo)
+		{
+
+			if (processo == String.Empty)
+			{
+				return null;
+			}
+			var processoSplit = processo.Split('/');
+
+			int numeroProcesso = 0;
+			int anoProcesso = 0;
+			if (processoSplit.Length > 1)
+			{
+				Int32.TryParse(processoSplit[0], out numeroProcesso);
+				Int32.TryParse(processoSplit[1], out anoProcesso);
+			}
+			if (numeroProcesso == 0)
+			{
+				return null;
+			}
+			//var idProcesso = _uowSciex.QueryStackSciex.Processo.Selecionar(o => o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso).IdProcesso;
+
+			var listaProdutosEmAnalise = _uowSciex.QueryStackSciex.PRCProduto.ListarGrafo(q => new
+			{
+				Id = q.IdProduto,
+				Text = q.CodigoProdutoSuframa,			
+				NumeroProcesso = q.Processo.NumeroProcesso,
+				AnoProcesso = q.Processo.AnoProcesso
+				
+			} ,
+			o => o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso);	
+
+			return listaProdutosEmAnalise;
+		}
+
 		public PEProdutoVM Salvar(PEProdutoVM vm)
 		{
 			if (vm == null) { return null; }

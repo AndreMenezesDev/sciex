@@ -262,6 +262,8 @@
     <Compile Include="RegimeTributario\RegimeTributarioValidation.cs" />
     <Compile Include="RelatorioListagemExportacaoAprovada\RelatorioListagemExportacaoBll.cs" />
     <Compile Include="RelatorioListagemExportacaoAprovada\IRelatorioListagemExportacaoBll.cs.cs" />
+    <Compile Include="RelatorioErrosDues\IRelatorioErrosDuesBll.cs" />
+    <Compile Include="RelatorioErrosDues\RelatorioErrosDuesBll.cs" />
     <Compile Include="ServicoGerarParecerSuspensao\IServicoGerarParecerSuspensaoBll.cs" />
     <Compile Include="ServicoGerarParecerSuspensao\ServicoGerarParecerSuspensaoBll.cs" />
     <Compile Include="SetorArmazenamento\ISetorArmazenamentoBll.cs" />
