@@ -352,6 +352,12 @@ export class MenuComponent implements OnInit {
 				nome: 'Erros nas DU-Es - Comprovação',
 				url: '/relatorio-erro-due',
 				descricao: 'Erros nas DU-Es - Comprovação'
+			}
+			,
+			{
+				nome: 'Relatório de listagem de exportação aprovadas',
+				url: '/relatorio-listagem-exportacao',
+				descricao: 'Relatório de listagem de exportação aprovadas por exportador'
 			}]
 		});
 	}
