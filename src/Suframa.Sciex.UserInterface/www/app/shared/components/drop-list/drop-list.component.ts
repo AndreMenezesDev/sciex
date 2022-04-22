@@ -12,6 +12,7 @@ import { ApplicationService } from '../../services/application.service';
 
 export class DropListComponent implements ControlValueAccessor, OnInit, OnChanges {
     @Input() isDisabled = false;
+    @Input() podeCarregar = true;
     @Input() isRequired = false;
     @Input() lazy = false;
     @Input() loadWhenParameterEmpty: boolean;
@@ -158,7 +159,7 @@ export class DropListComponent implements ControlValueAccessor, OnInit, OnChange
 
 	ngOnChanges(changes: any) {
 
-        if (changes.parametro) {
+        if (changes.parametro && this.podeCarregar) {
             if (!changes.parametro.firstChange) {
                 if (changes.parametro.currentValue || this.loadWhenParameterEmpty) {
                     this.listItems();

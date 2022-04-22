@@ -260,6 +260,8 @@
     <Compile Include="RegimeTributario\RegimeTributarioExisteRelacionamentoValidation.cs" />
     <Compile Include="RegimeTributario\RegimeTributarioTesteBll.cs" />
     <Compile Include="RegimeTributario\RegimeTributarioValidation.cs" />
+    <Compile Include="RelatorioListagemExportacaoAprovada\RelatorioListagemExportacaoBll.cs" />
+    <Compile Include="RelatorioListagemExportacaoAprovada\IRelatorioListagemExportacaoBll.cs.cs" />
     <Compile Include="RelatorioErrosDues\IRelatorioErrosDuesBll.cs" />
     <Compile Include="RelatorioErrosDues\RelatorioErrosDuesBll.cs" />
     <Compile Include="RelatorioListagemHistoricoInsumos\IRelatorioListagemHistoricoInsumosBll.cs" />

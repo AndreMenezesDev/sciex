@@ -31,6 +31,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public List<PRCHistoricoDetalheInsumoVM> ListaAcrescimo { get; set; }
 		public List<PRCHistoricoDetalheInsumoVM> ListaDescrescimo { get; set; }
 		public bool IsInsumo { get; set; }
+		public bool IsProduto { get; set; }
 		public int Id { get; set; }
 		public string DataHistoricoFormatada { get; set; }
 		public int ContadorListaHistorico { get; set; }

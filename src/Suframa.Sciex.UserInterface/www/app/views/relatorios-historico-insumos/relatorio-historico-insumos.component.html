@@ -1,0 +1,53 @@
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railOpacity="0.2">
+	<div class="row m-b-md">
+		<div class="col-lg-12">
+			<h1 class="m-b-xs text-black">RELATÓRIO PARA CONFERÊNCIA DE HISTÓRICO DE MANUTENÇÃO DE INSUMOS</h1>
+			<small></small>
+		</div>
+	</div>
+	<section class="panel panel-default">
+		<header class="panel-heading">
+			<h3 class="panel-title h5">Filtro de Pesquisa</h3>
+		</header>
+		<article class="panel-body">
+			<form>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-lg-8">
+							<label class="required">N° do Processo:</label>
+							<input type="text" name="processo" id="processo" [(ngModel)]="processo"  placeholder="_____/aaaa"
+							mask-number [mask]="'9999/9999'"  class="form-control" />
+						</div>
+						<div class="col-lg-8">
+							<label class="required">Produto:</label>
+							<app-drop-list
+								name="produto"
+								[podeCarregar]="processo?.length > 8"
+								placeholder="Selecione uma opção"
+								(valorModificado)="produto = $event"
+								[parametroChave]="'processo'"
+								[parametro]="processo"
+								servico="PRCProduto"
+								[(ngModel)]="produto">
+                            </app-drop-list>
+						</div>
+					</div>
+				</div>
+				<div class="row wrapper">
+					<div class="col-lg-6 m-t">
+						<button (click)="emitirHistoricoInsumo()" class="btn btn-primary btn-sm"><i class="fa fa-download"></i> Exportar</button>
+						<a (click)="limpar()" class="btn btn-sm btn-default"><i class="fa fa-eraser"></i> Limpar</a>
+					</div>
+				</div>
+			</form>
+		</article>
+		<footer class="panel-footer">
+		</footer>
+	</section>
+</div>
+
+<app-relatorio
+	#relatorio
+	id="relatorio">
+</app-relatorio>

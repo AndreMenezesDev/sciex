@@ -61,4 +61,9 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public bool isAprovarAnalise { get; set; }
 	}
 
+	public class LEProdutoComplementoVM : LEProdutoVM
+	{
+		public List<LEProdutoVM> listaLEProduto { get; set; } = new List<LEProdutoVM>();
+
+	}
 }
