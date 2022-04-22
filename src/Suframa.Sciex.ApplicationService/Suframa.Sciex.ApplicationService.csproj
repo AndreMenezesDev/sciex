@@ -363,6 +363,7 @@
     <Compile Include="Services\PEPaisCorrecaoController.cs" />
     <Compile Include="Services\RelatorioGerencial2Controller.cs" />
     <Compile Include="Services\RelatorioHistoricoController.cs" />
+    <Compile Include="Services\RelatorioListagemHistoricoInsumosController.cs" />
     <Compile Include="Services\ReprovarSolicitacaoController.cs" />
     <Compile Include="Services\PRCHistoricoInsumoSuframaController.cs" />
     <Compile Include="Services\SelecionarProdutoEmAnalisePorIdProcessoController.cs" />

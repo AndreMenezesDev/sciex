@@ -128,7 +128,6 @@ export class MenuComponent implements OnInit {
 				descricao: 'Enviar LE'
 			}]
 		});
-
 		this.Pss.push({
 			nome: 'PLI',
 			id: 2,
@@ -150,7 +149,6 @@ export class MenuComponent implements OnInit {
 				}
 			]
 		});
-
 		this.Pss.push({
 			nome: 'Parametrização',
 			id: 3,
@@ -193,8 +191,6 @@ export class MenuComponent implements OnInit {
 				}
 			]
 		});
-
-
 		this.Pss.push({
 			nome: 'Cadastros',
 			id: 4,
@@ -352,6 +348,11 @@ export class MenuComponent implements OnInit {
 				nome: 'Erros nas DU-Es - Comprovação',
 				url: '/relatorio-erro-due',
 				descricao: 'Erros nas DU-Es - Comprovação'
+			},
+			{
+				nome: 'Relatório Listagem do Histórico de Insumos da Listagem de Exportação',
+				url: '/relatorio-listagem-historico-insumos',
+				descricao: 'Relatório Listagem do Histórico de Insumos da Listagem de Exportação'
 			}]
 		});
 	}

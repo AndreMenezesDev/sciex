@@ -57,6 +57,7 @@ import { ConsultarProcessoExportacaoSuframaModule } from './consultar-processo-e
 import { RelatorioHistoricoModule } from './relatorios-historico/relatorio-historico.module';
 import { RelatorioAnalisadorDueModule } from './relatorios-analisador-due/relatorio-analisador-due.module';
 import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.module';
+import { RelatorioHistoricoInsumosModule } from './relatorio-listagem-historico-insumos/relatorio-listagem-historico-insumos.module';
 @NgModule({
 	declarations: [
 		IndexComponent,
@@ -103,7 +104,8 @@ import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.mo
 		EstruturaPropriaPEModule,
 		ManterPlanoExportacaoModule,
 		ConsultarProcessoExportacaoModule,
-		ConsultarProcessoExportacaoSuframaModule
+		ConsultarProcessoExportacaoSuframaModule,
+		RelatorioHistoricoInsumosModule
 	],
 	imports: [
 		CommonModule,
@@ -158,7 +160,8 @@ import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.mo
 		ConsultarProcessoExportacaoModule,
 		RelatorioErrosDueModule,
 		RelatorioAnalisadorDueModule,
-		RelatorioHistoricoModule
+		RelatorioHistoricoModule,
+		RelatorioHistoricoInsumosModule
 	]
 })
 export class ViewsModule { }
