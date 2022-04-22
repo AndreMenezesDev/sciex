@@ -20,4 +20,4 @@ import { FormularioRelatorioListaInsumosComponent } from './formulatorio-relator
 		FormularioRelatorioListaInsumosComponent
 	],
 })
-export class RelatorioHistoricoInsumosModule { }
+export class RelatorioListagemHistoricoInsumosModule { }

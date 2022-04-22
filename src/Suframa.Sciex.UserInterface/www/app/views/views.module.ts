@@ -58,8 +58,9 @@ import { RelatorioHistoricoModule } from './relatorios-historico/relatorio-histo
 import { RelatorioHistoricoInsumosModule } from './relatorios-historico-insumos/relatorio-historico-insumos.module';
 import { RelatorioAnalisadorDueModule } from './relatorios-analisador-due/relatorio-analisador-due.module';
 import { RelatorioErrosDueModule } from './relatorios-due/relatorio-erros-due.module';
-import { RelatorioHistoricoInsumosModule } from './relatorio-listagem-historico-insumos/relatorio-listagem-historico-insumos.module';
 import { RelatorListagemExportacaoModule } from './relatorios-listagem-exportada/relatorio-listagem-exportacao.module';
+import { RelatorioListagemHistoricoInsumosModule } from './relatorio-listagem-historico-insumos/relatorio-listagem-historico-insumos.module';
+
 @NgModule({
 	declarations: [
 		IndexComponent,
@@ -107,7 +108,8 @@ import { RelatorListagemExportacaoModule } from './relatorios-listagem-exportada
 		ManterPlanoExportacaoModule,
 		ConsultarProcessoExportacaoModule,
 		ConsultarProcessoExportacaoSuframaModule,
-		RelatorioHistoricoInsumosModule
+		RelatorioHistoricoInsumosModule,
+		RelatorioListagemHistoricoInsumosModule
 	],
 	imports: [
 		CommonModule,
@@ -163,11 +165,10 @@ import { RelatorListagemExportacaoModule } from './relatorios-listagem-exportada
 		RelatorioErrosDueModule,
 		RelatorioAnalisadorDueModule,
 		RelatorioHistoricoModule,
-		RelatorioHistoricoInsumosModule
-		RelatorioHistoricoModule,
 		RelatorioHistoricoInsumosModule,
 		RelatorioHistoricoModule,
-		RelatorListagemExportacaoModule
+		RelatorListagemExportacaoModule,
+		RelatorioListagemHistoricoInsumosModule
 	]
 })
 export class ViewsModule { }
