@@ -45,6 +45,12 @@ export class RelatorioHistoricoInsumosComponent implements OnInit {
 	}
 
 	emitirHistoricoInsumo(){
+		if (this.processo == '' || this.processo == null)
+			this.modal.alerta("N° do Processo não informado");
+
+		if (this.produto == '' || this.produto == null)
+			this.modal.alerta("produto não informado");
+
 		if(this.produto){
 
 			this.relatorio.emitirHistoricoInsumo(this.produto);
