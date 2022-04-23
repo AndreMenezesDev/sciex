@@ -264,6 +264,8 @@
     <Compile Include="RelatorioListagemExportacaoAprovada\IRelatorioListagemExportacaoBll.cs.cs" />
     <Compile Include="RelatorioErrosDues\IRelatorioErrosDuesBll.cs" />
     <Compile Include="RelatorioErrosDues\RelatorioErrosDuesBll.cs" />
+    <Compile Include="RelatorioListagemHistoricoInsumos\IRelatorioListagemHistoricoInsumosBll.cs" />
+    <Compile Include="RelatorioListagemHistoricoInsumos\RelatorioListagemHistoricoInsumosBll.cs" />
     <Compile Include="ServicoGerarParecerSuspensao\IServicoGerarParecerSuspensaoBll.cs" />
     <Compile Include="ServicoGerarParecerSuspensao\ServicoGerarParecerSuspensaoBll.cs" />
     <Compile Include="SetorArmazenamento\ISetorArmazenamentoBll.cs" />

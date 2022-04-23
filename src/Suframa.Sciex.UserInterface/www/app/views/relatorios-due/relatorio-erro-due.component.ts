@@ -86,7 +86,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 			}
 			else
 			{
-				this.modal.alerta("Nenhum registro encontrado", "Erro!", "");
+				this.modal.alerta("Nenhum registro encontrado", "Atenção!", "");
 				return false;
 			}
 		})

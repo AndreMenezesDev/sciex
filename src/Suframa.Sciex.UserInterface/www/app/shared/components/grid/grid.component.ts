@@ -41,10 +41,10 @@ export class GridComponent implements OnInit {
 
 	ngOnInit() {
 		this.page = this.page || 1;
-		this.size = this.size || 10;	
+		this.size = this.size || 10;
 	}
 
-	changeSize($event) {		
+	changeSize($event) {
 		this.onChangeSize.emit($event);
 		this.changePage(1);
 	}
@@ -79,14 +79,22 @@ export class GridComponent implements OnInit {
 
 					var item = this.parametros.fields[j].split("|");
 
-					valor = item.length > 0 ? Object.values(this.lista)[i][item[0].trim()] : Object.values(this.lista)[i][this.parametros.fields[j].trim()];
+					valor = item.length > 0 ?
+								Object.values(this.lista)
+								[i]
+								[item[0].trim()]
+							:
+								Object.values(this.lista)
+								[i]
+								[this.parametros.fields[j].trim()]
+							;
 
 					if (item.length == 2) {
 						if (item[1].split(":")[0].trim() == "formatCode") {
 							r[j] = this.formatCodeService.transform(valor, item[1].split(":")[1]);
 						}
 					}
-					else if (this.parametros.fields[j].trim() == "status") 
+					else if (this.parametros.fields[j].trim() == "status")
 						r[j] = (valor == 1 ? "ATIVO" : "INATIVO");
 					else {
 						r[j] = valor;
