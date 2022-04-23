@@ -187,7 +187,7 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					if (item.Length >= 1)
 					{
-						if (item.Substring(42, 1) != "S" || item.Substring(43, 2) != "AP")
+						if(item.Substring(42, 1) != "S" && (item.Substring(43, 2) != "AP" || item.Substring(43, 2) != "CO"))
 						{
 							return false;
 						}

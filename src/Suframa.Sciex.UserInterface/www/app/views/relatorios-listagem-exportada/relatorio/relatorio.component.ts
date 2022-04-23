@@ -23,6 +23,7 @@ export class RelatorioComponent implements OnInit {
 	result: boolean = false;
 	servico = '';
 	@Input() lista: any = {};
+	@Input() tipoRelatorio: any;
 	@Output() DownloadFinalizado: EventEmitter<any> = new EventEmitter();
 	exibeRelatorio: boolean = false;
 	dataImpressao: Date;
@@ -50,6 +51,7 @@ export class RelatorioComponent implements OnInit {
 	}
 	exportPDF()
 	{
+		this.tipoRelatorio;
 		this.dataInicio = new Date(this.lista.dataInicio).toLocaleDateString();
 		this.dataFim = new Date(this.lista.dataFim).toLocaleDateString();
 		this.exibeRelatorio = true;
