@@ -16,7 +16,7 @@ enum TipoHistorico {
 	templateUrl: './relatorio.component.html'
 })
 
-export class RelatorioComponent{
+export class RelatorioComponent {
 
 	exibirPdf = false;
 	exibirHistorico = false;
@@ -26,7 +26,11 @@ export class RelatorioComponent{
 	servico = "PRCHistoricoInsumoSuframa";
 	id: number;
 	path: string;
-
+	arquivoRelatorio: any;
+	hashPDF: any;
+	linkSource: any;
+	downloadLink: any;
+	fileName: any;
 	constructor(
 		private location: Location,
 		private applicationService: ApplicationService,
@@ -39,7 +43,7 @@ export class RelatorioComponent{
 
 	emitirHistoricoInsumo(id) {
 
-		if(id != undefined){
+		if (id != undefined) {
 			this.id = id;
 		}
 
@@ -49,66 +53,85 @@ export class RelatorioComponent{
 	}
 
 	gerarPDF() {
+
+
 		let renderizarHtml = new Promise(resolve => {
-		let rel = 'relatoriohistoricoInsumoSelecionado';
+			setTimeout(() => {
+				const elements = document.getElementById('relatoriohistoricoInsumoSelecionado');
+				const options = {
+					margin: [0.03, 0.03, 0.10, 0.03], // [top, left, bottom, right]
+					filename: 'relatorio-historico-alteracao-insumos.pdf',
+					image: { type: 'jpeg', quality: 0.98 },
+					html2canvas: {
+						scale: 2,
+						dpi: 300,
+						letterRendering: true,
+						useCORS: true
+					},
+					jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+					pagebreak: { after: ['#grid'] }
+				};
+				this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
+					var totalPages = pdf.internal.getNumberOfPages();
 
-			const elements = document.getElementById(rel);
-			const options = {
+					for (var i = 1; i <= totalPages; i++) {
+						pdf.setPage(i);
+						pdf.setFontSize(10);
+						pdf.setTextColor(150);
 
-				margin: [0.03, 0.03, 0.10, 0.03], // [top, left, bottom, right]
-				filename: 'relatorio-historico-alteracao-insumos.pdf',
-				image: { type: 'jpeg', quality: 0.98 },
-				html2canvas: {
-					scale: 2,
-					dpi: 300,
-					letterRendering: true,
-					useCORS: true
-				},
-				jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-				pagebreak: { after: ['#grid'] }
-			};
-			html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
-				var totalPages = pdf.internal.getNumberOfPages();
+						var dateObj = new Date();
+						var month = dateObj.getUTCMonth().toString().length <= 1 ? '0' + (dateObj.getUTCMonth() + 1).toString() : dateObj.getUTCMonth() + 1;
+						var day = dateObj.getUTCDate();
+						var year = dateObj.getUTCFullYear();
 
-				for (var i = 1; i <= totalPages; i++) {
-					pdf.setPage(i);
-					pdf.setFontSize(10);
-					pdf.setTextColor(150);
+						var hh = dateObj.getHours();
+						var mm = dateObj.getMinutes();
+						var ss = dateObj.getSeconds();
 
-					var dateObj = new Date();
-					var month = dateObj.getUTCMonth().toString().length <= 1 ? '0' + (dateObj.getUTCMonth() + 1).toString() : dateObj.getUTCMonth() + 1;
-					var day = dateObj.getUTCDate();
-					var year = dateObj.getUTCFullYear();
+						var newhr = hh + ":" + mm + ":" + ss;
 
-					var hh = dateObj.getHours();
-					var mm = dateObj.getMinutes();
-					var ss = dateObj.getSeconds();
+						var newdate = day + "/" + month + "/" + year;
 
-					var newhr = hh + ":" + mm + ":" + ss;
-
-					var newdate = day + "/" + month + "/" + year;
-
-					pdf.text('Data/Hora de Emissão: ' + newdate + " " + newhr
-						+ '                                                                                                           Página ' + i + ' de ' + (totalPages), .2, 11.5);
-				}
-			}).save();
-
+						pdf.text('Data/Hora de Emissão: ' + newdate + " " + newhr
+							+ '                                                                                                           Página ' + i + ' de ' + (totalPages), .2, 11.5);
+					}
+				}).outputPdf();
+			}, 5000);
 			resolve(null);
 		});
 
 		let liberarTela = new Promise(resolve => {
 			setTimeout(() => {
-				this.exibirPdf = false;
+				this.salvarArquivoRelatorio();
 			}, 5000);
 			resolve(null);
 		});
 
 		Promise.all([renderizarHtml, liberarTela]);
+
 	}
 
-	public buscarDados(id: number, isInsumo : boolean) {
+	salvarArquivoRelatorio() {
+		new Promise(resolve => {
+			btoa(JSON.stringify(this.arquivoRelatorio.then(pdf => {
+				resolve(btoa(pdf));
+			})));
+		}).then((data) => {
+			this.linkSource = 'data:' + 'application/pdf' + ';base64,' + data;
+			this.downloadLink = document.createElement('a');
+			this.fileName = "Relatório Listagem do Histórico de Processo de Exportação";
+			document.body.appendChild(this.downloadLink);
+			this.downloadLink.href = this.linkSource;
+			this.downloadLink.download = this.fileName;
+			this.downloadLink.target = '_self';
+			this.downloadLink.click();
+			this.exibirPdf = false;
+		});
+	}
 
-		let parametros = { id, isInsumo};
+	public buscarDados(id: number, isInsumo: boolean) {
+
+		let parametros = { id, isInsumo };
 
 		// data de emissão do relatorio
 		var dateObj = new Date();
@@ -123,16 +146,16 @@ export class RelatorioComponent{
 
 		this.applicationService.get(this.servico, parametros).subscribe((result: any) => {
 
-            if(result[0] != null){
+			if (result[0] != null) {
 				this.cabecalho = result[0];
-			    this.model = result;
-			    this.exibirPdf = true;
+				this.model = result;
+				this.exibirPdf = true;
 				this.exibirHistorico = true;
 				this.gerarPDF();
 
-			}else{
+			} else {
 				this.exibirHistorico = false;
-				this.modal.alerta( "Este Insumo não possui Histórico vinculado" , 'Informação' );
+				this.modal.alerta("Este Insumo não possui Histórico vinculado", 'Informação');
 			}
 
 		});
