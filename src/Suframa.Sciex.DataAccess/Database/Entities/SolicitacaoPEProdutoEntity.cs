@@ -10,11 +10,11 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 	public class SolicitacaoPEProdutoEntity : BaseEntity
 	{
 		public virtual SolicitacaoPELoteEntity SolicitacaoPELote { get; set; }
-		public virtual ICollection<SolicitacaoPaisProdutoEntity> PaisProduto { get; set; }
+		public virtual ICollection<SolicitacaoPEProdutoPaisEntity> PaisProduto { get; set; }
 		public virtual ICollection<SolicitacaoPEInsumoEntity> Insumos { get; set; }
 		public SolicitacaoPEProdutoEntity()
 		{
-			PaisProduto = new HashSet<SolicitacaoPaisProdutoEntity>();
+			PaisProduto = new HashSet<SolicitacaoPEProdutoPaisEntity>();
 			Insumos = new HashSet<SolicitacaoPEInsumoEntity>();
 		}
 

@@ -54,6 +54,7 @@ namespace Suframa.Sciex.BusinessLogic
 				retorno.listaLEProduto.Add(reg);
 			}
 			retorno.RazaoSocial = listaLEProtudo.FirstOrDefault().RazaoSocial;
+			retorno.InscricaoCadastral = listaLEProtudo.FirstOrDefault().InscricaoCadastral;
 			return retorno;
 		}
 

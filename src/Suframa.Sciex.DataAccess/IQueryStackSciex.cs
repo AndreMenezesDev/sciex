@@ -11,6 +11,7 @@ namespace Suframa.Sciex.DataAccess
 {
 	public interface IQueryStackSciex
 	{
+		IQueryRepositorySciex<SolicitacaoPEDueEntity> SolicitacaoPEDue { get; }
 		IQueryRepositorySciex<PRCDueEntity> PRCDue { get; }
 		IQueryRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		IQueryRepositorySciex<AladiEntity> Aladi { get; }
@@ -187,7 +188,7 @@ namespace Suframa.Sciex.DataAccess
 		IQueryRepositorySciex<SolicitacaoPEInsumoEntity> SolicitacaoPEInsumo { get; }
 		IQueryRepositorySciex<SolicitacaoPEDetalheEntity> SolicitacaoPEDetalhe { get; }
 		IQueryRepositorySciex<SolicitacaoPEProdutoEntity> SolicitacaoPEProduto { get; }
-		IQueryRepositorySciex<SolicitacaoPaisProdutoEntity> SolicitacaoPaisProduto { get; }
+		IQueryRepositorySciex<SolicitacaoPEProdutoPaisEntity> SolicitacaoPaisProduto { get; }
 		IQueryRepositorySciex<SolicitacaoPELoteEntity> SolicitacaoPELote { get; }
 		IQueryRepositorySciex<SolicitacaoPEArquivoEntity> SolicitacaoPEArquivo { get; }
 		IQueryRepositorySciex<ParecerTecnicoEntity> ParecerTecnico { get; }

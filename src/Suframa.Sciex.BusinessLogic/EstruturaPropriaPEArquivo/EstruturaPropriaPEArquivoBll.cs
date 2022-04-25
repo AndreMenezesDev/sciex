@@ -187,7 +187,7 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					if (item.Length >= 1)
 					{
-						if (item.Substring(42, 1) != "S" || item.Substring(43, 2) != "AP")
+						if(item.Substring(42, 1) != "S" && (item.Substring(43, 2) != "AP" || item.Substring(43, 2) != "CO"))
 						{
 							return false;
 						}
@@ -200,6 +200,24 @@ namespace Suframa.Sciex.BusinessLogic
 			}
 
 			return true;
+		}
+
+		public string VerificaTipoExportaca(string[] linha)
+		{
+			foreach (var item in linha)
+			{
+				if (item.Length >= 1)
+				{
+					if (item.Substring(43, 2) == "AP")
+					{
+						return "AP";
+					}else if (item.Substring(43, 2) == "CO")
+					{
+						return "CO";
+					}
+				}
+			}
+			return null;
 		}
 
 		private bool ValidarHorizontalProduto(string[] linhas)
@@ -480,20 +498,12 @@ namespace Suframa.Sciex.BusinessLogic
 					return false;
 				}
 
-				try
-				{
-					Convert.ToInt64(item.Substring(26, 15));
-				}
-				catch
+				if (item.Substring(26, 14) == "")
 				{
 					return false;
 				}
 
-				try
-				{
-					Convert.ToInt64(item.Substring(41, 10));
-				}
-				catch
+				if (item.Substring(41, 10) == "")
 				{
 					return false;
 				}
@@ -506,11 +516,7 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					return false;
 				}
-				try
-				{
-					Convert.ToInt64(item.Substring(71, 20));
-				}
-				catch
+				if (item.Substring(70, 20) == "")
 				{
 					return false;
 				}
@@ -553,22 +559,17 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			foreach (var item in linhas)
 			{
-				if (item.Substring(41, 10).Trim() != "")
+				if (item.Substring(40, 10).Trim() != "")
 				{
 					try
 					{
-						string[] dados = item.Substring(70, 10).Split('_');
+						string[] dados = item.Substring(40, 10).Split('_');
 
-						int dia = int.Parse(dados[2].Substring(0, 2));
-						int mes = DateTimeExtensions.RetornarNumeroMes(dados[2].Substring(2, 3));
-						int ano = int.Parse(dados[2].Substring(5, 4));
+						var dia = int.Parse(dados[0].Substring(0, 2));
+						var mes = int.Parse(dados[0].Substring(3, 2));
+						var ano = int.Parse(dados[0].Substring(6, 4));
 
-						int hora = int.Parse(dados[3].Substring(0, 2));
-						int min = int.Parse(dados[3].Substring(2, 2));
-						int seg = int.Parse(dados[3].Substring(4, 2));
-
-
-						var d = new DateTime(ano, mes, dia, hora, min, seg);
+						var d = new DateTime(ano, mes, dia);
 					}
 					catch
 					{
@@ -705,13 +706,12 @@ namespace Suframa.Sciex.BusinessLogic
 			var numeroLote = RecuperarNumeroLoteArquivoLote(arquivoLinhas);
 			var anoLote = RecuperarAnoLoteArquivoLote(arquivoLinhas);
 			var planoExiste = _uowSciex.QueryStackSciex.PlanoExportacao.Existe(x => x.NumeroPlano == numeroLote && x.AnoPlano == anoLote &&
-				x.NumeroInscricaoCadastral == inscricao && x.Situacao != 5);
+				x.NumeroInscricaoCadastral == inscricao && x.Situacao != 5 && x.TipoExportacao == "AP");
 			if (planoExiste)
 			{
 
 				return true;
 			}
-
 			return false;
 
 		}
@@ -1002,6 +1002,8 @@ namespace Suframa.Sciex.BusinessLogic
 					else
 					{
 						var loteFile = arquivos.Where(o => o.Contains("PX_LOTE.TXT"));
+						string[] linhasLote = File.ReadAllLines(loteFile.FirstOrDefault());
+						var tipoExportacao = VerificaTipoExportaca(linhasLote);
 						if (loteFile.FirstOrDefault() != null)
 						{
 							var filename = Path.GetFileName(loteFile.FirstOrDefault());
@@ -1168,7 +1170,6 @@ namespace Suframa.Sciex.BusinessLogic
 						{
 							return "Arquivo de Produto não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 						}
-
 						var prodPaisFile = arquivos.Where(o => o.Contains("PX_PRODPAIS.TXT"));
 						if (prodPaisFile.FirstOrDefault() != null)
 						{
@@ -1266,80 +1267,87 @@ namespace Suframa.Sciex.BusinessLogic
 
 						var insumoFile = arquivos.Where(o => o.Contains("PX_INSUMO.TXT"));
 						string tipoInsumo = string.Empty;
-						if (insumoFile.FirstOrDefault() != null)
+						if(tipoExportacao == "AP")
 						{
-							var filename = Path.GetFileName(insumoFile.FirstOrDefault());
-
-							string[] lines = File.ReadAllLines(insumoFile.FirstOrDefault());
-
-							if (lines.Length > 0 && lines[0].Length > 0)
+							if (insumoFile.FirstOrDefault() != null)
 							{
-								if (lines[0].Substring(0, 2) == "0\0")
+								var filename = Path.GetFileName(insumoFile.FirstOrDefault());
+
+								string[] lines = File.ReadAllLines(insumoFile.FirstOrDefault());
+
+								if (lines.Length > 0 && lines[0].Length > 0)
 								{
-									lines = File.ReadAllLines(filename, Encoding.Unicode);
-									File.Delete(filename);
-									File.WriteAllLines(filename, lines);
+									if (lines[0].Substring(0, 2) == "0\0")
+									{
+										lines = File.ReadAllLines(filename, Encoding.Unicode);
+										File.Delete(filename);
+										File.WriteAllLines(filename, lines);
+									}
+									else
+									{
+										lines = File.ReadAllLines(insumoFile.FirstOrDefault(), Encoding.Default);
+									}
+
+									if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O código do Plano do arquivo do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+									{
+										return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de “Insumo” está diferente, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-INSUMO
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O ano do arquivo de Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarFormatoNumeroArquivos(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O formato do número do Plano dentro do arquivo de “Insumo” é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+									}
+
+									if (!ValidarTipoInsumoArquivo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Serão aceitos somente insumos dos tipos P,E,N,R. Foi identificado insumo diferente dos aceitáveis, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									tipoInsumo = lines[0].Substring(30, 1);
+
+									if (!ValidarHorizontalInsumo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Arquivo de “Insumo” com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									}
 								}
 								else
 								{
-									lines = File.ReadAllLines(insumoFile.FirstOrDefault(), Encoding.Default);
-								}
-
-								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O código do Plano do arquivo do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
-								{
-									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de “Insumo” está diferente, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-INSUMO
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O ano do arquivo de Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarFormatoNumeroArquivos(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O formato do número do Plano dentro do arquivo de “Insumo” é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
-								}
-
-								if (!ValidarTipoInsumoArquivo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Serão aceitos somente insumos dos tipos P,E,N,R. Foi identificado insumo diferente dos aceitáveis, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								tipoInsumo = lines[0].Substring(30, 1);
-
-								if (!ValidarHorizontalInsumo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Arquivo de “Insumo” com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									return "Arquivo de Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 								}
 							}
 							else
@@ -1347,94 +1355,97 @@ namespace Suframa.Sciex.BusinessLogic
 								return "Arquivo de Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 							}
 						}
-						else
+
+						if (tipoExportacao == "AP")
 						{
-							return "Arquivo de Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
-						}
-
-						var detalheInsumoFile = arquivos.Where(o => o.Contains("PX_DETINSUMO.TXT"));
-						if (detalheInsumoFile.FirstOrDefault() != null)
-						{
-							var filename = Path.GetFileName(detalheInsumoFile.FirstOrDefault());
-
-							string[] lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault());
-
-							if (lines.Length > 0 && lines[0].Length > 0)
+							var detalheInsumoFile = arquivos.Where(o => o.Contains("PX_DETINSUMO.TXT"));
+							if (detalheInsumoFile.FirstOrDefault() != null)
 							{
-								if (lines[0].Substring(0, 2) == "0\0")
+								var filename = Path.GetFileName(detalheInsumoFile.FirstOrDefault());
+
+								string[] lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault());
+
+								if (lines.Length > 0 && lines[0].Length > 0)
 								{
-									lines = File.ReadAllLines(filename, Encoding.Unicode);
-									File.Delete(filename);
-									File.WriteAllLines(filename, lines);
+									if (lines[0].Substring(0, 2) == "0\0")
+									{
+										lines = File.ReadAllLines(filename, Encoding.Unicode);
+										File.Delete(filename);
+										File.WriteAllLines(filename, lines);
+									}
+									else
+									{
+										lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault(), Encoding.UTF8);
+									}
+
+									if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O código do Plano do arquivo do Detalhe do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+									{
+										return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de Detalhe do Insumo está diferente, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-DETINSUMO
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O ano do arquivo de Detalhe do Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarFormatoNumeroArquivos(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O formato do número do Plano dentro do arquivo de Detalhe do Insumo é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+									}
+
+									if (!ValidarCodPaisCodMoedaDetalheInsumo(tipoInsumo, lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Para insumos importados o país/moeda é obrigatório. Há Detalhe do Insumo sem informação de país/moeda.";
+									}
+
+									if (!ValidarQtdVlrUnitarioDetalheInsumo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "A Quantidade e o Valor Unitário devem ser superior a zero (0). Dentro do arquivo de Detalhe do Insumo há quantidade ou valor unitário igual a zero (0).";
+									}
+
+									if (!ValidarHorizontalDetalheInsumo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Arquivo de Detalhe do Insumo com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									}
 								}
 								else
 								{
-									lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault(), Encoding.UTF8);
-								}
-
-								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O código do Plano do arquivo do Detalhe do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
-								{
-									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de Detalhe do Insumo está diferente, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-DETINSUMO
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O ano do arquivo de Detalhe do Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarFormatoNumeroArquivos(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O formato do número do Plano dentro do arquivo de Detalhe do Insumo é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
-								}
-
-								if (!ValidarCodPaisCodMoedaDetalheInsumo(tipoInsumo, lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Para insumos importados o país/moeda é obrigatório. Há Detalhe do Insumo sem informação de país/moeda.";
-								}
-
-								if (!ValidarQtdVlrUnitarioDetalheInsumo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "A Quantidade e o Valor Unitário devem ser superior a zero (0). Dentro do arquivo de Detalhe do Insumo há quantidade ou valor unitário igual a zero (0).";
-								}
-
-								if (!ValidarHorizontalDetalheInsumo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Arquivo de Detalhe do Insumo com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 								}
 							}
 							else
@@ -1442,90 +1453,77 @@ namespace Suframa.Sciex.BusinessLogic
 								return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 							}
 						}
-						else
+						if(tipoExportacao == "CO")
 						{
-							return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
-						}
+							var reDueFile = arquivos.Where(o => o.Contains("PX_RE.TXT"));
 
-						var reDueFile = arquivos.Where(o => o.Contains("PX_RE.TXT"));
-
-						if (reDueFile.FirstOrDefault() != null)
-						{
-							var filename = Path.GetFileName(reDueFile.FirstOrDefault());
-
-							string[] lines = File.ReadAllLines(reDueFile.FirstOrDefault());
-
-							if (lines.Length > 0 && lines[0].Length > 0)
+							if (reDueFile.FirstOrDefault() != null)
 							{
-								if (lines[0].Substring(0, 2) == "0\0")
+								var filename = Path.GetFileName(reDueFile.FirstOrDefault());
+
+								string[] lines = File.ReadAllLines(reDueFile.FirstOrDefault());
+
+								if (lines.Length > 0 && lines[0].Length > 0)
 								{
-									lines = File.ReadAllLines(filename, Encoding.Unicode);
-									File.Delete(filename);
-									File.WriteAllLines(filename, lines);
+									if (lines[0].Substring(0, 2) == "0\0")
+									{
+										lines = File.ReadAllLines(filename, Encoding.Unicode);
+										File.Delete(filename);
+										File.WriteAllLines(filename, lines);
+									}
+									else
+									{
+										lines = File.ReadAllLines(reDueFile.FirstOrDefault(), Encoding.UTF8);
+									}
+									if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+									{
+										return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de RE/DUE está diferente, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarAnoArquivos(lines, loteAno, loteNumero))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O ano do arquivo de RE/DUE não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarFormatoNumeroArquivos(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O formato do número do Plano dentro do arquvio de RE/DUE é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+									}
+									if (!ValidarHorizontalReDue(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Arquivo de RE/DUE com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									}
+									if (!ValidarDataReDue(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "A data de embarque do arquivo de RE/DUE é inválida, não é possível realizar envio de Plano de Exportação.";
+									}
 								}
 								else
 								{
-									lines = File.ReadAllLines(reDueFile.FirstOrDefault(), Encoding.UTF8);
-								}
-
-								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O código do Plano do arquivo de Plano Exportação DUE não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
-								{
-									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de RE/DUE está diferente, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O ano do arquivo de RE/DUE não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarFormatoNumeroArquivos(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O formato do número do Plano dentro do arquvio de RE/DUE é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
-								}
-								if (!ValidarHorizontalReDue(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Arquivo de RE/DUE com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
-								}
-								if (!ValidarDataReDue(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "A data de embarque do arquivo de RE/DUE é inválida, não é possível realizar envio de Plano de Exportação.";
+									return "Arquivo de RED/DUE não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 								}
 							}
-							else
-							{
-								return "Arquivo de RED/DUE não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
-							}
-						}
+						}	
 						cnpjImportador = CNPJArquivo;
 						razaoSocial = objVI.RazaoSocial;
 
@@ -1569,8 +1567,10 @@ namespace Suframa.Sciex.BusinessLogic
 
 			foreach (var linhaListaPexpam in listaCodigoProdutoPexpam)
 			{
+				
 				foreach (var item in lines)
 				{
+					var tt = item.Substring(19, 4);
 					if ((item.Length > 1 && item.Substring(19, 4) == linhaListaPexpam) || listaValidados.Contains(item))
 					{
 						listaValidados.Add(item);
@@ -1650,11 +1650,32 @@ namespace Suframa.Sciex.BusinessLogic
 					var erro1 = ValidarExistenciaLote(lote);	
 					var erro2 = ValidarModalidade(lote);
 					var erro3 = ValidarTipoLote(lote);
-					var erro4 = ValidarProdutoPE(lote.produtos);
+					var erro4 = ValidarAnoNumeroProcesso(lote);
+					var erro5 = true;
+					var erro6 = true;
+
+					if (!erro4)
+					{
+						erro5 = ValidarExisteProcessoNaBase(lote);
+
+						if ("CO".Equals(lote.TipoExportacao))
+						{
+							var existePlanoNaBase = ValidarExisteProcessoParaPlanoExportacaoNaBase(lote);
+							var dueValidada = ValidarInfoDue(lote.produtos);
+
+							if (existePlanoNaBase && dueValidada)
+								erro6 = false;
+							
+						}
+						
+					}
+
+					var erro7 = ValidarProdutoPE(lote.produtos);
+
 					lote.Situacao = 2;
 					_uowSciex.CommandStackSciex.SolicitacaoPELote.Salvar(lote);
 
-					if (!erro1 && (erro2 || erro3 || erro4))
+					if (!erro1 && (erro2 || erro3 || erro4 || erro5 || erro6 || erro7))
 					{
 
 						plano = GerarPlanoExportacao(lote, false);
@@ -1702,6 +1723,242 @@ namespace Suframa.Sciex.BusinessLogic
 					RegistrarFimControleLog(lote.EstruturaPropria, controle, $"Tabela: SCIEX_PLANO_EXPORTACAO, Campo pex_id:  <{plano.IdPlanoExportacao}>");
 
 			}
+		}
+
+		private bool ValidarInfoDue(ICollection<SolicitacaoPEProdutoEntity> produtos)
+		{
+			var erros = false;
+			foreach (var produto in produtos)
+			{
+				
+				foreach (var produtoPais in produto.PaisProduto)
+				{
+					foreach (var due in produtoPais.ListaSolicPEDue)
+					{
+
+						//RN22 - 1
+						if (produto.SolicitacaoPELote.NumeroLote != due.NumeroLote
+							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
+							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral)
+						{
+							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 735);
+							var erro = new ErroProcessamentoEntity();
+							erro.DataProcessamento = GetDateTimeNowUtc();
+							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
+							erro.Descricao = entityMensagemErro.Descricao.Replace("[sdu_nu]", $"[{due.Numero}]"); ;
+							erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+							erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+							erros = true;
+							_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+							_uowSciex.CommandStackSciex.Save();
+						}
+
+						//RN22 - 2
+						if (produto.SolicitacaoPELote.NumeroLote != due.NumeroLote
+							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
+							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
+							|| produto.CodigoProdutoPexPam != due.CodigoProdutoExportacao)
+						{
+							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 736);
+							var erro = new ErroProcessamentoEntity();
+							erro.DataProcessamento = GetDateTimeNowUtc();
+							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
+							erro.Descricao = entityMensagemErro.Descricao.Replace("[sdu_co_produto_exp]", $"[{produto.CodigoProdutoPexPam}]").
+																		Replace("[sdu_nu]", $"[{due.Numero}]");
+
+							erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+							erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+							erros = true;
+							_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+							_uowSciex.CommandStackSciex.Save();
+						}
+
+						//RN22 - 3
+						var codigoPais = int.Parse(due.SolicitacaoPEProdutoPais.CodigoPais);
+						if (produto.SolicitacaoPELote.NumeroLote != due.NumeroLote
+							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
+							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
+							|| due.SolicitacaoPEProdutoPais.CodigoProdutoPexPam != due.CodigoProdutoExportacao
+							|| codigoPais != due.CodigoPais
+							)
+						{
+							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 737);
+							var erro = new ErroProcessamentoEntity();
+							erro.DataProcessamento = GetDateTimeNowUtc();
+							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
+							erro.Descricao = entityMensagemErro.Descricao.Replace("[sdi_co_pai]", $"[{due.CodigoPais}]").
+																		Replace("[spi_co_produto_exp]", $"[{due.SolicitacaoPEProdutoPais.CodigoProdutoPexPam}]")
+																		.Replace("[sdu_nu]", $"[{due.Numero}]");
+							erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+							erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+							erros = true;
+							_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+							_uowSciex.CommandStackSciex.Save();
+						}
+
+
+						//RN22 - 4
+						var numDue = due.Numero;
+						var numLote = due.NumeroLote;
+						var numAnoLote = due.NumeroAnoLote;
+						var inscCad = due.InscricaoCadastral;
+						var codProdExp = due.CodigoProdutoExportacao;
+						var codPais = due.CodigoPais;
+
+						var existeDueDuplicada = _uowSciex.QueryStackSciex.SolicitacaoPEDue.Contar(q=> q.Numero == numDue
+																									&& q.NumeroLote == numLote
+																									&& q.NumeroAnoLote == numAnoLote
+																									&& q.InscricaoCadastral == inscCad
+																									&& q.CodigoProdutoExportacao == codProdExp
+																									&& q.CodigoPais == codPais);
+						if (existeDueDuplicada > 1)
+						{
+							erros = true;
+							RegistarMensagemErro(produto.SolicitacaoPELote, 738, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
+										new string[] { $"[{due.Numero}]" }, produto.Id);
+						}
+
+
+						//RN22 - 5
+						var existeDueComPaisDistinto = _uowSciex.QueryStackSciex.SolicitacaoPEDue.Contar(q => q.Numero == numDue
+																									&& q.NumeroLote == numLote
+																									&& q.NumeroAnoLote == numAnoLote
+																									&& q.InscricaoCadastral == inscCad
+																									&& q.CodigoProdutoExportacao == codProdExp
+																									&& q.CodigoPais != codPais);
+
+						if (existeDueComPaisDistinto >= 1)
+						{
+							erros = true;
+							RegistarMensagemErro(produto.SolicitacaoPELote, 739, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
+										new string[] { $"[{due.Numero}]" }, produto.Id);
+						}
+
+						//RN22 - 6
+						var dataDue = due.DataAverbacao;
+						var numProcesso = int.Parse(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroProcesso);
+						var anoProcesso = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.AnoProcesso;
+
+						var validarDueDataEmbarqueNoPrazoVigenciaProcesso = _uowSciex.QueryStackSciex.Processo.Existe(q => q.ListaStatus.Any(w=> w.Tipo == w.Processo.TipoStatus)
+																									&& 
+																									(
+																										q.ListaStatus.Any(w=> w.DataValidade < dataDue)
+																										&& 
+																										q.DataValidade > dataDue
+																									)
+																									&& q.NumeroProcesso == numProcesso
+																									&& q.AnoProcesso == anoProcesso
+																									);
+
+						if (!validarDueDataEmbarqueNoPrazoVigenciaProcesso)
+						{
+							erros = true;
+							RegistarMensagemErro(produto.SolicitacaoPELote, 740, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
+										new string[] { $"[{due.Numero}]" }, produto.Id);
+						}
+					}
+				}
+				
+
+				if (!erros)
+				{
+					produto.SituacaoValidacao = 2;
+				}
+				else
+				{
+					produto.SolicitacaoPELote.Situacao = 3;
+					produto.SituacaoValidacao = 3;
+				}
+				_uowSciex.CommandStackSciex.SolicitacaoPEProduto.Salvar(produto);
+
+
+			}
+			return erros;
+		}
+
+		private bool ValidarAnoNumeroProcesso(SolicitacaoPELoteEntity lote)
+		{
+			var ano = lote.AnoProcesso == null ? 0 : lote.AnoProcesso.Value;
+
+			bool anoValido = ano != 0 && (1970 < ano && ano < 3000);
+
+
+			bool processoValido = !string.IsNullOrEmpty(lote.NumeroProcesso);
+
+			if (!anoValido || !processoValido)
+			{
+				var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 741);
+				var erro = new ErroProcessamentoEntity();
+				erro.DataProcessamento = GetDateTimeNowUtc();
+				erro.CNPJImportador = lote.NumeroCNPJ;
+				erro.Descricao = entityMensagemErro.Descricao;
+				erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+				erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+				lote.Situacao = 3;
+				_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+				_uowSciex.CommandStackSciex.Save();
+				return true;
+			}
+
+			return false;
+		}
+
+		private bool ValidarExisteProcessoNaBase(SolicitacaoPELoteEntity lote)
+		{
+			var ano = lote.AnoProcesso == null ? 0 : lote.AnoProcesso.Value;
+
+			var inscCad = lote.InscricaoCadastral == null ? 0 : int.Parse(lote.InscricaoCadastral);
+			var numProc = lote.NumeroProcesso == null ? 0 : int.Parse(lote.NumeroProcesso);
+
+			var existeProcesso = _uowSciex.QueryStackSciex.Processo.Listar(q => q.InscricaoSuframa == inscCad 
+																				&& q.AnoProcesso == ano 
+																				&& q.NumeroProcesso == numProc).Any();
+
+			if (!existeProcesso)
+			{
+				var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 741);
+				var erro = new ErroProcessamentoEntity();
+				erro.DataProcessamento = GetDateTimeNowUtc();
+				erro.CNPJImportador = lote.NumeroCNPJ;
+				erro.Descricao = entityMensagemErro.Descricao;
+				erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+				erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.ANO_NUM_PROCESSO_NAO_ENCONTRADO_NA_BASE;
+				lote.Situacao = 3;
+				_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+				_uowSciex.CommandStackSciex.Save();
+				return true;
+			}
+
+			return false;
+		}
+
+		private bool ValidarExisteProcessoParaPlanoExportacaoNaBase(SolicitacaoPELoteEntity lote)
+		{
+			var ano = lote.AnoProcesso == null ? 0 : lote.AnoProcesso.Value;
+			var inscCad = lote.InscricaoCadastral == null ? 0 : int.Parse(lote.InscricaoCadastral);
+			var numProc = lote.NumeroProcesso == null ? 0 : int.Parse(lote.NumeroProcesso);
+
+
+			var existeNaBaseParaPlanoComprovacao = _uowSciex.QueryStackSciex.PlanoExportacao.Listar(q=> q.NumeroInscricaoCadastral == inscCad
+																										&& q.NumeroAnoProcesso == ano
+																										&& q.NumeroProcesso == numProc).Any();
+
+			if (!existeNaBaseParaPlanoComprovacao)
+			{
+				var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 741);
+				var erro = new ErroProcessamentoEntity();
+				erro.DataProcessamento = GetDateTimeNowUtc();
+				erro.CNPJImportador = lote.NumeroCNPJ;
+				erro.Descricao = entityMensagemErro.Descricao;
+				erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+				erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.ANO_NUM_PROCESSO_JA_VINCULADO_NA_BASE;
+				lote.Situacao = 3;
+				_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+				_uowSciex.CommandStackSciex.Save();
+				return true;
+			}
+
+			return false;
 		}
 
 		private void CopiarArquivo(SolicitacaoPELoteEntity lote, int idPlanoExportacao)
@@ -1891,6 +2148,7 @@ namespace Suframa.Sciex.BusinessLogic
 				var produtosComFalha = lote.produtos.Count(x => x.SituacaoValidacao == 3);
 
 				var produtosComSucesso = lote.produtos.Count(x => x.SituacaoValidacao == 2);
+
 				if (sucesso)
 				{
 					plano.DataStatus = GetDateTimeNowUtc();
@@ -1950,122 +2208,186 @@ namespace Suframa.Sciex.BusinessLogic
 
 					if (prod != null)
 					{
-						List<PEInsumoEntity> novosInsumos = new List<PEInsumoEntity>();
-
-						var listaPEInsumosReprovados = prod.ListaPEInsumo.
-												Where(q => q.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO).ToList();
-
-						if (listaPEInsumosReprovados.Count > 0)
+						if (!"CO".Equals(lote.TipoExportacao))
 						{
 
+							var listaPEInsumosReprovados = prod.ListaPEInsumo.
+													Where(q => q.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO).ToList();
 
-							try
+							if (listaPEInsumosReprovados.Count > 0)
 							{
-								foreach (var insumoPEAtual in listaPEInsumosReprovados)
+
+
+								try
 								{
-
-									var insumoSolic = produto.Insumos.Where(q => q.CodigoInsumo == insumoPEAtual.CodigoInsumo
-																				&&
-																				q.CodigoProdutoPexPam == prod.CodigoProdutoExportacao)
-																			?.FirstOrDefault() ?? null;
-
-									if (insumoSolic != null)
+									foreach (var insumoPEAtual in listaPEInsumosReprovados)
 									{
 
-										insumoPEAtual.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO;
-										_uowSciex.CommandStackSciex.PEInsumo.Salvar(insumoPEAtual);
+										var insumoSolic = produto.Insumos.Where(q => q.CodigoInsumo == insumoPEAtual.CodigoInsumo
+																					&&
+																					q.CodigoProdutoPexPam == prod.CodigoProdutoExportacao)
+																				?.FirstOrDefault() ?? null;
 
-
-										var novoInsumoPE = new PEInsumoEntity();
-										novoInsumoPE.CodigoDetalhe = int.Parse(insumoSolic.CodigoDetalhe);
-										novoInsumoPE.CodigoInsumo = insumoSolic.CodigoInsumo;
-										novoInsumoPE.CodigoNcm = insumoSolic.CodigoNCM;
-										novoInsumoPE.CodigoUnidade = int.Parse(insumoSolic.CodigoUnidade);
-										novoInsumoPE.CodigoInsumo = insumoSolic.CodigoInsumo;
-										novoInsumoPE.CodigoUnidade = int.Parse(insumoSolic.CodigoUnidade);
-										novoInsumoPE.TipoInsumo = insumoSolic.CodigoTipoInsumo;
-										novoInsumoPE.DescricaoEspecificacaoTecnica = insumoSolic.DescricaoEspTecnica;
-										novoInsumoPE.DescricaoPartNumber = insumoSolic.DescricaoPartNumber;
-										novoInsumoPE.DescricaoInsumo = insumoSolic.DescricaoInsumo;
-										novoInsumoPE.ValorCoeficienteTecnico = insumoSolic.ValorCoeficienteTecnico.Value;
-										novoInsumoPE.ValorPercentualPerda = insumoSolic.ValorPctPerda.Value;
-										novoInsumoPE.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.CORRIGIDO;
-										novoInsumoPE.IdPEProduto = prod.IdPEProduto;
-
-
-										foreach (var detalhePEAtualVM in insumoPEAtual.ListaPEDetalheInsumo)
+										if (insumoSolic != null)
 										{
 
-											//var newDet = new PEDetalheInsumoEntity();
-											//newDet.IdPEInsumo = novoInsumoPE.IdPEInsumo;
-											//newDet.CodigoPais = detalhePEAtualVM.CodigoPais;
-											//newDet.ValorFrete = detalhePEAtualVM.ValorFrete;
-											//newDet.Quantidade = detalhePEAtualVM.Quantidade;
-											//newDet.NumeroSequencial = detalhePEAtualVM.NumeroSequencial;
-											//newDet.ValorUnitario = detalhePEAtualVM.ValorUnitario;
-											//newDet.SituacaoAnalise = detalhePEAtualVM.SituacaoAnalise;
-											//newDet.IdMoeda = detalhePEAtualVM.IdMoeda;
+											insumoPEAtual.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO;
+											_uowSciex.CommandStackSciex.PEInsumo.Salvar(insumoPEAtual);
 
-											//novoInsumoPE.ListaPEDetalheInsumo.Add(newDet);
 
-											////_uowSciex.CommandStackSciex.PEDetalheInsumo.Salvar(newDet);
-											////_uowSciex.CommandStackSciex.Save();
-											////_uowSciex.CommandStackSciex.DetachEntries();
+											var novoInsumoPE = new PEInsumoEntity();
+											novoInsumoPE.CodigoDetalhe = int.Parse(insumoSolic.CodigoDetalhe);
+											novoInsumoPE.CodigoInsumo = insumoSolic.CodigoInsumo;
+											novoInsumoPE.CodigoNcm = insumoSolic.CodigoNCM;
+											novoInsumoPE.CodigoUnidade = int.Parse(insumoSolic.CodigoUnidade);
+											novoInsumoPE.CodigoInsumo = insumoSolic.CodigoInsumo;
+											novoInsumoPE.CodigoUnidade = int.Parse(insumoSolic.CodigoUnidade);
+											novoInsumoPE.TipoInsumo = insumoSolic.CodigoTipoInsumo;
+											novoInsumoPE.DescricaoEspecificacaoTecnica = insumoSolic.DescricaoEspTecnica;
+											novoInsumoPE.DescricaoPartNumber = insumoSolic.DescricaoPartNumber;
+											novoInsumoPE.DescricaoInsumo = insumoSolic.DescricaoInsumo;
+											novoInsumoPE.ValorCoeficienteTecnico = insumoSolic.ValorCoeficienteTecnico.Value;
+											novoInsumoPE.ValorPercentualPerda = insumoSolic.ValorPctPerda.Value;
+											novoInsumoPE.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.CORRIGIDO;
+											novoInsumoPE.IdPEProduto = prod.IdPEProduto;
 
-											if (detalhePEAtualVM.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO)
+
+											foreach (var detalhePEAtualVM in insumoPEAtual.ListaPEDetalheInsumo)
 											{
-												var detalheSolic = insumoSolic.Detalhes.Where(q => q.Sequencial == detalhePEAtualVM.NumeroSequencial
-																							&&
-																							q.CodigoInsumo == insumoPEAtual.CodigoInsumo
-																							&&
-																							q.CodigoProdutoPexPam == prod.CodigoProdutoExportacao)
-																							?.FirstOrDefault() ?? null;
 
-												if (detalheSolic != null)
+												//var newDet = new PEDetalheInsumoEntity();
+												//newDet.IdPEInsumo = novoInsumoPE.IdPEInsumo;
+												//newDet.CodigoPais = detalhePEAtualVM.CodigoPais;
+												//newDet.ValorFrete = detalhePEAtualVM.ValorFrete;
+												//newDet.Quantidade = detalhePEAtualVM.Quantidade;
+												//newDet.NumeroSequencial = detalhePEAtualVM.NumeroSequencial;
+												//newDet.ValorUnitario = detalhePEAtualVM.ValorUnitario;
+												//newDet.SituacaoAnalise = detalhePEAtualVM.SituacaoAnalise;
+												//newDet.IdMoeda = detalhePEAtualVM.IdMoeda;
+
+												//novoInsumoPE.ListaPEDetalheInsumo.Add(newDet);
+
+												////_uowSciex.CommandStackSciex.PEDetalheInsumo.Salvar(newDet);
+												////_uowSciex.CommandStackSciex.Save();
+												////_uowSciex.CommandStackSciex.DetachEntries();
+
+												if (detalhePEAtualVM.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO)
 												{
+													var detalheSolic = insumoSolic.Detalhes.Where(q => q.Sequencial == detalhePEAtualVM.NumeroSequencial
+																								&&
+																								q.CodigoInsumo == insumoPEAtual.CodigoInsumo
+																								&&
+																								q.CodigoProdutoPexPam == prod.CodigoProdutoExportacao)
+																								?.FirstOrDefault() ?? null;
 
-													detalhePEAtualVM.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO;
-													_uowSciex.CommandStackSciex.PEDetalheInsumo.Salvar(detalhePEAtualVM);
-
-													var newDetCorrigido = new PEDetalheInsumoEntity();
-													newDetCorrigido.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.CORRIGIDO;
-													newDetCorrigido.CodigoPais = int.Parse(detalheSolic.CodigoPais);
-													newDetCorrigido.ValorFrete = detalheSolic.ValorFrete;
-													newDetCorrigido.Quantidade = detalheSolic.Quantidade.Value;
-													newDetCorrigido.NumeroSequencial = detalheSolic.Sequencial;
-													newDetCorrigido.ValorUnitario = detalheSolic.ValorUnitario.Value;
-
-													//TODO moeda pode ser nulo tem que mudar na base
-													if (detalheSolic.CodigoMoeda != null)
+													if (detalheSolic != null)
 													{
-														var cod = int.Parse(detalheSolic.CodigoMoeda);
-														newDetCorrigido.IdMoeda = _uowSciex.QueryStackSciex.Moeda.
-																							Selecionar(x => x.CodigoMoeda == cod).IdMoeda;
+
+														detalhePEAtualVM.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO;
+														_uowSciex.CommandStackSciex.PEDetalheInsumo.Salvar(detalhePEAtualVM);
+
+														var newDetCorrigido = new PEDetalheInsumoEntity();
+														newDetCorrigido.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.CORRIGIDO;
+														newDetCorrigido.CodigoPais = int.Parse(detalheSolic.CodigoPais);
+														newDetCorrigido.ValorFrete = detalheSolic.ValorFrete;
+														newDetCorrigido.Quantidade = detalheSolic.Quantidade.Value;
+														newDetCorrigido.NumeroSequencial = detalheSolic.Sequencial;
+														newDetCorrigido.ValorUnitario = detalheSolic.ValorUnitario.Value;
+
+														//TODO moeda pode ser nulo tem que mudar na base
+														if (detalheSolic.CodigoMoeda != null)
+														{
+															var cod = int.Parse(detalheSolic.CodigoMoeda);
+															newDetCorrigido.IdMoeda = _uowSciex.QueryStackSciex.Moeda.
+																								Selecionar(x => x.CodigoMoeda == cod).IdMoeda;
+														}
+
+
+														novoInsumoPE.ListaPEDetalheInsumo.Add(newDetCorrigido);
+
 													}
-
-
-													novoInsumoPE.ListaPEDetalheInsumo.Add(newDetCorrigido);
-
 												}
+
 											}
+
+											prod.ListaPEInsumo.Add(novoInsumoPE);
+											_uowSciex.CommandStackSciex.PlanoExportacaoProduto.Salvar(prod);
 
 										}
 
-										prod.ListaPEInsumo.Add(novoInsumoPE);
-										_uowSciex.CommandStackSciex.PlanoExportacaoProduto.Salvar(prod);
 
 									}
 
-
+								}
+								catch (Exception e)
+								{
+									throw new Exception(e.Message);
 								}
 
+
 							}
-							catch (Exception e)
+						}
+						else
+						{ 
+
+							foreach (var prodPaisPE in produto.PaisProduto.ToList())
 							{
-								throw new Exception(e.Message);
+
+								foreach (var solicPEDue in prodPaisPE.ListaSolicPEDue)
+								{
+									_uowSciex.CommandStackSciex.DetachEntries();
+
+									var duePEAtual = _uowSciex.QueryStackSciex.PlanoExportacaoDue.Listar(w =>
+																											w.Numero == solicPEDue.Numero
+																											&&
+																											w.CodigoPais == solicPEDue.CodigoPais
+																											).FirstOrDefault();
+
+									if (duePEAtual != null)
+									{
+
+										if (duePEAtual.SituacaoAnalise == (int)EnumSituacaoAnalisePlanoExportacao.REPROVADO)
+										{
+											duePEAtual.SituacaoAnalise = (int)EnumSituacaoAnalisePlanoExportacao.ALTERADO;
+											_uowSciex.CommandStackSciex.PlanoExportacaoDue.Salvar(duePEAtual);
+
+
+											var novaPEDue = new PlanoExportacaoDUEEntity()
+											{
+												IdPEProdutoPais = solicPEDue.IdProdutoPais,
+												CodigoPais = (int)solicPEDue.CodigoPais,
+												DataAverbacao = (DateTime)solicPEDue.DataAverbacao,
+												Numero = solicPEDue.Numero,
+												Quantidade = (decimal)solicPEDue.Quantidade,
+												ValorDolar = (decimal)solicPEDue.ValorDolar,
+												SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.CORRIGIDO
+											};
+
+											duePEAtual.PEProdutoPais.ListaPEDue.Add(novaPEDue);
+
+											_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(duePEAtual.PEProdutoPais);
+										}
+
+									}
+									else
+									{
+										var novaPEDue = new PlanoExportacaoDUEEntity()
+										{
+											IdPEProdutoPais = solicPEDue.IdProdutoPais,
+											CodigoPais = (int)solicPEDue.CodigoPais,
+											DataAverbacao = (DateTime)solicPEDue.DataAverbacao,
+											Numero = solicPEDue.Numero,
+											Quantidade = (decimal)solicPEDue.Quantidade,
+											ValorDolar = (decimal)solicPEDue.ValorDolar,
+											SituacaoAnalise = (int)EnumSituacaoAnalisePEDue.NOVO
+										};
+
+										duePEAtual.PEProdutoPais.ListaPEDue.Add(novaPEDue);
+
+										_uowSciex.CommandStackSciex.PlanoExportacaoProdutoPais.Salvar(duePEAtual.PEProdutoPais);
+									}
+								}
 							}
-
-
 						}
 
 					}
@@ -2103,15 +2425,15 @@ namespace Suframa.Sciex.BusinessLogic
 				if (sucesso)
 				{
 					plano.DataStatus = GetDateTimeNowUtc();
-					plano.Situacao = 2;
+					plano.Situacao = 2; //ENTREGUE
 					plano.DataEnvio = GetDateTimeNowUtc();
 					lote.EstruturaPropria.QuantidadePLIProcessadoSucesso = (short)produtosComSucesso;
 					lote.EstruturaPropria.QuantidadePLIProcessadoFalha = (short)produtosComFalha;
 
 				}
 				else
-				{
-					plano.Situacao = 1;
+				{ 
+					plano.Situacao = 1; //EM ELABORAÇÃO
 					lote.EstruturaPropria.QuantidadePLIProcessadoSucesso = (short)produtosComSucesso;
 					lote.EstruturaPropria.QuantidadePLIProcessadoFalha = (short)produtosComFalha;
 				}
@@ -2141,6 +2463,19 @@ namespace Suframa.Sciex.BusinessLogic
 						paisEntity.CodigoPais = int.Parse(pais.CodigoPais);
 						paisEntity.Quantidade = pais.Quantidade.Value;
 						paisEntity.ValorDolar = pais.ValorDolar.Value;
+
+						foreach (var due in pais.ListaSolicPEDue)
+						{
+							var dueEntity = new PlanoExportacaoDUEEntity();
+							dueEntity.Numero = due.Numero;
+							dueEntity.ValorDolar = (decimal)due.ValorDolar;
+							dueEntity.Quantidade = (decimal)due.Quantidade;
+							dueEntity.CodigoPais = (int)due.CodigoPais;
+							dueEntity.DataAverbacao = (DateTime)(due.DataAverbacao);
+
+							paisEntity.ListaPEDue.Add(dueEntity);
+						}
+
 						prod.ListaPEProdutoPais.Add(paisEntity);
 					}
 
@@ -2211,7 +2546,7 @@ namespace Suframa.Sciex.BusinessLogic
 			return plano;
 		}
 
-		private bool ValidarPaisProdutoPE(ICollection<SolicitacaoPaisProdutoEntity> paises)
+		private bool ValidarPaisProdutoPE(ICollection<SolicitacaoPEProdutoPaisEntity> paises)
 		{
 			var erros = false;
 			foreach (var pais in paises)
@@ -2524,8 +2859,9 @@ namespace Suframa.Sciex.BusinessLogic
 			var erros = false;
 			foreach (var produto in produtos)
 			{
-				if (produto.AnoLote != produto.SolicitacaoPELote.Ano || produto.NumeroLote != produto.SolicitacaoPELote.NumeroLote ||
-					 produto.InscricaoCadastral != produto.SolicitacaoPELote.InscricaoCadastral)
+				if (produto.AnoLote != produto.SolicitacaoPELote.Ano 
+					|| produto.NumeroLote != produto.SolicitacaoPELote.NumeroLote 
+					|| produto.InscricaoCadastral != produto.SolicitacaoPELote.InscricaoCadastral)
 				{
 					var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 703);
 					var erro = new ErroProcessamentoEntity();
@@ -2538,6 +2874,7 @@ namespace Suframa.Sciex.BusinessLogic
 					_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
 					_uowSciex.CommandStackSciex.Save();
 				}
+
 				var codSuf = int.Parse(produto.CodigoProdutoSuframa);
 				var inscSuf = int.Parse(produto.InscricaoCadastral);
 				var codTipoProduto = int.Parse(produto.CodigoTipoProduto);
@@ -2658,8 +2995,18 @@ namespace Suframa.Sciex.BusinessLogic
 		private bool ValidarExistenciaLote(SolicitacaoPELoteEntity lote)
 		{
 			int insc = int.Parse(lote.InscricaoCadastral);
-			var planoExiste = _uowSciex.QueryStackSciex.PlanoExportacao.Existe(x => x.NumeroPlano == lote.NumeroLote && x.AnoPlano == lote.Ano &&
-			   x.NumeroInscricaoCadastral == insc && x.Situacao != 5);
+			int _indeferido = 5;
+			var planoExiste = _uowSciex.QueryStackSciex.PlanoExportacao.Existe(x => 
+			
+			x.NumeroPlano == lote.NumeroLote 
+			&& 
+			x.AnoPlano == lote.Ano 
+			&&
+			x.NumeroInscricaoCadastral == insc 
+			&& 
+			x.Situacao != _indeferido
+			);
+
 			if (planoExiste)
 			{
 				byte nivelErroProduto = 2;
@@ -3349,7 +3696,7 @@ namespace Suframa.Sciex.BusinessLogic
 							}
 							foreach (var item in lines)
 							{
-								var produtoPais = new SolicitacaoPaisProdutoEntity();
+								var produtoPais = new SolicitacaoPEProdutoPaisEntity();
 
 
 								var anoLote = RecuperarAnoLoteArquivoLote(lines);
@@ -3367,7 +3714,16 @@ namespace Suframa.Sciex.BusinessLogic
 									produtoPais.CodigoPais = RecuperarCodigoPaisArquivoPais(item);
 									produtoPais.RegistroExportacao = RecuperarRegistroExportacaoArquivoPais(item);
 									produtoPais.DataEmbarque = DateTime.Now; // nao tem o exemplo do formato TODO
+
+									var Dues = RecuperarDues(arquivos, produtoPais);
+									foreach (var Due in Dues)
+									{
+										produtoPais.ListaSolicPEDue.Add(Due);
+									}
 									produto.PaisProduto.Add(produtoPais);
+
+
+									lote.produtos.Add(produto);
 								}
 							}
 						}
@@ -3388,6 +3744,104 @@ namespace Suframa.Sciex.BusinessLogic
 
 				RegistrarInicioValidacao(plano);
 			}
+		}
+
+		public ICollection<SolicitacaoPEDueEntity> RecuperarDues(string[] arquivos, SolicitacaoPEProdutoPaisEntity produtopais)
+		{
+			var listaDues = new HashSet<SolicitacaoPEDueEntity>();
+			var dueFile = arquivos.Where(o => o.Contains("PX_RE.TXT"));
+
+			if (dueFile.FirstOrDefault() != null)
+			{
+				var filename = Path.GetFileName(dueFile.FirstOrDefault());
+
+				string[] lines = File.ReadAllLines(dueFile.FirstOrDefault());
+
+				if (lines[0].Length > 0)
+				{
+					if (lines[0].Substring(0, 2) == "0\0")
+					{
+						lines = File.ReadAllLines(filename, Encoding.Unicode);
+						File.Delete(filename);
+						File.WriteAllLines(filename, lines);
+					}
+					else
+					{
+						lines = File.ReadAllLines(dueFile.FirstOrDefault(), Encoding.Default);
+					}
+
+					foreach (var item in lines)
+					{
+						var due = new SolicitacaoPEDueEntity();
+						var anoLote = RecuperarAnoLoteArquivoLote(lines);
+						var numLote = RecuperarNumeroLoteArquivoLote(lines);
+						var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+						//considerando insercao sequencial nos arquivos...
+						if (anoLote == produtopais.AnoLote && numLote == produtopais.NumeroLote && codPexPam == produtopais.CodigoProdutoPexPam)
+						{
+							due.InscricaoCadastral = produtopais.InscricaoCadastral.ToString();
+							due.NumeroAnoLote = anoLote;
+							due.NumeroLote = numLote;
+							due.CodigoProdutoExportacao = codPexPam;
+							due.CodigoPais = RecuperarCodigoPais(item);
+							due.Numero = RecuperarNumeroRegExportacao(item);
+							due.DataAverbacao = RecuperarDataAverbacao(item);
+							due.Quantidade = RecuperarQuantidade(item);
+							due.ValorDolar = RecuperarValorDolar(item);
+
+							listaDues.Add(due);
+						}
+					}
+				}
+
+			}
+
+			return listaDues;
+		}
+
+		private decimal? RecuperarValorDolar(string arquivoLinhas)
+		{
+			if (arquivoLinhas.Length > 0)
+			{
+				return Convert.ToDecimal(arquivoLinhas.Substring(72, 19).Trim());
+			}
+			return null;
+		}
+
+		private decimal? RecuperarQuantidade(string arquivoLinhas)
+		{
+			if (arquivoLinhas.Length > 0)
+			{
+				return Convert.ToDecimal(arquivoLinhas.Substring(52, 19).Trim());
+			}
+			return null;
+		}
+
+		private DateTime? RecuperarDataAverbacao(string arquivoLinhas)
+		{
+			if (arquivoLinhas.Length > 0)
+			{
+				return Convert.ToDateTime(arquivoLinhas.Substring(42, 9).Trim());
+			}
+			return null;
+		}
+
+		private string RecuperarNumeroRegExportacao(string arquivoLinhas)
+		{
+			if (arquivoLinhas.Length > 0)
+			{
+				return arquivoLinhas.Substring(27, 14).Trim();
+			}
+			return null;
+		}
+
+		private int? RecuperarCodigoPais(string arquivoLinhas)
+		{
+			if (arquivoLinhas.Length > 0)
+			{
+				return Convert.ToInt32(arquivoLinhas.Substring(24, 2).Trim());
+			}
+			return null;
 		}
 
 		public ICollection<SolicitacaoPEInsumoEntity> RecuperarInsumos(string[] arquivos, SolicitacaoPEProdutoEntity produto)

@@ -61,10 +61,10 @@
 						</button>
 						<ul class="dropdown-menu">
 							<li>
-								<a (click)="ExportarPDF()" style="cursor:pointer;"><i class="fa fa-file-pdf-o"></i>Salvar em PDF</a>
+								<a (click)="ExportarPDF(1)" style="cursor:pointer;"><i class="fa fa-file-pdf-o"></i>Salvar em PDF</a>
 							</li>
 							<li>
-								<a (click)="ExportarPDF()" style="cursor:pointer;"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+								<a (click)="ExportarPDF(2)" style="cursor:pointer;"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
 							</li>
 						</ul>
 						<a class="btn btn-sm btn-default" (click)="LimparFiltros()"><i class="fa fa-eraser"></i> Limpar</a>
@@ -84,6 +84,7 @@
 <app-relatorio
 	*ngIf="exibeRelatorio"
 	(DownloadFinalizado)="exibeRelatorio = false"
+	[(tipoRelatorio)]="tipoRelatorio"
 	[(lista)]="lista"
 	id="relatorio">
 </app-relatorio>
