@@ -3584,163 +3584,160 @@ namespace Suframa.Sciex.BusinessLogic
 				arquivos = Directory.GetFiles(local);
 
 
-				if (1 > 0)
+				var loteFile = arquivos.Where(o => o.Contains("PX_LOTE.TXT"));
+				if (loteFile.FirstOrDefault() != null)
 				{
-					var loteFile = arquivos.Where(o => o.Contains("PX_LOTE.TXT"));
-					if (loteFile.FirstOrDefault() != null)
+					var filename = Path.GetFileName(loteFile.FirstOrDefault());
+
+					string[] lines = File.ReadAllLines(loteFile.FirstOrDefault());
+
+					if (lines[0].Length > 0)
 					{
-						var filename = Path.GetFileName(loteFile.FirstOrDefault());
-
-						string[] lines = File.ReadAllLines(loteFile.FirstOrDefault());
-
-						if (lines[0].Length > 0)
+						if (lines[0].Substring(0, 2) == "0\0")
 						{
-							if (lines[0].Substring(0, 2) == "0\0")
-							{
-								lines = File.ReadAllLines(filename, Encoding.Unicode);
-								File.Delete(filename);
-								File.WriteAllLines(filename, lines);
-							}
-							else
-							{
-								lines = File.ReadAllLines(loteFile.FirstOrDefault(), Encoding.Default);
-							}
-							lote.InscricaoCadastral = plano.InscricaoCadastral.ToString();
-							lote.NumeroCNPJ = plano.CNPJImportador;
-							lote.RazaoSocial = plano.RazaoSocialImportador;
-							lote.Ano = RecuperarAnoLoteArquivoLote(lines);
-							lote.NumeroLote = RecuperarNumeroLoteArquivoLote(lines);
-							lote.NumeroProcesso = RecuperarNumeroProcessoArquivoLote(lines);
-							lote.AnoProcesso = RecuperarAnoProcessoArquivoLote(lines);
-							lote.TipoModalidade = RecuperarTipoModalidadeArquivoLote(lines);
-							lote.TipoExportacao = RecuperarTipoLoteArquivoLote(lines);
-							lote.Situacao = 1;
-
+							lines = File.ReadAllLines(filename, Encoding.Unicode);
+							File.Delete(filename);
+							File.WriteAllLines(filename, lines);
 						}
-
-					}
-
-					var produtoFile = arquivos.Where(o => o.Contains("PX_PRODUTO.TXT"));
-					var produto = new SolicitacaoPEProdutoEntity();
-					if (produtoFile.FirstOrDefault() != null)
-					{
-						var filename = Path.GetFileName(produtoFile.FirstOrDefault());
-
-						string[] lines = File.ReadAllLines(produtoFile.FirstOrDefault());
-
-						if (lines[0].Length > 0)
+						else
 						{
-							if (lines[0].Substring(0, 2) == "0\0")
-							{
-								lines = File.ReadAllLines(filename, Encoding.Unicode);
-								File.Delete(filename);
-								File.WriteAllLines(filename, lines);
-							}
-							else
-							{
-								lines = File.ReadAllLines(produtoFile.FirstOrDefault(), Encoding.Default);
-							}
-
-							foreach (var item in lines)
-							{
-								var anoLote = RecuperarAnoLoteArquivoLote(lines);
-								var numLote = RecuperarNumeroLoteArquivoLote(lines);
-								var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
-								//considerando insercao sequencial nos arquivos...
-								//if (anoLote == lote.Ano && numLote == lote.NumeroLote)
-								//{
-								produto.ValorDolar = RecuperarValorDolarArquivoProduto(item);
-								produto.Quantidade = RecuperarQuantidadeArquivoProduto(item);
-								produto.CodigoNCM = RecuperarNCMArquivoProduto(item);
-								produto.CodigoProdutoSuframa = RecuperarCodigoPPArquivoProduto(item);
-								produto.CodigoTipoProduto = RecuperarCodigoTipoPPArquivoProduto(item);
-								produto.CodigoUnidade = RecuperarCodigoUnidaderAquivoProduto(item);
-								produto.CodigoProdutoPexPam = RecuperarCodigoPexPamArquivoProduto(item);
-								produto.InscricaoCadastral = plano.InscricaoCadastral.ToString();
-								produto.AnoLote = lote.Ano;
-								produto.NumeroLote = lote.NumeroLote;
-								produto.DescricaoModelo = RecuperarDescricaoModArquivoProduto(item);
-								produto.ValorNacional = RecuperarValorNacionalArquivoProduto(item);
-								//produto.SituacaoValidacao = lote.Situacao; //confirmar TODO
-
-								var insumos = RecuperarInsumos(arquivos, produto);
-								foreach (var insumo in insumos)
-								{
-									produto.Insumos.Add(insumo);
-								}
-								lote.produtos.Add(produto);
-								//}
-							}
+							lines = File.ReadAllLines(loteFile.FirstOrDefault(), Encoding.Default);
 						}
+						lote.InscricaoCadastral = plano.InscricaoCadastral.ToString();
+						lote.NumeroCNPJ = plano.CNPJImportador;
+						lote.RazaoSocial = plano.RazaoSocialImportador;
+						lote.Ano = RecuperarAnoLoteArquivoLote(lines);
+						lote.NumeroLote = RecuperarNumeroLoteArquivoLote(lines);
+						lote.NumeroProcesso = RecuperarNumeroProcessoArquivoLote(lines);
+						lote.AnoProcesso = RecuperarAnoProcessoArquivoLote(lines);
+						lote.TipoModalidade = RecuperarTipoModalidadeArquivoLote(lines);
+						lote.TipoExportacao = RecuperarTipoLoteArquivoLote(lines);
+						lote.Situacao = 1;
 
 					}
 
-					var prodPaisFile = arquivos.Where(o => o.Contains("PX_PRODPAIS.TXT"));
-					if (prodPaisFile.FirstOrDefault() != null)
-					{
-						var filename = Path.GetFileName(prodPaisFile.FirstOrDefault());
-
-						string[] lines = File.ReadAllLines(prodPaisFile.FirstOrDefault());
-
-						if (lines[0].Length > 0)
-						{
-							if (lines[0].Substring(0, 2) == "0\0")
-							{
-								lines = File.ReadAllLines(filename, Encoding.Unicode);
-								File.Delete(filename);
-								File.WriteAllLines(filename, lines);
-							}
-							else
-							{
-								lines = File.ReadAllLines(prodPaisFile.FirstOrDefault(), Encoding.Default);
-							}
-							foreach (var item in lines)
-							{
-								var produtoPais = new SolicitacaoPEProdutoPaisEntity();
-
-
-								var anoLote = RecuperarAnoLoteArquivoLote(lines);
-								var numLote = RecuperarNumeroLoteArquivoLote(lines);
-								var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
-								//considerando insercao sequencial nos arquivos...
-								if (anoLote == produto.AnoLote && numLote == produto.NumeroLote && codPexPam == produto.CodigoProdutoPexPam)
-								{
-									produtoPais.InscricaoCadastral = plano.InscricaoCadastral.ToString();
-									produtoPais.AnoLote = anoLote;
-									produtoPais.NumeroLote = numLote;
-									produtoPais.CodigoProdutoPexPam = codPexPam;
-									produtoPais.Quantidade = RecuperarQuantidadeArquivoPais(item);
-									produtoPais.ValorDolar = RecuperarValorDolarArquivoPais(item);
-									produtoPais.CodigoPais = RecuperarCodigoPaisArquivoPais(item);
-									produtoPais.RegistroExportacao = RecuperarRegistroExportacaoArquivoPais(item);
-									produtoPais.DataEmbarque = DateTime.Now; // nao tem o exemplo do formato TODO
-
-									var Dues = RecuperarDues(arquivos, produtoPais);
-									foreach (var Due in Dues)
-									{
-										produtoPais.ListaSolicPEDue.Add(Due);
-									}
-									produto.PaisProduto.Add(produtoPais);
-
-
-									lote.produtos.Add(produto);
-								}
-							}
-						}
-
-					}
-					lote.EspId = plano.IdEstruturaPropria;
-					lote.Situacao = 1; //aguardando validacao
-					_uowSciex.CommandStackSciex.SolicitacaoPELote.Salvar(lote);
-					_uowSciex.CommandStackSciex.Save();
-
-
-					foreach (string item in arquivos)
-					{
-						File.Delete(item);
-					}
-					Directory.Delete(local);
 				}
+
+				var produtoFile = arquivos.Where(o => o.Contains("PX_PRODUTO.TXT"));
+				var produto = new SolicitacaoPEProdutoEntity();
+				if (produtoFile.FirstOrDefault() != null)
+				{
+					var filename = Path.GetFileName(produtoFile.FirstOrDefault());
+
+					string[] lines = File.ReadAllLines(produtoFile.FirstOrDefault());
+
+					if (lines[0].Length > 0)
+					{
+						if (lines[0].Substring(0, 2) == "0\0")
+						{
+							lines = File.ReadAllLines(filename, Encoding.Unicode);
+							File.Delete(filename);
+							File.WriteAllLines(filename, lines);
+						}
+						else
+						{
+							lines = File.ReadAllLines(produtoFile.FirstOrDefault(), Encoding.Default);
+						}
+
+						foreach (var item in lines)
+						{
+							var anoLote = RecuperarAnoLoteArquivoLote(lines);
+							var numLote = RecuperarNumeroLoteArquivoLote(lines);
+							var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+							//considerando insercao sequencial nos arquivos...
+							//if (anoLote == lote.Ano && numLote == lote.NumeroLote)
+							//{
+							produto.ValorDolar = RecuperarValorDolarArquivoProduto(item);
+							produto.Quantidade = RecuperarQuantidadeArquivoProduto(item);
+							produto.CodigoNCM = RecuperarNCMArquivoProduto(item);
+							produto.CodigoProdutoSuframa = RecuperarCodigoPPArquivoProduto(item);
+							produto.CodigoTipoProduto = RecuperarCodigoTipoPPArquivoProduto(item);
+							produto.CodigoUnidade = RecuperarCodigoUnidaderAquivoProduto(item);
+							produto.CodigoProdutoPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+							produto.InscricaoCadastral = plano.InscricaoCadastral.ToString();
+							produto.AnoLote = lote.Ano;
+							produto.NumeroLote = lote.NumeroLote;
+							produto.DescricaoModelo = RecuperarDescricaoModArquivoProduto(item);
+							produto.ValorNacional = RecuperarValorNacionalArquivoProduto(item);
+							//produto.SituacaoValidacao = lote.Situacao; //confirmar TODO
+
+							var insumos = RecuperarInsumos(arquivos, produto);
+							foreach (var insumo in insumos)
+							{
+								produto.Insumos.Add(insumo);
+							}
+							lote.produtos.Add(produto);
+							//}
+						}
+					}
+
+				}
+
+				var prodPaisFile = arquivos.Where(o => o.Contains("PX_PRODPAIS.TXT"));
+				if (prodPaisFile.FirstOrDefault() != null)
+				{
+					var filename = Path.GetFileName(prodPaisFile.FirstOrDefault());
+
+					string[] lines = File.ReadAllLines(prodPaisFile.FirstOrDefault());
+
+					if (lines[0].Length > 0)
+					{
+						if (lines[0].Substring(0, 2) == "0\0")
+						{
+							lines = File.ReadAllLines(filename, Encoding.Unicode);
+							File.Delete(filename);
+							File.WriteAllLines(filename, lines);
+						}
+						else
+						{
+							lines = File.ReadAllLines(prodPaisFile.FirstOrDefault(), Encoding.Default);
+						}
+						foreach (var item in lines)
+						{
+							var produtoPais = new SolicitacaoPEProdutoPaisEntity();
+
+
+							var anoLote = RecuperarAnoLoteArquivoLote(lines);
+							var numLote = RecuperarNumeroLoteArquivoLote(lines);
+							var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+							//considerando insercao sequencial nos arquivos...
+							if (anoLote == produto.AnoLote && numLote == produto.NumeroLote && codPexPam == produto.CodigoProdutoPexPam)
+							{
+								produtoPais.InscricaoCadastral = plano.InscricaoCadastral.ToString();
+								produtoPais.AnoLote = anoLote;
+								produtoPais.NumeroLote = numLote;
+								produtoPais.CodigoProdutoPexPam = codPexPam;
+								produtoPais.Quantidade = RecuperarQuantidadeArquivoPais(item);
+								produtoPais.ValorDolar = RecuperarValorDolarArquivoPais(item);
+								produtoPais.CodigoPais = RecuperarCodigoPaisArquivoPais(item);
+								produtoPais.RegistroExportacao = RecuperarRegistroExportacaoArquivoPais(item);
+								produtoPais.DataEmbarque = DateTime.Now; // nao tem o exemplo do formato TODO
+
+								var Dues = RecuperarDues(arquivos, produtoPais);
+								foreach (var Due in Dues)
+								{
+									produtoPais.ListaSolicPEDue.Add(Due);
+								}
+								produto.PaisProduto.Add(produtoPais);
+
+
+								lote.produtos.Add(produto);
+							}
+						}
+					}
+
+				}
+				lote.EspId = plano.IdEstruturaPropria;
+				lote.Situacao = 1; //aguardando validacao
+				_uowSciex.CommandStackSciex.SolicitacaoPELote.Salvar(lote);
+				_uowSciex.CommandStackSciex.Save();
+
+
+				foreach (string item in arquivos)
+				{
+					File.Delete(item);
+				}
+				Directory.Delete(local);
 
 				RegistrarInicioValidacao(plano);
 			}
@@ -3777,7 +3774,9 @@ namespace Suframa.Sciex.BusinessLogic
 						var numLote = RecuperarNumeroLoteArquivoLote(lines);
 						var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
 						//considerando insercao sequencial nos arquivos...
-						if (anoLote == produtopais.AnoLote && numLote == produtopais.NumeroLote && codPexPam == produtopais.CodigoProdutoPexPam)
+						if (anoLote == produtopais.AnoLote
+							&& numLote == produtopais.NumeroLote 
+							&& codPexPam == produtopais.CodigoProdutoPexPam)
 						{
 							due.InscricaoCadastral = produtopais.InscricaoCadastral.ToString();
 							due.NumeroAnoLote = anoLote;
@@ -3855,50 +3854,53 @@ namespace Suframa.Sciex.BusinessLogic
 
 				string[] lines = File.ReadAllLines(insumoFile.FirstOrDefault());
 
-				if (lines[0].Length > 0)
+				if (lines.Length > 0)
 				{
-					if (lines[0].Substring(0, 2) == "0\0")
+					if (lines[0].Length > 0)
 					{
-						lines = File.ReadAllLines(filename, Encoding.Unicode);
-						File.Delete(filename);
-						File.WriteAllLines(filename, lines);
-					}
-					else
-					{
-						lines = File.ReadAllLines(insumoFile.FirstOrDefault(), Encoding.Default);
-					}
-
-					foreach (var item in lines)
-					{
-						var insumo = new SolicitacaoPEInsumoEntity();
-						var anoLote = RecuperarAnoLoteArquivoLote(lines);
-						var numLote = RecuperarNumeroLoteArquivoLote(lines);
-						var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
-						//considerando insercao sequencial nos arquivos...
-						if (anoLote == produto.AnoLote && numLote == produto.NumeroLote && codPexPam == produto.CodigoProdutoPexPam)
+						if (lines[0].Substring(0, 2) == "0\0")
 						{
-							insumo.InscricaoCadastral = produto.InscricaoCadastral.ToString();
-							insumo.AnoLote = anoLote;
-							insumo.NumeroLote = numLote;
-							insumo.CodigoProdutoPexPam = codPexPam;
-							insumo.CodigoInsumo = RecuperarCodigoInsumoArquivoInsumo(item);
-							insumo.CodigoUnidade = RecuperarUnidadeInsumo(item);
-							insumo.CodigoTipoInsumo = RecuperarTipoInsumoArquivoInsumo(item);
-							insumo.CodigoNCM = RecuperarNCMArquivoInsumo(item);
-							insumo.CodigoDetalhe = RecuperarDetalheArquivoInsumo(item);
-							insumo.ValorCoeficienteTecnico = RecuperarCoeficienteTecArquivoInsumo(item);
-							insumo.DescricaoPartNumber = RecuperarPartNumberArquivoInsumo(item);
-							insumo.ValorPctPerda = RecuperarPctPerdaArquivoInsumo(item);
-							insumo.DescricaoInsumo = RecuperarDescInsumoArquivoInsumo(item);
-							insumo.DescricaoEspTecnica = RecuperarEspTecnicaArquivoInsumo(item);
-							var detalhes = RecuperarDetalheInsumos(arquivos, produto, insumo);
-							foreach (var detalhe in detalhes)
-							{
-								insumo.Detalhes.Add(detalhe);
-							}
-							insumos.Add(insumo);
+							lines = File.ReadAllLines(filename, Encoding.Unicode);
+							File.Delete(filename);
+							File.WriteAllLines(filename, lines);
 						}
-					}
+						else
+						{
+							lines = File.ReadAllLines(insumoFile.FirstOrDefault(), Encoding.Default);
+						}
+
+						foreach (var item in lines)
+						{
+							var insumo = new SolicitacaoPEInsumoEntity();
+							var anoLote = RecuperarAnoLoteArquivoLote(lines);
+							var numLote = RecuperarNumeroLoteArquivoLote(lines);
+							var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+							//considerando insercao sequencial nos arquivos...
+							if (anoLote == produto.AnoLote && numLote == produto.NumeroLote && codPexPam == produto.CodigoProdutoPexPam)
+							{
+								insumo.InscricaoCadastral = produto.InscricaoCadastral.ToString();
+								insumo.AnoLote = anoLote;
+								insumo.NumeroLote = numLote;
+								insumo.CodigoProdutoPexPam = codPexPam;
+								insumo.CodigoInsumo = RecuperarCodigoInsumoArquivoInsumo(item);
+								insumo.CodigoUnidade = RecuperarUnidadeInsumo(item);
+								insumo.CodigoTipoInsumo = RecuperarTipoInsumoArquivoInsumo(item);
+								insumo.CodigoNCM = RecuperarNCMArquivoInsumo(item);
+								insumo.CodigoDetalhe = RecuperarDetalheArquivoInsumo(item);
+								insumo.ValorCoeficienteTecnico = RecuperarCoeficienteTecArquivoInsumo(item);
+								insumo.DescricaoPartNumber = RecuperarPartNumberArquivoInsumo(item);
+								insumo.ValorPctPerda = RecuperarPctPerdaArquivoInsumo(item);
+								insumo.DescricaoInsumo = RecuperarDescInsumoArquivoInsumo(item);
+								insumo.DescricaoEspTecnica = RecuperarEspTecnicaArquivoInsumo(item);
+								var detalhes = RecuperarDetalheInsumos(arquivos, produto, insumo);
+								foreach (var detalhe in detalhes)
+								{
+									insumo.Detalhes.Add(detalhe);
+								}
+								insumos.Add(insumo);
+							}
+						}
+					} 
 				}
 
 			}

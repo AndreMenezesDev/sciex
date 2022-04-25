@@ -37,27 +37,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CrossCutting.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Suframa.Sciex.CrossCutting.Mapping", "src\Suframa.Sciex.CrossCutting.Mapping\Suframa.Sciex.CrossCutting.Mapping.csproj", "{A0072EF6-B84A-4671-B692-D1BCB190145E}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Suframa.Sciex.UserInterface(1)", "src\Suframa.Sciex.UserInterface\", "{751A353F-15DF-4347-B336-B548EF7E7709}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_50198"
-		Debug.AspNetCompiler.PhysicalPath = "src\Suframa.Sciex.UserInterface\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50198\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_50198"
-		Release.AspNetCompiler.PhysicalPath = "src\Suframa.Sciex.UserInterface\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50198\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "50198"
-		SlnRelativePath = "src\Suframa.Sciex.UserInterface\"
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{6332FEE7-0768-424F-9418-E5D4EEFA0E9A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Suframa.Sciex.Database.Master", "db\Suframa.Sciex.Database.Master\Suframa.Sciex.Database.Master.sqlproj", "{B23C87E4-B013-4154-8CDF-ACB8FDF97005}"

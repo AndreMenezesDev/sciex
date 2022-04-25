@@ -7,9 +7,16 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 {
 	[Table("SCIEX_SOLIC_PE_PRODUTO_PAIS")]
 	public class SolicitacaoPEProdutoPaisEntity : BaseEntity
-	{
+	{	
+
 		public virtual SolicitacaoPEProdutoEntity SolicitacaoPEProduto { get; set; }
 		public virtual ICollection<SolicitacaoPEDueEntity> ListaSolicPEDue { get; set; }
+
+		public SolicitacaoPEProdutoPaisEntity()
+		{
+			ListaSolicPEDue = new HashSet<SolicitacaoPEDueEntity>();
+		}
+
 		[Key]
 		[Column("prp_id")]
 		public int Id { get; set; }

@@ -86,6 +86,7 @@
     <Compile Include="EntityToModel\RecintoAlfandegaEntityProfile.cs" />
     <Compile Include="EntityToModel\SetorArmazenamentoEntityProfile.cs" />
     <Compile Include="EntityToModel\SolicitacaoPELoteEntityProfile.cs" />
+    <Compile Include="EntityToModel\SolicitacaoPEDueEntityProfile.cs" />
     <Compile Include="EntityToModel\SolicitacaoPEProdutoEntityProfile.cs" />
     <Compile Include="EntityToModel\SolicitacaoLEInsumoEntityProfile.cs" />
     <Compile Include="EntityToModel\TipoDeclaracaoEntityProfile.cs" />
