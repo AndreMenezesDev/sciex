@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Suframa.Sciex.ApplicationService.Properties {
+namespace Suframa.Sciex.DataAccess.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,6 +20,17 @@ namespace Suframa.Sciex.ApplicationService.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.75.34.51,1555;Initial Catalog=dbd_11212_su-sciex;Persist Security " +
+            "Info=True;User ID=usr_desenvolvimento;Password=ukCX%Toh9wRuYMp")]
+        public string DB_SCIEX_DEV {
+            get {
+                return ((string)(this["DB_SCIEX_DEV"]));
             }
         }
     }

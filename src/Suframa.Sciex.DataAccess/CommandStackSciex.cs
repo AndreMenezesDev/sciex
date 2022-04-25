@@ -14,6 +14,7 @@ namespace Suframa.Sciex.DataAccess
 	{
 		private readonly IDatabaseContextSciex contextSciex;
 
+		public ICommandRepositorySciex<SolicitacaoPEDueEntity> SolicitacaoPEDue{ get; }
 		public ICommandRepositorySciex<PRCDueEntity> PRCDue { get; }
 		public ICommandRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		public ICommandRepositorySciex<AladiEntity> Aladi { get; }
@@ -140,7 +141,7 @@ namespace Suframa.Sciex.DataAccess
 		public ICommandRepositorySciex<SolicitacaoPEInsumoEntity> SolicitacaoPEInsumo { get; }
 		public ICommandRepositorySciex<SolicitacaoPEDetalheEntity> SolicitacaoPEDetalhe { get; }
 		public ICommandRepositorySciex<SolicitacaoPEProdutoEntity> SolicitacaoPEProduto { get; }
-		public ICommandRepositorySciex<SolicitacaoPaisProdutoEntity> SolicitacaoPaisProduto { get; }
+		public ICommandRepositorySciex<SolicitacaoPEProdutoPaisEntity> SolicitacaoPaisProduto { get; }
 		public ICommandRepositorySciex<SolicitacaoPELoteEntity> SolicitacaoPELote { get; }
 		public ICommandRepositorySciex<SolicitacaoPEArquivoEntity> SolicitacaoPEArquivo { get; }
 		public ICommandRepositorySciex<ParecerTecnicoEntity> ParecerTecnico { get; }
@@ -153,12 +154,15 @@ namespace Suframa.Sciex.DataAccess
 		public ICommandRepositorySciex<PRCDetalheHistoricoInsumoEntity> PRCDetalheHistoricoInsumo { get; }
 		public ICommandRepositorySciex<PlanoExportacaoDUEEntity> PlanoExportacaoDue { get; }
 
+		public ICommandRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; }
+
 
 
 		public CommandStackSciex(IDatabaseContextSciex databaseContextSciex)
 		{
 			contextSciex = databaseContextSciex;
 
+			SolicitacaoPEDue = new CommandRepositorySciex<SolicitacaoPEDueEntity>(contextSciex);
 			PRCDue = new CommandRepositorySciex<PRCDueEntity>(contextSciex);
 			Processo = new CommandRepositorySciex<ProcessoEntity>(contextSciex);
 			PlanoExportacaoDue = new CommandRepositorySciex<PlanoExportacaoDUEEntity>(contextSciex);
@@ -237,6 +241,7 @@ namespace Suframa.Sciex.DataAccess
 			TaxaPliDebito = new CommandRepositorySciex<TaxaPliDebitoEntity>(contextSciex);
 			TaxaPliHistorico = new CommandRepositorySciex<TaxaPliHistoricoEntity>(contextSciex);
 			TaxaPliMercadoria = new CommandRepositorySciex<TaxaPliMercadoriaEntity>(contextSciex);
+			ViewEmitirRelatorioAnalisadorDue = new CommandRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity>(contextSciex);
 
 			Ali = new CommandRepositorySciex<AliEntity>(contextSciex);
 			AliArquivoEnvio = new CommandRepositorySciex<AliArquivoEnvioEntity>(contextSciex);
@@ -291,7 +296,7 @@ namespace Suframa.Sciex.DataAccess
 			SolicitacaoPEInsumo = new CommandRepositorySciex<SolicitacaoPEInsumoEntity>(contextSciex);
 			SolicitacaoPEDetalhe = new CommandRepositorySciex<SolicitacaoPEDetalheEntity>(contextSciex);
 			SolicitacaoPEProduto = new CommandRepositorySciex<SolicitacaoPEProdutoEntity>(contextSciex);
-			SolicitacaoPaisProduto = new CommandRepositorySciex<SolicitacaoPaisProdutoEntity>(contextSciex);
+			SolicitacaoPaisProduto = new CommandRepositorySciex<SolicitacaoPEProdutoPaisEntity>(contextSciex);
 			SolicitacaoPELote = new CommandRepositorySciex<SolicitacaoPELoteEntity>(contextSciex);
 			SolicitacaoPEArquivo = new CommandRepositorySciex<SolicitacaoPEArquivoEntity>(contextSciex);
 

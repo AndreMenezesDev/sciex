@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Suframa.Sciex.DataAccess</RootNamespace>
     <AssemblyName>Suframa.Sciex.DataAccess</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -117,6 +117,7 @@
     <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicProrrogacao.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicDetalhe.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigurePRCSolicitacaoAlteracao.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureSolicitacaoPEDue.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureSTParecerTecnico.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureParecerTecnicoProduto.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureEstruturaPropriaLE.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Database\ConfigureEntities\ConfigureTipoEmbalagem.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViaTransporte.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViewPais.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewRelatorioEmitirRelatorioAnalisadorDue.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViewProdutoEmpresaExportacao.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViewRelatorioAnaliseProcessamentoPli.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureErroProcessamento.cs" />
@@ -319,6 +321,7 @@
     <Compile Include="Database\Entities\PRCProdutoEntity.cs" />
     <Compile Include="Database\Entities\PRCSolicDetalheEntity.cs" />
     <Compile Include="Database\Entities\PRCStatusEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPEDueEntity.cs" />
     <Compile Include="Database\Entities\TipoSolicAlteracaoEntity.cs" />
     <Compile Include="Database\Entities\ProcessoEntity.cs" />
     <Compile Include="Database\Entities\PRJUnidadeMedidaEntity.cs" />
@@ -326,7 +329,7 @@
     <Compile Include="Database\Entities\RecintoAlfandegaEntity.cs" />
     <Compile Include="Database\Entities\SetorArmazenamentoEntity.cs" />
     <Compile Include="Database\Entities\SolicitacaoLeInsumoEntity.cs" />
-    <Compile Include="Database\Entities\SolicitacaoPaisProdutoEntity.cs" />
+    <Compile Include="Database\Entities\SolicitacaoPEProdutoPaisEntity.cs" />
     <Compile Include="Database\Entities\SolicitacaoPEDetalheEntity.cs" />
     <Compile Include="Database\Entities\SolicitacaoPEInsumoEntity.cs" />
     <Compile Include="Database\Entities\SolicitacaoPEArquivoEntity.cs" />
@@ -437,6 +440,7 @@
     <Compile Include="Database\Entities\ViewAtividadeEconomicaPrincipalEntity.cs" />
     <Compile Include="Database\Entities\PRJProdutoEmpresaExportacaoEntity.cs" />
     <Compile Include="Database\Entities\ViewProdutoEmpresaExportacaoEntity.cs" />
+    <Compile Include="Database\Entities\ViewAnalisadorDueEntity.cs" />
     <Compile Include="Database\Entities\ViewSetorEmpresaEntity.cs" />
     <Compile Include="Database\Entities\ViewProdutoEmpresaEntity.cs" />
     <Compile Include="Database\Entities\ViewDetalheMercadoriaEntity.cs" />
@@ -532,6 +536,11 @@
     <Compile Include="IQueryStack.cs" />
     <Compile Include="LdapService\AutenticacaoLdap.cs" />
     <Compile Include="LdapService\IAutenticacaoLdap.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="QueryRepositorySciex.cs" />
     <Compile Include="QueryStackSciex.cs" />
     <Compile Include="RestService\ApiDto\CadUsuarioApiDto.cs" />
@@ -572,6 +581,11 @@
     <Compile Include="Specifications\ObjetivoSocialDescricaoSpecification.cs" />
     <Compile Include="Specifications\ObjetivoSocialSpecification.cs" />
     <Compile Include="CommandStack.cs" />
+    <Compile Include="_dbd_11212_su_sciexDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_dbd_11212_su_sciexDataSet.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Suframa.Sciex.CrossCutting.DataTransferObject\Suframa.Sciex.CrossCutting.DataTransferObject.csproj">
@@ -586,7 +600,22 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Suframa.Sciex.DataAccess.ruleset" />
+    <None Include="_dbd_11212_su_sciexDataSet.xsc">
+      <DependentUpon>_dbd_11212_su_sciexDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_dbd_11212_su_sciexDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>_dbd_11212_su_sciexDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_dbd_11212_su_sciexDataSet.xss">
+      <DependentUpon>_dbd_11212_su_sciexDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />

@@ -19,6 +19,7 @@ namespace Suframa.Sciex.DataAccess
 	{
 		private readonly IDatabaseContextSciex contextSciex;
 
+		public IQueryRepositorySciex<SolicitacaoPEDueEntity> SolicitacaoPEDue { get; }
 		public IQueryRepositorySciex<PRCDueEntity> PRCDue { get; }
 		public IQueryRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		public IQueryRepositorySciex<AladiEntity> Aladi { get; }
@@ -51,6 +52,7 @@ namespace Suframa.Sciex.DataAccess
 		public IQueryRepositorySciex<ViewMercadoriaEntity> ViewMercadoria { get; }
 		public IQueryRepositorySciex<ViewDetalheMercadoriaEntity> ViewDetalheMercadoria { get; }
 		public IQueryRepositorySciex<ViewUnidadeMedidaEntity> ViewUnidadeMedida { get; }
+		public IQueryRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; }
 
 		public IQueryRepositorySciex<PliEntity> Pli { get; }
 		public IQueryRepositorySciex<PliAnaliseVisualEntity> PliAnaliseVisual { get; }
@@ -155,7 +157,7 @@ namespace Suframa.Sciex.DataAccess
 		public IQueryRepositorySciex<SolicitacaoPEInsumoEntity> SolicitacaoPEInsumo { get; }
 		public IQueryRepositorySciex<SolicitacaoPEDetalheEntity> SolicitacaoPEDetalhe { get; }
 		public IQueryRepositorySciex<SolicitacaoPEProdutoEntity> SolicitacaoPEProduto { get; }
-		public IQueryRepositorySciex<SolicitacaoPaisProdutoEntity> SolicitacaoPaisProduto { get; }
+		public IQueryRepositorySciex<SolicitacaoPEProdutoPaisEntity> SolicitacaoPaisProduto { get; }
 		public IQueryRepositorySciex<SolicitacaoPELoteEntity> SolicitacaoPELote { get; }
 		public IQueryRepositorySciex<SolicitacaoPEArquivoEntity> SolicitacaoPEArquivo { get; }
 
@@ -173,6 +175,7 @@ namespace Suframa.Sciex.DataAccess
 		{
 			contextSciex = databaseContextSciex;
 
+			SolicitacaoPEDue = new QueryRepositorySciex<SolicitacaoPEDueEntity>(contextSciex);
 			PRCDue = new QueryRepositorySciex<PRCDueEntity>(contextSciex);
 			Processo = new QueryRepositorySciex<ProcessoEntity>(contextSciex);
 			PlanoExportacaoDue = new QueryRepositorySciex<PlanoExportacaoDUEEntity>(contextSciex);
@@ -319,7 +322,7 @@ namespace Suframa.Sciex.DataAccess
 			SolicitacaoPEInsumo = new QueryRepositorySciex<SolicitacaoPEInsumoEntity>(contextSciex);
 			SolicitacaoPEDetalhe = new QueryRepositorySciex<SolicitacaoPEDetalheEntity>(contextSciex);
 			SolicitacaoPEProduto = new QueryRepositorySciex<SolicitacaoPEProdutoEntity>(contextSciex);
-			SolicitacaoPaisProduto = new QueryRepositorySciex<SolicitacaoPaisProdutoEntity>(contextSciex);
+			SolicitacaoPaisProduto = new QueryRepositorySciex<SolicitacaoPEProdutoPaisEntity>(contextSciex);
 			SolicitacaoPELote = new QueryRepositorySciex<SolicitacaoPELoteEntity>(contextSciex);
 			SolicitacaoPEArquivo = new QueryRepositorySciex<SolicitacaoPEArquivoEntity>(contextSciex);
 
@@ -331,6 +334,7 @@ namespace Suframa.Sciex.DataAccess
 			ProcessoSolicProrrogacao = new QueryRepositorySciex<PRCSolicProrrogacaoEntity>(contextSciex);
 			PRCHistoricoInsumo = new QueryRepositorySciex<PRCHistoricoInsumoEntity>(contextSciex);
 			PRCDetalheHistoricoInsumo = new QueryRepositorySciex<PRCDetalheHistoricoInsumoEntity>(contextSciex);
+			ViewEmitirRelatorioAnalisadorDue = new QueryRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity>(contextSciex);
 		}
 
 		public IList<LiDto> VerificaLiDoImportador(long liNumero, string cnpj)

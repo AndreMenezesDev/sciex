@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Suframa.Sciex.CrossCutting.DataTransferObject</RootNamespace>
     <AssemblyName>Suframa.Sciex.CrossCutting.DataTransferObject</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -110,6 +110,8 @@
     <Compile Include="Dto\SacDto.cs" />
     <Compile Include="Dto\TipoRequerimentoGrupoDto.cs" />
     <Compile Include="Dto\UsuarioSaaDto.cs" />
+    <Compile Include="Enum\EnumStatusPlano.cs" />
+    <Compile Include="Enum\EnumNivelErroServicoArquivoPE.cs" />
     <Compile Include="Enum\EnumSituacaoAnaliseDUE.cs" />
     <Compile Include="Enum\EnumSituacaoAnalisePEDue.cs" />
     <Compile Include="Enum\EnumSolicitacaoProrrogacao.cs" />
@@ -213,6 +215,8 @@
     <Compile Include="ViewModel\AnalisePlanoExportacaoDUEVM.cs" />
     <Compile Include="ViewModel\DuePorProdutoVM.cs" />
     <Compile Include="ViewModel\ListaSolicitacaoVM.cs" />
+    <Compile Include="ViewModel\RelatoriosAnalisadorListaDuesVM.cs" />
+    <Compile Include="ViewModel\RelatorioAnalisadorDuesVM.cs" />
     <Compile Include="ViewModel\PlanoExportacaoDUEVM.cs" />
     <Compile Include="ViewModel\PRCHistoricoDetalheInsumoVM.cs" />
     <Compile Include="ViewModel\PRCHistoricoInsumoVM.cs" />

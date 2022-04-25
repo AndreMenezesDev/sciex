@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Suframa.Sciex.BusinessLogic</RootNamespace>
     <AssemblyName>Suframa.Sciex.BusinessLogic</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -260,6 +260,8 @@
     <Compile Include="RegimeTributario\RegimeTributarioExisteRelacionamentoValidation.cs" />
     <Compile Include="RegimeTributario\RegimeTributarioTesteBll.cs" />
     <Compile Include="RegimeTributario\RegimeTributarioValidation.cs" />
+    <Compile Include="RelatorioAnalisadorDues\IRelatorioAnalisadorDuesBll.cs" />
+    <Compile Include="RelatorioAnalisadorDues\RelatorioAnalisadorDuesBll.cs" />
     <Compile Include="RelatorioListagemExportacaoAprovada\RelatorioListagemExportacaoBll.cs" />
     <Compile Include="RelatorioListagemExportacaoAprovada\IRelatorioListagemExportacaoBll.cs.cs" />
     <Compile Include="RelatorioErrosDues\IRelatorioErrosDuesBll.cs" />

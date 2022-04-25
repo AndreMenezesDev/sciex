@@ -51,7 +51,7 @@ namespace Suframa.Sciex.BusinessLogic
 					CodigoNCM = lEProduto.CodigoNCM,
 					DescricaoModelo = lEProduto.DescricaoModelo,
 				};
-				retorno.listaLEProduto.Add(reg);
+				retorno.ListaLEProduto.Add(reg);
 			}
 			retorno.RazaoSocial = listaLEProtudo.FirstOrDefault().RazaoSocial;
 			retorno.InscricaoCadastral = listaLEProtudo.FirstOrDefault().InscricaoCadastral;

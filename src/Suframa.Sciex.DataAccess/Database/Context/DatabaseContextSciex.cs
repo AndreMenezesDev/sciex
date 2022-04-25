@@ -19,6 +19,7 @@ namespace Suframa.Sciex.DataAccess.Database
 {
 	public partial class DatabaseContextSciex : DbContext, IDatabaseContextSciex
 	{
+		public virtual DbSet<SolicitacaoPEDueEntity> SolicitacaoPEDue { get; set; }
 		public virtual DbSet<PRCDueEntity> PRCDue { get; set; }
 		public virtual DbSet<RegimeTributarioEntity> RegimeTributario { get; set; }
 		public virtual DbSet<AladiEntity> Aladi { get; set; }
@@ -65,7 +66,7 @@ namespace Suframa.Sciex.DataAccess.Database
 		public virtual DbSet<PliProdutoEntity> PliProduto { get; set; }
 		public virtual DbSet<OrgaoAnuenteEntity> OrgaoAnuente { get; set; }
 		public virtual DbSet<ViewImportadorEntity> ViewImportador { get; set; }
-
+		public virtual DbSet<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; set; }
 		public virtual DbSet<TaxaEmpresaAtuacaoEntity> TaxaEmpresaAtuacao { get; set; }
 		public virtual DbSet<TaxaFatoGeradorEntity> TaxaFatoGerador { get; set; }
 		public virtual DbSet<TaxaGrupoBeneficioEntity> TaxaGrupoBeneficio { get; set; }
@@ -156,7 +157,7 @@ namespace Suframa.Sciex.DataAccess.Database
 		public virtual DbSet<SolicitacaoPEDetalheEntity> SolicitacaoPEDetalhe { get; set; }
 		public virtual DbSet<SolicitacaoPEInsumoEntity> SolicitacaoPEInsumo { get; set; }
 		public virtual DbSet<SolicitacaoPEProdutoEntity> SolicitacaoPEProduto { get; set; }
-		public virtual DbSet<SolicitacaoPaisProdutoEntity> SolicitacaoPaisProduto { get; set; }
+		public virtual DbSet<SolicitacaoPEProdutoPaisEntity> SolicitacaoPaisProduto { get; set; }
 		public virtual DbSet<SolicitacaoPEArquivoEntity> SolicitacaoPEArquivo { get; set; }
 		public virtual DbSet<ParecerTecnicoEntity> ParecerTecnico { get; set; }
 		public virtual DbSet<ParecerComplementarEntity> ParecerComplementar { get; set; }
@@ -191,6 +192,7 @@ namespace Suframa.Sciex.DataAccess.Database
 			//modelBuilder.HasDefaultSchema(PrivateSettings.DEFAULT_DB_SCHEMA);
 
 			modelBuilder.HasDefaultSchema("dbo");
+			ConfigureSolicitacaoPEDue(modelBuilder);
 			ConfigurePRCDue(modelBuilder);
 			ConfigurePRCSolicDetalhe(modelBuilder);
 			ConfigureTipoSolicAlteracao(modelBuilder);
