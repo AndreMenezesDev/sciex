@@ -728,7 +728,7 @@ namespace Suframa.Sciex.BusinessLogic
 					{
 						if (item.Substring(43, 2) == "CO")
 						{
-							if (item.Substring(28, 9).Trim() == "" && item.Substring(38, 4).Trim() != "")
+							if (item.Substring(28, 9).ToString().IndexOf(' ') >= 0 || item.Substring(38, 4).ToString().IndexOf(' ') >=0)
 							{
 								return false;
 							}
@@ -1067,7 +1067,14 @@ namespace Suframa.Sciex.BusinessLogic
 										File.Delete(item);
 									}
 									Directory.Delete(local);
-									return "O número e ano do Processo não deverá ter informação para Lote do tipo Aprovação. Foi identificado informação no número ou ano do processo do arquivo de Lote.";
+									if(tipoExportacao == "CO")
+									{
+										return "O número ou ano do Processo não foi informado para o lote do tipo Comprovação.";
+									}else if(tipoExportacao == "AP")
+									{
+										return "O número e ano do Processo não deverá ter informação para Lote do tipo Aprovação. Foi identificado informação no número ou ano do processo do arquivo de Lote.";
+									}
+									
 								}
 
 								if (ValidarExisteLoteAprovado(lines, (Convert.ToInt32(dados[0]))))
