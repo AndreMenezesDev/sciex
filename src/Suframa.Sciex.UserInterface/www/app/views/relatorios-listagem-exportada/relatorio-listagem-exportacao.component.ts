@@ -43,7 +43,7 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 	}
 	ngOnInit(): void {
 	}
-	ExportarPDF(tipoRelatorio){
+	Exportar(tipoRelatorio){
 		if(this.parametros.razaoSocial == null){
 			return this.modal.alerta("Campo 'Empresa' não pode estar vazio", "Alerta!");
 		}
@@ -62,6 +62,7 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 		this.parametros.razaoSocial = null;
 		this.parametros.dataInicio = null;
 		this.parametros.dataFim = null;
+		this.tipoRelatorio = null;
 	}
 
 

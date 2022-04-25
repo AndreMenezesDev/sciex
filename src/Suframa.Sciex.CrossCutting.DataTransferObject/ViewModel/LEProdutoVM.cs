@@ -63,7 +63,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 
 	public class LEProdutoComplementoVM : LEProdutoVM
 	{
-		public List<LEProdutoVM> listaLEProduto { get; set; } = new List<LEProdutoVM>();
+		public List<LEProdutoVM> ListaLEProduto { get; set; } = new List<LEProdutoVM>();
 
 	}
 }
