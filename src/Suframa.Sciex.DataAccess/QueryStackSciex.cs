@@ -52,6 +52,7 @@ namespace Suframa.Sciex.DataAccess
 		public IQueryRepositorySciex<ViewMercadoriaEntity> ViewMercadoria { get; }
 		public IQueryRepositorySciex<ViewDetalheMercadoriaEntity> ViewDetalheMercadoria { get; }
 		public IQueryRepositorySciex<ViewUnidadeMedidaEntity> ViewUnidadeMedida { get; }
+		public IQueryRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; }
 
 		public IQueryRepositorySciex<PliEntity> Pli { get; }
 		public IQueryRepositorySciex<PliAnaliseVisualEntity> PliAnaliseVisual { get; }
@@ -333,6 +334,7 @@ namespace Suframa.Sciex.DataAccess
 			ProcessoSolicProrrogacao = new QueryRepositorySciex<PRCSolicProrrogacaoEntity>(contextSciex);
 			PRCHistoricoInsumo = new QueryRepositorySciex<PRCHistoricoInsumoEntity>(contextSciex);
 			PRCDetalheHistoricoInsumo = new QueryRepositorySciex<PRCDetalheHistoricoInsumoEntity>(contextSciex);
+			ViewEmitirRelatorioAnalisadorDue = new QueryRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity>(contextSciex);
 		}
 
 		public IList<LiDto> VerificaLiDoImportador(long liNumero, string cnpj)

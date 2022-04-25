@@ -69,6 +69,7 @@ namespace Suframa.Sciex.DataAccess
 		IQueryRepositorySciex<TaxaPliDebitoEntity> TaxaPliDebito { get; }
 		IQueryRepositorySciex<TaxaPliHistoricoEntity> TaxaPliHistorico { get; }
 		IQueryRepositorySciex<TaxaPliMercadoriaEntity> TaxaPliMercadoria { get; }
+		IQueryRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; }
 
 		IQueryRepositorySciex<AliEntity> Ali { get; }
 		IQueryRepositorySciex<AliArquivoEntity> AliArquivo { get; }

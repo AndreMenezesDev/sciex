@@ -85,6 +85,7 @@ namespace Suframa.Sciex.DataAccess
 		ICommandRepositorySciex<PliFornecedorFabricanteEntity> PliFornecedorFabricante { get; }
 		ICommandRepositorySciex<AuditoriaEntity> Auditoria { get; }
 		ICommandRepositorySciex<AuditoriaAplicacaoEntity> AuditoriaAplicacao { get; }
+		ICommandRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; }
 
 		ICommandRepositorySciex<SequencialEntity> Sequencial { get; }
 		ICommandRepositorySciex<DiLiEntity> DiLi { get; }

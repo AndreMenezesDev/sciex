@@ -154,6 +154,8 @@ namespace Suframa.Sciex.DataAccess
 		public ICommandRepositorySciex<PRCDetalheHistoricoInsumoEntity> PRCDetalheHistoricoInsumo { get; }
 		public ICommandRepositorySciex<PlanoExportacaoDUEEntity> PlanoExportacaoDue { get; }
 
+		public ICommandRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; }
+
 
 
 		public CommandStackSciex(IDatabaseContextSciex databaseContextSciex)
@@ -239,6 +241,7 @@ namespace Suframa.Sciex.DataAccess
 			TaxaPliDebito = new CommandRepositorySciex<TaxaPliDebitoEntity>(contextSciex);
 			TaxaPliHistorico = new CommandRepositorySciex<TaxaPliHistoricoEntity>(contextSciex);
 			TaxaPliMercadoria = new CommandRepositorySciex<TaxaPliMercadoriaEntity>(contextSciex);
+			ViewEmitirRelatorioAnalisadorDue = new CommandRepositorySciex<ViewEmitirRelatorioAnalisadorDueEntity>(contextSciex);
 
 			Ali = new CommandRepositorySciex<AliEntity>(contextSciex);
 			AliArquivoEnvio = new CommandRepositorySciex<AliArquivoEnvioEntity>(contextSciex);

@@ -333,6 +333,7 @@
     <Compile Include="Grid\RecintoAlfandegaGridController.cs" />
     <Compile Include="Grid\SetorArmazenamentoGridController.cs" />
     <Compile Include="Grid\ConsultarProtocoloEnvioLEGridController.cs" />
+    <Compile Include="Services\RelatorioAnalisadorDuesController .cs" />
     <Compile Include="Services\RelatorioErrorDuesController.cs" />
     <Compile Include="Services\AprovarSolicitacaoController.cs" />
     <Compile Include="Services\AprovarTodosDUEEmAnaliseController.cs" />

@@ -66,7 +66,7 @@ namespace Suframa.Sciex.DataAccess.Database
 		public virtual DbSet<PliProdutoEntity> PliProduto { get; set; }
 		public virtual DbSet<OrgaoAnuenteEntity> OrgaoAnuente { get; set; }
 		public virtual DbSet<ViewImportadorEntity> ViewImportador { get; set; }
-
+		public virtual DbSet<ViewEmitirRelatorioAnalisadorDueEntity> ViewEmitirRelatorioAnalisadorDue { get; set; }
 		public virtual DbSet<TaxaEmpresaAtuacaoEntity> TaxaEmpresaAtuacao { get; set; }
 		public virtual DbSet<TaxaFatoGeradorEntity> TaxaFatoGerador { get; set; }
 		public virtual DbSet<TaxaGrupoBeneficioEntity> TaxaGrupoBeneficio { get; set; }
