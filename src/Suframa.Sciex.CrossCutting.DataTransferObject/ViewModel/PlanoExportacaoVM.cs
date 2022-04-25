@@ -91,6 +91,10 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public bool NaoExisteDetalhe { get; set; }
 		public bool NaoExisteParidadeCambial { get; set; }
 		public bool NaoExisteParidadeCambialEstrangeira { get; set; }
+		public bool NaoExisteProcessoAprovacao{ get; set; }
+		public bool ExisteProcessoComprovacao { get; set; }
+		public bool CampoAnoNumeroProcessoVazio { get; set; }
+
 		public int? IdProduto { get; set; }
 		public int? IdInsumo { get; set; }
 		public bool IsNacional { get; set; }

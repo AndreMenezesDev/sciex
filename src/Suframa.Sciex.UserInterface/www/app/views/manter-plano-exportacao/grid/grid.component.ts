@@ -73,7 +73,7 @@ export class ManterPlanoExportacaoGridComponent {
 	gerarCopia(item: any) {
 
 		this.applicationService.put(this.servico, item).subscribe((sucesso: any) => {
-			
+
 			if (!sucesso) {
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
 				return;
@@ -94,7 +94,7 @@ export class ManterPlanoExportacaoGridComponent {
 		})
 	}
 	processarEntrega(item: any) {
-		
+
 		if(item.tipoExportacao == "AP") {
 			this.applicationService.post(this.servicoEntregarPlano, item).subscribe((result: any) => {
 				if (!result.resultado) {
@@ -124,17 +124,17 @@ export class ManterPlanoExportacaoGridComponent {
 
 			});
 		}
-	
-	
+
+
 	}
-	
+
 
 	validar(item, realizarEntrega: boolean){
 		let idPlanoExportacao = item.idPlanoExportacao;
 		if(item.tipoExportacao == "AP"){
 
 		this.applicationService.post(this.servicoValidarPlano, item).subscribe((result: any) => {
-			
+
 			if (!result.resultado) {
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO + ": "+result.mensagem, "Atenção", "");
 			}else if(result.camposNaoValidos == null){
@@ -144,7 +144,7 @@ export class ManterPlanoExportacaoGridComponent {
 					this.modal.resposta("Plano sem erros de validação", "Informação", "");
 				}
 			}else if(result.camposNaoValidos != null){
-				
+
 				if (result.camposNaoValidos.naoExisteProduto){
 					this.modal.confirmacao("Erro na validação. Plano não possui produto cadastrado, deseja corrigir os dados?","Confirmação","")
 					.subscribe(result => {
@@ -181,7 +181,7 @@ export class ManterPlanoExportacaoGridComponent {
 							if (isNacional){
 								this.router.navigate([`manter-plano-exportacao-detalhes-insumos/${idInsumo}/validar-detalhe-nacional`]);
 							}
-							else{ 
+							else{
 								this.router.navigate([`manter-plano-exportacao-detalhes-insumos/${idInsumo}/validar-detalhe-importado`]);
 							}
 						}
@@ -198,7 +198,7 @@ export class ManterPlanoExportacaoGridComponent {
 	else if(item.tipoExportacao == "CO"){
 		this.applicationService.post(this.servicoValidarPlanoComprovacao,item).subscribe((result: any)=>{
 			if(result.resultado==true){
-				
+
 				if(realizarEntrega) {
 					this.processarEntrega(item);
 				}else{
@@ -211,11 +211,15 @@ export class ManterPlanoExportacaoGridComponent {
 			}
 			else if(result.camposNaoValidos.naoExisteExistePais ){
 				this.modal.alerta("Erro na validação. Plano não possui produto pais cadastrado","Erro","")
-			}
-				else if(result.camposNaoValidos.naoExisteDue ){
+			}else if(result.camposNaoValidos.naoExisteDue ){
 				this.modal.alerta("Erro na validação. Plano não possui registro DU-E","Erro","")
+			}else if(result.camposNaoValidos.campoAnoNumeroProcessoVazio){
+				this.modal.alerta("Erro na validação. Campos Ano do Processo ou Numero do Processo estão vazios","Erro","")
+			}else if(result.camposNaoValidos.naoExisteProcessoAprovacao){
+				this.modal.alerta("Erro na validação. Não existe este Numero de Processo em APROVAÇÃO","Erro","")
+			}else if(result.camposNaoValidos.existeProcessoComprovacao){
+				this.modal.alerta("Erro na validação. Já existe este Numero de Processo em COOMPROVAÇÃO","Erro","")
 			}
-	
 		});
 	}
 }
@@ -226,16 +230,16 @@ export class ManterPlanoExportacaoGridComponent {
 			if (result){
 				this.realizarExcluirInsumo(dados);
 			}
-		});		
+		});
 	}
 	realizarExcluirInsumo(dados){
 		let id = dados.idPlanoExportacao;
 		this.applicationService.delete(this.servico, id).subscribe((result: any) => {
-			
+
 			if (!result) {
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
 				return;
-			}else{				
+			}else{
 				this.modal.resposta(this.msg.OPERACAO_REALIZADA_COM_SUCESSO, "Informação", "")
 				.subscribe(()=>{
 					this.formPai.ngOnInit();
@@ -250,16 +254,16 @@ export class ManterPlanoExportacaoGridComponent {
 			if (result){
 				this.realizarExcluirCorrecaoInsumo(dados);
 			}
-		});		
+		});
 	}
 	realizarExcluirCorrecaoInsumo(dados){
 		let id = dados.idPlanoExportacao;
 		this.applicationService.delete(this.servicoCorrecaoPlano, id).subscribe((result: any) => {
-			
+
 			if (!result) {
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
 				return;
-			}else{				
+			}else{
 				this.modal.resposta(this.msg.OPERACAO_REALIZADA_COM_SUCESSO, "Informação", "")
 				.subscribe(()=>{
 					this.formPai.ngOnInit();
@@ -278,19 +282,19 @@ export class ManterPlanoExportacaoGridComponent {
 		})
 	}
 
-	corrigirSolicitacao(item){		
+	corrigirSolicitacao(item){
 		this.applicationService.put(this.servicoCorrecaoPlano, item).subscribe((retorno: any) => {
-			
+
 			if (retorno.resultado) {
 				this.modal.resposta(this.msg.OPERACAO_REALIZADA_COM_SUCESSO, "Informação", "")
 				.subscribe(()=>{
 					this.abrirCorrecao(item);
 				});
-			}else{	
+			}else{
 				this.modal.alerta(this.msg.NAO_FOI_POSSIVEL_CONCLUIR_OPERACAO, "Informação", "");
 				console.log(retorno.mensagem);
-				return;			
-				
+				return;
+
 			}
 		});
 	}

@@ -1143,8 +1143,9 @@ namespace Suframa.Sciex.BusinessLogic
 		}
 		public ResultadoProcessamentoVM ValidarPlanoExportacaoComprovacao(int idPlanoExportacao, ResultadoProcessamentoVM retorno)
 		{
-			var PlanoProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Listar(x => x.IdPlanoExportacao == idPlanoExportacao).ToList();
 
+			var PlanoProduto = _uowSciex.QueryStackSciex.PlanoExportacaoProduto.Listar(x => x.IdPlanoExportacao == idPlanoExportacao).ToList();
+			
 			if (PlanoProduto.Count == 0)
 			{
 				if (retorno.CamposNaoValidos == null)
@@ -1155,8 +1156,36 @@ namespace Suframa.Sciex.BusinessLogic
 			else
 			{
 				retorno.CamposNaoValidos = new CamposNaoValidadosVM();
+				var pe = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.IdPlanoExportacao == idPlanoExportacao);
+				if(pe.NumeroProcesso == null  || pe.NumeroAnoProcesso == null)
+				{
+					retorno.CamposNaoValidos.CampoAnoNumeroProcessoVazio = true;
+					retorno.Resultado = false;
+					return retorno;
+				}
+				var possuiProcessoEmAprovacao = _uowSciex.QueryStackSciex.Processo.Selecionar(x => x.AnoProcesso == pe.NumeroAnoProcesso
+																							&& x.NumeroProcesso == pe.NumeroProcesso
+																							&& x.TipoStatus == "AP"
+																							);
+				if(possuiProcessoEmAprovacao == null)
+				{
+					retorno.CamposNaoValidos.NaoExisteProcessoAprovacao = true;
+					retorno.Resultado = false;
+					return retorno;
+				}
+				var possuiProcessoDoTipoComprovacao = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.NumeroAnoProcesso == pe.NumeroAnoProcesso
+																							&& x.NumeroProcesso == pe.NumeroProcesso
+																							&& x.TipoExportacao == "CO"
+																							);
+				if (possuiProcessoDoTipoComprovacao != null)
+				{
+					retorno.CamposNaoValidos.ExisteProcessoComprovacao = true;
+					retorno.Resultado = false;
+					return retorno;
+				}
 				foreach (var produto in PlanoProduto)
 				{
+
 					var ProdutoPaisLista = _uowSciex.QueryStackSciex.PlanoExportacaoProdutoPais.Listar(w => w.IdPEProduto == produto.IdPEProduto).ToList();
 					if (ProdutoPaisLista.Count > 0)
 					{
