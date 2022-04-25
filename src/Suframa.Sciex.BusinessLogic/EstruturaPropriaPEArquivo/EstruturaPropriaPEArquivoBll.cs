@@ -498,7 +498,7 @@ namespace Suframa.Sciex.BusinessLogic
 					return false;
 				}
 
-				if (item.Substring(26, 14) == "")
+				if (item.Substring(26, 15) == "")
 				{
 					return false;
 				}
@@ -516,7 +516,7 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					return false;
 				}
-				if (item.Substring(70, 20) == "")
+				if (item.Substring(71, 20) == "")
 				{
 					return false;
 				}
@@ -559,11 +559,11 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			foreach (var item in linhas)
 			{
-				if (item.Substring(40, 10).Trim() != "")
+				if (item.Substring(41, 10).Trim() != "")
 				{
 					try
 					{
-						string[] dados = item.Substring(40, 10).Split('_');
+						string[] dados = item.Substring(41, 10).Split('_');
 
 						var dia = int.Parse(dados[0].Substring(0, 2));
 						var mes = int.Parse(dados[0].Substring(3, 2));
