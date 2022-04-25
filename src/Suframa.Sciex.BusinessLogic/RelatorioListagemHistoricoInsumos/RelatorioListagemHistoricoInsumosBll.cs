@@ -71,7 +71,7 @@ namespace Suframa.Sciex.BusinessLogic
 			tipoAlteracao == (int?)EnumTipoAlteracaoInsumo.TRANSFERENCIA_SALDO_INSUMO ? "Transferência saldo insumo" :
 			tipoAlteracao == (int?)EnumTipoAlteracaoInsumo.VALOR_FRETE ? "Valor frete" :
 			tipoAlteracao == (int?)EnumTipoAlteracaoInsumo.VALOR_UNITARIO ? "Valor unitário" :
-				"Tipo de alteração não encontrado";
+				"--";
 
 		private string getDescricaoSituacaoInsumo(int? situacaoInsumo) =>
 			situacaoInsumo == (int?)EnumSituacaoInsumo.ALTERADO ? "Alterado" :
