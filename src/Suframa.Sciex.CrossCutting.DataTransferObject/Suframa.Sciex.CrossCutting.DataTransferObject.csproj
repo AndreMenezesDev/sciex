@@ -110,6 +110,7 @@
     <Compile Include="Dto\SacDto.cs" />
     <Compile Include="Dto\TipoRequerimentoGrupoDto.cs" />
     <Compile Include="Dto\UsuarioSaaDto.cs" />
+    <Compile Include="Enum\EnumNivelErroServicoArquivoPE.cs" />
     <Compile Include="Enum\EnumSituacaoAnaliseDUE.cs" />
     <Compile Include="Enum\EnumSituacaoAnalisePEDue.cs" />
     <Compile Include="Enum\EnumSolicitacaoProrrogacao.cs" />

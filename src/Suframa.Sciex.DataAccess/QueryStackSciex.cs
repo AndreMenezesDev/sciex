@@ -19,6 +19,7 @@ namespace Suframa.Sciex.DataAccess
 	{
 		private readonly IDatabaseContextSciex contextSciex;
 
+		public IQueryRepositorySciex<SolicitacaoPEDueEntity> SolicitacaoPEDue { get; }
 		public IQueryRepositorySciex<PRCDueEntity> PRCDue { get; }
 		public IQueryRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		public IQueryRepositorySciex<AladiEntity> Aladi { get; }
@@ -155,7 +156,7 @@ namespace Suframa.Sciex.DataAccess
 		public IQueryRepositorySciex<SolicitacaoPEInsumoEntity> SolicitacaoPEInsumo { get; }
 		public IQueryRepositorySciex<SolicitacaoPEDetalheEntity> SolicitacaoPEDetalhe { get; }
 		public IQueryRepositorySciex<SolicitacaoPEProdutoEntity> SolicitacaoPEProduto { get; }
-		public IQueryRepositorySciex<SolicitacaoPaisProdutoEntity> SolicitacaoPaisProduto { get; }
+		public IQueryRepositorySciex<SolicitacaoPEProdutoPaisEntity> SolicitacaoPaisProduto { get; }
 		public IQueryRepositorySciex<SolicitacaoPELoteEntity> SolicitacaoPELote { get; }
 		public IQueryRepositorySciex<SolicitacaoPEArquivoEntity> SolicitacaoPEArquivo { get; }
 
@@ -173,6 +174,7 @@ namespace Suframa.Sciex.DataAccess
 		{
 			contextSciex = databaseContextSciex;
 
+			SolicitacaoPEDue = new QueryRepositorySciex<SolicitacaoPEDueEntity>(contextSciex);
 			PRCDue = new QueryRepositorySciex<PRCDueEntity>(contextSciex);
 			Processo = new QueryRepositorySciex<ProcessoEntity>(contextSciex);
 			PlanoExportacaoDue = new QueryRepositorySciex<PlanoExportacaoDUEEntity>(contextSciex);
@@ -319,7 +321,7 @@ namespace Suframa.Sciex.DataAccess
 			SolicitacaoPEInsumo = new QueryRepositorySciex<SolicitacaoPEInsumoEntity>(contextSciex);
 			SolicitacaoPEDetalhe = new QueryRepositorySciex<SolicitacaoPEDetalheEntity>(contextSciex);
 			SolicitacaoPEProduto = new QueryRepositorySciex<SolicitacaoPEProdutoEntity>(contextSciex);
-			SolicitacaoPaisProduto = new QueryRepositorySciex<SolicitacaoPaisProdutoEntity>(contextSciex);
+			SolicitacaoPaisProduto = new QueryRepositorySciex<SolicitacaoPEProdutoPaisEntity>(contextSciex);
 			SolicitacaoPELote = new QueryRepositorySciex<SolicitacaoPELoteEntity>(contextSciex);
 			SolicitacaoPEArquivo = new QueryRepositorySciex<SolicitacaoPEArquivoEntity>(contextSciex);
 

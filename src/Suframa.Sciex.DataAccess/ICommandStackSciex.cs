@@ -8,6 +8,7 @@ namespace Suframa.Sciex.DataAccess
 {
 	public interface ICommandStackSciex
 	{
+		ICommandRepositorySciex<SolicitacaoPEDueEntity> SolicitacaoPEDue { get; }
 		ICommandRepositorySciex<PRCDueEntity> PRCDue { get; }
 		ICommandRepositorySciex<RegimeTributarioEntity> RegimeTributario { get; }
 		ICommandRepositorySciex<AladiEntity> Aladi { get; }
@@ -127,7 +128,7 @@ namespace Suframa.Sciex.DataAccess
 		ICommandRepositorySciex<SolicitacaoPEInsumoEntity> SolicitacaoPEInsumo { get; }
 		ICommandRepositorySciex<SolicitacaoPEDetalheEntity> SolicitacaoPEDetalhe { get; }
 		ICommandRepositorySciex<SolicitacaoPEProdutoEntity> SolicitacaoPEProduto { get; }
-		ICommandRepositorySciex<SolicitacaoPaisProdutoEntity> SolicitacaoPaisProduto { get; }
+		ICommandRepositorySciex<SolicitacaoPEProdutoPaisEntity> SolicitacaoPaisProduto { get; }
 		ICommandRepositorySciex<SolicitacaoPELoteEntity> SolicitacaoPELote { get; }
 		ICommandRepositorySciex<SolicitacaoPEArquivoEntity> SolicitacaoPEArquivo { get; }
 

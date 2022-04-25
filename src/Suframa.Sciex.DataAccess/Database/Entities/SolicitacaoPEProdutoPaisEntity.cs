@@ -6,10 +6,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Suframa.Sciex.DataAccess.Database.Entities
 {
 	[Table("SCIEX_SOLIC_PE_PRODUTO_PAIS")]
-	public class SolicitacaoPaisProdutoEntity : BaseEntity
+	public class SolicitacaoPEProdutoPaisEntity : BaseEntity
 	{
-		public virtual SolicitacaoPEProdutoEntity SolicitacaoPEProduto { get; set;
-		}
+		public virtual SolicitacaoPEProdutoEntity SolicitacaoPEProduto { get; set; }
+		public virtual ICollection<SolicitacaoPEDueEntity> ListaSolicPEDue { get; set; }
 		[Key]
 		[Column("prp_id")]
 		public int Id { get; set; }

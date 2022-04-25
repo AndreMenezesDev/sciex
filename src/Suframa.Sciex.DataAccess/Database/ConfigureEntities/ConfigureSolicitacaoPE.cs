@@ -11,7 +11,7 @@ namespace Suframa.Sciex.DataAccess.Database
 			modelBuilder.Entity<SolicitacaoPEDetalheEntity>();
 			modelBuilder.Entity<SolicitacaoPEInsumoEntity>();
 			modelBuilder.Entity<SolicitacaoPEProdutoEntity>();
-			modelBuilder.Entity<SolicitacaoPaisProdutoEntity>();
+			modelBuilder.Entity<SolicitacaoPEProdutoPaisEntity>();
 			modelBuilder.Entity<SolicitacaoPEArquivoEntity>();
 		}
 	}
