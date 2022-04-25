@@ -45,12 +45,13 @@ namespace Suframa.Sciex.BusinessLogic
 
 			if (filterVm.Due == null)
 			{
-				resultadoPesquisaDueLista = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroIncricaoCadastral == filterVm.NumeroInscriçãoCadastral
+				resultadoPesquisaDueLista = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral
 																					  && x.NumeroPlano == filterVm.NumeroPlano
-																					  && x.RazaoSocial == filterVm.NomeEmpresa);
+																					  && x.RazaoSocial == filterVm.NomeEmpresa);				
 				foreach (var item in resultadoPesquisaDueLista)
 				{
-					var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroPlano != item.NumeroPlano && x.NumeroDue == item.NumeroDue);
+
+					var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroDue == item.NumeroDue);
 					foreach (var item2 in ListaDueRepetidas2)
 					{
 						var itemDue = new RelatorioAnalisadorDuesVM
@@ -58,27 +59,29 @@ namespace Suframa.Sciex.BusinessLogic
 							AnoProcesso = item.AnoProcesso,
 							NumeroProcesso = item.NumeroProcesso,
 							NumeroPlanoFormated = item.NumeroPlano + "/" + item.AnoPlano,
+							NumeroInscricaoCadastral = item.NumeroIncricaoCadastral,
 							NomeEmpresa = item.RazaoSocial,
 							PlanoStatus = GetStatusPlano(item.StatusPlano),
 							DataStatus = item.DataStatus.ToString("dd/mm/yyyy"),
 							Due = item.NumeroDue,
 							ValorDue = item.ValorDolar,
-							QuantidadeDue = item.QuantidadeDue,
+							QuantidadeDue = item.QuantidadeDue
 						};
 						ListaDueRepetidas.Add(itemDue);
+						retornoMetodo.NomeEmpresa = itemDue.NomeEmpresa;
+						retornoMetodo.NumeroInscricaoCadastral = itemDue.NumeroInscricaoCadastral;
 					}
 					retornoMetodo.RelatoriosAnaliseDue = ListaDueRepetidas;
 				}
-
 			}
 			else
 			{
-				resultadoPesquisaDues = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Selecionar(x => x.NumeroIncricaoCadastral == filterVm.NumeroInscriçãoCadastral
+				resultadoPesquisaDues = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Selecionar(x => x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral
 																					   && x.NumeroPlano == filterVm.NumeroPlano
 																					   && x.RazaoSocial == filterVm.NomeEmpresa
 																					   && x.NumeroDue == filterVm.Due);
 
-				var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroPlano == resultadoPesquisaDues.NumeroPlano && x.NumeroDue == resultadoPesquisaDues.NumeroDue);
+				var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroDue == filterVm.Due);
 
 				foreach (var item in ListaDueRepetidas2)
 				{
@@ -87,20 +90,20 @@ namespace Suframa.Sciex.BusinessLogic
 						AnoProcesso = item.AnoProcesso,
 						NumeroProcesso = item.NumeroProcesso,
 						NumeroPlanoFormated = item.NumeroPlano + "/" + item.AnoPlano,
+						NumeroInscricaoCadastral = item.NumeroIncricaoCadastral,
 						NomeEmpresa = item.RazaoSocial,
 						PlanoStatus = GetStatusPlano(item.StatusPlano),
 						DataStatus = item.DataStatus.ToString("dd/mm/yyyy"),
 						Due = item.NumeroDue,
 						ValorDue = item.ValorDolar,
-						QuantidadeDue = item.QuantidadeDue,
-						NumeroInscriçãoCadastral = item.NumeroIncricaoCadastral
+						QuantidadeDue = item.QuantidadeDue
 					};
 					ListaDueRepetidas.Add(itemDue);
+					retornoMetodo.NomeEmpresa = itemDue.NomeEmpresa;
+					retornoMetodo.NumeroInscricaoCadastral = itemDue.NumeroInscricaoCadastral;
 				}
 				retornoMetodo.RelatoriosAnaliseDue = ListaDueRepetidas;
-
 			}
-
 			return retornoMetodo;
 		}
 

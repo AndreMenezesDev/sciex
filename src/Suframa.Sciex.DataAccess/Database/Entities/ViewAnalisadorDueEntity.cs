@@ -16,7 +16,7 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		public string RazaoSocial { get; set; }
 
 		[Column("nu_plano")]
-		public int NumeroPlano { get; set; }
+		public long NumeroPlano { get; set; }
 
 		[Column("nu_ano_plano")]
 		public int AnoPlano { get; set; }

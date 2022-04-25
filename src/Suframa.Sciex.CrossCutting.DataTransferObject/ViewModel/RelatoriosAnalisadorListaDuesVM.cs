@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 {
-	public class RelatoriosAnalisadorListaDuesVM : PagedOptions
+	public class RelatoriosAnalisadorListaDuesVM : RelatorioAnalisadorDuesVM
 	{
 		public List<RelatorioAnalisadorDuesVM> RelatoriosAnaliseDue { get; set; }
 

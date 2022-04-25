@@ -1,3 +1,4 @@
+import { RelatorioComponent } from './relatorio/relatorio.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -15,7 +16,8 @@ import { RelatorioAnalisadorDue } from './relatorio-analisador-due.component';
 		SharedModule
 	],
 	declarations: [
-		RelatorioAnalisadorDue
+		RelatorioAnalisadorDue,
+		RelatorioComponent
 	],
 })
 export class RelatorioAnalisadorDueModule { }
