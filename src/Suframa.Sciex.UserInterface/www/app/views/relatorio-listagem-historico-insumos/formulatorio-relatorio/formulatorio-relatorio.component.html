@@ -1,6 +1,7 @@
-
-<div class="row" style="margin: 0 auto;">
+<!--
+<div class="row">
 	<div class="col-sm-12">
+		<div style="margin-top: -20px; text-align: right; color: grey;">IMPRESSO EM : {{objetoParametro[0].dataImpressao}}</div>
 		<div class="form-group m-n text-center">
 			<h4>
 				<img width="67" height="55"
@@ -11,50 +12,63 @@
 			<h5 style="font-weight: bold">SUFRAMA</h5>
 		</div>
 		<br>
-		<div class="centraliza-div-relatorio" style="border-bottom: solid 1px; border-top: solid 1px; height: 50px;">
+		<div class="centraliza-div-relatorio" style="border: solid 1px; height: 40px;">
 			<div class="text-align: center;">
-				<b>RELATÓRIO DE LISTAGEM DE EXPORTAÇÃO APROVADA POR EMPRESA</b>
+				<b>Relatório Listagem do Histórico de Insumos da Listagem de Exportação</b>
 			</div>
 		</div>
-		<div style="border-bottom: solid 1px; border-top: solid 1px; height: 40px; padding-top: 6px;" *ngIf="lista.datainicio != null || lista.dataFim != null">
-			<div class="text-align: left;">
-				<b>Periodo de Aprovação:  {{dataInicio}} até {{dataFim}}</b>
-			</div>
-		</div>
-		<div style="border-bottom: solid 1px; border-top: solid 1px; height: 40px; background-color: rgba(169, 169, 169, 0.548) ; padding-top: 6px;">
-			<div class="text-align: left;">
-				<b>Empresa: {{lista.inscricaoCadastral}} - {{ lista.razaoSocial}}</b>
-			</div>
-		</div>
-		<div class="table-responsive no-margin-bottom no-border">
-			<table class="table">
-				<thead>
-					<tr>
-						<th class="text-center">Cód. Produto PEXPAM</th>
-						<th class="text-center">NCM</th>
-						<th class="text-center">Cód. Produto Suframa</th>
-						<th class="text-center">Modelo</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr *ngFor="let item of lista.listaLEProduto">
-						<td class="text-center">
-						  {{item.codigoProduto}}
-						</td>
-						<td class="text-center">
-						  {{item.codigoNCM}}
-						</td>
-						<td class="text-center">
-							{{item.codigoProdutoSuframa}}
-						  </td>
-						  <td class="text-center">
-							{{item.descricaoModelo}}
-						  </td>
-					</tr>
-				</tbody>
-			</table>
+		<br>
+		<div *ngFor=" let itemRelatorio of objetoParametro; let i = index ">
+			<span id="novo-plano" *ngIf="i > 0"></span>
+			<br>
+			<section style="border: dotted 3px; border-color: orangered; margin-top: 20px;">
+				<div style="background-color: lightgoldenrodyellow;">
+					<div class="col-lg-6">
+						<label for="empresa" style="font-size: 11px;" class="control-label">EMPRESA:</label>
+						<span style="font-size: 11px;"> {{itemRelatorio.nomeEmpresa}} </span>
+					</div>
+					<div class="col-lg-6">
+						<label for="empresa" style="font-size: 11px;" class="control-label">PRODUTO: </label>
+						<span style="font-size: 11px;"> {{itemRelatorio.codigoProduto}} - {{itemRelatorio.descricaoModelo}} </span>
+					</div>
+				</div>
+				<div *ngIf="itemRelatorio.insumos == null" style="background-color: salmon;">
+					<b style="font-size: 11px;
+							  margin-top: 10px;
+							  margin-left: 20px;">
+						Produto não possui insumos cadastrados
+					</b>
+				</div>
+				<div *ngIf="itemRelatorio.insumos != null">
+					<!--#################################-->
+					<!--#####TABELA LISTA DE INSUMOS#####-->
+					<!--#################################-->
+					<!-- <div class="table-responsive no-margin-bottom no-border">
+						<table class="table">
+							<thead>
+								<tr style="">
+									<th style="font-size: 11px;">Cd. Insumo</th>
+									<th style="font-size: 11px;">Descrição Insumo</th>
+									<th style="font-size: 11px;">Situação</th>
+									<th style="font-size: 11px;">Tipo Alteração</th>
+									<th style="font-size: 11px;">Justificativa</th>
+								</tr>
+							</thead>
+							<tbody id="content">
+								<tr *ngFor=" let item of itemRelatorio.insumos; let i = index ">
+									<td style="font-size: 11px;">{{item.codigoInsumo}}</td>
+									<td style="font-size: 11px;">{{item.descricaoInsumo}}</td>
+									<td style="font-size: 11px;">{{item.situacaoInsumo}}</td>
+									<td style="font-size: 11px;">{{item.descricaoTipoAlteracao}}</td>
+									<td style="font-size: 11px;">{{item.justificativa}}</td>
+									<div *ngIf="i==7 || i == 14 || i == 21" id='quebraPaginaAnalises'></div>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</section>
 		</div>
 	</div>
-</div>
-
+</div> -->
 

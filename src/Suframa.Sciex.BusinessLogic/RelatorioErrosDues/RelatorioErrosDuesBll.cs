@@ -15,17 +15,11 @@ namespace Suframa.Sciex.BusinessLogic
 	public class RelatorioErrosDuesBll : IRelatorioErrosDuesBll
 	{
 		private readonly IUnitOfWorkSciex _uowSciex;
-		private readonly IUnitOfWork _uowCadsuf;
-		private readonly IUsuarioPssBll _usuarioPssBll;
 		int[] situacaoPlanoExportacaoFiltragem = new int[3] { (int)EnumSituacaoPlanoExportacao.AGUARDANDO_ANÁLISE, (int)EnumSituacaoPlanoExportacao.DEFERIDO, (int)EnumSituacaoPlanoExportacao.INDEFERIDO };
 
-		public RelatorioErrosDuesBll(IUnitOfWorkSciex uowSciex,
-									 IUnitOfWork uowCadsuf,
-									 IUsuarioPssBll usuarioPssBll)
+		public RelatorioErrosDuesBll(IUnitOfWorkSciex uowSciex)
 		{
 			_uowSciex = uowSciex;
-			_uowCadsuf = uowCadsuf;
-			_usuarioPssBll = usuarioPssBll;
 		}
 
 		public List<RelatorioErrosDuesVM> GerarRelatorio(RelatorioErrosDuesVM filterVm)

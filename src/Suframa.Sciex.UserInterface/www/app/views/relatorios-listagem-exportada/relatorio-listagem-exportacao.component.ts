@@ -25,6 +25,7 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 	dataInicio : string;
 	dataFim: string;
 	servico = 'RelatorioListagemExportacaoAprovada';
+	tipoRelatorio: any;
 	lista: any = {};
 	exibeRelatorio: boolean = false;
 	constructor(
@@ -42,7 +43,7 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 	}
 	ngOnInit(): void {
 	}
-	ExportarPDF(){
+	ExportarPDF(tipoRelatorio){
 		if(this.parametros.razaoSocial == null){
 			return this.modal.alerta("Campo 'Empresa' não pode estar vazio", "Alerta!");
 		}
@@ -52,12 +53,7 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 			}
 			this.lista = result;
 			this.exibeRelatorio = true;
-			this.lista;
-			//this.dataInicio = new Date(this.lista.dataInicio).toISOString().slice(0, 9);
-			console.log(this.lista.dataInicio);
-			console.log(this.lista.dataFim);
-			console.log(this.dataInicio);
-			console.log(this.dataFim);
+			this.tipoRelatorio = tipoRelatorio;
 		});
 	}
 

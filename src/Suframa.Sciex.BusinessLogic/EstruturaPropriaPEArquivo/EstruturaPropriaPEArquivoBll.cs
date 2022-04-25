@@ -187,7 +187,7 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					if (item.Length >= 1)
 					{
-						if (item.Substring(42, 1) != "S" || item.Substring(43, 2) != "AP")
+						if(item.Substring(42, 1) != "S" && (item.Substring(43, 2) != "AP" || item.Substring(43, 2) != "CO"))
 						{
 							return false;
 						}
@@ -200,6 +200,24 @@ namespace Suframa.Sciex.BusinessLogic
 			}
 
 			return true;
+		}
+
+		public string VerificaTipoExportaca(string[] linha)
+		{
+			foreach (var item in linha)
+			{
+				if (item.Length >= 1)
+				{
+					if (item.Substring(43, 2) == "AP")
+					{
+						return "AP";
+					}else if (item.Substring(43, 2) == "CO")
+					{
+						return "CO";
+					}
+				}
+			}
+			return null;
 		}
 
 		private bool ValidarHorizontalProduto(string[] linhas)
@@ -480,20 +498,12 @@ namespace Suframa.Sciex.BusinessLogic
 					return false;
 				}
 
-				try
-				{
-					Convert.ToInt64(item.Substring(26, 15));
-				}
-				catch
+				if (item.Substring(26, 14) == "")
 				{
 					return false;
 				}
 
-				try
-				{
-					Convert.ToInt64(item.Substring(41, 10));
-				}
-				catch
+				if (item.Substring(41, 10) == "")
 				{
 					return false;
 				}
@@ -506,11 +516,7 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					return false;
 				}
-				try
-				{
-					Convert.ToInt64(item.Substring(71, 20));
-				}
-				catch
+				if (item.Substring(70, 20) == "")
 				{
 					return false;
 				}
@@ -553,22 +559,17 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			foreach (var item in linhas)
 			{
-				if (item.Substring(41, 10).Trim() != "")
+				if (item.Substring(40, 10).Trim() != "")
 				{
 					try
 					{
-						string[] dados = item.Substring(70, 10).Split('_');
+						string[] dados = item.Substring(40, 10).Split('_');
 
-						int dia = int.Parse(dados[2].Substring(0, 2));
-						int mes = DateTimeExtensions.RetornarNumeroMes(dados[2].Substring(2, 3));
-						int ano = int.Parse(dados[2].Substring(5, 4));
+						var dia = int.Parse(dados[0].Substring(0, 2));
+						var mes = int.Parse(dados[0].Substring(3, 2));
+						var ano = int.Parse(dados[0].Substring(6, 4));
 
-						int hora = int.Parse(dados[3].Substring(0, 2));
-						int min = int.Parse(dados[3].Substring(2, 2));
-						int seg = int.Parse(dados[3].Substring(4, 2));
-
-
-						var d = new DateTime(ano, mes, dia, hora, min, seg);
+						var d = new DateTime(ano, mes, dia);
 					}
 					catch
 					{
@@ -705,13 +706,12 @@ namespace Suframa.Sciex.BusinessLogic
 			var numeroLote = RecuperarNumeroLoteArquivoLote(arquivoLinhas);
 			var anoLote = RecuperarAnoLoteArquivoLote(arquivoLinhas);
 			var planoExiste = _uowSciex.QueryStackSciex.PlanoExportacao.Existe(x => x.NumeroPlano == numeroLote && x.AnoPlano == anoLote &&
-				x.NumeroInscricaoCadastral == inscricao && x.Situacao != 5);
+				x.NumeroInscricaoCadastral == inscricao && x.Situacao != 5 && x.TipoExportacao == "AP");
 			if (planoExiste)
 			{
 
 				return true;
 			}
-
 			return false;
 
 		}
@@ -1002,6 +1002,8 @@ namespace Suframa.Sciex.BusinessLogic
 					else
 					{
 						var loteFile = arquivos.Where(o => o.Contains("PX_LOTE.TXT"));
+						string[] linhasLote = File.ReadAllLines(loteFile.FirstOrDefault());
+						var tipoExportacao = VerificaTipoExportaca(linhasLote);
 						if (loteFile.FirstOrDefault() != null)
 						{
 							var filename = Path.GetFileName(loteFile.FirstOrDefault());
@@ -1168,7 +1170,6 @@ namespace Suframa.Sciex.BusinessLogic
 						{
 							return "Arquivo de Produto não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 						}
-
 						var prodPaisFile = arquivos.Where(o => o.Contains("PX_PRODPAIS.TXT"));
 						if (prodPaisFile.FirstOrDefault() != null)
 						{
@@ -1266,80 +1267,87 @@ namespace Suframa.Sciex.BusinessLogic
 
 						var insumoFile = arquivos.Where(o => o.Contains("PX_INSUMO.TXT"));
 						string tipoInsumo = string.Empty;
-						if (insumoFile.FirstOrDefault() != null)
+						if(tipoExportacao == "AP")
 						{
-							var filename = Path.GetFileName(insumoFile.FirstOrDefault());
-
-							string[] lines = File.ReadAllLines(insumoFile.FirstOrDefault());
-
-							if (lines.Length > 0 && lines[0].Length > 0)
+							if (insumoFile.FirstOrDefault() != null)
 							{
-								if (lines[0].Substring(0, 2) == "0\0")
+								var filename = Path.GetFileName(insumoFile.FirstOrDefault());
+
+								string[] lines = File.ReadAllLines(insumoFile.FirstOrDefault());
+
+								if (lines.Length > 0 && lines[0].Length > 0)
 								{
-									lines = File.ReadAllLines(filename, Encoding.Unicode);
-									File.Delete(filename);
-									File.WriteAllLines(filename, lines);
+									if (lines[0].Substring(0, 2) == "0\0")
+									{
+										lines = File.ReadAllLines(filename, Encoding.Unicode);
+										File.Delete(filename);
+										File.WriteAllLines(filename, lines);
+									}
+									else
+									{
+										lines = File.ReadAllLines(insumoFile.FirstOrDefault(), Encoding.Default);
+									}
+
+									if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O código do Plano do arquivo do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+									{
+										return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de “Insumo” está diferente, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-INSUMO
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O ano do arquivo de Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarFormatoNumeroArquivos(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O formato do número do Plano dentro do arquivo de “Insumo” é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+									}
+
+									if (!ValidarTipoInsumoArquivo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Serão aceitos somente insumos dos tipos P,E,N,R. Foi identificado insumo diferente dos aceitáveis, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									tipoInsumo = lines[0].Substring(30, 1);
+
+									if (!ValidarHorizontalInsumo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Arquivo de “Insumo” com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									}
 								}
 								else
 								{
-									lines = File.ReadAllLines(insumoFile.FirstOrDefault(), Encoding.Default);
-								}
-
-								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O código do Plano do arquivo do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
-								{
-									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de “Insumo” está diferente, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-INSUMO
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O ano do arquivo de Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarFormatoNumeroArquivos(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O formato do número do Plano dentro do arquivo de “Insumo” é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
-								}
-
-								if (!ValidarTipoInsumoArquivo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Serão aceitos somente insumos dos tipos P,E,N,R. Foi identificado insumo diferente dos aceitáveis, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								tipoInsumo = lines[0].Substring(30, 1);
-
-								if (!ValidarHorizontalInsumo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Arquivo de “Insumo” com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									return "Arquivo de Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 								}
 							}
 							else
@@ -1347,94 +1355,97 @@ namespace Suframa.Sciex.BusinessLogic
 								return "Arquivo de Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 							}
 						}
-						else
+
+						if (tipoExportacao == "AP")
 						{
-							return "Arquivo de Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
-						}
-
-						var detalheInsumoFile = arquivos.Where(o => o.Contains("PX_DETINSUMO.TXT"));
-						if (detalheInsumoFile.FirstOrDefault() != null)
-						{
-							var filename = Path.GetFileName(detalheInsumoFile.FirstOrDefault());
-
-							string[] lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault());
-
-							if (lines.Length > 0 && lines[0].Length > 0)
+							var detalheInsumoFile = arquivos.Where(o => o.Contains("PX_DETINSUMO.TXT"));
+							if (detalheInsumoFile.FirstOrDefault() != null)
 							{
-								if (lines[0].Substring(0, 2) == "0\0")
+								var filename = Path.GetFileName(detalheInsumoFile.FirstOrDefault());
+
+								string[] lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault());
+
+								if (lines.Length > 0 && lines[0].Length > 0)
 								{
-									lines = File.ReadAllLines(filename, Encoding.Unicode);
-									File.Delete(filename);
-									File.WriteAllLines(filename, lines);
+									if (lines[0].Substring(0, 2) == "0\0")
+									{
+										lines = File.ReadAllLines(filename, Encoding.Unicode);
+										File.Delete(filename);
+										File.WriteAllLines(filename, lines);
+									}
+									else
+									{
+										lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault(), Encoding.UTF8);
+									}
+
+									if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O código do Plano do arquivo do Detalhe do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+									{
+										return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de Detalhe do Insumo está diferente, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-DETINSUMO
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O ano do arquivo de Detalhe do Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarFormatoNumeroArquivos(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O formato do número do Plano dentro do arquivo de Detalhe do Insumo é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+									}
+
+									if (!ValidarCodPaisCodMoedaDetalheInsumo(tipoInsumo, lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Para insumos importados o país/moeda é obrigatório. Há Detalhe do Insumo sem informação de país/moeda.";
+									}
+
+									if (!ValidarQtdVlrUnitarioDetalheInsumo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "A Quantidade e o Valor Unitário devem ser superior a zero (0). Dentro do arquivo de Detalhe do Insumo há quantidade ou valor unitário igual a zero (0).";
+									}
+
+									if (!ValidarHorizontalDetalheInsumo(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Arquivo de Detalhe do Insumo com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									}
 								}
 								else
 								{
-									lines = File.ReadAllLines(detalheInsumoFile.FirstOrDefault(), Encoding.UTF8);
-								}
-
-								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))//VALICAO-COD_PEXPAM
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O código do Plano do arquivo do Detalhe do Insumo não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
-								{
-									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de Detalhe do Insumo está diferente, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))//VALIDACAO-DETINSUMO
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O ano do arquivo de Detalhe do Insumo não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarFormatoNumeroArquivos(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O formato do número do Plano dentro do arquivo de Detalhe do Insumo é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
-								}
-
-								if (!ValidarCodPaisCodMoedaDetalheInsumo(tipoInsumo, lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Para insumos importados o país/moeda é obrigatório. Há Detalhe do Insumo sem informação de país/moeda.";
-								}
-
-								if (!ValidarQtdVlrUnitarioDetalheInsumo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "A Quantidade e o Valor Unitário devem ser superior a zero (0). Dentro do arquivo de Detalhe do Insumo há quantidade ou valor unitário igual a zero (0).";
-								}
-
-								if (!ValidarHorizontalDetalheInsumo(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Arquivo de Detalhe do Insumo com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 								}
 							}
 							else
@@ -1442,90 +1453,77 @@ namespace Suframa.Sciex.BusinessLogic
 								return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 							}
 						}
-						else
+						if(tipoExportacao == "CO")
 						{
-							return "Arquivo de Detalhe do Insumo não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
-						}
+							var reDueFile = arquivos.Where(o => o.Contains("PX_RE.TXT"));
 
-						var reDueFile = arquivos.Where(o => o.Contains("PX_RE.TXT"));
-
-						if (reDueFile.FirstOrDefault() != null)
-						{
-							var filename = Path.GetFileName(reDueFile.FirstOrDefault());
-
-							string[] lines = File.ReadAllLines(reDueFile.FirstOrDefault());
-
-							if (lines.Length > 0 && lines[0].Length > 0)
+							if (reDueFile.FirstOrDefault() != null)
 							{
-								if (lines[0].Substring(0, 2) == "0\0")
+								var filename = Path.GetFileName(reDueFile.FirstOrDefault());
+
+								string[] lines = File.ReadAllLines(reDueFile.FirstOrDefault());
+
+								if (lines.Length > 0 && lines[0].Length > 0)
 								{
-									lines = File.ReadAllLines(filename, Encoding.Unicode);
-									File.Delete(filename);
-									File.WriteAllLines(filename, lines);
+									if (lines[0].Substring(0, 2) == "0\0")
+									{
+										lines = File.ReadAllLines(filename, Encoding.Unicode);
+										File.Delete(filename);
+										File.WriteAllLines(filename, lines);
+									}
+									else
+									{
+										lines = File.ReadAllLines(reDueFile.FirstOrDefault(), Encoding.UTF8);
+									}
+									if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
+									{
+										return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de RE/DUE está diferente, não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarAnoArquivos(lines, loteAno, loteNumero))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O ano do arquivo de RE/DUE não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
+									}
+
+									if (!ValidarFormatoNumeroArquivos(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "O formato do número do Plano dentro do arquvio de RE/DUE é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
+									}
+									if (!ValidarHorizontalReDue(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "Arquivo de RE/DUE com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
+									}
+									if (!ValidarDataReDue(lines))
+									{
+										foreach (string item in arquivos)
+										{
+											File.Delete(item);
+										}
+										Directory.Delete(local);
+										return "A data de embarque do arquivo de RE/DUE é inválida, não é possível realizar envio de Plano de Exportação.";
+									}
 								}
 								else
 								{
-									lines = File.ReadAllLines(reDueFile.FirstOrDefault(), Encoding.UTF8);
-								}
-
-								if (!ValidarCodigoPexpam(lines, listaCodigoProdutoPexpam))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O código do Plano do arquivo de Plano Exportação DUE não corresponde ao arquivo do Produto. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarInscricaoArquivos(objVI.InscricaoCadastral, lines))
-								{
-									return "Será aceito somente Plano correspondente a empresa especificada no nome do arquivo. A empresa do arquivo de RE/DUE está diferente, não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarAnoArquivos(lines, loteAno, loteNumero))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O ano do arquivo de RE/DUE não corresponde ao ano corrente, ou o ano não corresponde ao arquivo de lote, ou o número do plano não corresponde ao número do lote. Não é possível realizar envio de Plano de Exportação.";
-								}
-
-								if (!ValidarFormatoNumeroArquivos(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "O formato do número do Plano dentro do arquvio de RE/DUE é inválido. Utilizar o formato aaaa/nnnnn (numérico).";
-								}
-								if (!ValidarHorizontalReDue(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "Arquivo de RE/DUE com erro na estrutura, não é possível realizar envio de Plano de Exportação. É necessário seguir o padrão de Estrutura Própria definido pela Suframa.";
-								}
-								if (!ValidarDataReDue(lines))
-								{
-									foreach (string item in arquivos)
-									{
-										File.Delete(item);
-									}
-									Directory.Delete(local);
-									return "A data de embarque do arquivo de RE/DUE é inválida, não é possível realizar envio de Plano de Exportação.";
+									return "Arquivo de RED/DUE não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
 								}
 							}
-							else
-							{
-								return "Arquivo de RED/DUE não encontrado ou vazio, não é possível realizar envio de Plano de Exportação.";
-							}
-						}
+						}	
 						cnpjImportador = CNPJArquivo;
 						razaoSocial = objVI.RazaoSocial;
 
@@ -1569,8 +1567,10 @@ namespace Suframa.Sciex.BusinessLogic
 
 			foreach (var linhaListaPexpam in listaCodigoProdutoPexpam)
 			{
+				
 				foreach (var item in lines)
 				{
+					var tt = item.Substring(19, 4);
 					if ((item.Length > 1 && item.Substring(19, 4) == linhaListaPexpam) || listaValidados.Contains(item))
 					{
 						listaValidados.Add(item);
