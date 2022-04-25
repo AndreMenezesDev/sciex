@@ -62,6 +62,14 @@ export class RelatoriListagensHistoricoInsumoComponent implements OnInit {
 			this.modal.alerta("Informe um filtro para gerar o Relatório!");
 			return false;
 		}
+		if(!this.filterVm.codigoProduto){
+			this.modal.alerta("Campo obrigatório não informado: <b>Código do produto</b>!");
+			return false;
+		}
+		if(!this.filterVm.inscricaoCadastral || !this.filterVm.nomeEmpresa){
+			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
+			return false;
+		}
 
 		let obj : RelatorioListagemHistoricoInsumosVM = new RelatorioListagemHistoricoInsumosVM();
 
