@@ -470,6 +470,8 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			foreach (var item in linhas)
 			{
+
+				if(item.ToString().Length < 91) { return false; }
 				if (item.Substring(0, 9) == "")
 				{
 					return false;
