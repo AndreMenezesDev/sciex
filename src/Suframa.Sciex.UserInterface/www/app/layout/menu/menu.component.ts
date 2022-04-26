@@ -333,7 +333,7 @@ export class MenuComponent implements OnInit {
 			id: 9,
 			funcoesSistema: [
 			{
-				nome: 'Relatório Listagem do Histórico de Processo de Exportação',
+				nome: 'Listagem do Histórico de Processo de Exportação',
 				url: '/relatorio-historico',
 				descricao: 'Relatório Listagem do Histórico de Processo de Exportação'
 			}
@@ -350,19 +350,19 @@ export class MenuComponent implements OnInit {
 				descricao: 'Erros nas DU-Es - Comprovação'
 			},
 			{
-				nome: 'Relatório Listagem do Histórico de Insumos da Listagem de Exportação',
+				nome: 'Histórico de Insumos da Listagem de Exportação',
 				url: '/relatorio-listagem-historico-insumos',
 				descricao: 'Relatório Listagem do Histórico de Insumos da Listagem de Exportação'
 			}
 			,
 			{
-				nome: 'Relatório Histórico dos Insumos',
+				nome: 'Histórico de Insumos do Processo de Exportação',
 				url: '/relatorio-historico-insumos',
-				descricao: 'Relatório Histórico dos Insumos'
+				descricao: 'Relatório Histórico de Insumos do Processo de Exportação'
 			}
 			,
 			{
-				nome: 'Relatório de listagem de exportação aprovadas',
+				nome: 'Listagem de Exportação Aprovadas',
 				url: '/relatorio-listagem-exportacao',
 				descricao: 'Relatório de listagem de exportação aprovadas por exportador'
 			}]
