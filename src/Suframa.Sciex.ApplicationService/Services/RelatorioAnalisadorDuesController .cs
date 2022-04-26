@@ -18,7 +18,7 @@ namespace Suframa.Sciex.ApplicationService.Services
 			_relatorioAnalisadorDues = relatorioAnalisadorDues;
 		}
 
-		public RelatoriosAnalisadorListaDuesVM Get([FromUri] RelatorioAnalisadorDuesVM vm)
+		public List<RelatoriosAnalisadorListaDuesVM> Get([FromUri] RelatorioAnalisadorDuesVM vm)
 		{
 			return _relatorioAnalisadorDues.GetInfoRelatorio(vm);
 		}

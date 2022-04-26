@@ -35,6 +35,5 @@ export class RelatorioComponent implements OnInit {
 		}
 
 		ngOnInit(): void {
-
 	}
 }

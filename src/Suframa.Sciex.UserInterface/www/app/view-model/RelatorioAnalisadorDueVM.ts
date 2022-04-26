@@ -12,5 +12,6 @@ export class RelatorioAnalisadorDueVM {
 	anoNumPlano: number
 	nomeEmpresa: string
 	numeroInscricaoCadastral: number
+	porPlano:Boolean
 
 }

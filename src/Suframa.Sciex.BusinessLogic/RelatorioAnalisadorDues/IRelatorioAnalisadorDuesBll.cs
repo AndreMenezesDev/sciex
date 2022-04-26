@@ -7,7 +7,7 @@ namespace Suframa.Sciex.BusinessLogic
 	{
 
 		//List<RelatorioAnalisadorDuesVM> GerarRelatorio(RelatorioAnalisadorDuesVM RelatorioAnalisadorDuesVM);
-		RelatoriosAnalisadorListaDuesVM GetInfoRelatorio(RelatorioAnalisadorDuesVM filterVm);
+		List<RelatoriosAnalisadorListaDuesVM> GetInfoRelatorio(RelatorioAnalisadorDuesVM filterVm);
 
 
 	}
