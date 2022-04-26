@@ -216,9 +216,9 @@ export class ManterPlanoExportacaoGridComponent {
 			}else if(result.camposNaoValidos.campoAnoNumeroProcessoVazio){
 				this.modal.alerta("Erro na validação. Campos Ano do Processo ou Numero do Processo estão vazios","Erro","")
 			}else if(result.camposNaoValidos.naoExisteProcessoAprovacao){
-				this.modal.alerta("Erro na validação. Não existe este Numero de Processo em APROVAÇÃO","Erro","")
+				this.modal.alerta("Erro na validação. Número/Ano do Plano Invãlido","Erro","")
 			}else if(result.camposNaoValidos.existeProcessoComprovacao){
-				this.modal.alerta("Erro na validação. Já existe este Numero de Processo em COOMPROVAÇÃO","Erro","")
+				this.modal.alerta("Erro na validação. Número/Ano do Plano Invãlido","Erro","")
 			}
 		});
 	}

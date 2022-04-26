@@ -1173,9 +1173,9 @@ namespace Suframa.Sciex.BusinessLogic
 					retorno.Resultado = false;
 					return retorno;
 				}
-				var possuiProcessoDoTipoComprovacao = _uowSciex.QueryStackSciex.PlanoExportacao.Selecionar(x => x.NumeroAnoProcesso == pe.NumeroAnoProcesso
+				var possuiProcessoDoTipoComprovacao = _uowSciex.QueryStackSciex.Processo.Selecionar(x => x.AnoProcesso == pe.NumeroAnoProcesso
 																							&& x.NumeroProcesso == pe.NumeroProcesso
-																							&& x.TipoExportacao == "CO"
+																							&& x.TipoStatus == "CO"
 																							);
 				if (possuiProcessoDoTipoComprovacao != null)
 				{
