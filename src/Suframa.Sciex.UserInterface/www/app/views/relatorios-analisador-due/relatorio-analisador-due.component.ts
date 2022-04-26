@@ -185,5 +185,11 @@ export class RelatorioAnalisadorDue implements OnInit {
 	}
 
 
+	limpar(){
+		this.parametros2.numeroInscricaoCadastral = null;
+		this.parametros2.nomeEmpresa = null;
+		this.parametros2.numeroPlanoFormated = null;
+		this.parametros2.due = null;
+	}
 
 }

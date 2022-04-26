@@ -78,7 +78,7 @@ namespace Suframa.Sciex.BusinessLogic
 						NumeroInscricaoCadastral = item2.NumeroIncricaoCadastral,
 						NomeEmpresa = item2.RazaoSocial,
 						PlanoStatus = GetStatusPlano(item2.StatusPlano),
-						DataStatus = item2.DataStatus.HasValue ? item2.DataStatus.Value.ToString("dd/mm/yyyy") : null,
+						DataStatus = item2.DataStatus.HasValue ? item2.DataStatus.Value.ToString("dd/MM/yyyy") : null,
 						Due = item2.NumeroDue,
 						ValorDue = item2.ValorDolar,
 						QuantidadeDue = item2.QuantidadeDue,
