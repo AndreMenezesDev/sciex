@@ -14,35 +14,89 @@
 			<h5 style="font-weight: bold">SUFRAMA</h5>
 		</div>
 		<br>
-		<div class="centraliza-div-relatorio" style="border-bottom: solid 1px; border-top: solid 1px; height: 40px;">
+		<div class="centraliza-div-relatorio" style="border-bottom: solid 1px; border-top: solid 1px; margin-left: solid 1px; margin-right: solid 1px; height: 40px;">
 			<div class="text-align: center;">
-				<b>ANALISADOR DUE CONTIDA NO PLANO</b>
+				<b>ANALISADOR DUE's CONTIDA NO PLANO</b>
 			</div>
 		</div>
-		<div style="border-bottom: solid 1px;">
+		<div>
 			<div class="row wrapper">
 				<div class="col-lg-12">
 					<label for="empresa" style="font-size: 11px;" class="control-label">EMPRESA:</label>
-					<span style="font-size: 11px;">{{dados[0].nomeEmpresa}} {{dados[0].numeroInscricaoCadastral}}</span>
+					<span style="font-size: 11px;">{{dados[0].numeroInscricaoCadastral}} - {{dados[0].nomeEmpresa}} </span>
 				</div>
 			</div>
 		</div>
 		<div class="col-lg-12">
-			<label for="empresa" style="font-size: 11px;" class="control-label">Tipo: STATUS </label>
-			<br>
+			<div class="row" style="border-bottom: solid 0.5px;">
+				<div class="col-lg-1">
+					<label style="font-size: 11px;">N° plano</label>
+				</div>
+				<div class="col-lg-2">
+					<label style="font-size: 11px;">Plano Status</label>
+				</div>
+				<div class="col-lg-2">
+					<label style="font-size: 11px;">Data Status</label>
+				</div>
+				<div class="col-lg-1">
+					<label style="font-size: 11px;">DUE</label>
+				</div>
+				<div class="col-lg-2">
+					<label style="font-size: 11px;">Valor</label>
+				</div>
+				<div class="col-lg-2">
+					<label style="font-size: 11px;">Quantidade</label>
+				</div>
+				<div class="col-lg-1">
+					<label style="font-size: 11px;">Ano Processo</label>
+				</div>
+				<div class="col-lg-1">
+					<label style="font-size: 11px;">N° Processo</label>
+				</div>
+			</div>
 			<div class="row">
 				<div *ngFor=" let item2 of dados">
 					<div *ngFor=" let item2 of item2.relatoriosAnaliseDue">
-						<div class="col-md-12">
-							<span style="font-size: 11px;"> {{item2.numeroPlanoFormated}} {{item2.planoStatus}}
-								{{item2.dataStatus}} {{item2.due}} {{item2.valorDue}} {{item2.quantidadeDue}}
-								{{item2.anoProcesso}} {{item2.numeroProcesso}} </span>
+						<div class="row" style="margin-left: 2px;">
+							<div class="col-lg-1">
+								<span style="font-size: 11px;">{{item2.numeroPlanoFormated}}</span>
+							</div>
+							<div class="col-lg-2">
+								<span style="font-size: 11px;">{{item2.planoStatus}}</span>
+							</div>
+							<div class="col-lg-2">
+								<span style="font-size: 11px;">{{item2.dataStatus}}</span>
+							</div>
+							<div class="col-lg-1">
+								<span style="font-size: 11px;">{{item2.due}}</span>
+							</div>
+							<div class="col-lg-2">
+								<span style="font-size: 11px;">{{item2.valorDue}}</span>
+							</div>
+							<div class="col-lg-2">
+								<span style="font-size: 11px;">{{item2.quantidadeDue}}</span>
+							</div>
+							<div class="col-lg-1">
+								<span style="font-size: 11px;">{{item2.anoProcesso}}</span>
+							</div>
+							<div class="col-lg-1">
+								<span style="font-size: 11px;">{{item2.numeroProcesso}}</span>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-6">
-						Total:
-						{{item2.valorDueTotal}}
-						{{item2.quantidadeDueTotal}}
+					<div class="row" style=" margin-left: 2px; font-size: 11px;">
+						<div class="col-lg-5">
+							<span style="font-size: 11px;"></span>
+						</div>
+						<div class="col-lg-1">
+							<label style="font-size: 11px;">TOTAL: </label>
+						</div>
+						<div class="col-lg-2">
+							<span style="font-size: 11px;">{{item2.valorDueTotal}}</span>
+						</div>
+						<div class="col-lg-2">
+							<span style="font-size: 11px;">{{item2.quantidadeDueTotal}}</span>
+						</div>
 					</div>
 				</div>
 			</div>
