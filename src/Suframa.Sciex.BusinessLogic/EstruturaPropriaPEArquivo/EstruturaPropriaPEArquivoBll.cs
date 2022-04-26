@@ -1660,10 +1660,10 @@ namespace Suframa.Sciex.BusinessLogic
 
 						if ("CO".Equals(lote.TipoExportacao))
 						{
-							var existePlanoNaBase = ValidarExisteProcessoParaPlanoExportacaoNaBase(lote);
-							var dueValidada = ValidarInfoDue(lote.produtos);
+							var naoExistePlanoNaBase = ValidarExisteProcessoParaPlanoExportacaoNaBase(lote);
+							var dueNaoValidada = ValidarInfoDue(lote.produtos);
 
-							if (existePlanoNaBase && dueValidada)
+							if (!naoExistePlanoNaBase && !dueNaoValidada)
 								erro6 = false;
 							
 						}
@@ -1839,15 +1839,14 @@ namespace Suframa.Sciex.BusinessLogic
 						var numProcesso = int.Parse(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroProcesso);
 						var anoProcesso = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.AnoProcesso;
 
-						var validarDueDataEmbarqueNoPrazoVigenciaProcesso = _uowSciex.QueryStackSciex.Processo.Existe(q => q.ListaStatus.Any(w=> w.Tipo == w.Processo.TipoStatus)
-																									&& 
-																									(
-																										q.ListaStatus.Any(w=> w.DataValidade < dataDue)
-																										&& 
+						var validarDueDataEmbarqueNoPrazoVigenciaProcesso = _uowSciex.QueryStackSciex.Processo.Existe(q =>
+																										(
+																										q.ListaStatus.Any(w => w.Data < dataDue)
+																										&&
 																										q.DataValidade > dataDue
-																									)
-																									&& q.NumeroProcesso == numProcesso
-																									&& q.AnoProcesso == anoProcesso
+																										)
+																										&& q.NumeroProcesso == numProcesso
+																										&& q.AnoProcesso == anoProcesso
 																									);
 
 						if (!validarDueDataEmbarqueNoPrazoVigenciaProcesso)
@@ -2419,6 +2418,13 @@ namespace Suframa.Sciex.BusinessLogic
 				plano.NumeroInscricaoCadastral = int.Parse(lote.InscricaoCadastral);
 				plano.Cnpj = lote.NumeroCNPJ;
 				plano.DataCadastro = GetDateTimeNowUtc();
+
+				if ("CO".Equals(lote.TipoExportacao))
+				{
+					plano.NumeroProcesso = int.Parse(lote.NumeroProcesso);
+					plano.NumeroAnoProcesso = lote.AnoProcesso;
+				}
+
 				var produtosComFalha = lote.produtos.Count(x => x.SituacaoValidacao == 3);
 				var produtosComSucesso = lote.produtos.Count(x => x.SituacaoValidacao == 2);
 
@@ -2468,10 +2474,10 @@ namespace Suframa.Sciex.BusinessLogic
 						{
 							var dueEntity = new PlanoExportacaoDUEEntity();
 							dueEntity.Numero = due.Numero;
-							dueEntity.ValorDolar = (decimal)due.ValorDolar;
-							dueEntity.Quantidade = (decimal)due.Quantidade;
-							dueEntity.CodigoPais = (int)due.CodigoPais;
 							dueEntity.DataAverbacao = (DateTime)(due.DataAverbacao);
+							dueEntity.ValorDolar = due.ValorDolar.Value;
+							dueEntity.Quantidade = due.Quantidade.Value;
+							dueEntity.CodigoPais = (int)due.CodigoPais;
 
 							paisEntity.ListaPEDue.Add(dueEntity);
 						}
@@ -3073,7 +3079,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return arquivoLinhas.FirstOrDefault().Substring(28, 9).Trim();
+				return arquivoLinhas.FirstOrDefault().Substring(28, 10).Trim();
 			}
 
 			return null;
@@ -3773,10 +3779,13 @@ namespace Suframa.Sciex.BusinessLogic
 						var anoLote = RecuperarAnoLoteArquivoLote(lines);
 						var numLote = RecuperarNumeroLoteArquivoLote(lines);
 						var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+						var codPais = RecuperarCodigoPais(item);
 						//considerando insercao sequencial nos arquivos...
 						if (anoLote == produtopais.AnoLote
-							&& numLote == produtopais.NumeroLote 
-							&& codPexPam == produtopais.CodigoProdutoPexPam)
+							&& numLote == produtopais.NumeroLote
+							&& codPexPam == produtopais.CodigoProdutoPexPam
+							&& codPais == int.Parse(produtopais.CodigoPais)
+							)
 						{
 							due.InscricaoCadastral = produtopais.InscricaoCadastral.ToString();
 							due.NumeroAnoLote = anoLote;
@@ -3800,18 +3809,34 @@ namespace Suframa.Sciex.BusinessLogic
 
 		private decimal? RecuperarValorDolar(string arquivoLinhas)
 		{
+
 			if (arquivoLinhas.Length > 0)
 			{
-				return Convert.ToDecimal(arquivoLinhas.Substring(72, 19).Trim());
+				var valorLinha = arquivoLinhas.Substring(71, 20).Trim().InsertDecimal(7);
+
+				decimal valor;
+				bool bNum = decimal.TryParse(valorLinha, out valor);
+				if (bNum)
+				{
+					return valor;
+				}
 			}
 			return null;
 		}
 
 		private decimal? RecuperarQuantidade(string arquivoLinhas)
 		{
+
 			if (arquivoLinhas.Length > 0)
 			{
-				return Convert.ToDecimal(arquivoLinhas.Substring(52, 19).Trim());
+				var valorLinha = arquivoLinhas.Substring(51, 20).Trim().InsertDecimal(7);
+
+				decimal valor;
+				bool bNum = decimal.TryParse(valorLinha, out valor);
+				if (bNum)
+				{
+					return valor;
+				}
 			}
 			return null;
 		}
@@ -3820,7 +3845,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return Convert.ToDateTime(arquivoLinhas.Substring(42, 9).Trim());
+				return Convert.ToDateTime(arquivoLinhas.Substring(41, 10).Trim());
 			}
 			return null;
 		}
@@ -3829,7 +3854,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return arquivoLinhas.Substring(27, 14).Trim();
+				return arquivoLinhas.Substring(26, 15).Trim();
 			}
 			return null;
 		}
@@ -3838,7 +3863,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return Convert.ToInt32(arquivoLinhas.Substring(24, 2).Trim());
+				return Convert.ToInt32(arquivoLinhas.Substring(23, 3).Trim());
 			}
 			return null;
 		}

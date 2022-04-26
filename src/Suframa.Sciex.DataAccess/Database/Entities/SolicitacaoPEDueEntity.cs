@@ -26,7 +26,7 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		[Column("sdu_dt_averbacao")]
 		public DateTime? DataAverbacao { get; set; }
 
-		[Column("sdu_valor_dolar")]
+		[Column("sdu_vl_dolar")]
 		public decimal? ValorDolar { get; set; }
 
 		[Column("sdu_qt")]
