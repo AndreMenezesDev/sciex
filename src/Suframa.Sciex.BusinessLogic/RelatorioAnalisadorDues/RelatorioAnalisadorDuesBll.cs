@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using Suframa.Sciex.BusinessLogic.Pss;
-using Suframa.Sciex.CrossCutting.DataTransferObject.Dto;
+﻿using Suframa.Sciex.BusinessLogic.Pss;
 using Suframa.Sciex.CrossCutting.DataTransferObject.Enum;
 using Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel;
 using Suframa.Sciex.DataAccess;
@@ -36,78 +34,68 @@ namespace Suframa.Sciex.BusinessLogic
 				 "--";
 
 
-		public RelatoriosAnalisadorListaDuesVM GetInfoRelatorio(RelatorioAnalisadorDuesVM filterVm)
+		public List<RelatoriosAnalisadorListaDuesVM> GetInfoRelatorio(RelatorioAnalisadorDuesVM filterVm)
 		{
-			ViewEmitirRelatorioAnalisadorDueEntity resultadoPesquisaDues;
 			List<ViewEmitirRelatorioAnalisadorDueEntity> resultadoPesquisaDueLista;
-			var retornoMetodo = new RelatoriosAnalisadorListaDuesVM();
-			var ListaDueRepetidas = new List<RelatorioAnalisadorDuesVM>();
+			var retornoMetodo = new List<RelatoriosAnalisadorListaDuesVM>();
 
-			if (filterVm.Due == null)
+			int numeroPlano = 0;
+			int anoPlano = 0;
+			if (filterVm.NumeroPlanoFormated != string.Empty && filterVm.NumeroPlanoFormated != null)
 			{
-				resultadoPesquisaDueLista = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral
-																					  && x.NumeroPlano == filterVm.NumeroPlano
-																					  && x.RazaoSocial == filterVm.NomeEmpresa);				
-				foreach (var item in resultadoPesquisaDueLista)
+				var processoSplit = filterVm.NumeroPlanoFormated.Split('/');
+				if (processoSplit.Length > 1)
 				{
-
-					var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroDue == item.NumeroDue);
-					foreach (var item2 in ListaDueRepetidas2)
-					{
-						var itemDue = new RelatorioAnalisadorDuesVM
-						{
-							AnoProcesso = item.AnoProcesso,
-							NumeroProcesso = item.NumeroProcesso,
-							NumeroPlanoFormated = item.NumeroPlano + "/" + item.AnoPlano,
-							NumeroInscricaoCadastral = item.NumeroIncricaoCadastral,
-							NomeEmpresa = item.RazaoSocial,
-							PlanoStatus = GetStatusPlano(item.StatusPlano),
-							DataStatus = item.DataStatus.ToString("dd/mm/yyyy"),
-							Due = item.NumeroDue,
-							ValorDue = item.ValorDolar,
-							QuantidadeDue = item.QuantidadeDue
-						};
-						ListaDueRepetidas.Add(itemDue);
-						retornoMetodo.NomeEmpresa = itemDue.NomeEmpresa;
-						retornoMetodo.NumeroInscricaoCadastral = itemDue.NumeroInscricaoCadastral;
-					}
-					retornoMetodo.RelatoriosAnaliseDue = ListaDueRepetidas;
+					Int32.TryParse(processoSplit[0], out numeroPlano);
+					Int32.TryParse(processoSplit[1], out anoPlano);
 				}
 			}
-			else
+			
+			resultadoPesquisaDueLista = _uowSciex.QueryStackSciex
+												 .ViewEmitirRelatorioAnalisadorDue
+												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null || x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral)
+														   && (numeroPlano == 0 || x.NumeroPlano == numeroPlano && x.AnoPlano == anoPlano)
+														   && x.RazaoSocial.Contains(filterVm.NomeEmpresa)
+														   && (filterVm.Due == null || x.NumeroDue == filterVm.Due));
+
+			if(resultadoPesquisaDueLista.Count == 0)
+				return retornoMetodo;
+			var dues = resultadoPesquisaDueLista.Select(y => y.NumeroDue).Distinct().ToList();
+
+			var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => dues.Contains(x.NumeroDue));
+			foreach (var item in dues)
 			{
-				resultadoPesquisaDues = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Selecionar(x => x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral
-																					   && x.NumeroPlano == filterVm.NumeroPlano
-																					   && x.RazaoSocial == filterVm.NomeEmpresa
-																					   && x.NumeroDue == filterVm.Due);
+				var retorno = new RelatoriosAnalisadorListaDuesVM();
+				var retorno1 = new List<RelatorioAnalisadorDuesVM>();
 
-				var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => x.NumeroDue == filterVm.Due);
-
-				foreach (var item in ListaDueRepetidas2)
+				foreach (var item2 in ListaDueRepetidas2.Where(x=> x.NumeroDue == item).ToList())
 				{
 					var itemDue = new RelatorioAnalisadorDuesVM
 					{
-						AnoProcesso = item.AnoProcesso,
-						NumeroProcesso = item.NumeroProcesso,
-						NumeroPlanoFormated = item.NumeroPlano + "/" + item.AnoPlano,
-						NumeroInscricaoCadastral = item.NumeroIncricaoCadastral,
-						NomeEmpresa = item.RazaoSocial,
-						PlanoStatus = GetStatusPlano(item.StatusPlano),
-						DataStatus = item.DataStatus.ToString("dd/mm/yyyy"),
-						Due = item.NumeroDue,
-						ValorDue = item.ValorDolar,
-						QuantidadeDue = item.QuantidadeDue
+						AnoProcesso = item2.AnoProcesso,
+						NumeroProcesso = item2.NumeroProcesso,
+						NumeroPlanoFormated = item2.NumeroPlano + "/" + item2.AnoPlano,
+						NumeroInscricaoCadastral = item2.NumeroIncricaoCadastral,
+						NomeEmpresa = item2.RazaoSocial,
+						PlanoStatus = GetStatusPlano(item2.StatusPlano),
+						DataStatus = item2.DataStatus.HasValue ? item2.DataStatus.Value.ToString("dd/mm/yyyy") : null,
+						Due = item2.NumeroDue,
+						ValorDue = item2.ValorDolar,
+						QuantidadeDue = item2.QuantidadeDue,
+						AnoNumPlano = item2.AnoPlano.ToString(),
+						NumeroPlano = (int)item2.NumeroPlano,							
 					};
-					ListaDueRepetidas.Add(itemDue);
-					retornoMetodo.NomeEmpresa = itemDue.NomeEmpresa;
-					retornoMetodo.NumeroInscricaoCadastral = itemDue.NumeroInscricaoCadastral;
+					retorno1.Add(itemDue);
 				}
-				retornoMetodo.RelatoriosAnaliseDue = ListaDueRepetidas;
+				retorno.RelatoriosAnaliseDue = retorno1;
+				retorno.NomeEmpresa = resultadoPesquisaDueLista[0].RazaoSocial;
+				retorno.NumeroInscricaoCadastral = resultadoPesquisaDueLista[0].NumeroIncricaoCadastral;
+				retorno.ValorDueTotal = retorno.RelatoriosAnaliseDue.Sum(x=> x.ValorDue);
+				retorno.QuantidadeDueTotal = retorno.RelatoriosAnaliseDue.Sum(x=> x.QuantidadeDue);
+				retornoMetodo.Add(retorno);
 			}
+			
 			return retornoMetodo;
 		}
-
-
-
 	}
 }

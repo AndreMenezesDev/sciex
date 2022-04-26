@@ -22,19 +22,19 @@ namespace Suframa.Sciex.DataAccess.Database.Entities
 		public int AnoPlano { get; set; }
 
 		[Column("nu_ano_processo")]
-		public int NuAnoProcesso { get; set; }
+		public int? NuAnoProcesso { get; set; }
 
 		[Column("nu_processo")]
-		public int NumeroProcesso { get; set; }
+		public int? NumeroProcesso { get; set; }
 
 		[Column("ano_processo")]
-		public int AnoProcesso { get; set; }
+		public int? AnoProcesso { get; set; }
 
 		[Column("status_plano")]
 		public int StatusPlano { get; set; }
 
 		[Column("dt_status")]
-		public DateTime DataStatus { get; set; }
+		public DateTime? DataStatus { get; set; }
 
 		[Column("due_nu")]
 		public string NumeroDue { get; set; }

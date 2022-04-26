@@ -1,3 +1,4 @@
+import { inscricaoCadastralCredenciamentoVM } from './../../view-model/InscricaoCadastralCredenciamentoVM';
 import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { PagedItems } from '../../view-model/PagedItems';
 import { ModalService } from '../../shared/services/modal.service';
@@ -23,9 +24,9 @@ export class RelatorioAnalisadorDue implements OnInit {
 	grid: any = { sort: {} };
 	result: boolean = false;
 	parametros: any = {}
-	parametros2 : RelatorioAnalisadorDueVM  = new RelatorioAnalisadorDueVM()
+	parametros2: RelatorioAnalisadorDueVM = new RelatorioAnalisadorDueVM()
 	lista: any;
-	dadosRelatorio:any;
+	dadosRelatorio: any;
 	servico = 'RelatorioAnalisadorDues';
 	date: Date = new Date();
 	exibeRelatorio: boolean = false;
@@ -54,104 +55,117 @@ export class RelatorioAnalisadorDue implements OnInit {
 
 	}
 
-	exportPDF(isExcel){
-		this.applicationService.get(this.servico, this.parametros2).subscribe((result: any)=>{
-			this.dadosRelatorio= result
-			console.log(this.dadosRelatorio)
+	exportPDF(isExcel) {
+		let isValid = true
+		if (this.parametros2.nomeEmpresa == null || this.parametros2.nomeEmpresa == '' && isValid){
+			this.modal.alerta("Empresa não informada");
+			isValid = false;
+		}
+		// if (this.parametros2.due == null && isValid){
+		// 	this.modal.alerta("N° da DUE não informado");
+		// 	isValid = false;
+		// }
 
-			if (this.dadosRelatorio) {
-				if (isExcel) {
+		if (isValid) {
+			this.applicationService.get(this.servico, this.parametros2).subscribe((result: any) => {
+				this.dadosRelatorio = result
 
-					this.parametros.titulo = "ANALISADOR DUE";
-					this.parametros.columns = ["N Plano", "Plano Status", "Data Staus", "DUE", "Valor","Quantidade","Ano processo","N Processo"];
-					this.parametros.fields = ["razaoSocial", "numeroAnoProcessoFormatado", "descricaoTipo", "dataSrting", "nomeResponsavel"];
+				if (this.dadosRelatorio) {
+					if (isExcel) {
 
-					var file = window.location.href.split("#")[1].replace("/", "");
-					this.lista = this.dadosRelatorio;
+						this.parametros.titulo = "ANALISADOR DUE";
+						this.parametros.columns = ["Nº Plano", "Plano Status", "Data Staus", "DUE", "Valor", "Quantidade", "Ano processo", "N Processo"];
+						this.parametros.fields = ["numeroPlanoFormated", "planoStatus", "dataStatus", "due", "valorDue", "quantidadeDue", "anoProcesso", "numeroProcesso"];
 
-					let rows = Array<any>();
-					for (var i = 0; i < this.lista.listaStatus.length; i++) {
-						let r = Array<any>();
-						let valor: any;
+						var file = window.location.href.split("#")[1].replace("/", "");
+						this.lista = this.dadosRelatorio;
 
-						for (var j = 0; j < this.parametros.fields.length; j++) {
+						var excel: any = [];
+						excel.push(this.parametros.columns);
+						for (var x = 0; x < this.lista.length; x++) {
+							let rows = Array<any>();
+							for (var i = 0; i < this.lista[x].relatoriosAnaliseDue.length; i++) {
+								let r = Array<any>();
+								let valor: any;
 
-							var item = this.parametros.fields[j].split("|");
+								for (var j = 0; j < this.parametros.fields.length; j++) {
 
-							valor = item.length > 0 ? Object.values(this.lista.listaStatus)[i][item[0].trim()] : Object.values(this.lista)[i][this.parametros.fields[j].trim()];
+									var item = this.parametros.fields[j].split("|");
 
-							if (this.parametros.fields[j].trim() == "razaoSocial")
-								r[j] = this.lista.razaoSocial;
-							else if (this.parametros.fields[j].trim() == "numeroAnoProcessoFormatado")
-								r[j] = this.lista.numeroAnoProcessoFormatado;
-							else {
-								r[j] = valor;
+									valor = item.length > 0 ? Object.values(this.lista[x].relatoriosAnaliseDue)[i][item[0].trim()] : Object.values(this.lista[x].relatoriosAnaliseDue)[i][this.parametros.fields[j].trim()];
+
+									if (this.parametros.fields[j].trim() == "razaoSocial")
+									r[j] = this.lista.razaoSocial;
+									else if (this.parametros.fields[j].trim() == "numeroAnoProcessoFormatado")
+									r[j] = this.lista.numeroAnoProcessoFormatado;
+									else {
+										r[j] = valor;
+									}
+
+								}
+								rows.push(r);
 							}
 
-						}
-						rows.push(r);
+							for (var i = 0; i < rows.length; i++) {
+								excel.push(rows[i]);
+							}
+							this.parametros.columns = ["", "", "", "Total:", this.lista[x].valorDueTotal,this.lista[x].quantidadeDueTotal, "", ""];
+							excel.push(this.parametros.columns);
 					}
-					var excel: any = [];
-
-					excel.push(this.parametros.columns);
-
-					for (var i = 0; i < rows.length; i++) {
-						excel.push(rows[i]);
+						this.excelService.exportAsExcelFile(excel, file, this.parametros.titulo);
 					}
+					else {
+						this.dadosRelatorio.dataImpressao = `${this.date.getDate()}/${this.date.getMonth()}/${this.date.getFullYear()}`;
 
-					this.excelService.exportAsExcelFile(excel, file, this.parametros.titulo);
+						this.exibeRelatorio = true;
+						const assign = this.assignHour;
+						let renderizarHtml = new Promise(resolve => {
+							setTimeout(() => {
+								const elements = document.getElementById('relatorio');
+								const options = {
+									margin: [0.03, 0.03, 0.5, 0.03], // [top, left, bottom, right]
+									filename: "Relatório Listagem do Histórico de Processo de Exportação",
+									image: { type: 'jpeg', quality: 0.98 },
+									html2canvas: {
+										scale: 2,
+										dpi: 300,
+										letterRendering: true,
+										useCORS: true
+									},
+									jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+									pagebreak: { before: ['#quebraPaginaAnalises'], after: ['#quebraPagina'] }
+								};
+								this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
+									var totalPages = pdf.internal.getNumberOfPages();
+									for (let i = 1; i <= totalPages; i++) {
+										pdf.setPage(i);
+										pdf.setFontSize(10);
+										pdf.setTextColor(150);
+										pdf.text((pdf.internal.pageSize.width / 2), 7.9, '                                                                                                                                                                                                                                                                          ' +
+											'página ' + i + ' de ' + totalPages);
+									}
+								}).outputPdf();
+							}, 5000);
+							resolve(null);
+						});
+
+						let liberarTela = new Promise(resolve => {
+							setTimeout(() => {
+								this.salvarArquivoRelatorio();
+							}, 5000);
+							resolve(null);
+						});
+
+						Promise.all([renderizarHtml, liberarTela]);
+					}
+				} else {
+					this.modal.alerta(this.msg.DADO_NAO_ENCONTRADO);
+
 				}
-				else {
-					this.dadosRelatorio.dataImpressao = `${this.date.getDate()}/${this.date.getMonth()}/${this.date.getFullYear()}`;
-
-					this.exibeRelatorio = true;
-					const assign = this.assignHour;
-					let renderizarHtml = new Promise(resolve => {
-						setTimeout(() => {
-							const elements = document.getElementById('relatorio');
-							const options = {
-								margin: [0.03, 0.03, 0.5, 0.03], // [top, left, bottom, right]
-								filename: "Relatório Listagem do Histórico de Processo de Exportação",
-								image: { type: 'jpeg', quality: 0.98 },
-								html2canvas: {
-									scale: 2,
-									dpi: 300,
-									letterRendering: true,
-									useCORS: true
-								},
-								jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-								pagebreak: { before: ['#quebraPaginaAnalises'], after: ['#quebraPagina'] }
-							};
-							this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
-								console.log("height page: " + pdf.internal.pageSize.height);
-								var totalPages = pdf.internal.getNumberOfPages();
-								for (let i = 1; i <= totalPages; i++) {
-									pdf.setPage(i);
-									pdf.setFontSize(10);
-									pdf.setTextColor(150);
-									pdf.text((pdf.internal.pageSize.width / 2), 7.9, '                                                                                                                                                                                                                                                                          ' +
-										'página ' + i + ' de ' + totalPages);
-								}
-							}).outputPdf();
-						}, 5000);
-						resolve(null);
-					});
-
-					let liberarTela = new Promise(resolve => {
-						setTimeout(() => {
-							this.salvarArquivoRelatorio();
-						}, 5000);
-						resolve(null);
-					});
-
-					Promise.all([renderizarHtml, liberarTela]);
-				}
-			} else {
-				this.modal.alerta(this.msg.DADO_NAO_ENCONTRADO);
-
-			}
-		})
+			})
+		}
 	}
+
 	salvarArquivoRelatorio() {
 		new Promise(resolve => {
 			btoa(JSON.stringify(this.arquivoRelatorio.then(pdf => {
