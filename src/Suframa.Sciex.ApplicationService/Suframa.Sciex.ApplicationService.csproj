@@ -342,6 +342,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\RelatorioAnalisadorDuesController .cs" />
     <Compile Include="Services\RelatorioErrorDuesController.cs" />
     <Compile Include="Services\AprovarSolicitacaoController.cs" />
     <Compile Include="Services\AprovarTodosDUEEmAnaliseController.cs" />

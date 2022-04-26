@@ -179,6 +179,7 @@
     <Compile Include="Database\ConfigureEntities\ConfigureTipoEmbalagem.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViaTransporte.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViewPais.cs" />
+    <Compile Include="Database\ConfigureEntities\ConfigureViewRelatorioEmitirRelatorioAnalisadorDue.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViewProdutoEmpresaExportacao.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureViewRelatorioAnaliseProcessamentoPli.cs" />
     <Compile Include="Database\ConfigureEntities\ConfigureErroProcessamento.cs" />
@@ -439,6 +440,7 @@
     <Compile Include="Database\Entities\ViewAtividadeEconomicaPrincipalEntity.cs" />
     <Compile Include="Database\Entities\PRJProdutoEmpresaExportacaoEntity.cs" />
     <Compile Include="Database\Entities\ViewProdutoEmpresaExportacaoEntity.cs" />
+    <Compile Include="Database\Entities\ViewAnalisadorDueEntity.cs" />
     <Compile Include="Database\Entities\ViewSetorEmpresaEntity.cs" />
     <Compile Include="Database\Entities\ViewProdutoEmpresaEntity.cs" />
     <Compile Include="Database\Entities\ViewDetalheMercadoriaEntity.cs" />

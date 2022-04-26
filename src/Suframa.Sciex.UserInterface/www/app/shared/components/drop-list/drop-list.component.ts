@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { ArrayService } from '../../services/array.service';
 import { ApplicationService } from '../../services/application.service';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
     selector: 'app-drop-list',
@@ -34,6 +35,7 @@ export class DropListComponent implements ControlValueAccessor, OnInit, OnChange
         private applicationService: ApplicationService,
         private arrayService: ArrayService,
         private elm: ElementRef,
+		private modal: ModalService,
 	) {
 		this.placeholder = this.placeholder || 'Informe o código ou a descrição';
     }
@@ -93,16 +95,20 @@ export class DropListComponent implements ControlValueAccessor, OnInit, OnChange
         return this.applicationService.get(url).subscribe(result => {
             this.list = result;
             this.listAutoComplete = this.list;
-
             // Selecionar o primeiro ítem quando retornar somente 1 linha
             if (this.list.length == 1) {
                 this.model = this.list[0].id;
                 this.onChange(this.list[0].id);
             }else{
-                if(this.selecionarPrimeiroRegistro){
-                    this.model = this.list[0].id;
-                    this.onChange(this.list[0].id);
-                }
+				if(this.list.length> 0){
+					if(this.selecionarPrimeiroRegistro ){
+						this.model = this.list[0].id;
+						this.onChange(this.list[0].id);
+					}
+				}
+				else{
+					this.modal.alerta("Dados não encontrados para: " + this.parametroChave);
+				}
             }
 
             if (observer) {
@@ -166,6 +172,9 @@ export class DropListComponent implements ControlValueAccessor, OnInit, OnChange
                 }
             }
         }
+		else{
+			this.list = [];
+		}
     }
 
     onChange(value) {

@@ -13,13 +13,16 @@
 	  </header>
 	  <article class="panel-body">
 
-		<form>
+
 
 		  <div class="form-group">
 			<div class="row">
 			  <div class="col-lg-3">
 				<label>Inscrição Cadastral:</label>
-				<input type="text" class="form-control" />
+				<input type="text"
+				class="form-control"
+				name="inscricaoCadastral"
+				[(ngModel)]="parametros2.numeroInscricaoCadastral"/>
 			  </div>
 
 
@@ -31,7 +34,7 @@
 			<div class="row">
 			  <div class="col-lg-8">
 				<label>Empresa:</label>
-				<input type="text" class="form-control" />
+				<input [(ngModel)]="parametros2.nomeEmpresa" type="text" class="form-control" />
 			  </div>
 
 
@@ -42,7 +45,10 @@
 			<div class="row">
 			  <div class="col-lg-8">
 				<label>N° do Plano:</label>
-				<input type="text" class="form-control" />
+				<input
+				type="text"
+				class="form-control"
+				[(ngModel)]="parametros2.numeroPlano" />
 			  </div>
 
 
@@ -54,8 +60,12 @@
 			<div class="row">
 			  <div class="col-lg-8">
 				<label>N° da DUE:</label>
-				<input type="text" class="form-control" />
-			  </div>
+				<input
+			  	type="text"
+			    class="form-control"
+				[(ngModel)]="parametros2.due" />
+
+			</div>
 			</div>
 			<br>
 			<div class="col-lg-8">
@@ -74,19 +84,23 @@
 			  <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar <span class="caret"></span></button>
 			   <ul class="dropdown-menu pull-right">
 				   <li>
-					   <a ><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
+					   <a (click)="exportPDF(false)" ><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
 				   </li>
 				   <li>
-					   <a ><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+					   <a (click)="exportPDF(false)" ><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
 				   </li>
 			   </ul>
 			  <a class="btn btn-sm btn-default"><i class="fa fa-eraser"></i> Limpar</a>
 			</div>
 		  </div>
-		</form>
 
 	  </article>
 	</section>
 
 
   </div>
+  <app-relatorio
+	[(dados)]="dadosRelatorio"
+	*ngIf="exibeRelatorio"
+	id="relatorio">
+</app-relatorio>
