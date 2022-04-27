@@ -3784,18 +3784,20 @@ namespace Suframa.Sciex.BusinessLogic
 
 				string[] lines = File.ReadAllLines(dueFile.FirstOrDefault());
 
-				if (lines[0].Length > 0)
+				if (lines.Length > 0)
 				{
-					if (lines[0].Substring(0, 2) == "0\0")
+					if (lines[0].Length > 0)
 					{
-						lines = File.ReadAllLines(filename, Encoding.Unicode);
-						File.Delete(filename);
-						File.WriteAllLines(filename, lines);
-					}
-					else
-					{
-						lines = File.ReadAllLines(dueFile.FirstOrDefault(), Encoding.Default);
-					}
+						if (lines[0].Substring(0, 2) == "0\0")
+						{
+							lines = File.ReadAllLines(filename, Encoding.Unicode);
+							File.Delete(filename);
+							File.WriteAllLines(filename, lines);
+						}
+						else
+						{
+							lines = File.ReadAllLines(dueFile.FirstOrDefault(), Encoding.Default);
+						}
 
 					foreach (var item in lines)
 					{
@@ -3821,9 +3823,10 @@ namespace Suframa.Sciex.BusinessLogic
 							due.Quantidade = RecuperarQuantidade(item);
 							due.ValorDolar = RecuperarValorDolar(item);
 
-							listaDues.Add(due);
+								listaDues.Add(due);
+							}
 						}
-					}
+					} 
 				}
 
 			}
