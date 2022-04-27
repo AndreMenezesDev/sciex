@@ -1750,7 +1750,7 @@ namespace Suframa.Sciex.BusinessLogic
 							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
 							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral)
 						{
-							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 735);
+							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 744);
 							var erro = new ErroProcessamentoEntity();
 							erro.DataProcessamento = GetDateTimeNowUtc();
 							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
@@ -1768,7 +1768,7 @@ namespace Suframa.Sciex.BusinessLogic
 							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
 							|| produto.CodigoProdutoPexPam != due.CodigoProdutoExportacao)
 						{
-							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 736);
+							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 745);
 							var erro = new ErroProcessamentoEntity();
 							erro.DataProcessamento = GetDateTimeNowUtc();
 							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
