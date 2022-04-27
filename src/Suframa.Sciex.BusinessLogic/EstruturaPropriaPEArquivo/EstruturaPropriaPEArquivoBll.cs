@@ -728,7 +728,7 @@ namespace Suframa.Sciex.BusinessLogic
 					{
 						if (item.Substring(43, 2) == "CO")
 						{
-							if (item.Substring(28, 9).ToString().IndexOf(' ') >= 0 || item.Substring(38, 4).ToString().IndexOf(' ') >=0)
+							if (string.IsNullOrEmpty(item.Substring(28, 9).ToString().Trim()) || string.IsNullOrEmpty(item.Substring(38, 4).ToString().Trim()))
 							{
 								return false;
 							}
