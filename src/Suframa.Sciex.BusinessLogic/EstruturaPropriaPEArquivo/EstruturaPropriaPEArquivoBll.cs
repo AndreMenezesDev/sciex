@@ -3769,46 +3769,49 @@ namespace Suframa.Sciex.BusinessLogic
 
 				string[] lines = File.ReadAllLines(dueFile.FirstOrDefault());
 
-				if (lines[0].Length > 0)
+				if (lines.Length > 0)
 				{
-					if (lines[0].Substring(0, 2) == "0\0")
+					if (lines[0].Length > 0)
 					{
-						lines = File.ReadAllLines(filename, Encoding.Unicode);
-						File.Delete(filename);
-						File.WriteAllLines(filename, lines);
-					}
-					else
-					{
-						lines = File.ReadAllLines(dueFile.FirstOrDefault(), Encoding.Default);
-					}
-
-					foreach (var item in lines)
-					{
-						var due = new SolicitacaoPEDueEntity();
-						var anoLote = RecuperarAnoLoteArquivoLote(lines);
-						var numLote = RecuperarNumeroLoteArquivoLote(lines);
-						var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
-						var codPais = RecuperarCodigoPais(item);
-						//considerando insercao sequencial nos arquivos...
-						if (anoLote == produtopais.AnoLote
-							&& numLote == produtopais.NumeroLote
-							&& codPexPam == produtopais.CodigoProdutoPexPam
-							&& codPais == int.Parse(produtopais.CodigoPais)
-							)
+						if (lines[0].Substring(0, 2) == "0\0")
 						{
-							due.InscricaoCadastral = produtopais.InscricaoCadastral.ToString();
-							due.NumeroAnoLote = anoLote;
-							due.NumeroLote = numLote;
-							due.CodigoProdutoExportacao = codPexPam;
-							due.CodigoPais = RecuperarCodigoPais(item);
-							due.Numero = RecuperarNumeroRegExportacao(item);
-							due.DataAverbacao = RecuperarDataAverbacao(item);
-							due.Quantidade = RecuperarQuantidade(item);
-							due.ValorDolar = RecuperarValorDolar(item);
-
-							listaDues.Add(due);
+							lines = File.ReadAllLines(filename, Encoding.Unicode);
+							File.Delete(filename);
+							File.WriteAllLines(filename, lines);
 						}
-					}
+						else
+						{
+							lines = File.ReadAllLines(dueFile.FirstOrDefault(), Encoding.Default);
+						}
+
+						foreach (var item in lines)
+						{
+							var due = new SolicitacaoPEDueEntity();
+							var anoLote = RecuperarAnoLoteArquivoLote(lines);
+							var numLote = RecuperarNumeroLoteArquivoLote(lines);
+							var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+							var codPais = RecuperarCodigoPais(item);
+							//considerando insercao sequencial nos arquivos...
+							if (anoLote == produtopais.AnoLote
+								&& numLote == produtopais.NumeroLote
+								&& codPexPam == produtopais.CodigoProdutoPexPam
+								&& codPais == int.Parse(produtopais.CodigoPais)
+								)
+							{
+								due.InscricaoCadastral = produtopais.InscricaoCadastral.ToString();
+								due.NumeroAnoLote = anoLote;
+								due.NumeroLote = numLote;
+								due.CodigoProdutoExportacao = codPexPam;
+								due.CodigoPais = RecuperarCodigoPais(item);
+								due.Numero = RecuperarNumeroRegExportacao(item);
+								due.DataAverbacao = RecuperarDataAverbacao(item);
+								due.Quantidade = RecuperarQuantidade(item);
+								due.ValorDolar = RecuperarValorDolar(item);
+
+								listaDues.Add(due);
+							}
+						}
+					} 
 				}
 
 			}
