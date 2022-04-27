@@ -471,7 +471,7 @@ namespace Suframa.Sciex.BusinessLogic
 			foreach (var item in linhas)
 			{
 
-				if(item.ToString().Length < 91) { return false; }
+				if(item.ToString().Length != 90) { return false; }
 				if (item.Substring(0, 9) == "")
 				{
 					return false;
@@ -484,7 +484,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 				try
 				{
-					Convert.ToInt64(item.Substring(19, 4));
+					Convert.ToInt64(item.Substring(19, 3));
 				}
 				catch
 				{
@@ -493,32 +493,32 @@ namespace Suframa.Sciex.BusinessLogic
 
 				try
 				{
-					Convert.ToInt64(item.Substring(23, 3));
+					Convert.ToInt64(item.Substring(22, 3));
 				}
 				catch
 				{
 					return false;
 				}
 
-				if (item.Substring(26, 15) == "")
+				if (item.Substring(25, 15) == "")
 				{
 					return false;
 				}
 
-				if (item.Substring(41, 10) == "")
+				if (item.Substring(40, 10) == "")
 				{
 					return false;
 				}
 
 				try
 				{
-					Convert.ToInt64(item.Substring(51, 20));
+					Convert.ToInt64(item.Substring(50, 20));
 				}
 				catch
 				{
 					return false;
 				}
-				if (item.Substring(71, 20) == "")
+				if (item.Substring(70, 20) == "")
 				{
 					return false;
 				}
@@ -561,11 +561,11 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			foreach (var item in linhas)
 			{
-				if (item.Substring(41, 10).Trim() != "")
+				if (item.Substring(40, 10).Trim() != "")
 				{
 					try
 					{
-						string[] dados = item.Substring(41, 10).Split('_');
+						string[] dados = item.Substring(40, 10).Split('_');
 
 						var dia = int.Parse(dados[0].Substring(0, 2));
 						var mes = int.Parse(dados[0].Substring(3, 2));
@@ -3438,6 +3438,21 @@ namespace Suframa.Sciex.BusinessLogic
 			return 0;
 		}
 
+		public int RecuperarCodigoPexPamDUE(string linha)
+		{
+			if (linha.Length > 0)
+			{
+				var valorLinha = linha.Substring(19, 3).Trim();
+				int valor;
+				bool bNum = int.TryParse(valorLinha, out valor);
+				if (bNum)
+				{
+					return valor;
+				}
+			}
+			return 0;
+		}
+
 		public int RecuperarCodigoInsumoArquivoInsumo(string linha)
 		{
 			if (linha.Length > 0)
@@ -3787,7 +3802,7 @@ namespace Suframa.Sciex.BusinessLogic
 						var due = new SolicitacaoPEDueEntity();
 						var anoLote = RecuperarAnoLoteArquivoLote(lines);
 						var numLote = RecuperarNumeroLoteArquivoLote(lines);
-						var codPexPam = RecuperarCodigoPexPamArquivoProduto(item);
+						var codPexPam = RecuperarCodigoPexPamDUE(item);
 						var codPais = RecuperarCodigoPais(item);
 						//considerando insercao sequencial nos arquivos...
 						if (anoLote == produtopais.AnoLote
@@ -3821,7 +3836,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 			if (arquivoLinhas.Length > 0)
 			{
-				var valorLinha = arquivoLinhas.Substring(71, 20).Trim().InsertDecimal(7);
+				var valorLinha = arquivoLinhas.Substring(70, 20).Trim().InsertDecimal(7);
 
 				decimal valor;
 				bool bNum = decimal.TryParse(valorLinha, out valor);
@@ -3838,7 +3853,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 			if (arquivoLinhas.Length > 0)
 			{
-				var valorLinha = arquivoLinhas.Substring(51, 20).Trim().InsertDecimal(7);
+				var valorLinha = arquivoLinhas.Substring(50, 20).Trim().InsertDecimal(7);
 
 				decimal valor;
 				bool bNum = decimal.TryParse(valorLinha, out valor);
@@ -3854,7 +3869,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return Convert.ToDateTime(arquivoLinhas.Substring(41, 10).Trim());
+				return Convert.ToDateTime(arquivoLinhas.Substring(40, 10).Trim());
 			}
 			return null;
 		}
@@ -3863,7 +3878,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return arquivoLinhas.Substring(26, 15).Trim();
+				return arquivoLinhas.Substring(25, 15).Trim();
 			}
 			return null;
 		}
@@ -3872,7 +3887,7 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			if (arquivoLinhas.Length > 0)
 			{
-				return Convert.ToInt32(arquivoLinhas.Substring(23, 3).Trim());
+				return Convert.ToInt32(arquivoLinhas.Substring(22, 3).Trim());
 			}
 			return null;
 		}
