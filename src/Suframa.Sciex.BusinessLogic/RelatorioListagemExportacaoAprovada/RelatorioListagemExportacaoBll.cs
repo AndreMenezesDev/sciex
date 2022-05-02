@@ -26,7 +26,7 @@ namespace Suframa.Sciex.BusinessLogic
 			if(filtro == null) { return null; }
 			var listaLEProtudo = _uowSciex.QueryStackSciex.LEProduto.Listar(o => 
 					(
-					   filtro.InscricaoCadastral == 0 || o.InscricaoCadastral == filtro.InscricaoCadastral
+					   filtro.InscricaoCadastral == 0 || o.InscricaoCadastral.ToString().StartsWith(filtro.InscricaoCadastral.ToString())
 					)
 					&&
 					(
