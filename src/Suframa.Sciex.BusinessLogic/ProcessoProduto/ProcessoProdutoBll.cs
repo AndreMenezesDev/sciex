@@ -782,20 +782,27 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				return null;
 			}
-			//var idProcesso = _uowSciex.QueryStackSciex.Processo.Selecionar(o => o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso).IdProcesso;
 
-			var listaProdutosEmAnalise = _uowSciex.QueryStackSciex.PRCProduto.ListarGrafo(q => new
-			{
-				Id = q.IdProduto,
-				Text = q.CodigoProdutoSuframa,			
-				NumeroProcesso = q.Processo.NumeroProcesso,
-				AnoProcesso = q.Processo.AnoProcesso
-				
-			} ,
-			o => o.NumeroProcesso != null && o.NumeroProcesso == numeroProcesso && o.AnoProcesso == anoProcesso);	
+			var listaProdutosEmAnalise = _uowSciex.QueryStackSciex.PRCProduto.Listar(o => o.Processo != null && 
+																					      o.Processo.NumeroProcesso == numeroProcesso && 
+																						  o.Processo.AnoProcesso == anoProcesso)
+																			 .Select(q => new
+																						 {
+																							 Id = q.IdProduto,
+																							 Text = TransFormText(q),
+																							 NumeroProcesso = q.Processo.NumeroProcesso,
+																							 AnoProcesso = q.Processo.AnoProcesso
+
+																						 }
+																			 ).ToList();
 
 			return listaProdutosEmAnalise;
 		}
+
+		private string TransFormText(PRCProdutoEntity q) =>	(q.CodigoProdutoSuframa == null) ?
+																"0000 - " + q.DescricaoModelo :
+																		Convert.ToUInt64(q.CodigoProdutoSuframa).ToString("D4") + " - " + q.DescricaoModelo;	
+		
 
 		public PEProdutoVM Salvar(PEProdutoVM vm)
 		{
