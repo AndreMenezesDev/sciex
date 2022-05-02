@@ -44,7 +44,7 @@ namespace Suframa.Sciex.BusinessLogic
 					DataStatus = planoExportacaoEntity.DataStatus?.ToString("dd/MM/yyyy"),
 					DataRecebimento = planoExportacaoEntity.DataEnvio?.ToString("dd/MM/yyyy"),
 					DataImpressao = DateTime.Now.ToString("dd/MM/yy"),
-					AnoNumProcesso =   planoExportacaoEntity.NumeroProcesso?.ToString("D5") + "/" + planoExportacaoEntity.NumeroAnoProcesso
+					AnoNumProcesso = planoExportacaoEntity.NumeroProcesso?.ToString("D4") + "/" + planoExportacaoEntity.NumeroAnoProcesso
 				};
 				
 				var _relatorioHistoricoAnalise = new List<DadosDuesVM>();
