@@ -44,16 +44,19 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 	ngOnInit(): void {
 	}
 	Exportar(tipoRelatorio){
-		if(this.parametros.razaoSocial == null){
-			return this.modal.alerta("Campo 'Empresa' não pode estar vazio", "Alerta!");
+		if(!this.parametros.razaoSocial && !this.parametros.inscricaoCadastral){
+			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
+			return false;
 		}
 		this.applicationService.get(this.servico, this.parametros).subscribe((result: any) => {
 			if(result == null){
-				return this.modal.alerta("Nenhum registro encontrado para o filtro selecionado", "Atenção!");
+				this.modal.alerta("Nenhum registro encontrado para o filtro selecionado", "Atenção!");
+				return false;
+			} else {
+				this.lista = result;
+				this.exibeRelatorio = true;
+				this.tipoRelatorio = tipoRelatorio;
 			}
-			this.lista = result;
-			this.exibeRelatorio = true;
-			this.tipoRelatorio = tipoRelatorio;
 		});
 	}
 
