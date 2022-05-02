@@ -45,7 +45,7 @@ namespace Suframa.Sciex.CrossCutting.DataTransferObject.ViewModel
 		public string DataValidadeProrrogadaFormatada { get; set; }
 		public bool JaPossuiProrrogacao { get; set; }
 		public bool prorrogacaoAndamento { get; set; }
-
+		public string DataImpressao { get; set; }
 		#endregion
 	}
 

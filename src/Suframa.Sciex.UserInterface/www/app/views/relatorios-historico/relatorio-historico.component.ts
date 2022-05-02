@@ -64,11 +64,12 @@ export class RelatorioHistoricoComponent implements OnInit {
 				processo: this.processo,
 			}
 			this.applicationService.get(this.servico, this.parametros).subscribe((result: any) => {
-				this.dadosRelatorio = result;
+				if (result) {
 
-				if (this.dadosRelatorio) {
-					if (isExcel) {
+					this.dadosRelatorio = result;
 
+					if (isExcel)
+					{
 						this.parametros.titulo = "RELATÓRIO LISTAGEM DO HISTÓRICO DO PROCESSO DE EXPORTAÇÃO";
 						this.parametros.columns = ["Empresa", "Processo(Núm./Ano)", "Situação", "Data", "Usuário"];
 						this.parametros.fields = ["razaoSocial", "numeroAnoProcessoFormatado", "descricaoTipo", "dataSrting", "nomeResponsavel"];
@@ -108,9 +109,8 @@ export class RelatorioHistoricoComponent implements OnInit {
 
 						this.excelService.exportAsExcelFile(excel, file, this.parametros.titulo);
 					}
-					else {
-						this.dadosRelatorio.dataImpressao = `${this.date.getDate()}/${this.date.getMonth()}/${this.date.getFullYear()}`;
-
+					else
+					{
 						this.exibeRelatorio = true;
 						const assign = this.assignHour;
 						let renderizarHtml = new Promise(resolve => {
