@@ -57,7 +57,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 
 	exportPDF(isExcel) {
 
-		if (!this.parametros2.numeroInscricaoCadastral == null && !this.parametros2.nomeEmpresa)
+		if (!this.parametros2.numeroInscricaoCadastral && !this.parametros2.nomeEmpresa)
 		{
 			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
 			return false;

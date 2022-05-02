@@ -53,9 +53,9 @@ namespace Suframa.Sciex.BusinessLogic
 			
 			resultadoPesquisaDueLista = _uowSciex.QueryStackSciex
 												 .ViewEmitirRelatorioAnalisadorDue
-												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null || x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral)
+												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null || x.NumeroIncricaoCadastral.ToString().StartsWith(filterVm.NumeroInscricaoCadastral.ToString()))
 														   && (numeroPlano == 0 || x.NumeroPlano == numeroPlano && x.AnoPlano == anoPlano)
-														   && x.RazaoSocial.Contains(filterVm.NomeEmpresa)
+														   && (filterVm.NomeEmpresa == null || x.RazaoSocial.Contains(filterVm.NomeEmpresa))
 														   && (filterVm.Due == null || x.NumeroDue == filterVm.Due));
 
 			if(resultadoPesquisaDueLista.Count == 0)
