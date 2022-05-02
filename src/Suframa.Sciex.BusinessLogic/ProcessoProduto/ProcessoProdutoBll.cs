@@ -792,7 +792,6 @@ namespace Suframa.Sciex.BusinessLogic
 																							 Text = TransFormText(q),
 																							 NumeroProcesso = q.Processo.NumeroProcesso,
 																							 AnoProcesso = q.Processo.AnoProcesso
-
 																						 }
 																			 ).ToList();
 
