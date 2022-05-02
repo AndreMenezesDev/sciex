@@ -155,8 +155,10 @@ export class RelatorioAnalisadorDue implements OnInit {
 
 						Promise.all([renderizarHtml, liberarTela]);
 					}
-				} else {
-					this.modal.alerta(this.msg.DADO_NAO_ENCONTRADO);
+				}
+				else
+				{
+					this.modal.alerta("Nenhum registro encontrado", "Atenção!", "");
 					return false;
 				}
 			})
