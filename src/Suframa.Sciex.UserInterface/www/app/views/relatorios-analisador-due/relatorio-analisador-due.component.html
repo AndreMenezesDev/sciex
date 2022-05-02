@@ -1,82 +1,67 @@
-<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px" data-railOpacity="0.2">
+<div class="slim-scroll padder-h" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="10px"
+	data-railOpacity="0.2">
 	<div class="row m-b-md">
-	  <div class="col-lg-12">
-		<h1 class="m-b-xs text-black">Relatório Analisador de DU-E's Contidas no Plano Exportação-Comprovação</h1>
-		<small></small>
-	  </div>
+		<div class="col-lg-12">
+			<h1 class="m-b-xs text-black">Relatório Analisador de DU-E's Contidas no Plano Exportação-Comprovação</h1>
+			<small></small>
+		</div>
 	</div>
 	<section class="panel panel-default">
-	  <header class="panel-heading">
-		<h3 class="panel-title h5">Filtro de Pesquisa</h3>
-	  </header>
-	  <article class="panel-body">
-		  <div class="form-group">
-			<div class="row">
-			  <div class="col-lg-3">
-				<label>Inscrição Cadastral:</label>
-				<input type="text"
-				class="form-control"
-				name="inscricaoCadastral"
-				[(ngModel)]="parametros2.numeroInscricaoCadastral"/>
-			  </div>
+		<header class="panel-heading">
+			<h3 class="panel-title h5">Filtro de Pesquisa</h3>
+		</header>
+		<article class="panel-body">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-3">
+						<label>Inscrição Cadastral:</label>
+						<input type="text" class="form-control" name="inscricaoCadastral"
+							[(ngModel)]="parametros2.numeroInscricaoCadastral" />
+					</div>
+				</div>
 			</div>
-		  </div>
-		  <div class="form-group">
-			<div class="row">
-			  <div class="col-lg-8">
-				<label class="required" >Empresa:</label>
-				<input [(ngModel)]="parametros2.nomeEmpresa" type="text" class="form-control" />
-			  </div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-8">
+						<label class="required">Empresa:</label>
+						<input [(ngModel)]="parametros2.nomeEmpresa" type="text" class="form-control" />
+					</div>
+				</div>
 			</div>
-		  </div>
-		  <div class="form-group">
-			<div class="row">
-			  <div class="col-lg-8">
-				<label >N° do Plano:</label>
-				<input
-				type="text"
-				class="form-control"
-				placeholder="_____/aaaa"
-				mask-number [mask]="'9999/9999'"
-				[(ngModel)]="parametros2.numeroPlanoFormated" />
-			  </div>
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-8">
+						<label>N° do Plano:</label>
+						<input type="text" class="form-control" maxlength="10" mask-number [mask]="'99999/9999'"
+							placeholder="00000/AAAA" [(ngModel)]="parametros2.numeroPlanoFormated" />
+					</div>
+				</div>
 			</div>
-		  </div>
-		  <div class="form-group">
-			<div class="row">
-			  <div class="col-lg-8">
-				<label>N° da DUE:</label>
-				<input
-			  	type="text"
-			    class="form-control"
-				[(ngModel)]="parametros2.due" />
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-8">
+						<label>N° da DUE:</label>
+						<input type="text" class="form-control" [(ngModel)]="parametros2.due" />
+					</div>
+				</div>
 			</div>
+			<div class="row wrapper">
+				<div class="col-lg-6 m-t">
+					<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i
+							class="fa fa-download"></i> Exportar <span class="caret"></span></button>
+					<ul class="dropdown-menu" style="left: 85px;">
+						<li>
+							<a (click)="exportPDF(false)"><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
+						</li>
+						<li>
+							<a (click)="exportPDF(true)"><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
+						</li>
+					</ul>
+					<a (click)="limpar()" class="btn btn-sm btn-default"><i class="fa fa-eraser"></i> Limpar</a>
+				</div>
 			</div>
-			<!-- <div class="col-lg-8">
-				 <label>
-				  <input type="checkbox" [(ngModel)]="parametros2.porPlano"> Do Plano
-				</label>
-			</div> -->
-		</div>
-		  <div class="row wrapper">
-			<div class="col-lg-6 m-t">
-			  <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-download"></i> Exportar <span class="caret"></span></button>
-			   <ul class="dropdown-menu" style="left: 85px;">
-				   <li>
-					   <a (click)="exportPDF(false)" ><i class="fa fa-file-pdf-o"></i> Salvar em PDF</a>
-				   </li>
-				   <li>
-					   <a (click)="exportPDF(true)" ><i class="fa fa-file-excel-o"></i> Salvar em Excel</a>
-				   </li>
-			   </ul>
-			  <a (click)="limpar()" class="btn btn-sm btn-default"><i class="fa fa-eraser"></i> Limpar</a>
-			</div>
-		  </div>
-	  </article>
+		</article>
 	</section>
-  </div>
-  <app-relatorio
-	[(dados)]="dadosRelatorio"
-	*ngIf="exibeRelatorio"
-	id="relatorio">
+</div>
+<app-relatorio [(dados)]="dadosRelatorio" *ngIf="exibeRelatorio" id="relatorio">
 </app-relatorio>

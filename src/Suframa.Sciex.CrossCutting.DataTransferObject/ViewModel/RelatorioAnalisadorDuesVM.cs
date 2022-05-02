@@ -4,6 +4,7 @@
 	{
 		public int NumeroPlano { get; set; }
 		public string PlanoStatus { get; set; }
+		public string NumeroAnoProcessoFormatado { get; set; }
 		public string NumeroPlanoFormated { get; set; }
 		public string DataStatus { get; set; }
 		public string Due { get; set; }
@@ -17,5 +18,7 @@
 		public string NomeEmpresa { get; set; }
 		public int? NumeroInscricaoCadastral { get; set; }
 		public bool	porPlano{ get; set; }
+		public string DataImpressao { get; set; }
+		public string NumerProcessoFormated { get; set; }
 	}
 }
