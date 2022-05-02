@@ -20,6 +20,7 @@
 							onlyNumber="true"
 							class="form-control"
 							name="inscricaoCadastral"
+							(keyup.space)="parametros2.numeroInscricaoCadastral=null"
 							[(ngModel)]="parametros2.numeroInscricaoCadastral"
 						/>
 					</div>
@@ -32,6 +33,7 @@
 						<input
 							[(ngModel)]="parametros2.nomeEmpresa"
 							type="text"
+							(keyup.space)="parametros2.nomeEmpresa=null"
 							class="form-control"
 						/>
 					</div>

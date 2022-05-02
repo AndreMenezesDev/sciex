@@ -22,6 +22,7 @@
 								id="processo"
 								[(ngModel)]="processo"
 								placeholder="_____/aaaa"
+								(keyup.space)="processo=null"
 								mask-number
 								[mask]="'9999/9999'"
 								class="form-control" />
