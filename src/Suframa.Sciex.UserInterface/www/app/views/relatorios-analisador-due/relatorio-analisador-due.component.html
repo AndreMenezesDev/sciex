@@ -15,8 +15,13 @@
 				<div class="row">
 					<div class="col-lg-3">
 						<label>Inscrição Cadastral:</label>
-						<input type="text" class="form-control" name="inscricaoCadastral"
-							[(ngModel)]="parametros2.numeroInscricaoCadastral" />
+						<input
+							type="text"
+							onlyNumber="true"
+							class="form-control"
+							name="inscricaoCadastral"
+							[(ngModel)]="parametros2.numeroInscricaoCadastral"
+						/>
 					</div>
 				</div>
 			</div>
@@ -24,7 +29,11 @@
 				<div class="row">
 					<div class="col-lg-8">
 						<label class="required">Empresa:</label>
-						<input [(ngModel)]="parametros2.nomeEmpresa" type="text" class="form-control" />
+						<input
+							[(ngModel)]="parametros2.nomeEmpresa"
+							type="text"
+							class="form-control"
+						/>
 					</div>
 				</div>
 			</div>

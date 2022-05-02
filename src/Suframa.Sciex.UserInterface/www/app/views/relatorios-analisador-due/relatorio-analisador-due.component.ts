@@ -56,14 +56,14 @@ export class RelatorioAnalisadorDue implements OnInit {
 	}
 
 	exportPDF(isExcel) {
-		let isValid = true
 
-		if (this.parametros2.nomeEmpresa == null || this.parametros2.nomeEmpresa == '' && isValid) {
-			this.modal.alerta("Empresa não informada");
-			isValid = false;
+		if (!this.parametros2.numeroInscricaoCadastral == null && !this.parametros2.nomeEmpresa)
+		{
+			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
+			return false;
 		}
-
-		if (isValid) {
+		else
+		{
 			this.applicationService.get(this.servico, this.parametros2).subscribe((result: any) => {
 				if (result) {
 
