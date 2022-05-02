@@ -76,7 +76,7 @@ namespace Suframa.Sciex.BusinessLogic
 					{
 						AnoProcesso = item2.AnoProcesso,
 						NumeroProcesso = item2.NumeroProcesso,
-						NumeroPlanoFormated = item2.NumeroPlano.ToString("D4") + "/" + item2.AnoPlano,
+						NumeroPlanoFormated = item2.NumeroPlano.ToString("D5") + "/" + item2.AnoPlano,
 						NumeroInscricaoCadastral = item2.NumeroIncricaoCadastral,
 						NomeEmpresa = item2.RazaoSocial,
 						PlanoStatus = GetStatusPlano(item2.StatusPlano),
