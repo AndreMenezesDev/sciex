@@ -1437,7 +1437,6 @@ namespace Suframa.Sciex.BusinessLogic
 					DescricaoProcesso = o.DescricaoProcesso,
 					DescricaoSolicitacao = o.DescricaoSolicitacao,
 					DescricaoProduto = o.DescricaoProduto
-
 				}, o => o.IdProduto == parametros.Id).ToList();
 			}
 
@@ -1457,7 +1456,7 @@ namespace Suframa.Sciex.BusinessLogic
 						DescricaoEvento = o.DescricaoEvento,
 						DescricaoDetalhe = o.DescricaoDetalhe,
 						TipoEvento = o.TipoEvento,
-						DescricaoEventoDetalhe = o.DescricaoEvento + " " + o.DescricaoDetalhe
+						DescricaoEventoDetalhe = o.DescricaoEvento + " " + (o.DescricaoDetalhe == null ? " -- " : o.DescricaoDetalhe)
 
 					}, o => o.IdPRCHistoricoInsumo == regHistorico.IdPRCHistoricoInsumo 
 					  && 
@@ -1472,7 +1471,7 @@ namespace Suframa.Sciex.BusinessLogic
 						DescricaoEvento = o.DescricaoEvento,
 						DescricaoDetalhe = o.DescricaoDetalhe,
 						TipoEvento = o.TipoEvento,
-						DescricaoEventoDetalhe = o.DescricaoEvento + " " + o.DescricaoDetalhe
+						DescricaoEventoDetalhe = o.DescricaoEvento + " " + (o.DescricaoDetalhe == null ? " -- " : o.DescricaoDetalhe)
 
 					}, o => o.IdPRCHistoricoInsumo == regHistorico.IdPRCHistoricoInsumo
 					  &&
@@ -1487,7 +1486,7 @@ namespace Suframa.Sciex.BusinessLogic
 						DescricaoEvento = o.DescricaoEvento,
 						DescricaoDetalhe = o.DescricaoDetalhe,
 						TipoEvento = o.TipoEvento,
-						DescricaoEventoDetalhe = o.DescricaoEvento + " " + o.DescricaoDetalhe
+						DescricaoEventoDetalhe = o.DescricaoEvento + " " + (o.DescricaoDetalhe == null ? " -- " : o.DescricaoDetalhe)
 
 					}, o => o.IdPRCHistoricoInsumo == regHistorico.IdPRCHistoricoInsumo
 					  &&
@@ -1502,7 +1501,7 @@ namespace Suframa.Sciex.BusinessLogic
 						DescricaoEvento = o.DescricaoEvento,
 						DescricaoDetalhe = o.DescricaoDetalhe,
 						TipoEvento = o.TipoEvento,
-						DescricaoEventoDetalhe = o.DescricaoEvento + " " + o.DescricaoDetalhe
+						DescricaoEventoDetalhe = o.DescricaoEvento + " " + (o.DescricaoDetalhe == null ? " -- " : o.DescricaoDetalhe)
 
 					}, o => o.IdPRCHistoricoInsumo == regHistorico.IdPRCHistoricoInsumo
 					  &&

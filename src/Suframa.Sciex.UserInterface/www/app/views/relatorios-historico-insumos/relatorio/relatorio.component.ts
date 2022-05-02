@@ -69,7 +69,7 @@ export class RelatorioComponent {
 						useCORS: true
 					},
 					jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-					pagebreak: { after: ['#grid'] }
+					pagebreak: { before: ['#quebra-pagina-relatorio-manutencao-insumo'] }
 				};
 				this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
 					var totalPages = pdf.internal.getNumberOfPages();
@@ -142,7 +142,6 @@ export class RelatorioComponent {
 		var monthExt = new MonthPipe().transform(Number(month));
 
 		this.dataEmissao = day + " de " + monthExt + " de " + year;
-		//
 
 		this.applicationService.get(this.servico, parametros).subscribe((result: any) => {
 
