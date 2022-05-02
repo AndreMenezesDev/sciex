@@ -59,7 +59,8 @@ namespace Suframa.Sciex.BusinessLogic
 														   && (filterVm.Due == null || x.NumeroDue == filterVm.Due));
 
 			if(resultadoPesquisaDueLista.Count == 0)
-				return retornoMetodo;
+				return null;
+
 			var dues = resultadoPesquisaDueLista.Select(y => y.NumeroDue).Distinct().ToList();
 
 			var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => dues.Contains(x.NumeroDue));

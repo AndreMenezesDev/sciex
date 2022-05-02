@@ -157,7 +157,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 					}
 				} else {
 					this.modal.alerta(this.msg.DADO_NAO_ENCONTRADO);
-
+					return false;
 				}
 			})
 		}
