@@ -38,7 +38,7 @@ namespace Suframa.Sciex.BusinessLogic
 					NumeroPlano = planoExportacaoEntity.NumeroPlano,
 					NumeroPlanoFormated = planoExportacaoEntity.NumeroPlano.ToString("D5"),
 					AnoPlano = planoExportacaoEntity.AnoPlano,
-					AnoNumPlano = planoExportacaoEntity.AnoPlano + "/" + planoExportacaoEntity.NumeroPlano.ToString("D5"),
+					AnoNumPlano = planoExportacaoEntity.NumeroPlano.ToString("D5") + "/" + planoExportacaoEntity.AnoPlano ,
 					Modalidade = planoExportacaoEntity.TipoModalidade,
 					Tipo = planoExportacaoEntity.TipoExportacao,
 					DataStatus = planoExportacaoEntity.DataStatus?.ToString("dd/MM/yyyy"),
