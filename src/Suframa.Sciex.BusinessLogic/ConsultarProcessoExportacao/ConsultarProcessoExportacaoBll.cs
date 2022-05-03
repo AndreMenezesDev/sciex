@@ -94,7 +94,7 @@ namespace Suframa.Sciex.BusinessLogic
 				}
 
 				prcStatus.Tipo = "PE";
-				prcStatus.Data = DateTime.Now;
+				prcStatus.Data = GetDateTimeNowUtc();
 				prcStatus.IdProcesso = filtro.IdProcesso;
 				prcStatus.DescricaoObservacao = filtro.DescricaoObservacao;
 
@@ -125,9 +125,16 @@ namespace Suframa.Sciex.BusinessLogic
 
 			}
 		}
-	
-	
-	
+		public DateTime GetDateTimeNowUtc()
+		{
+			var manausTime = TimeZoneInfo.ConvertTime(DateTime.Now,
+				 TimeZoneInfo.FindSystemTimeZoneById("SA Western Standard Time"));
+
+			return manausTime;
+
+		}
+
+
 	}
 
 }
