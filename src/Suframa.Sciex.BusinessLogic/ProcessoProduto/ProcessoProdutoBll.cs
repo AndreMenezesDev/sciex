@@ -602,8 +602,8 @@ namespace Suframa.Sciex.BusinessLogic
 																	q.Status == 3
 																	);
 
-
-
+			prod.QuantidadeComprovado = prod.ListaProdutoPaisPaginada.Items.Sum(q => q.QuantidadeComprovado == null ? 0 : (decimal)q.QuantidadeComprovado);
+			prod.ValorDolarComprovado = prod.ListaProdutoPaisPaginada.Items.Sum(q => q.ValorDolarComprovado == null ? 0 : (decimal)q.ValorDolarComprovado);
 			return prod;
 		}
 		public PRCProdutoVM SelecionarProdutoEmAnalisePorIdProcesso(int idProcesso)
