@@ -2412,8 +2412,8 @@ namespace Suframa.Sciex.BusinessLogic
 				_uowSciex.CommandStackSciex.PEHistorico.Salvar(historico);
 				_uowSciex.CommandStackSciex.Save();
 
-				_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(plano);
-				_uowSciex.CommandStackSciex.Save();
+				//_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(plano);
+				//_uowSciex.CommandStackSciex.Save();
 
 			}
 			else
@@ -2439,6 +2439,11 @@ namespace Suframa.Sciex.BusinessLogic
 
 				if (sucesso)
 				{
+					foreach (var item in lote.produtos)
+					{
+						item.SituacaoValidacao = 2;
+					}
+
 					plano.DataStatus = GetDateTimeNowUtc();
 					plano.Situacao = 2; //ENTREGUE
 					plano.DataEnvio = GetDateTimeNowUtc();
@@ -2447,7 +2452,12 @@ namespace Suframa.Sciex.BusinessLogic
 
 				}
 				else
-				{ 
+				{
+					foreach (var item in lote.produtos)
+					{
+						item.SituacaoValidacao = 3;
+					}
+
 					plano.Situacao = 1; //EM ELABORAÇÃO
 					lote.EstruturaPropria.QuantidadePLIProcessadoSucesso = (short)produtosComSucesso;
 					lote.EstruturaPropria.QuantidadePLIProcessadoFalha = (short)produtosComFalha;
@@ -2552,8 +2562,8 @@ namespace Suframa.Sciex.BusinessLogic
 				_uowSciex.CommandStackSciex.PEHistorico.Salvar(historico);
 				_uowSciex.CommandStackSciex.Save();
 
-				_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(plano);
-				_uowSciex.CommandStackSciex.Save();
+				//_uowSciex.CommandStackSciex.PlanoExportacao.Salvar(plano);
+				//_uowSciex.CommandStackSciex.Save();
 			}
 
 
