@@ -1659,24 +1659,28 @@ namespace Suframa.Sciex.BusinessLogic
 					var erro1 = ValidarExistenciaLote(lote);	
 					var erro2 = ValidarModalidade(lote);
 					var erro3 = ValidarTipoLote(lote);
-					var erro4 = ValidarAnoNumeroProcesso(lote);
-					var erro5 = true;
-					var erro6 = true;
+					var erro4 = "CO".Equals(lote.TipoExportacao) ? ValidarAnoNumeroProcesso(lote) : false;
+					bool erro6;
 
-					if (!erro4)
+					var erro5 = "CO".Equals(lote.TipoExportacao) ? ValidarExisteProcessoNaBase(lote) : false;
+
+					if ("CO".Equals(lote.TipoExportacao))
 					{
-						erro5 = ValidarExisteProcessoNaBase(lote);
+						var naoExistePlanoNaBase = ValidarExisteProcessoParaPlanoExportacaoNaBase(lote);
 
-						if ("CO".Equals(lote.TipoExportacao))
+						if (!naoExistePlanoNaBase)
 						{
-							var naoExistePlanoNaBase = ValidarExisteProcessoParaPlanoExportacaoNaBase(lote);
-							var dueNaoValidada = ValidarInfoDue(lote.produtos);
-
-							if (!naoExistePlanoNaBase && !dueNaoValidada)
-								erro6 = false;
-							
+							erro6 = false;
 						}
-						
+						else
+						{
+							erro6 = true;
+						}
+
+					}
+					else
+					{
+						erro6 = false;
 					}
 
 					var erro7 = ValidarProdutoPE(lote.produtos);
@@ -1734,153 +1738,146 @@ namespace Suframa.Sciex.BusinessLogic
 			}
 		}
 
-		private bool ValidarInfoDue(ICollection<SolicitacaoPEProdutoEntity> produtos)
+		private bool ValidarDueProdutoPais(SolicitacaoPEProdutoPaisEntity pais)
 		{
 			var erros = false;
-			foreach (var produto in produtos)
+			foreach (var due in pais.ListaSolicPEDue)
 			{
-				
-				foreach (var produtoPais in produto.PaisProduto)
+
+				//RN22 - 1
+				if (due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroLote != due.NumeroLote
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.Ano != due.NumeroAnoLote
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral)
 				{
-					foreach (var due in produtoPais.ListaSolicPEDue)
-					{
-
-						//RN22 - 1
-						if (produto.SolicitacaoPELote.NumeroLote != due.NumeroLote
-							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
-							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral)
-						{
-							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 744);
-							var erro = new ErroProcessamentoEntity();
-							erro.DataProcessamento = GetDateTimeNowUtc();
-							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
-							erro.Descricao = entityMensagemErro.Descricao.Replace("[sdu_nu]", $"[{due.Numero}]"); ;
-							erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
-							erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
-							erros = true;
-							_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
-							_uowSciex.CommandStackSciex.Save();
-						}
-
-						//RN22 - 2
-						if (produto.SolicitacaoPELote.NumeroLote != due.NumeroLote
-							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
-							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
-							|| produto.CodigoProdutoPexPam != due.CodigoProdutoExportacao)
-						{
-							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 745);
-							var erro = new ErroProcessamentoEntity();
-							erro.DataProcessamento = GetDateTimeNowUtc();
-							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
-							erro.Descricao = entityMensagemErro.Descricao.Replace("[sdu_co_produto_exp]", $"[{produto.CodigoProdutoPexPam}]").
-																		Replace("[sdu_nu]", $"[{due.Numero}]");
-
-							erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
-							erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
-							erros = true;
-							_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
-							_uowSciex.CommandStackSciex.Save();
-						}
-
-						//RN22 - 3
-						var codigoPais = int.Parse(due.SolicitacaoPEProdutoPais.CodigoPais);
-						if (produto.SolicitacaoPELote.NumeroLote != due.NumeroLote
-							|| produto.SolicitacaoPELote.Ano != due.NumeroAnoLote
-							|| produto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
-							|| due.SolicitacaoPEProdutoPais.CodigoProdutoPexPam != due.CodigoProdutoExportacao
-							|| codigoPais != due.CodigoPais
-							)
-						{
-							var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 737);
-							var erro = new ErroProcessamentoEntity();
-							erro.DataProcessamento = GetDateTimeNowUtc();
-							erro.CNPJImportador = produto.SolicitacaoPELote.NumeroCNPJ;
-							erro.Descricao = entityMensagemErro.Descricao.Replace("[sdi_co_pai]", $"[{due.CodigoPais}]").
-																		Replace("[spi_co_produto_exp]", $"[{due.SolicitacaoPEProdutoPais.CodigoProdutoPexPam}]")
-																		.Replace("[sdu_nu]", $"[{due.Numero}]");
-							erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
-							erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
-							erros = true;
-							_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
-							_uowSciex.CommandStackSciex.Save();
-						}
-
-
-						//RN22 - 4
-						var numDue = due.Numero;
-						var numLote = due.NumeroLote;
-						var numAnoLote = due.NumeroAnoLote;
-						var inscCad = due.InscricaoCadastral;
-						var codProdExp = due.CodigoProdutoExportacao;
-						var codPais = due.CodigoPais;
-
-						var existeDueDuplicada = _uowSciex.QueryStackSciex.SolicitacaoPEDue.Contar(q=> q.Numero == numDue
-																									&& q.NumeroLote == numLote
-																									&& q.NumeroAnoLote == numAnoLote
-																									&& q.InscricaoCadastral == inscCad
-																									&& q.CodigoProdutoExportacao == codProdExp
-																									&& q.CodigoPais == codPais);
-						if (existeDueDuplicada > 1)
-						{
-							erros = true;
-							RegistarMensagemErro(produto.SolicitacaoPELote, 738, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
-										new string[] { $"[{due.Numero}]" }, produto.Id);
-						}
-
-
-						//RN22 - 5
-						var existeDueComPaisDistinto = _uowSciex.QueryStackSciex.SolicitacaoPEDue.Contar(q => q.Numero == numDue
-																									&& q.NumeroLote == numLote
-																									&& q.NumeroAnoLote == numAnoLote
-																									&& q.InscricaoCadastral == inscCad
-																									&& q.CodigoProdutoExportacao == codProdExp
-																									&& q.CodigoPais != codPais);
-
-						if (existeDueComPaisDistinto >= 1)
-						{
-							erros = true;
-							RegistarMensagemErro(produto.SolicitacaoPELote, 739, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
-										new string[] { $"[{due.Numero}]" }, produto.Id);
-						}
-
-						//RN22 - 6
-						var dataDue = due.DataAverbacao;
-						var numProcesso = int.Parse(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroProcesso);
-						var anoProcesso = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.AnoProcesso;
-
-						var validarDueDataEmbarqueNoPrazoVigenciaProcesso = _uowSciex.QueryStackSciex.Processo.Existe(q =>
-																										(
-																										q.ListaStatus.Any(w => w.Data < dataDue)
-																										&&
-																										q.DataValidade > dataDue
-																										)
-																										&& q.NumeroProcesso == numProcesso
-																										&& q.AnoProcesso == anoProcesso
-																									);
-
-						if (!validarDueDataEmbarqueNoPrazoVigenciaProcesso)
-						{
-							erros = true;
-							RegistarMensagemErro(produto.SolicitacaoPELote, 740, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
-										new string[] { $"[{due.Numero}]" }, produto.Id);
-						}
-					}
+					var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 744);
+					var erro = new ErroProcessamentoEntity();
+					erro.DataProcessamento = GetDateTimeNowUtc();
+					erro.CNPJImportador = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroCNPJ;
+					erro.Descricao = entityMensagemErro.Descricao.Replace("[sdu_nu]", $"[{due.Numero}]"); ;
+					erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+					erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+					erros = true;
+					_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+					_uowSciex.CommandStackSciex.Save();
 				}
-				
 
-				if (!erros)
+				//RN22 - 2
+				if (due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroLote != due.NumeroLote
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.Ano != due.NumeroAnoLote
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.CodigoProdutoPexPam != due.CodigoProdutoExportacao)
 				{
-					produto.SituacaoValidacao = 2;
+					var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 745);
+					var erro = new ErroProcessamentoEntity();
+					erro.DataProcessamento = GetDateTimeNowUtc();
+					erro.CNPJImportador = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroCNPJ;
+					erro.Descricao = entityMensagemErro.Descricao.Replace("[sdu_co_produto_exp]", $"[{due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.CodigoProdutoPexPam}]").
+																Replace("[sdu_nu]", $"[{due.Numero}]");
+
+					erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+					erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+					erros = true;
+					_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+					_uowSciex.CommandStackSciex.Save();
 				}
-				else
+
+				//RN22 - 3
+				var codigoPais = int.Parse(due.SolicitacaoPEProdutoPais.CodigoPais);
+				if (due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroLote != due.NumeroLote
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.Ano != due.NumeroAnoLote
+					|| due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.InscricaoCadastral != due.InscricaoCadastral
+					|| due.SolicitacaoPEProdutoPais.CodigoProdutoPexPam != due.CodigoProdutoExportacao
+					|| codigoPais != due.CodigoPais
+					)
 				{
-					produto.SolicitacaoPELote.Situacao = 3;
-					produto.SituacaoValidacao = 3;
+					var entityMensagemErro = _uowSciex.QueryStackSciex.ErroMensagem.Selecionar(o => o.IdErroMensagem == 737);
+					var erro = new ErroProcessamentoEntity();
+					erro.DataProcessamento = GetDateTimeNowUtc();
+					erro.CNPJImportador = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroCNPJ;
+					erro.Descricao = entityMensagemErro.Descricao.Replace("[sdi_co_pai]", $"[{due.CodigoPais}]").
+																Replace("[spi_co_produto_exp]", $"[{due.SolicitacaoPEProdutoPais.CodigoProdutoPexPam}]")
+																.Replace("[sdu_nu]", $"[{due.Numero}]");
+					erro.IdErroMensagem = entityMensagemErro.IdErroMensagem;
+					erro.CodigoNivelErro = (byte)EnumNivelErroServicoPE.RE_DUE;
+					erros = true;
+					_uowSciex.CommandStackSciex.ErroProcessamento.Salvar(erro);
+					_uowSciex.CommandStackSciex.Save();
 				}
-				_uowSciex.CommandStackSciex.SolicitacaoPEProduto.Salvar(produto);
 
 
+				//RN22 - 4
+				var numDue = due.Numero;
+				var numLote = due.NumeroLote;
+				var numAnoLote = due.NumeroAnoLote;
+				var inscCad = due.InscricaoCadastral;
+				var codProdExp = due.CodigoProdutoExportacao;
+				var codPais = due.CodigoPais;
+				var idLote = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.Id;
+
+				var existeDueDuplicada = _uowSciex.QueryStackSciex.SolicitacaoPEDue.Contar(q => q.Numero == numDue
+																							&& q.NumeroLote == numLote
+																							&& q.NumeroAnoLote == numAnoLote
+																							&& q.InscricaoCadastral == inscCad
+																							&& q.CodigoProdutoExportacao == codProdExp
+																							&& q.CodigoPais == codPais
+																							&& q.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.Id == idLote);
+				if (existeDueDuplicada > 1)
+				{
+					erros = true;
+					RegistarMensagemErro(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote, 738, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
+								new string[] { $"[{due.Numero}]" }, due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.Id);
+				}
+
+
+				//RN22 - 5
+				var existeDueComPaisDistinto = _uowSciex.QueryStackSciex.SolicitacaoPEDue.Contar(q => q.Numero == numDue
+																							&& q.NumeroLote == numLote
+																							&& q.NumeroAnoLote == numAnoLote
+																							&& q.InscricaoCadastral == inscCad
+																							&& q.CodigoProdutoExportacao == codProdExp
+																							&& q.CodigoPais != codPais);
+
+				if (existeDueComPaisDistinto >= 1)
+				{
+					erros = true;
+					RegistarMensagemErro(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote, 739, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
+								new string[] { $"[{due.Numero}]" }, due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.Id);
+				}
+
+				//RN22 - 6
+				var dataDue = due.DataAverbacao;
+				var numProcesso = int.Parse(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.NumeroProcesso);
+				var anoProcesso = due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote.AnoProcesso;
+
+				var validarDueDataEmbarqueNoPrazoVigenciaProcesso = _uowSciex.QueryStackSciex.Processo.Existe(q =>
+																								(
+																								q.ListaStatus.Any(w => w.Data < dataDue)
+																								&&
+																								q.DataValidade > dataDue
+																								)
+																								&& q.NumeroProcesso == numProcesso
+																								&& q.AnoProcesso == anoProcesso
+																							);
+
+				if (!validarDueDataEmbarqueNoPrazoVigenciaProcesso)
+				{
+					erros = true;
+					RegistarMensagemErro(due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.SolicitacaoPELote, 740, (byte)EnumNivelErroServicoPE.RE_DUE, new string[] { "[sdu_nu]" },
+								new string[] { $"[{due.Numero}]" }, due.SolicitacaoPEProdutoPais.SolicitacaoPEProduto.Id);
+				}
 			}
+
+
+			if (!erros)
+			{
+				pais.SolicitacaoPEProduto.SituacaoValidacao = 2;
+			}
+			else
+			{
+				pais.SolicitacaoPEProduto.SolicitacaoPELote.Situacao = 3;
+				pais.SolicitacaoPEProduto.SituacaoValidacao = 3;
+			}
+
 			return erros;
 		}
 
@@ -2623,6 +2620,12 @@ namespace Suframa.Sciex.BusinessLogic
 					erros = true;
 					RegistarMensagemErro(produto.SolicitacaoPELote, 715, 2, new string[] { "[spp_co_produto_exp]" },
 						new string[] { $"[{produto.CodigoProdutoPexPam}]" }, produto.Id);
+				}
+
+				var dueErro = ValidarDueProdutoPais(pais);
+				if (dueErro)
+				{
+					erros = true;
 				}
 			}
 
