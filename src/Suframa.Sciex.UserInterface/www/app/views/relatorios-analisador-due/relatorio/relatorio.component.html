@@ -55,7 +55,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div *ngFor=" let item2 of dados">
+				<div *ngFor=" let item2 of dados; let indiceGeral = index">
 					<div *ngFor=" let item2 of item2.relatoriosAnaliseDue">
 						<div class="row" style="margin-left: 2px;">
 							<div class="col-lg-1">
@@ -84,7 +84,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="row" style=" margin-left: 2px; font-size: 11px;">
+					<div class="row" style=" margin-left: 2px; font-size: 11px; border-bottom: 1px solid #000;">
 						<div class="col-lg-5">
 							<span style="font-size: 11px;"></span>
 						</div>
@@ -97,6 +97,13 @@
 						<div class="col-lg-2">
 							<span style="font-size: 11px;">{{item2.quantidadeDueTotal}}</span>
 						</div>
+					</div>
+
+					<!-- quebra de pagina a cada 14 registros. na ultima pagina, nao devera quebrar. -->
+					<div
+						*ngIf=" (((indiceGeral+1) % 14 == 0) || (indiceGeral+1 == 14)) && (indiceGeral+1) != dados.length"
+						id="quebra-pagina-relatorio-manutencao-insumo"
+					>
 					</div>
 				</div>
 			</div>

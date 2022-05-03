@@ -120,7 +120,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 							setTimeout(() => {
 								const elements = document.getElementById('relatorio');
 								const options = {
-									margin: [0.03, 0.03, 0.5, 0.03], // [top, left, bottom, right]
+									margin: [0.5, 0.03, 0.5, 0.03], // [top, left, bottom, right]
 									filename: "Relatório Listagem do Histórico de Processo de Exportação",
 									image: { type: 'jpeg', quality: 0.98 },
 									html2canvas: {
@@ -130,7 +130,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 										useCORS: true
 									},
 									jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-									pagebreak: { before: ['#quebraPaginaAnalises'], after: ['#quebraPagina'] }
+									pagebreak: { before: ['#quebra-pagina-relatorio-manutencao-insumo'] }
 								};
 								this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {
 									var totalPages = pdf.internal.getNumberOfPages();
