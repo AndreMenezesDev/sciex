@@ -2,7 +2,7 @@
 	data-railOpacity="0.2">
 	<div class="row m-b-md">
 		<div class="col-lg-12">
-			<h1 class="m-b-xs text-black">RELATÓRIO PARA CONFERÊNCIA DE HISTÓRICO DE MANUTENÇÃO DE INSUMOS</h1>
+			<h1 class="m-b-xs text-black">Relatório para Conferência de Histórico de Manutenção de Insumo</h1>
 			<small></small>
 		</div>
 	</div>
@@ -14,10 +14,18 @@
 			<form>
 				<div class="form-group">
 					<div class="row">
-						<div class="col-lg-8">
+						<div class="col-lg-3">
 							<label class="required">N° do Processo:</label>
-							<input type="text" name="processo" id="processo" [(ngModel)]="processo"  placeholder="_____/aaaa"
-							mask-number [mask]="'9999/9999'"  class="form-control" />
+							<input
+								type="text"
+								name="processo"
+								id="processo"
+								[(ngModel)]="processo"
+								placeholder="_____/aaaa"
+								(keyup.space)="processo=null"
+								mask-number
+								[mask]="'9999/9999'"
+								class="form-control" />
 						</div>
 						<div class="col-lg-8">
 							<label class="required">Produto:</label>

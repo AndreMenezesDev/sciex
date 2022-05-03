@@ -26,7 +26,7 @@ namespace Suframa.Sciex.BusinessLogic
 			if(filtro == null) { return null; }
 			var listaLEProtudo = _uowSciex.QueryStackSciex.LEProduto.Listar(o => 
 					(
-					   filtro.InscricaoCadastral == 0 || o.InscricaoCadastral == filtro.InscricaoCadastral
+					   filtro.InscricaoCadastral == 0 || o.InscricaoCadastral.ToString().StartsWith(filtro.InscricaoCadastral.ToString())
 					)
 					&&
 					(
@@ -53,8 +53,12 @@ namespace Suframa.Sciex.BusinessLogic
 				};
 				retorno.ListaLEProduto.Add(reg);
 			}
-			retorno.RazaoSocial = listaLEProtudo.FirstOrDefault().RazaoSocial;
-			retorno.InscricaoCadastral = listaLEProtudo.FirstOrDefault().InscricaoCadastral;
+
+			var empresa = listaLEProtudo.Where(x => x.RazaoSocial != null && x.InscricaoCadastral != null).FirstOrDefault();
+
+			retorno.RazaoSocial = empresa.RazaoSocial;
+			retorno.InscricaoCadastral = empresa.InscricaoCadastral;
+
 			return retorno;
 		}
 

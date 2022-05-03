@@ -27,6 +27,7 @@
 									id="inscricao-cadastral"
 									name="inscricao-cadastral"
 									class="form-control"
+									(keyup.space)="filterVm.inscricaoCadastral=null"
 									[(ngModel)]="filterVm.inscricaoCadastral"/>
 							</div>
 						</div>
@@ -40,6 +41,7 @@
 									name="empresa"
 									id="empresa"
 									class="form-control"
+									(keyup.space)="filterVm.nomeEmpresa=null"
 									[(ngModel)]="filterVm.nomeEmpresa"/>
 							</div>
 						</div>
@@ -57,6 +59,7 @@
 									[mask]="'99999/9999'"
 									placeholder="00000/AAAA"
 									class="form-control"
+									(keyup.space)="filterVm.anoNumProcesso=null"
 									[(ngModel)]="filterVm.anoNumProcesso"/>
 							</div>
 						</div>

@@ -18,19 +18,26 @@
 					<div class="row">
 						<div class="col-lg-3">
 							<label>Inscrição Cadastral:</label>
-							<input type="text" class="form-control"
-							id="inscricaoCadastral" name="inscricaoCadastral"
-							[(ngModel)]="parametros.inscricaoCadastral"/>
+							<input
+								type="text"
+								onlyNumber="true"
+								class="form-control"
+								id="inscricaoCadastral"
+								name="inscricaoCadastral"
+								(keyup.space)="parametros.inscricaoCadastral=null"
+								[(ngModel)]="parametros.inscricaoCadastral"
+							/>
 						</div>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="row">
-						<div class="col-lg-6">
+						<div class="col-lg-5">
 							<label>Empresa:</label>
-							<input type="text" class="form-control"
-							id="razaoSocial" name="razaoSocial"
-							[(ngModel)]="parametros.razaoSocial"/>
+							<input
+								type="text"
+								class="form-control"
+								id="razaoSocial"
+								name="razaoSocial"
+								(keyup.space)="parametros.razaoSocial=null"
+								[(ngModel)]="parametros.razaoSocial"
+							/>
 						</div>
 					</div>
 				</div>
@@ -39,15 +46,31 @@
 						<div class="col-lg-8">
 							<label for="cnpj" class="">Data de Aprovação:</label>
 							<div class="input-group" style="display: flex;">
-								<input autocomplete="off" class="form-control date ng-pristine ng-valid ng-touched"
-									id="dataInicio" maxlength="10" name="dataInicio" style="width: 50%;" type="date"
-									ng-reflect-maxlength="10" ng-reflect-name="dataInicio"
-									[(ngModel)]="parametros.dataInicio">
+								<input
+									autocomplete="off"
+									class="form-control date ng-pristine ng-valid ng-touched"
+									id="dataInicio"
+									maxlength="10"
+									name="dataInicio"
+									style="width: 50%;"
+									type="date"
+									ng-reflect-maxlength="10"
+									ng-reflect-name="dataInicio"
+									[(ngModel)]="parametros.dataInicio"
+								>
 								<span style="padding-right: 11px; padding-top: 8px; padding-left: 10px;">a</span>
-								<input autocomplete="off" class="form-control date ng-pristine ng-valid ng-touched"
-									id="dataFim" maxlength="10" name="dataFim" style="width: 50%;" type="date"
-									ng-reflect-maxlength="10" ng-reflect-name="dataFim"
-									[(ngModel)]="parametros.dataFim">
+								<input
+									autocomplete="off"
+									class="form-control date ng-pristine ng-valid ng-touched"
+									id="dataFim"
+									maxlength="10"
+									name="dataFim"
+									style="width: 50%;"
+									type="date"
+									ng-reflect-maxlength="10"
+									ng-reflect-name="dataFim"
+									[(ngModel)]="parametros.dataFim"
+								>
 							</div>
 						</div>
 					</div>

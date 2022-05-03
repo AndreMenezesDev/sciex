@@ -38,13 +38,13 @@ namespace Suframa.Sciex.BusinessLogic
 					NumeroPlano = planoExportacaoEntity.NumeroPlano,
 					NumeroPlanoFormated = planoExportacaoEntity.NumeroPlano.ToString("D5"),
 					AnoPlano = planoExportacaoEntity.AnoPlano,
-					AnoNumPlano = planoExportacaoEntity.AnoPlano + "/" + planoExportacaoEntity.NumeroPlano.ToString("D5"),
+					AnoNumPlano = planoExportacaoEntity.NumeroPlano.ToString("D5") + "/" + planoExportacaoEntity.AnoPlano ,
 					Modalidade = planoExportacaoEntity.TipoModalidade,
 					Tipo = planoExportacaoEntity.TipoExportacao,
 					DataStatus = planoExportacaoEntity.DataStatus?.ToString("dd/MM/yyyy"),
 					DataRecebimento = planoExportacaoEntity.DataEnvio?.ToString("dd/MM/yyyy"),
 					DataImpressao = DateTime.Now.ToString("dd/MM/yy"),
-					AnoNumProcesso = planoExportacaoEntity.NumeroAnoProcesso + "/" + planoExportacaoEntity.NumeroProcesso?.ToString("D5")
+					AnoNumProcesso = planoExportacaoEntity.NumeroProcesso?.ToString("D4") + "/" + planoExportacaoEntity.NumeroAnoProcesso
 				};
 				
 				var _relatorioHistoricoAnalise = new List<DadosDuesVM>();

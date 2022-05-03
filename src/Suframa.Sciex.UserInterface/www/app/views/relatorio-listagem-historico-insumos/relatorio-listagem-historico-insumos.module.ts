@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 
 import { RelatoriListagensHistoricoInsumoComponent } from './relatorio-listagem-historico-insumos.component';
-import { FormularioRelatorioListaInsumosComponent } from './formulatorio-relatorio/formulatorio-relatorio.component';
-
 
 @NgModule({
 	imports: [
@@ -16,8 +14,7 @@ import { FormularioRelatorioListaInsumosComponent } from './formulatorio-relator
 		SharedModule
 	],
 	declarations: [
-		RelatoriListagensHistoricoInsumoComponent,
-		FormularioRelatorioListaInsumosComponent
+		RelatoriListagensHistoricoInsumoComponent
 	],
 })
 export class RelatorioListagemHistoricoInsumosModule { }

@@ -27,6 +27,7 @@
 									id="inscricao-cadastral"
 									name="inscricao-cadastral"
 									class="form-control"
+									(keyup.space)="filterVm.inscricaoCadastral=null"
 									[(ngModel)]="filterVm.inscricaoCadastral"/>
 							</div>
 						</div>
@@ -40,6 +41,7 @@
 									name="empresa"
 									id="empresa"
 									class="form-control"
+									(keyup.space)="filterVm.nomeEmpresa=null"
 									[(ngModel)]="filterVm.nomeEmpresa"/>
 							</div>
 						</div>
@@ -80,11 +82,3 @@
 			</article>
 		</section>
 </div>
-
-
-<app-formulatorio-relatorio-lista-insumos
-	[objetoParametro]="objetoRelatorio"
-	*ngIf="exibeRelatorio"
-	id="relatorio-lista-insumos">
-</app-formulatorio-relatorio-lista-insumos>
-

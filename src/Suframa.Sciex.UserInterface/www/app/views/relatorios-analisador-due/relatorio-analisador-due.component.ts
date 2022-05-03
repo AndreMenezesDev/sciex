@@ -56,21 +56,19 @@ export class RelatorioAnalisadorDue implements OnInit {
 	}
 
 	exportPDF(isExcel) {
-		let isValid = true
-		if (this.parametros2.nomeEmpresa == null || this.parametros2.nomeEmpresa == '' && isValid){
-			this.modal.alerta("Empresa não informada");
-			isValid = false;
+
+		if (!this.parametros2.numeroInscricaoCadastral && !this.parametros2.nomeEmpresa)
+		{
+			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
+			return false;
 		}
-		// if (this.parametros2.due == null && isValid){
-		// 	this.modal.alerta("N° da DUE não informado");
-		// 	isValid = false;
-		// }
-
-		if (isValid) {
+		else
+		{
 			this.applicationService.get(this.servico, this.parametros2).subscribe((result: any) => {
-				this.dadosRelatorio = result
+				if (result) {
 
-				if (this.dadosRelatorio) {
+					this.dadosRelatorio = result;
+
 					if (isExcel) {
 
 						this.parametros.titulo = "ANALISADOR DUE";
@@ -95,9 +93,9 @@ export class RelatorioAnalisadorDue implements OnInit {
 									valor = item.length > 0 ? Object.values(this.lista[x].relatoriosAnaliseDue)[i][item[0].trim()] : Object.values(this.lista[x].relatoriosAnaliseDue)[i][this.parametros.fields[j].trim()];
 
 									if (this.parametros.fields[j].trim() == "razaoSocial")
-									r[j] = this.lista.razaoSocial;
+										r[j] = this.lista.razaoSocial;
 									else if (this.parametros.fields[j].trim() == "numeroAnoProcessoFormatado")
-									r[j] = this.lista.numeroAnoProcessoFormatado;
+										r[j] = this.lista.numeroAnoProcessoFormatado;
 									else {
 										r[j] = valor;
 									}
@@ -109,13 +107,12 @@ export class RelatorioAnalisadorDue implements OnInit {
 							for (var i = 0; i < rows.length; i++) {
 								excel.push(rows[i]);
 							}
-							this.parametros.columns = ["", "", "", "Total:", this.lista[x].valorDueTotal,this.lista[x].quantidadeDueTotal, "", ""];
+							this.parametros.columns = ["", "", "", "Total:", this.lista[x].valorDueTotal, this.lista[x].quantidadeDueTotal, "", ""];
 							excel.push(this.parametros.columns);
-					}
+						}
 						this.excelService.exportAsExcelFile(excel, file, this.parametros.titulo);
 					}
 					else {
-						this.dadosRelatorio.dataImpressao = `${this.date.getDate()}/${this.date.getMonth()}/${this.date.getFullYear()}`;
 
 						this.exibeRelatorio = true;
 						const assign = this.assignHour;
@@ -158,9 +155,11 @@ export class RelatorioAnalisadorDue implements OnInit {
 
 						Promise.all([renderizarHtml, liberarTela]);
 					}
-				} else {
-					this.modal.alerta(this.msg.DADO_NAO_ENCONTRADO);
-
+				}
+				else
+				{
+					this.modal.alerta("Nenhum registro encontrado", "Atenção!", "");
+					return false;
 				}
 			})
 		}
@@ -185,7 +184,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 	}
 
 
-	limpar(){
+	limpar() {
 		this.parametros2.numeroInscricaoCadastral = null;
 		this.parametros2.nomeEmpresa = null;
 		this.parametros2.numeroPlanoFormated = null;

@@ -53,16 +53,18 @@ namespace Suframa.Sciex.BusinessLogic
 			
 			resultadoPesquisaDueLista = _uowSciex.QueryStackSciex
 												 .ViewEmitirRelatorioAnalisadorDue
-												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null || x.NumeroIncricaoCadastral == filterVm.NumeroInscricaoCadastral)
+												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null || x.NumeroIncricaoCadastral.ToString().StartsWith(filterVm.NumeroInscricaoCadastral.ToString()))
 														   && (numeroPlano == 0 || x.NumeroPlano == numeroPlano && x.AnoPlano == anoPlano)
-														   && x.RazaoSocial.Contains(filterVm.NomeEmpresa)
+														   && (filterVm.NomeEmpresa == null || x.RazaoSocial.Contains(filterVm.NomeEmpresa))
 														   && (filterVm.Due == null || x.NumeroDue == filterVm.Due));
 
 			if(resultadoPesquisaDueLista.Count == 0)
-				return retornoMetodo;
+				return null;
+
 			var dues = resultadoPesquisaDueLista.Select(y => y.NumeroDue).Distinct().ToList();
 
 			var ListaDueRepetidas2 = _uowSciex.QueryStackSciex.ViewEmitirRelatorioAnalisadorDue.Listar(x => dues.Contains(x.NumeroDue));
+
 			foreach (var item in dues)
 			{
 				var retorno = new RelatoriosAnalisadorListaDuesVM();
@@ -74,7 +76,7 @@ namespace Suframa.Sciex.BusinessLogic
 					{
 						AnoProcesso = item2.AnoProcesso,
 						NumeroProcesso = item2.NumeroProcesso,
-						NumeroPlanoFormated = item2.NumeroPlano + "/" + item2.AnoPlano,
+						NumeroPlanoFormated = item2.NumeroPlano.ToString("D5") + "/" + item2.AnoPlano,
 						NumeroInscricaoCadastral = item2.NumeroIncricaoCadastral,
 						NomeEmpresa = item2.RazaoSocial,
 						PlanoStatus = GetStatusPlano(item2.StatusPlano),
@@ -83,7 +85,10 @@ namespace Suframa.Sciex.BusinessLogic
 						ValorDue = item2.ValorDolar,
 						QuantidadeDue = item2.QuantidadeDue,
 						AnoNumPlano = item2.AnoPlano.ToString(),
-						NumeroPlano = (int)item2.NumeroPlano,							
+						NumeroPlano = (int)item2.NumeroPlano,
+						NumeroAnoProcessoFormatado = item2.AnoProcesso + "/" + item2.NumeroProcesso?.ToString("D4"),
+						NumerProcessoFormated = item2.NumeroProcesso?.ToString("D4"),
+						DataImpressao = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss")
 					};
 					retorno1.Add(itemDue);
 				}
@@ -92,6 +97,9 @@ namespace Suframa.Sciex.BusinessLogic
 				retorno.NumeroInscricaoCadastral = resultadoPesquisaDueLista[0].NumeroIncricaoCadastral;
 				retorno.ValorDueTotal = retorno.RelatoriosAnaliseDue.Sum(x=> x.ValorDue);
 				retorno.QuantidadeDueTotal = retorno.RelatoriosAnaliseDue.Sum(x=> x.QuantidadeDue);
+				retorno.NumeroAnoProcessoFormatado = resultadoPesquisaDueLista[0].AnoProcesso + "/" + resultadoPesquisaDueLista[0].NumeroProcesso?.ToString("D4");
+				retorno.DataImpressao = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
+				retorno.NumeroPlanoFormated = resultadoPesquisaDueLista[0].NumeroPlano.ToString("D5");
 				retornoMetodo.Add(retorno);
 			}
 			

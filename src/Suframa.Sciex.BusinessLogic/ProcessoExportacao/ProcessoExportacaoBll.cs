@@ -1067,11 +1067,18 @@ namespace Suframa.Sciex.BusinessLogic
 
 			var ultimoStatus = pe.ListaStatus.LastOrDefault();
 
-			pe.NumeroAnoPlanoFormatado = ultimoStatus != null && ultimoStatus.AnoPlano != null ? Convert.ToInt32(ultimoStatus.NumeroPlano).ToString("D5") + "/" + ultimoStatus.AnoPlano : "-";
+			var consultaFormatacaoNumeroPlano = pe.ListaStatus.Where(x => x.AnoPlano != null && x.NumeroPlano != null).LastOrDefault();
+
+			if(consultaFormatacaoNumeroPlano!= null)
+			{
+				pe.NumeroAnoPlanoFormatado = Convert.ToInt32(consultaFormatacaoNumeroPlano.NumeroPlano).ToString("D5") + "/" + consultaFormatacaoNumeroPlano.AnoPlano;
+			}
 
 			pe.DataValidadeFormatada = pe.DataValidade == DateTime.MinValue ? DateTime.MinValue.ToShortDateString() : ((DateTime)pe.DataValidade).ToShortDateString();
 
 			pe.TipoModalidadeString = pe.TipoModalidade == "S" ? "SUSPENSÃO" : pe.TipoModalidade == "I" ? "ISENÇÃO" : "-";
+
+			pe.DataImpressao = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
 
 			pe.TipoStatusString = StatusString(pe.TipoStatus);
 
