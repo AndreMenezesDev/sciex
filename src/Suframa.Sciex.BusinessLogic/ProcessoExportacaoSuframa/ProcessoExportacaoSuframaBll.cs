@@ -379,7 +379,7 @@ namespace Suframa.Sciex.BusinessLogic
 
 			pe.NumeroAnoProcessoFormatado = Convert.ToInt32(pe.NumeroProcesso).ToString("D4") + "/" + pe.AnoProcesso;
 
-			var ultimoStatus = pe.ListaStatus.LastOrDefault();
+			var ultimoStatus = pe.ListaStatus.Where(x => x.NumeroPlano != null && x.AnoPlano != null).FirstOrDefault();
 
 			pe.NumeroAnoPlanoFormatado = Convert.ToInt32(ultimoStatus.NumeroPlano).ToString("D5") + "/" + ultimoStatus.AnoPlano;
 
