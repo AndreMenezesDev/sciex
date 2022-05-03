@@ -1851,7 +1851,9 @@ namespace Suframa.Sciex.BusinessLogic
 
 				var validarDueDataEmbarqueNoPrazoVigenciaProcesso = _uowSciex.QueryStackSciex.Processo.Existe(q =>
 																								(
-																								q.ListaStatus.Any(w => w.Data < dataDue)
+																								q.ListaStatus.Any(w=> w.Tipo == w.Processo.TipoStatus
+																														&& 
+																														w.Data < dataDue)
 																								&&
 																								q.DataValidade > dataDue
 																								)
