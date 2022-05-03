@@ -798,7 +798,7 @@ namespace Suframa.Sciex.BusinessLogic
 			var prcStatusEntity = new PRCStatusEntity()
 			{
 				Tipo = obj.Tipo,
-				Data = obj.Data,
+				Data = GetDateTimeNowUtc(),
 				DataValidade = obj.DataValidade,
 				CpfResponsavel = obj.CpfResponsavel.CnpjCpfUnformat(),
 				NomeResponsavel = obj.NomeResponsavel,
@@ -899,6 +899,15 @@ namespace Suframa.Sciex.BusinessLogic
 			_uowSciex.CommandStackSciex.Save();
 
 			return somatorioValorUnitario;
+		}
+
+		public DateTime GetDateTimeNowUtc()
+		{
+			var manausTime = TimeZoneInfo.ConvertTime(DateTime.Now,
+				 TimeZoneInfo.FindSystemTimeZoneById("SA Western Standard Time"));
+
+			return manausTime;
+
 		}
 
 		private void CalcularValoresImportados(int idProcesso)
