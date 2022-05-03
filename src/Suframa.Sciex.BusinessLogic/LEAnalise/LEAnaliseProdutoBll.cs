@@ -312,6 +312,7 @@ namespace Suframa.Sciex.BusinessLogic
 			if (vm.isAprovarAnalise) //BOTÃO ANALISE LE INSUMOS APROVADO
 			{
 				regProduto.StatusLE = (int)EnumSituacaoProduto.APROVADO;
+				regProduto.DataAprovacao = DateTime.Now;
 
 				//foreach (var insumo in regProduto.LEInsumo)
 				//{
