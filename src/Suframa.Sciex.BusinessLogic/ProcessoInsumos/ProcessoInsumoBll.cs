@@ -1512,6 +1512,11 @@ namespace Suframa.Sciex.BusinessLogic
 
 			}
 
+			if(Listahistorico != null)
+			{
+				Listahistorico[0].DescricaoProcesso = Listahistorico.FirstOrDefault().DescricaoProcesso.PadLeft(9, '0');
+			}
+
 			return Listahistorico;
 		}
 
