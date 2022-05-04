@@ -105,11 +105,26 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				retornoMetodo[0].NumeroPlanoFormated = filterVm.NumeroPlanoFormated;
 			}
-			else
+
+			foreach (var item in resultadoPesquisaDueLista)
 			{
-				retornoMetodo[0].NumeroPlanoFormated = resultadoPesquisaDueLista[0].NumeroPlano.ToString("D5") + "/" + resultadoPesquisaDueLista[0].AnoPlano;
+				if(item.NumeroProcesso == resultadoPesquisaDueLista[0].NumeroProcesso && item.AnoProcesso == resultadoPesquisaDueLista[0].AnoProcesso)
+				{
+					retornoMetodo[0].NumeroAnoProcessoFormatado = resultadoPesquisaDueLista[0].NumeroProcesso?.ToString("D4") + "/" + resultadoPesquisaDueLista[0].AnoProcesso;
+				}
+				else 
+				{
+					retornoMetodo[0].NumeroAnoProcessoFormatado = null;
+				}
+				if (item.NumeroPlano == resultadoPesquisaDueLista[0].NumeroPlano && item.AnoPlano == resultadoPesquisaDueLista[0].AnoPlano)
+				{
+					retornoMetodo[0].NumeroPlanoFormated = resultadoPesquisaDueLista[0].NumeroPlano.ToString("D5") + "/" + resultadoPesquisaDueLista[0].AnoPlano;
+				}
+				else
+				{
+					retornoMetodo[0].NumeroPlanoFormated = null;
+				}
 			}
-			retornoMetodo[0].NumeroAnoProcessoFormatado = resultadoPesquisaDueLista[0].NumeroProcesso?.ToString("D4") + "/" + resultadoPesquisaDueLista[0].AnoProcesso;
 
 			return retornoMetodo;
 		}
