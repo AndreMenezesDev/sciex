@@ -14,7 +14,7 @@
 		public decimal QuantidadeDueTotal { get; set; }
 		public int? AnoProcesso { get; set; }
 		public int? NumeroProcesso { get; set; }
-		public string AnoNumPlano { get; set; }
+		public int? AnoNumPlano { get; set; }
 		public string NomeEmpresa { get; set; }
 		public int? NumeroInscricaoCadastral { get; set; }
 		public bool	porPlano{ get; set; }

@@ -84,7 +84,7 @@ namespace Suframa.Sciex.BusinessLogic
 						Due = item2.NumeroDue,
 						ValorDue = item2.ValorDolar,
 						QuantidadeDue = item2.QuantidadeDue,
-						AnoNumPlano = item2.AnoPlano.ToString(),
+						AnoNumPlano = item2.AnoPlano,
 						NumeroPlano = (int)item2.NumeroPlano,
 						NumeroAnoProcessoFormatado = item2.AnoProcesso + "/" + item2.NumeroProcesso?.ToString("D4"),
 						NumerProcessoFormated = item2.NumeroProcesso?.ToString("D4"),
@@ -99,10 +99,11 @@ namespace Suframa.Sciex.BusinessLogic
 				retorno.QuantidadeDueTotal = retorno.RelatoriosAnaliseDue.Sum(x=> x.QuantidadeDue);
 				retorno.NumeroAnoProcessoFormatado = resultadoPesquisaDueLista[0].AnoProcesso + "/" + resultadoPesquisaDueLista[0].NumeroProcesso?.ToString("D4");
 				retorno.DataImpressao = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
-				retorno.NumeroPlanoFormated = resultadoPesquisaDueLista[0].NumeroPlano.ToString("D5");
 				retornoMetodo.Add(retorno);
 			}
-			
+			retornoMetodo[0].NumeroPlanoFormated = resultadoPesquisaDueLista[0].NumeroPlano.ToString("D5") + "/" + resultadoPesquisaDueLista[0].AnoPlano;
+			retornoMetodo[0].NumeroAnoProcessoFormatado = resultadoPesquisaDueLista[0].NumeroProcesso?.ToString("D4") + "/" + resultadoPesquisaDueLista[0].AnoProcesso;
+
 			return retornoMetodo;
 		}
 	}
