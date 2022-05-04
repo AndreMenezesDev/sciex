@@ -149,7 +149,7 @@ export class RelatoriErrosoDueComponent implements OnInit {
 
 			jsonExcel.LinhaVazia = [""]
 
-			jsonExcel.Cabecalho = ["Ano/N° do Plano: " + element.anoNumPlano, "Empresa: " + element.nomeEmpresa, "", "", "", "", "", ""]
+			jsonExcel.Cabecalho = ["N° do Plano: " + element.anoNumPlano, "Empresa: " + element.nomeEmpresa, "", "", "", "", "", ""]
 			excel.push(jsonExcel.Cabecalho);
 
 			jsonExcel.InfoPlanoExportacao = [
