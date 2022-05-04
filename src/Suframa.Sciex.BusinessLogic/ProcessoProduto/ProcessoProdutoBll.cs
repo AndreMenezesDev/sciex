@@ -179,6 +179,8 @@ namespace Suframa.Sciex.BusinessLogic
 												_uowSciex.CommandStackSciex.PRCInsumo.Salvar(_regInsumoAtivo);
 												statusInsumoJaAlterado = true;
 											}
+
+											regSolicDetalhe.PrcInsumo.StatusInsumo = StatusInsumo_Ativo;
 											break;
 
 										case (int)enumTipoSolicitacao.INCLUSÃO_DE_INSUMO:
