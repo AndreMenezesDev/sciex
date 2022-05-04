@@ -707,8 +707,16 @@ namespace Suframa.Sciex.BusinessLogic
 		{
 			var numeroLote = RecuperarNumeroLoteArquivoLote(arquivoLinhas);
 			var anoLote = RecuperarAnoLoteArquivoLote(arquivoLinhas);
-			var planoExiste = _uowSciex.QueryStackSciex.PlanoExportacao.Existe(x => x.NumeroPlano == numeroLote && x.AnoPlano == anoLote &&
-				x.NumeroInscricaoCadastral == inscricao && x.Situacao != 5 && x.TipoExportacao == "AP");
+			var planoExiste = _uowSciex.QueryStackSciex.PlanoExportacao.Existe(x => x.NumeroPlano == numeroLote 
+																					&& x.AnoPlano == anoLote 
+																					&& x.NumeroInscricaoCadastral == inscricao 
+																					&& x.Situacao != 5 																				&& x.Situacao != 5 
+																					&& (
+																						x.TipoExportacao == "AP" 
+																						||
+																						x.TipoExportacao == "CO"
+																						));
+
 			if (planoExiste)
 			{
 
