@@ -105,10 +105,6 @@ namespace Suframa.Sciex.BusinessLogic
 			{
 				retornoMetodo[0].NumeroPlanoFormated = filterVm.NumeroPlanoFormated;
 			}
-			else
-			{
-				retornoMetodo[0].NumeroPlanoFormated = resultadoPesquisaDueLista[0].NumeroPlano.ToString("D5") + "/" + resultadoPesquisaDueLista[0].AnoPlano;
-			}
 			retornoMetodo[0].NumeroAnoProcessoFormatado = resultadoPesquisaDueLista[0].NumeroProcesso?.ToString("D4") + "/" + resultadoPesquisaDueLista[0].AnoProcesso;
 
 			return retornoMetodo;
