@@ -273,6 +273,7 @@ namespace Suframa.Sciex.BusinessLogic
 			//vm.Cnpj = usuarioLogado.empresaRepresentadaCnpj.CnpjCpfUnformat();
 			vm.Cnpj = usuarioLogado.usuCpfCnpjEmpresaOuLogado.CnpjCpfUnformat();
 			vm.InscricaoCadastral = usuarioLogado.usuInscricaoCadastral;
+			vm.RazaoSocial = _uowSciex.QueryStackSciex.ViewImportador.Selecionar(w => w.Cnpj == vm.Cnpj).RazaoSocial;
 
 			if (vm.IdCodigoProdutoSuframa > 0)
 			{
