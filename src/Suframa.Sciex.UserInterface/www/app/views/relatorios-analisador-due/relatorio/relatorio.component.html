@@ -1,8 +1,10 @@
 <div class="row" style="margin: 0 auto;">
 	<div class="col-sm-12">
 		<div class="row" style="text-align: right; font-size: 10px;">
-			<span *ngIf="dados[0].numeroAnoProcessoFormatado != null">Processo Nº: {{dados[0].numeroAnoProcessoFormatado}}</span>
-			<span *ngIf="dados[0].numeroPlanoFormated != null">Nº Plano: {{dados[0].numeroPlanoFormated}}</span>
+			<!-- <span *ngIf="dados[0].numeroAnoProcessoFormatado != null">Processo Nº: {{dados[0].numeroAnoProcessoFormatado}}</span>
+			<span *ngIf="dados[0].numeroPlanoFormated != null">Nº Plano: {{dados[0].numeroPlanoFormated}}</span> -->
+			<span *ngIf="!dados[0].muitosPlanos">Processo Nº: {{dados[0].numeroAnoProcessoFormatado}}</span>
+			<span *ngIf="!dados[0].muitosPlanos">Nº Plano: {{dados[0].numeroPlanoFormated}}</span>
 		</div>
 		<div style="margin-top: 10px; margin-right: 10px; text-align: right; ">IMPRESSO EM: {{dados[0].dataImpressao}}
 		</div>

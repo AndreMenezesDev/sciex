@@ -20,5 +20,6 @@
 		public bool	porPlano{ get; set; }
 		public string DataImpressao { get; set; }
 		public string NumerProcessoFormated { get; set; }
+		public bool MuitosPlanos { get; set; }
 	}
 }

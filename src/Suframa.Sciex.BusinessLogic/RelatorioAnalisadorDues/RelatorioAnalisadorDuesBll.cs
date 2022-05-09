@@ -53,7 +53,10 @@ namespace Suframa.Sciex.BusinessLogic
 			
 			resultadoPesquisaDueLista = _uowSciex.QueryStackSciex
 												 .ViewEmitirRelatorioAnalisadorDue
-												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null || x.NumeroIncricaoCadastral.ToString().StartsWith(filterVm.NumeroInscricaoCadastral.ToString()))
+												 .Listar(x => (filterVm.NumeroInscricaoCadastral == null 
+																	|| 
+																	x.NumeroIncricaoCadastral.ToString().StartsWith(filterVm.NumeroInscricaoCadastral.ToString())
+																)
 														   && (numeroPlano == 0 || x.NumeroPlano == numeroPlano && x.AnoPlano == anoPlano)
 														   && (filterVm.NomeEmpresa == null || x.RazaoSocial.Contains(filterVm.NomeEmpresa))
 														   && (filterVm.Due == null || x.NumeroDue == filterVm.Due));
@@ -124,6 +127,17 @@ namespace Suframa.Sciex.BusinessLogic
 				{
 					retornoMetodo[0].NumeroPlanoFormated = null;
 				}
+			}
+
+			var qtdPlanosDistintos = resultadoPesquisaDueLista.Select(q => q.NumeroPlano).Distinct().ToList();
+
+			if (qtdPlanosDistintos.Count > 1)
+			{
+				retornoMetodo[0].MuitosPlanos = true;
+			}
+			else
+			{
+				retornoMetodo[0].MuitosPlanos = false;
 			}
 
 			return retornoMetodo;

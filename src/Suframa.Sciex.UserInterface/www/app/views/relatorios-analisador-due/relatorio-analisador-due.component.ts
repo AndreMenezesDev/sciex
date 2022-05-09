@@ -35,6 +35,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 	linkSource: any;
 	downloadLink: any;
 	fileName: any;
+	nomeArquivo: string;
 
 
 	constructor(
@@ -68,10 +69,10 @@ export class RelatorioAnalisadorDue implements OnInit {
 				if (result) {
 
 					this.dadosRelatorio = result;
-
+					this.nomeArquivo = "Relatório Analisador DUE's Plano";
 					if (isExcel) {
 
-						this.parametros.titulo = "ANALISADOR DUE";
+						this.parametros.titulo = this.nomeArquivo;
 						this.parametros.columns = ["Nº Plano", "Plano Status", "Data Staus", "DUE", "Valor", "Quantidade", "Ano processo", "N Processo"];
 						this.parametros.fields = ["numeroPlanoFormated", "planoStatus", "dataStatus", "due", "valorDue", "quantidadeDue", "anoProcesso", "numeroProcesso"];
 
@@ -121,7 +122,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 								const elements = document.getElementById('relatorio');
 								const options = {
 									margin: [0.5, 0.03, 0.5, 0.03], // [top, left, bottom, right]
-									filename: "Relatório Listagem do Histórico de Processo de Exportação",
+									filename: this.nomeArquivo,
 									image: { type: 'jpeg', quality: 0.98 },
 									html2canvas: {
 										scale: 2,
@@ -173,7 +174,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 		}).then((data) => {
 			this.linkSource = 'data:' + 'application/pdf' + ';base64,' + data;
 			this.downloadLink = document.createElement('a');
-			this.fileName = "Relatório Listagem do Histórico de Processo de Exportação";
+			this.fileName = this.nomeArquivo;
 			document.body.appendChild(this.downloadLink);
 			this.downloadLink.href = this.linkSource;
 			this.downloadLink.download = this.fileName;
