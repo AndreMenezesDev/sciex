@@ -28,6 +28,7 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 	tipoRelatorio: any;
 	lista: any = {};
 	exibeRelatorio: boolean = false;
+	valorInscricaoCadastral: Number;
 	constructor(
 		private applicationService: ApplicationService,
 		private formatCodeService: FormatCodeService,
@@ -48,6 +49,11 @@ export class RelatorioListagemExportacaoComponent implements OnInit {
 			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
 			return false;
 		}
+		this.valorInscricaoCadastral = parseInt(this.parametros.inscricaoCadastral);
+		if(this.valorInscricaoCadastral == 0){
+			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> corretamente!");
+			return false;
+		}		
 		this.applicationService.get(this.servico, this.parametros).subscribe((result: any) => {
 			if(result == null){
 				this.modal.alerta("Nenhum registro encontrado para o filtro selecionado", "Atenção!");

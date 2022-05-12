@@ -36,6 +36,7 @@ export class RelatoriListagensHistoricoInsumoComponent implements OnInit {
 	fileName: any;
 	filterVm : any = {};
 	lista: Array<any>;
+	valorInscricaoCadastral: Number;
 
 	constructor(
 		private applicationService: ApplicationService,
@@ -68,6 +69,12 @@ export class RelatoriListagensHistoricoInsumoComponent implements OnInit {
 		}
 		if(!this.filterVm.inscricaoCadastral && !this.filterVm.nomeEmpresa){
 			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> ou <b>Empresa</b>!");
+			return false;
+		}
+		
+		this.valorInscricaoCadastral = parseInt(this.filterVm.inscricaoCadastral);
+		if(this.valorInscricaoCadastral == 0){
+			this.modal.alerta("Informe a <b>Inscrição Cadastral</b> corretamente!");
 			return false;
 		}
 
