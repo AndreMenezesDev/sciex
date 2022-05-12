@@ -73,8 +73,8 @@ export class RelatorioAnalisadorDue implements OnInit {
 					if (isExcel) {
 
 						this.parametros.titulo = this.nomeArquivo;
-						this.parametros.columns = ["Nº Plano", "Plano Status", "Data Staus", "DUE", "Valor", "Quantidade", "Ano processo", "N Processo"];
-						this.parametros.fields = ["numeroPlanoFormated", "planoStatus", "dataStatus", "due", "valorDue", "quantidadeDue", "anoProcesso", "numeroProcesso"];
+						this.parametros.columns = ["Nº Plano", "Plano Status", "Data Staus", "DUE", "Valor", "Quantidade", "N Processo", "Ano processo"];
+						this.parametros.fields = ["numeroPlanoFormated", "planoStatus", "dataStatus", "due", "valorDueFormatado", "quantidadeDueFormatado", "numeroProcesso", "anoProcesso"];
 
 						var file = window.location.href.split("#")[1].replace("/", "");
 						this.lista = this.dadosRelatorio;
@@ -130,7 +130,7 @@ export class RelatorioAnalisadorDue implements OnInit {
 										letterRendering: true,
 										useCORS: true
 									},
-									jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+									jsPDF: { unit: 'in', format: 'a4', orientation: 'l' },
 									pagebreak: { before: ['#quebra-pagina-relatorio-manutencao-insumo'] }
 								};
 								this.arquivoRelatorio = html2pdf().from(elements).set(options).toPdf().get('pdf').then(function (pdf) {

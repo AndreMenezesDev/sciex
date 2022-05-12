@@ -10,6 +10,8 @@
 		public string Due { get; set; }
 		public decimal ValorDue { get; set; }
 		public decimal QuantidadeDue { get; set; }
+		public string ValorDueFormatado { get; set; }
+		public string QuantidadeDueFormatado { get; set; }
 		public decimal ValorDueTotal { get; set; }
 		public decimal QuantidadeDueTotal { get; set; }
 		public int? AnoProcesso { get; set; }

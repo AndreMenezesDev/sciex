@@ -52,11 +52,12 @@
 					<label style="font-size: 11px;">Quantidade</label>
 				</div>
 				<div class="col-lg-1">
-					<label style="font-size: 11px;">Ano Processo</label>
-				</div>
-				<div class="col-lg-1">
 					<label style="font-size: 11px;">N° Processo</label>
 				</div>
+				<div class="col-lg-1">
+					<label style="font-size: 11px;">Ano Processo</label>
+				</div>
+
 			</div>
 			<div class="row">
 				<div *ngFor=" let item2 of dados; let indiceGeral = index">
@@ -75,17 +76,18 @@
 								<span style="font-size: 11px;">{{item2.due}}</span>
 							</div>
 							<div class="col-lg-2">
-								<span style="font-size: 11px;">{{item2.valorDue}}</span>
+								<span style="font-size: 11px;">{{item2.valorDueFormatado}}</span>
 							</div>
 							<div class="col-lg-2">
-								<span style="font-size: 11px;">{{item2.quantidadeDue}}</span>
-							</div>
-							<div class="col-lg-1">
-								<span style="font-size: 11px;">{{item2.anoProcesso}}</span>
+								<span style="font-size: 11px;">{{item2.quantidadeDueFormatado}}</span>
 							</div>
 							<div class="col-lg-1">
 								<span style="font-size: 11px;">{{item2.numerProcessoFormated}}</span>
 							</div>
+							<div class="col-lg-1">
+								<span style="font-size: 11px;">{{item2.anoProcesso}}</span>
+							</div>
+
 						</div>
 					</div>
 					<div class="row" style=" margin-left: 2px; font-size: 11px; border-bottom: 1px solid #000;">

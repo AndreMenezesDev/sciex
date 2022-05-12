@@ -87,6 +87,8 @@ namespace Suframa.Sciex.BusinessLogic
 						Due = item2.NumeroDue,
 						ValorDue = item2.ValorDolar,
 						QuantidadeDue = item2.QuantidadeDue,
+						ValorDueFormatado = item2.ValorDolar == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item2.ValorDolar),
+						QuantidadeDueFormatado = item2.QuantidadeDue == null ? string.Format("{0:0,000.0000000}", 0) : string.Format("{0:0,000.0000000}", item2.QuantidadeDue),
 						AnoNumPlano = item2.AnoPlano,
 						NumeroPlano = (int)item2.NumeroPlano,
 						NumeroAnoProcessoFormatado = item2.AnoProcesso + "/" + item2.NumeroProcesso?.ToString("D4"),
